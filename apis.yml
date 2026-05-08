@@ -28,6 +28,8 @@ apis:
         type: Documentation
       - url: https://cal.com/docs/api-reference/v2/bookings
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Create, read, update, cancel, and reschedule bookings. Supports recurring, seated, and round-robin booking flows.
   - aid: cal-com:cal-com-event-types-api
@@ -41,6 +43,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/event-types
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Manage event types (meeting templates) — duration, location, fields, locations, payment, recurrence, and team round-robin assignments.
   - aid: cal-com:cal-com-schedules-api
@@ -54,6 +58,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/schedules
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Manage user schedules — weekly working hours, date overrides, and timezone defaults.
   - aid: cal-com:cal-com-availability-api
@@ -67,6 +73,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/availability
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Compute and read user/team availability across event types, accounting for connected calendars and overrides.
   - aid: cal-com:cal-com-slots-api
@@ -80,6 +88,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/slots
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Reserve, list, and release bookable time slots for event types — used by booking page UIs to lock a slot before confirmation.
   - aid: cal-com:cal-com-webhooks-api
@@ -93,6 +103,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/webhooks
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Subscribe to BOOKING_CREATED, BOOKING_RESCHEDULED, BOOKING_CANCELLED, MEETING_STARTED, and other events; deliveries POST to a developer-defined endpoint.
   - aid: cal-com:cal-com-oauth-api
@@ -106,6 +118,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/oauth
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       OAuth client management, token issuance, and refresh — primarily used by Cal.com Platform integrations to manage end-user accounts under a hosting application.
   - aid: cal-com:cal-com-teams-api
@@ -119,6 +133,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/teams
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Manage teams, team members, and team event types for collective and round-robin scheduling.
   - aid: cal-com:cal-com-organizations-api
@@ -132,6 +148,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/organizations
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Top-level organizations API for managing sub-teams, members, and organization-wide event types and routing forms.
   - aid: cal-com:cal-com-ooo-api
@@ -145,6 +163,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/out-of-office
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Mark users as out-of-office for a date range, with optional automatic forwarding to a delegate.
   - aid: cal-com:cal-com-conferencing-api
@@ -158,6 +178,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/conferencing
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Connect and manage video-conferencing apps (Zoom, Google Meet, Microsoft Teams, Cal Video, Daily, etc.) used as event-type locations.
   - aid: cal-com:cal-com-destination-calendars-api
@@ -171,6 +193,8 @@ apis:
     properties:
       - url: https://cal.com/docs/api-reference/v2/destination-calendars
         type: API Reference
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Connect Google, Outlook/Office 365, Apple, and CalDAV calendars; choose where new bookings are written and where conflicts are read from.
   - aid: cal-com:cal-com-atoms-api
@@ -187,6 +211,8 @@ apis:
         type: Documentation
       - url: https://www.npmjs.com/package/@calcom/atoms
         type: SDK
+      - url: openapi/cal-com-openapi.json
+        type: OpenAPI
     description: >-
       Cal.com Platform exposes pre-built React components ("Atoms") and a managed-user OAuth model so SaaS apps can embed scheduling primitives end-to-end. Used by platforms that want to ship Cal.com features under their own brand.
 common:
