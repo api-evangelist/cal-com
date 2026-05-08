@@ -15,22 +15,44 @@ tags:
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Cal.com. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+description: Cal.com API v2 returns 429 with a Retry-After header when rate-limit ceilings
+  are exceeded. Limits are scoped per API key (or per OAuth client on Platform) and are
+  not consistently published as exact per-second numbers. Self-hosted instances have no
+  platform-imposed rate limit beyond the operator's infrastructure.
+notes: For high-volume Platform integrations (managed users), coordinate with Cal.com to
+  raise per-org rate ceilings. For booking-page traffic, prefer slot reservation flows
+  over polling availability.
 sources:
-- https://cal.com/
+- https://cal.com/docs/api-reference
+- https://github.com/calcom/cal.com
 responseCodes:
   throttled: 429
 limits:
-- name: Default
-  scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+- name: Cloud API Key
+  scope: api_key
+  metric: request
+  limit: published per-key
+  timeFrame: per-minute
+  notes: Per-key request rate; honor Retry-After on 429.
+- name: Platform OAuth Client
+  scope: oauth_client
+  metric: request
+  limit: published per-client
+  timeFrame: per-minute
+  notes: Platform managed-user OAuth clients have their own ceilings; raised by contract.
+- name: Self-Hosted
+  scope: instance
+  metric: none
+  limit: -1
+  notes: No platform-imposed limits when self-hosted; bounded by operator infrastructure.
 policies:
 - name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  description: Exponential backoff with jitter on 429; honor Retry-After header.
+- name: Use Webhooks Not Polling
+  description: Subscribe to BOOKING_* events instead of polling the bookings endpoint.
+- name: Reserve Slots Before Confirmation
+  description: Use the Slots API to reserve a slot during the booking flow rather than
+    re-querying availability multiple times.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

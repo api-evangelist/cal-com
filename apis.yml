@@ -3,7 +3,7 @@ url: https://raw.githubusercontent.com/api-evangelist/cal-com/refs/heads/main/ap
 name: Cal.com
 x-type: company
 description: >-
-  Cal.com is open-source scheduling infrastructure (Calendly alternative). The Cal.com API exposes event types, bookings, schedules, availability, and webhook subscriptions.
+  Cal.com is open-source scheduling infrastructure (Calendly alternative) available as a managed cloud service or self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks, OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding scheduling primitives into other apps.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - Productivity
@@ -14,10 +14,190 @@ tags:
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: cal-com:cal-com-bookings-api
+    name: Cal.com Bookings API
+    tags:
+      - Bookings
+      - CRUD
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/bookings
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference
+        type: Documentation
+      - url: https://cal.com/docs/api-reference/v2/bookings
+        type: API Reference
+    description: >-
+      Create, read, update, cancel, and reschedule bookings. Supports recurring, seated, and round-robin booking flows.
+  - aid: cal-com:cal-com-event-types-api
+    name: Cal.com Event Types API
+    tags:
+      - Event Types
+      - Configuration
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/event-types
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/event-types
+        type: API Reference
+    description: >-
+      Manage event types (meeting templates) — duration, location, fields, locations, payment, recurrence, and team round-robin assignments.
+  - aid: cal-com:cal-com-schedules-api
+    name: Cal.com Schedules API
+    tags:
+      - Schedules
+      - Working Hours
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/schedules
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/schedules
+        type: API Reference
+    description: >-
+      Manage user schedules — weekly working hours, date overrides, and timezone defaults.
+  - aid: cal-com:cal-com-availability-api
+    name: Cal.com Availability API
+    tags:
+      - Availability
+      - Calendar
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/availability
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/availability
+        type: API Reference
+    description: >-
+      Compute and read user/team availability across event types, accounting for connected calendars and overrides.
+  - aid: cal-com:cal-com-slots-api
+    name: Cal.com Slots API
+    tags:
+      - Slots
+      - Time
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/slots
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/slots
+        type: API Reference
+    description: >-
+      Reserve, list, and release bookable time slots for event types — used by booking page UIs to lock a slot before confirmation.
+  - aid: cal-com:cal-com-webhooks-api
+    name: Cal.com Webhooks API
+    tags:
+      - Webhooks
+      - Events
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/webhooks
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/webhooks
+        type: API Reference
+    description: >-
+      Subscribe to BOOKING_CREATED, BOOKING_RESCHEDULED, BOOKING_CANCELLED, MEETING_STARTED, and other events; deliveries POST to a developer-defined endpoint.
+  - aid: cal-com:cal-com-oauth-api
+    name: Cal.com OAuth & Auth API
+    tags:
+      - OAuth
+      - Authentication
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/oauth
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/oauth
+        type: API Reference
+    description: >-
+      OAuth client management, token issuance, and refresh — primarily used by Cal.com Platform integrations to manage end-user accounts under a hosting application.
+  - aid: cal-com:cal-com-teams-api
+    name: Cal.com Teams API
+    tags:
+      - Teams
+      - Membership
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/teams
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/teams
+        type: API Reference
+    description: >-
+      Manage teams, team members, and team event types for collective and round-robin scheduling.
+  - aid: cal-com:cal-com-organizations-api
+    name: Cal.com Organizations API
+    tags:
+      - Organizations
+      - Enterprise
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/organizations
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/organizations
+        type: API Reference
+    description: >-
+      Top-level organizations API for managing sub-teams, members, and organization-wide event types and routing forms.
+  - aid: cal-com:cal-com-ooo-api
+    name: Cal.com Out-of-Office API
+    tags:
+      - OOO
+      - Availability
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/out-of-office
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/out-of-office
+        type: API Reference
+    description: >-
+      Mark users as out-of-office for a date range, with optional automatic forwarding to a delegate.
+  - aid: cal-com:cal-com-conferencing-api
+    name: Cal.com Conferencing API
+    tags:
+      - Conferencing
+      - Video
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/conferencing
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/conferencing
+        type: API Reference
+    description: >-
+      Connect and manage video-conferencing apps (Zoom, Google Meet, Microsoft Teams, Cal Video, Daily, etc.) used as event-type locations.
+  - aid: cal-com:cal-com-destination-calendars-api
+    name: Cal.com Destination Calendars API
+    tags:
+      - Calendars
+      - Integration
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/api-reference/v2/destination-calendars
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/api-reference/v2/destination-calendars
+        type: API Reference
+    description: >-
+      Connect Google, Outlook/Office 365, Apple, and CalDAV calendars; choose where new bookings are written and where conflicts are read from.
+  - aid: cal-com:cal-com-atoms-api
+    name: Cal.com Atoms (Platform)
+    tags:
+      - Atoms
+      - SDK
+      - Embed
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://cal.com/docs/platform
+    baseURL: https://api.cal.com/v2
+    properties:
+      - url: https://cal.com/docs/platform
+        type: Documentation
+      - url: https://www.npmjs.com/package/@calcom/atoms
+        type: SDK
+    description: >-
+      Cal.com Platform exposes pre-built React components ("Atoms") and a managed-user OAuth model so SaaS apps can embed scheduling primitives end-to-end. Used by platforms that want to ship Cal.com features under their own brand.
 common:
   - type: Website
     url: https://cal.com/
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: Pricing
+    url: https://cal.com/pricing
+  - type: GitHub
+    url: https://github.com/calcom/cal.com
   - type: Plans
     url: plans/cal-com-plans-pricing.yml
   - type: RateLimits

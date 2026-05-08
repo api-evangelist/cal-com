@@ -5,7 +5,7 @@ provider: Cal.com
 providerId: cal-com
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - Productivity
 - Scheduling
@@ -15,11 +15,13 @@ tags:
 - FinOps
 - Cost Management
 - FOCUS
-description: FOCUS-aligned FinOps placeholder for Cal.com. Pipeline will replace with the provider's
-  real billing-model details once researched.
-notes: Initial scaffold — billing model has not yet been reconciled.
+description: FOCUS-aligned FinOps profile for Cal.com. The managed cloud bills per-user
+  monthly across Free, Teams ($12), Organizations ($28), and Enterprise (custom). The
+  Cal.com Platform (Atoms / managed users) is sold separately, typically priced on
+  managed-user volume. Self-hosted has no platform fees.
 sources:
-- https://cal.com/
+- https://cal.com/pricing
+- https://cal.com/docs/platform
 - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
@@ -27,41 +29,54 @@ alignedWith:
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-publisherName: Cal.com
+publisherName: Cal.com, Inc.
 serviceCategory: Productivity
 billingModel:
-  pricingCategory: To Be Reconciled
-  billingFrequency: Monthly
+  pricingCategory: Subscription (Per Seat) + Platform Volume
+  billingFrequency: Monthly or Annual
   billingCurrency: USD
   chargeCategories:
-  - Usage
   - Purchase
+  - Usage
   - Adjustment
 focusColumns:
   ServiceName: Cal.com
   ServiceCategory: Productivity
   ProviderName: Cal.com
-  PublisherName: Cal.com
-  InvoiceIssuerName: Cal.com
+  PublisherName: Cal.com, Inc.
+  InvoiceIssuerName: Cal.com, Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation against the provider's published metering.
-  unit: varies
+- name: user_seats
+  description: Per-user monthly subscription. Teams $12, Organizations $28, Enterprise
+    contract.
+  unit: seat
   aggregation: sum
   dimensions:
   - account
-  - resource
+  - team
+  - plan
+- name: platform_managed_users
+  description: Cal.com Platform managed-user volume meter for embedded SaaS deployments.
+  unit: managed_user
+  aggregation: sum
+  dimensions:
+  - oauth_client
+  - account
 principles:
 - name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
+  description: Inventory active users in the Cal.com admin panel; track Platform managed-user
+    counts separately.
 - name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
+  description: Allocate user seats by team membership; allocate Platform spend to the SaaS
+    product embedding scheduling.
 - name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
+  description: Reclaim seats from inactive users; choose annual billing for the 25% discount;
+    consider self-hosting for very large deployments where engineering capacity is available.
 - name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  description: Assign an owner per Cal.com organization; review Platform managed-user count
+    against forecast.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

@@ -5,7 +5,7 @@ provider: Cal.com
 providerId: cal-com
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - Productivity
 - Scheduling
@@ -13,30 +13,144 @@ tags:
 - Open Source
 - Booking
 - Plans
-description: Placeholder plans/pricing artifact for Cal.com. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+description: Cal.com plans reconciled against the public Cal.com pricing page. Cal.com is
+  AGPL-licensed open source and can be self-hosted at no platform cost; the managed cloud
+  bills per-user across Free, Teams, Organizations, and Enterprise tiers. The Cal.com
+  Platform (Atoms / managed users) is a separate offering for SaaS embedders.
 sources:
-- https://cal.com/
+- https://cal.com/pricing
+- https://cal.com/docs/api-reference
+- https://github.com/calcom/cal.com
 plans:
-- id: cal-com-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
+- id: cal-com-self-hosted
+  name: Self-Hosted (Open Source)
+  type: free
+  description: AGPL-licensed open-source Cal.com you can run on your own infrastructure with
+    no platform fees.
   entries:
-  - label: API Access
-    name: api_access
+  - label: Platform Fee
+    name: platform_fee
     type: flat
-    metric: varies
+    metric: license
     limit: -1
-    timeFrame: usage
+    timeFrame: monthly
     geo: global
     unit: 1
-    price: see https://cal.com/
+    price: 0
     userMultiplied: false
   elements:
-  - name: Pending Reconciliation
+  - name: All Core Scheduling Features
+  - name: Self-Hosted Deployment
+  - name: Community Support
+- id: cal-com-free
+  name: Free (Cloud)
+  type: free
+  description: Free cloud tier for individual users.
+  entries:
+  - label: Per-User
+    name: seat
+    type: flat
+    metric: user
+    limit: 1
+    timeFrame: monthly
+    geo: global
+    unit: 1
+    price: 0
+    userMultiplied: false
+  elements:
+  - name: Unlimited Event Types and Calendars
+  - name: Email and SMS Notifications
+  - name: 100+ App Integrations
+  - name: Mobile App and Browser Extension
+  - name: Stripe and PayPal Payments
+  - name: Salesforce and HubSpot Sync
+- id: cal-com-teams
+  name: Teams (Cloud)
+  type: paid
+  description: Per-user team plan for small teams and startups.
+  entries:
+  - label: Per-User Monthly
+    name: seat_monthly
+    type: flat
+    metric: user
+    limit: -1
+    timeFrame: monthly
+    geo: global
+    unit: 1
+    price: 12
+    userMultiplied: true
+  elements:
+  - name: Team Scheduling
+  - name: Round-Robin Distribution
+  - name: Managed Event Types
+  - name: Recurring Events
+  - name: Custom Branding Removal
+  - name: Routing Forms
+  - name: Booking Analytics
+- id: cal-com-organizations
+  name: Organizations (Cloud)
+  type: paid
+  description: Per-user organization plan for larger teams needing enhanced control.
+  entries:
+  - label: Per-User Monthly
+    name: seat_monthly
+    type: flat
+    metric: user
+    limit: -1
+    timeFrame: monthly
+    geo: global
+    unit: 1
+    price: 28
+    userMultiplied: true
+  elements:
+  - name: Unlimited Sub-Teams
+  - name: Custom Routing
+  - name: Company Subdomain
+  - name: SAML SSO and SCIM
+  - name: SOC2 / HIPAA / ISO 27001 Compliance
+  - name: Role-Based Permissions
+- id: cal-com-enterprise
+  name: Enterprise (Cloud)
+  type: enterprise
+  description: For large enterprises. Custom pricing.
+  entries:
+  - label: Per-User Subscription
+    name: seat
+    type: flat
+    metric: user
+    limit: -1
+    timeFrame: annual
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: true
+  elements:
+  - name: All Organizations Features
+  - name: Dedicated Support
+  - name: SLA Guarantees
+  - name: HRIS and Directory Integrations
+  - name: Dedicated Database
+- id: cal-com-platform
+  name: Platform (Atoms)
+  type: paid
+  description: Cal.com Platform for SaaS apps that embed scheduling primitives via Atoms and
+    managed-user OAuth. Custom pricing per managed-user volume.
+  entries:
+  - label: Platform Subscription
+    name: platform
+    type: flat
+    metric: account
+    limit: -1
+    timeFrame: monthly
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Atoms React SDK
+  - name: Managed-User OAuth
+  - name: White-Label Booking Pages
+  - name: Volume Pricing on Managed Users
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
