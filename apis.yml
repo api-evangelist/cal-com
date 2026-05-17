@@ -1,7 +1,7 @@
 aid: cal-com
 url: https://raw.githubusercontent.com/api-evangelist/cal-com/refs/heads/main/apis.yml
 name: Cal.com
-x-type: company
+kind: company
 description: >-
   Cal.com is open-source scheduling infrastructure (Calendly alternative) available as a managed cloud service or self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks, OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding scheduling primitives into other apps.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -27,7 +27,7 @@ apis:
       - url: https://cal.com/docs/api-reference
         type: Documentation
       - url: https://cal.com/docs/api-reference/v2/bookings
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -42,7 +42,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/event-types
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -57,7 +57,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/schedules
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -72,7 +72,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/availability
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -87,7 +87,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/slots
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -102,7 +102,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/webhooks
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -117,7 +117,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/oauth
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -132,7 +132,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/teams
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -147,7 +147,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/organizations
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -162,7 +162,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/out-of-office
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -177,7 +177,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/conferencing
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
@@ -192,7 +192,7 @@ apis:
     baseURL: https://api.cal.com/v2
     properties:
       - url: https://cal.com/docs/api-reference/v2/destination-calendars
-        type: API Reference
+        type: APIReference
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
