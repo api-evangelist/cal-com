@@ -1,0 +1,98 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Bookings / Guests
+  description: 'Cal.diy API v2 — Bookings / Guests. 1 operations. Lead operation: Add guests to an existing booking. Self-contained
+    Naftiko capability covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Bookings / Guests
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-bookings-guests
+    baseUri: ''
+    description: Cal.diy API v2 — Bookings / Guests business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-bookings-bookingUid-guests
+      path: /v2/bookings/{bookingUid}/guests
+      operations:
+      - name: bookingguestscontroller20240813addguests
+        method: POST
+        description: Add guests to an existing booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. This header is required as this endpoint does not exist in older API versions.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-bookings-guests-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Bookings / Guests. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/bookings/{bookinguid}/guests
+      name: v2-bookings-bookinguid-guests
+      description: REST surface for v2-bookings-bookingUid-guests.
+      operations:
+      - method: POST
+        name: bookingguestscontroller20240813addguests
+        description: Add guests to an existing booking
+        call: cal-com-bookings-guests.bookingguestscontroller20240813addguests
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-bookings-guests-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Bookings / Guests. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: add-guests-existing-booking
+      description: Add guests to an existing booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings-guests.bookingguestscontroller20240813addguests
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

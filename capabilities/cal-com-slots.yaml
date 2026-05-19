@@ -1,0 +1,356 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Slots
+  description: 'Cal.diy API v2 — Slots. 5 operations. Lead operation: Get available time slots for an event type. Self-contained
+    Naftiko capability covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Slots
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-slots
+    baseUri: ''
+    description: Cal.diy API v2 — Slots business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-slots
+      path: /v2/slots
+      operations:
+      - name: slotscontroller20240904getavailableslots
+        method: GET
+        description: Get available time slots for an event type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUidToReschedule
+          in: query
+          type: string
+          description: The unique identifier of the booking being rescheduled. When provided will ensure that the original
+            booking time appears within the returned available slots whe
+        - name: start
+          in: query
+          type: string
+          description: Time starting from which available slots should be checked.
+          required: true
+        - name: end
+          in: query
+          type: string
+          description: Time until which available slots should be checked.
+          required: true
+        - name: organizationSlug
+          in: query
+          type: string
+          description: The slug of the organization to which user with username belongs or team with teamSlug belongs.
+        - name: teamSlug
+          in: query
+          type: string
+          description: The slug of the team who owns event type with eventTypeSlug - used when slots are checked for team
+            event type.
+        - name: username
+          in: query
+          type: string
+          description: The username of the user who owns event type with eventTypeSlug - used when slots are checked for individual
+            user event type.
+        - name: eventTypeSlug
+          in: query
+          type: string
+          description: The slug of the event type for which available slots should be checked. If slug is provided then username
+            or teamSlug must be provided too and if relevant organ
+        - name: eventTypeId
+          in: query
+          type: number
+          description: The ID of the event type for which available slots should be checked.
+        - name: usernames
+          in: query
+          type: string
+          description: The usernames for which available slots should be checked separated by a comma.
+        - name: format
+          in: query
+          type: string
+          description: Format of slot times in response. Use 'range' to get start and end times. Use 'time' or omit this query
+            parameter to get only start time.
+        - name: duration
+          in: query
+          type: number
+          description: If event type has multiple possible durations then you can specify the desired duration here. Also,
+            if you are fetching slots for a dynamic event then you can s
+        - name: timeZone
+          in: query
+          type: string
+          description: Time zone in which the available slots should be returned. Defaults to UTC.
+    - name: v2-slots-reservations
+      path: /v2/slots/reservations
+      operations:
+      - name: slotscontroller20240904reserveslot
+        method: POST
+        description: Reserve a slot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-slots-reservations-uid
+      path: /v2/slots/reservations/{uid}
+      operations:
+      - name: slotscontroller20240904getreservedslot
+        method: GET
+        description: Get reserved slot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: uid
+          in: path
+          type: string
+          required: true
+      - name: slotscontroller20240904updatereservedslot
+        method: PATCH
+        description: Update a reserved slot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: uid
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: slotscontroller20240904deletereservedslot
+        method: DELETE
+        description: Delete a reserved slot
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: uid
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-slots-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Slots. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/slots
+      name: v2-slots
+      description: REST surface for v2-slots.
+      operations:
+      - method: GET
+        name: slotscontroller20240904getavailableslots
+        description: Get available time slots for an event type
+        call: cal-com-slots.slotscontroller20240904getavailableslots
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUidToReschedule: rest.bookingUidToReschedule
+          start: rest.start
+          end: rest.end
+          organizationSlug: rest.organizationSlug
+          teamSlug: rest.teamSlug
+          username: rest.username
+          eventTypeSlug: rest.eventTypeSlug
+          eventTypeId: rest.eventTypeId
+          usernames: rest.usernames
+          format: rest.format
+          duration: rest.duration
+          timeZone: rest.timeZone
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/slots/reservations
+      name: v2-slots-reservations
+      description: REST surface for v2-slots-reservations.
+      operations:
+      - method: POST
+        name: slotscontroller20240904reserveslot
+        description: Reserve a slot
+        call: cal-com-slots.slotscontroller20240904reserveslot
+        with:
+          cal-api-version: rest.cal-api-version
+          Authorization: rest.Authorization
+          x-cal-client-id: rest.x-cal-client-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/slots/reservations/{uid}
+      name: v2-slots-reservations-uid
+      description: REST surface for v2-slots-reservations-uid.
+      operations:
+      - method: GET
+        name: slotscontroller20240904getreservedslot
+        description: Get reserved slot
+        call: cal-com-slots.slotscontroller20240904getreservedslot
+        with:
+          cal-api-version: rest.cal-api-version
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: slotscontroller20240904updatereservedslot
+        description: Update a reserved slot
+        call: cal-com-slots.slotscontroller20240904updatereservedslot
+        with:
+          cal-api-version: rest.cal-api-version
+          uid: rest.uid
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: slotscontroller20240904deletereservedslot
+        description: Delete a reserved slot
+        call: cal-com-slots.slotscontroller20240904deletereservedslot
+        with:
+          cal-api-version: rest.cal-api-version
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-slots-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Slots. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-available-time-slots-event
+      description: Get available time slots for an event type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-slots.slotscontroller20240904getavailableslots
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUidToReschedule: tools.bookingUidToReschedule
+        start: tools.start
+        end: tools.end
+        organizationSlug: tools.organizationSlug
+        teamSlug: tools.teamSlug
+        username: tools.username
+        eventTypeSlug: tools.eventTypeSlug
+        eventTypeId: tools.eventTypeId
+        usernames: tools.usernames
+        format: tools.format
+        duration: tools.duration
+        timeZone: tools.timeZone
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reserve-slot
+      description: Reserve a slot
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-slots.slotscontroller20240904reserveslot
+      with:
+        cal-api-version: tools.cal-api-version
+        Authorization: tools.Authorization
+        x-cal-client-id: tools.x-cal-client-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-reserved-slot
+      description: Get reserved slot
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-slots.slotscontroller20240904getreservedslot
+      with:
+        cal-api-version: tools.cal-api-version
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-reserved-slot
+      description: Update a reserved slot
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-slots.slotscontroller20240904updatereservedslot
+      with:
+        cal-api-version: tools.cal-api-version
+        uid: tools.uid
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-reserved-slot
+      description: Delete a reserved slot
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-slots.slotscontroller20240904deletereservedslot
+      with:
+        cal-api-version: tools.cal-api-version
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.

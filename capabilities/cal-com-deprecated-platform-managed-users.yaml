@@ -1,0 +1,413 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: 'Cal.diy API v2 — Deprecated: Platform / Managed Users'
+  description: 'Cal.diy API v2 — Deprecated: Platform / Managed Users. 7 operations. Lead operation: Get all managed users.
+    Self-contained Naftiko capability covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - 'Deprecated: Platform / Managed Users'
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-deprecated-platform-managed-users
+    baseUri: ''
+    description: 'Cal.diy API v2 — Deprecated: Platform / Managed Users business capability. Self-contained, no shared references.'
+    resources:
+    - name: v2-oauth-clients-clientId-users
+      path: /v2/oauth-clients/{clientId}/users
+      operations:
+      - name: oauthclientuserscontrollergetmanagedusers
+        method: GET
+        description: Get all managed users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: limit
+          in: query
+          type: number
+          description: The number of items to return
+        - name: offset
+          in: query
+          type: number
+          description: The number of items to skip
+        - name: emails
+          in: query
+          type: array
+          description: Filter managed users by email. If you want to filter by multiple emails, separate them with a comma.
+      - name: oauthclientuserscontrollercreateuser
+        method: POST
+        description: Create a managed user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-oauth-clients-clientId-users-userId
+      path: /v2/oauth-clients/{clientId}/users/{userId}
+      operations:
+      - name: oauthclientuserscontrollergetuserbyid
+        method: GET
+        description: Get a managed user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: userId
+          in: path
+          type: number
+          required: true
+      - name: oauthclientuserscontrollerupdateuser
+        method: PATCH
+        description: Update a managed user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: userId
+          in: path
+          type: number
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: oauthclientuserscontrollerdeleteuser
+        method: DELETE
+        description: Delete a managed user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: userId
+          in: path
+          type: number
+          required: true
+    - name: v2-oauth-clients-clientId-users-userId-force-refresh
+      path: /v2/oauth-clients/{clientId}/users/{userId}/force-refresh
+      operations:
+      - name: oauthclientuserscontrollerforcerefresh
+        method: POST
+        description: Force refresh tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: userId
+          in: path
+          type: number
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+    - name: v2-oauth-clientId-refresh
+      path: /v2/oauth/{clientId}/refresh
+      operations:
+      - name: oauthflowcontrollerrefreshtokens
+        method: POST
+        description: Refresh managed user tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-deprecated-platform-managed-users-rest
+    port: 8080
+    description: 'REST adapter for Cal.diy API v2 — Deprecated: Platform / Managed Users. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.'
+    resources:
+    - path: /v1/v2/oauth-clients/{clientid}/users
+      name: v2-oauth-clients-clientid-users
+      description: REST surface for v2-oauth-clients-clientId-users.
+      operations:
+      - method: GET
+        name: oauthclientuserscontrollergetmanagedusers
+        description: Get all managed users
+        call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollergetmanagedusers
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          limit: rest.limit
+          offset: rest.offset
+          emails: rest.emails
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: oauthclientuserscontrollercreateuser
+        description: Create a managed user
+        call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollercreateuser
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/oauth-clients/{clientid}/users/{userid}
+      name: v2-oauth-clients-clientid-users-userid
+      description: REST surface for v2-oauth-clients-clientId-users-userId.
+      operations:
+      - method: GET
+        name: oauthclientuserscontrollergetuserbyid
+        description: Get a managed user
+        call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollergetuserbyid
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: oauthclientuserscontrollerupdateuser
+        description: Update a managed user
+        call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollerupdateuser
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          userId: rest.userId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: oauthclientuserscontrollerdeleteuser
+        description: Delete a managed user
+        call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollerdeleteuser
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/oauth-clients/{clientid}/users/{userid}/force-refresh
+      name: v2-oauth-clients-clientid-users-userid-force-refresh
+      description: REST surface for v2-oauth-clients-clientId-users-userId-force-refresh.
+      operations:
+      - method: POST
+        name: oauthclientuserscontrollerforcerefresh
+        description: Force refresh tokens
+        call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollerforcerefresh
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          userId: rest.userId
+          clientId: rest.clientId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/oauth/{clientid}/refresh
+      name: v2-oauth-clientid-refresh
+      description: REST surface for v2-oauth-clientId-refresh.
+      operations:
+      - method: POST
+        name: oauthflowcontrollerrefreshtokens
+        description: Refresh managed user tokens
+        call: cal-com-deprecated-platform-managed-users.oauthflowcontrollerrefreshtokens
+        with:
+          clientId: rest.clientId
+          x-cal-secret-key: rest.x-cal-secret-key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-deprecated-platform-managed-users-mcp
+    port: 9090
+    transport: http
+    description: 'MCP adapter for Cal.diy API v2 — Deprecated: Platform / Managed Users. One tool per consumed operation,
+      routed inline through this capability''s consumes block.'
+    tools:
+    - name: get-all-managed-users
+      description: Get all managed users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollergetmanagedusers
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        limit: tools.limit
+        offset: tools.offset
+        emails: tools.emails
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-managed-user
+      description: Create a managed user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollercreateuser
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-managed-user
+      description: Get a managed user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollergetuserbyid
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-managed-user
+      description: Update a managed user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollerupdateuser
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        userId: tools.userId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-managed-user
+      description: Delete a managed user
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollerdeleteuser
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: force-refresh-tokens
+      description: Force refresh tokens
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-deprecated-platform-managed-users.oauthclientuserscontrollerforcerefresh
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        userId: tools.userId
+        clientId: tools.clientId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: refresh-managed-user-tokens
+      description: Refresh managed user tokens
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-deprecated-platform-managed-users.oauthflowcontrollerrefreshtokens
+      with:
+        clientId: tools.clientId
+        x-cal-secret-key: tools.x-cal-secret-key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

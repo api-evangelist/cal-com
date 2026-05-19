@@ -1,0 +1,525 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Calendars
+  description: 'Cal.diy API v2 — Calendars. 9 operations. Lead operation: Get all calendars. Self-contained Naftiko capability
+    covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Calendars
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-calendars
+    baseUri: ''
+    description: Cal.diy API v2 — Calendars business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-calendars
+      path: /v2/calendars
+      operations:
+      - name: calendarscontrollergetcalendars
+        method: GET
+        description: Get all calendars
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-busy-times
+      path: /v2/calendars/busy-times
+      operations:
+      - name: calendarscontrollergetbusytimes
+        method: GET
+        description: Get busy times
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: loggedInUsersTz
+          in: query
+          type: string
+          description: 'Deprecated: Use timeZone instead. The timezone of the user represented as a string'
+        - name: timeZone
+          in: query
+          type: string
+          description: The timezone for the busy times query represented as a string
+        - name: dateFrom
+          in: query
+          type: string
+          description: The starting date for the busy times query
+        - name: dateTo
+          in: query
+          type: string
+          description: The ending date for the busy times query
+        - name: credentialId
+          in: query
+          type: number
+          required: true
+        - name: externalId
+          in: query
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-ics-feed-check
+      path: /v2/calendars/ics-feed/check
+      operations:
+      - name: calendarscontrollercheckicsfeed
+        method: GET
+        description: Check an ICS feed
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-ics-feed-save
+      path: /v2/calendars/ics-feed/save
+      operations:
+      - name: calendarscontrollercreateicsfeed
+        method: POST
+        description: Save an ICS feed
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-calendars-calendar-check
+      path: /v2/calendars/{calendar}/check
+      operations:
+      - name: calendarscontrollercheck
+        method: GET
+        description: Check a calendar connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-calendar-connect
+      path: /v2/calendars/{calendar}/connect
+      operations:
+      - name: calendarscontrollerredirect
+        method: GET
+        description: Get OAuth connect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: isDryRun
+          in: query
+          type: boolean
+          required: true
+        - name: redir
+          in: query
+          type: string
+          description: Redirect URL after successful calendar authorization.
+    - name: v2-calendars-calendar-credentials
+      path: /v2/calendars/{calendar}/credentials
+      operations:
+      - name: calendarscontrollersynccredentials
+        method: POST
+        description: Save Apple calendar credentials
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-calendars-calendar-disconnect
+      path: /v2/calendars/{calendar}/disconnect
+      operations:
+      - name: calendarscontrollerdeletecalendarcredentials
+        method: POST
+        description: Disconnect a calendar
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-calendars-calendar-save
+      path: /v2/calendars/{calendar}/save
+      operations:
+      - name: calendarscontrollersave
+        method: GET
+        description: Save Google or Outlook calendar credentials
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: state
+          in: query
+          type: string
+          required: true
+        - name: code
+          in: query
+          type: string
+          required: true
+        - name: calendar
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-calendars-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Calendars. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/calendars
+      name: v2-calendars
+      description: REST surface for v2-calendars.
+      operations:
+      - method: GET
+        name: calendarscontrollergetcalendars
+        description: Get all calendars
+        call: cal-com-calendars.calendarscontrollergetcalendars
+        with:
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/busy-times
+      name: v2-calendars-busy-times
+      description: REST surface for v2-calendars-busy-times.
+      operations:
+      - method: GET
+        name: calendarscontrollergetbusytimes
+        description: Get busy times
+        call: cal-com-calendars.calendarscontrollergetbusytimes
+        with:
+          loggedInUsersTz: rest.loggedInUsersTz
+          timeZone: rest.timeZone
+          dateFrom: rest.dateFrom
+          dateTo: rest.dateTo
+          credentialId: rest.credentialId
+          externalId: rest.externalId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/ics-feed/check
+      name: v2-calendars-ics-feed-check
+      description: REST surface for v2-calendars-ics-feed-check.
+      operations:
+      - method: GET
+        name: calendarscontrollercheckicsfeed
+        description: Check an ICS feed
+        call: cal-com-calendars.calendarscontrollercheckicsfeed
+        with:
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/ics-feed/save
+      name: v2-calendars-ics-feed-save
+      description: REST surface for v2-calendars-ics-feed-save.
+      operations:
+      - method: POST
+        name: calendarscontrollercreateicsfeed
+        description: Save an ICS feed
+        call: cal-com-calendars.calendarscontrollercreateicsfeed
+        with:
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/check
+      name: v2-calendars-calendar-check
+      description: REST surface for v2-calendars-calendar-check.
+      operations:
+      - method: GET
+        name: calendarscontrollercheck
+        description: Check a calendar connection
+        call: cal-com-calendars.calendarscontrollercheck
+        with:
+          calendar: rest.calendar
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/connect
+      name: v2-calendars-calendar-connect
+      description: REST surface for v2-calendars-calendar-connect.
+      operations:
+      - method: GET
+        name: calendarscontrollerredirect
+        description: Get OAuth connect URL
+        call: cal-com-calendars.calendarscontrollerredirect
+        with:
+          Authorization: rest.Authorization
+          calendar: rest.calendar
+          isDryRun: rest.isDryRun
+          redir: rest.redir
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/credentials
+      name: v2-calendars-calendar-credentials
+      description: REST surface for v2-calendars-calendar-credentials.
+      operations:
+      - method: POST
+        name: calendarscontrollersynccredentials
+        description: Save Apple calendar credentials
+        call: cal-com-calendars.calendarscontrollersynccredentials
+        with:
+          calendar: rest.calendar
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/disconnect
+      name: v2-calendars-calendar-disconnect
+      description: REST surface for v2-calendars-calendar-disconnect.
+      operations:
+      - method: POST
+        name: calendarscontrollerdeletecalendarcredentials
+        description: Disconnect a calendar
+        call: cal-com-calendars.calendarscontrollerdeletecalendarcredentials
+        with:
+          calendar: rest.calendar
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/save
+      name: v2-calendars-calendar-save
+      description: REST surface for v2-calendars-calendar-save.
+      operations:
+      - method: GET
+        name: calendarscontrollersave
+        description: Save Google or Outlook calendar credentials
+        call: cal-com-calendars.calendarscontrollersave
+        with:
+          state: rest.state
+          code: rest.code
+          calendar: rest.calendar
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-calendars-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Calendars. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-all-calendars
+      description: Get all calendars
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-calendars.calendarscontrollergetcalendars
+      with:
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-busy-times
+      description: Get busy times
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-calendars.calendarscontrollergetbusytimes
+      with:
+        loggedInUsersTz: tools.loggedInUsersTz
+        timeZone: tools.timeZone
+        dateFrom: tools.dateFrom
+        dateTo: tools.dateTo
+        credentialId: tools.credentialId
+        externalId: tools.externalId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-ics-feed
+      description: Check an ICS feed
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-calendars.calendarscontrollercheckicsfeed
+      with:
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: save-ics-feed
+      description: Save an ICS feed
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-calendars.calendarscontrollercreateicsfeed
+      with:
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-calendar-connection
+      description: Check a calendar connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-calendars.calendarscontrollercheck
+      with:
+        calendar: tools.calendar
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-oauth-connect-url
+      description: Get OAuth connect URL
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-calendars.calendarscontrollerredirect
+      with:
+        Authorization: tools.Authorization
+        calendar: tools.calendar
+        isDryRun: tools.isDryRun
+        redir: tools.redir
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: save-apple-calendar-credentials
+      description: Save Apple calendar credentials
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-calendars.calendarscontrollersynccredentials
+      with:
+        calendar: tools.calendar
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disconnect-calendar
+      description: Disconnect a calendar
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-calendars.calendarscontrollerdeletecalendarcredentials
+      with:
+        calendar: tools.calendar
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: save-google-outlook-calendar-credentials
+      description: Save Google or Outlook calendar credentials
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-calendars.calendarscontrollersave
+      with:
+        state: tools.state
+        code: tools.code
+        calendar: tools.calendar
+      outputParameters:
+      - type: object
+        mapping: $.

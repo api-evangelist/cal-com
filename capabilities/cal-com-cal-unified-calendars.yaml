@@ -1,0 +1,920 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Cal Unified Calendars
+  description: 'Cal.diy API v2 — Cal Unified Calendars. 15 operations. Lead operation: List calendar connections. Self-contained
+    Naftiko capability covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Cal Unified Calendars
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-cal-unified-calendars
+    baseUri: ''
+    description: Cal.diy API v2 — Cal Unified Calendars business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-calendars-connections
+      path: /v2/calendars/connections
+      operations:
+      - name: calunifiedcalendarscontrollerlistconnections
+        method: GET
+        description: List calendar connections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-connections-connectionId-events
+      path: /v2/calendars/connections/{connectionId}/events
+      operations:
+      - name: calunifiedcalendarscontrollerlistconnectionevents
+        method: GET
+        description: List events for a connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connectionId
+          in: path
+          type: string
+          description: Calendar connection ID from GET /connections
+          required: true
+        - name: from
+          in: query
+          type: string
+          description: Start of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: to
+          in: query
+          type: string
+          description: End of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: timeZone
+          in: query
+          type: string
+          description: IANA time zone for the request (e.g. America/New_York)
+        - name: calendarId
+          in: query
+          type: string
+          description: Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar.
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+      - name: calunifiedcalendarscontrollercreateconnectionevent
+        method: POST
+        description: Create event on a connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: calendarId
+          in: query
+          type: string
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-calendars-connections-connectionId-events-eventId
+      path: /v2/calendars/connections/{connectionId}/events/{eventId}
+      operations:
+      - name: calunifiedcalendarscontrollergetconnectionevent
+        method: GET
+        description: Get event for a connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: eventId
+          in: path
+          type: string
+          required: true
+        - name: calendarId
+          in: query
+          type: string
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+      - name: calunifiedcalendarscontrollerupdateconnectionevent
+        method: PATCH
+        description: Update event for a connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: eventId
+          in: path
+          type: string
+          required: true
+        - name: calendarId
+          in: query
+          type: string
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: calunifiedcalendarscontrollerdeleteconnectionevent
+        method: DELETE
+        description: Delete event for a connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: eventId
+          in: path
+          type: string
+          required: true
+        - name: calendarId
+          in: query
+          type: string
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-connections-connectionId-freebusy
+      path: /v2/calendars/connections/{connectionId}/freebusy
+      operations:
+      - name: calunifiedcalendarscontrollergetconnectionfreebusy
+        method: GET
+        description: Get free/busy for a connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: from
+          in: query
+          type: string
+          description: Start of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: to
+          in: query
+          type: string
+          description: End of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: timeZone
+          in: query
+          type: string
+          description: IANA time zone (e.g. America/New_York)
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-calendar-event-eventUid
+      path: /v2/calendars/{calendar}/event/{eventUid}
+      operations:
+      - name: calunifiedcalendarscontrollergetcalendareventdetails
+        method: GET
+        description: Get meeting details from calendar
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: eventUid
+          in: path
+          type: string
+          description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following
+            endpoints:'
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+      - name: calunifiedcalendarscontrollerupdatecalendarevent
+        method: PATCH
+        description: Update meeting details in calendar
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: eventUid
+          in: path
+          type: string
+          description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following
+            endpoints:'
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-calendars-calendar-events
+      path: /v2/calendars/{calendar}/events
+      operations:
+      - name: calunifiedcalendarscontrollerlistcalendarevents
+        method: GET
+        description: List calendar events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: from
+          in: query
+          type: string
+          description: Start of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: to
+          in: query
+          type: string
+          description: End of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: timeZone
+          in: query
+          type: string
+          description: IANA time zone for the request (e.g. America/New_York)
+        - name: calendarId
+          in: query
+          type: string
+          description: Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar.
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+      - name: calunifiedcalendarscontrollercreatecalendarevent
+        method: POST
+        description: Create a calendar event
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-calendars-calendar-events-eventUid
+      path: /v2/calendars/{calendar}/events/{eventUid}
+      operations:
+      - name: calunifiedcalendarscontrollergetcalendareventdetails
+        method: GET
+        description: Get meeting details from calendar
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: eventUid
+          in: path
+          type: string
+          description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following
+            endpoints:'
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+      - name: calunifiedcalendarscontrollerupdatecalendarevent
+        method: PATCH
+        description: Update meeting details in calendar
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: eventUid
+          in: path
+          type: string
+          description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following
+            endpoints:'
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: calunifiedcalendarscontrollerdeletecalendarevent
+        method: DELETE
+        description: Delete a calendar event
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: eventUid
+          in: path
+          type: string
+          description: The calendar provider's event ID (e.g. Google Calendar event ID)
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-calendars-calendar-freebusy
+      path: /v2/calendars/{calendar}/freebusy
+      operations:
+      - name: calunifiedcalendarscontrollergetfreebusy
+        method: GET
+        description: Get free/busy times
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: calendar
+          in: path
+          type: string
+          required: true
+        - name: from
+          in: query
+          type: string
+          description: Start of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: to
+          in: query
+          type: string
+          description: End of the date range (ISO 8601 date or date-time)
+          required: true
+        - name: timeZone
+          in: query
+          type: string
+          description: IANA time zone (e.g. America/New_York)
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-cal-unified-calendars-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Cal Unified Calendars. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/calendars/connections
+      name: v2-calendars-connections
+      description: REST surface for v2-calendars-connections.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollerlistconnections
+        description: List calendar connections
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerlistconnections
+        with:
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/connections/{connectionid}/events
+      name: v2-calendars-connections-connectionid-events
+      description: REST surface for v2-calendars-connections-connectionId-events.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollerlistconnectionevents
+        description: List events for a connection
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerlistconnectionevents
+        with:
+          connectionId: rest.connectionId
+          from: rest.from
+          to: rest.to
+          timeZone: rest.timeZone
+          calendarId: rest.calendarId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: calunifiedcalendarscontrollercreateconnectionevent
+        description: Create event on a connection
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollercreateconnectionevent
+        with:
+          connectionId: rest.connectionId
+          calendarId: rest.calendarId
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/connections/{connectionid}/events/{eventid}
+      name: v2-calendars-connections-connectionid-events-eventid
+      description: REST surface for v2-calendars-connections-connectionId-events-eventId.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollergetconnectionevent
+        description: Get event for a connection
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetconnectionevent
+        with:
+          connectionId: rest.connectionId
+          eventId: rest.eventId
+          calendarId: rest.calendarId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: calunifiedcalendarscontrollerupdateconnectionevent
+        description: Update event for a connection
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerupdateconnectionevent
+        with:
+          connectionId: rest.connectionId
+          eventId: rest.eventId
+          calendarId: rest.calendarId
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: calunifiedcalendarscontrollerdeleteconnectionevent
+        description: Delete event for a connection
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerdeleteconnectionevent
+        with:
+          connectionId: rest.connectionId
+          eventId: rest.eventId
+          calendarId: rest.calendarId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/connections/{connectionid}/freebusy
+      name: v2-calendars-connections-connectionid-freebusy
+      description: REST surface for v2-calendars-connections-connectionId-freebusy.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollergetconnectionfreebusy
+        description: Get free/busy for a connection
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetconnectionfreebusy
+        with:
+          connectionId: rest.connectionId
+          from: rest.from
+          to: rest.to
+          timeZone: rest.timeZone
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/event/{eventuid}
+      name: v2-calendars-calendar-event-eventuid
+      description: REST surface for v2-calendars-calendar-event-eventUid.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollergetcalendareventdetails
+        description: Get meeting details from calendar
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetcalendareventdetails
+        with:
+          calendar: rest.calendar
+          eventUid: rest.eventUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: calunifiedcalendarscontrollerupdatecalendarevent
+        description: Update meeting details in calendar
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerupdatecalendarevent
+        with:
+          calendar: rest.calendar
+          eventUid: rest.eventUid
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/events
+      name: v2-calendars-calendar-events
+      description: REST surface for v2-calendars-calendar-events.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollerlistcalendarevents
+        description: List calendar events
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerlistcalendarevents
+        with:
+          calendar: rest.calendar
+          from: rest.from
+          to: rest.to
+          timeZone: rest.timeZone
+          calendarId: rest.calendarId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: calunifiedcalendarscontrollercreatecalendarevent
+        description: Create a calendar event
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollercreatecalendarevent
+        with:
+          calendar: rest.calendar
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/events/{eventuid}
+      name: v2-calendars-calendar-events-eventuid
+      description: REST surface for v2-calendars-calendar-events-eventUid.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollergetcalendareventdetails
+        description: Get meeting details from calendar
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetcalendareventdetails
+        with:
+          calendar: rest.calendar
+          eventUid: rest.eventUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: calunifiedcalendarscontrollerupdatecalendarevent
+        description: Update meeting details in calendar
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerupdatecalendarevent
+        with:
+          calendar: rest.calendar
+          eventUid: rest.eventUid
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: calunifiedcalendarscontrollerdeletecalendarevent
+        description: Delete a calendar event
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerdeletecalendarevent
+        with:
+          calendar: rest.calendar
+          eventUid: rest.eventUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/calendars/{calendar}/freebusy
+      name: v2-calendars-calendar-freebusy
+      description: REST surface for v2-calendars-calendar-freebusy.
+      operations:
+      - method: GET
+        name: calunifiedcalendarscontrollergetfreebusy
+        description: Get free/busy times
+        call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetfreebusy
+        with:
+          calendar: rest.calendar
+          from: rest.from
+          to: rest.to
+          timeZone: rest.timeZone
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-cal-unified-calendars-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Cal Unified Calendars. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-calendar-connections
+      description: List calendar connections
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerlistconnections
+      with:
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-events-connection
+      description: List events for a connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerlistconnectionevents
+      with:
+        connectionId: tools.connectionId
+        from: tools.from
+        to: tools.to
+        timeZone: tools.timeZone
+        calendarId: tools.calendarId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-event-connection
+      description: Create event on a connection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollercreateconnectionevent
+      with:
+        connectionId: tools.connectionId
+        calendarId: tools.calendarId
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-event-connection
+      description: Get event for a connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetconnectionevent
+      with:
+        connectionId: tools.connectionId
+        eventId: tools.eventId
+        calendarId: tools.calendarId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-event-connection
+      description: Update event for a connection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerupdateconnectionevent
+      with:
+        connectionId: tools.connectionId
+        eventId: tools.eventId
+        calendarId: tools.calendarId
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-event-connection
+      description: Delete event for a connection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerdeleteconnectionevent
+      with:
+        connectionId: tools.connectionId
+        eventId: tools.eventId
+        calendarId: tools.calendarId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-free-busy-connection
+      description: Get free/busy for a connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetconnectionfreebusy
+      with:
+        connectionId: tools.connectionId
+        from: tools.from
+        to: tools.to
+        timeZone: tools.timeZone
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-meeting-details-calendar
+      description: Get meeting details from calendar
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetcalendareventdetails
+      with:
+        calendar: tools.calendar
+        eventUid: tools.eventUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-meeting-details-calendar
+      description: Update meeting details in calendar
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerupdatecalendarevent
+      with:
+        calendar: tools.calendar
+        eventUid: tools.eventUid
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-calendar-events
+      description: List calendar events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerlistcalendarevents
+      with:
+        calendar: tools.calendar
+        from: tools.from
+        to: tools.to
+        timeZone: tools.timeZone
+        calendarId: tools.calendarId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-calendar-event
+      description: Create a calendar event
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollercreatecalendarevent
+      with:
+        calendar: tools.calendar
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-meeting-details-calendar-2
+      description: Get meeting details from calendar
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetcalendareventdetails
+      with:
+        calendar: tools.calendar
+        eventUid: tools.eventUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-meeting-details-calendar-2
+      description: Update meeting details in calendar
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerupdatecalendarevent
+      with:
+        calendar: tools.calendar
+        eventUid: tools.eventUid
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-calendar-event
+      description: Delete a calendar event
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollerdeletecalendarevent
+      with:
+        calendar: tools.calendar
+        eventUid: tools.eventUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-free-busy-times
+      description: Get free/busy times
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-cal-unified-calendars.calunifiedcalendarscontrollergetfreebusy
+      with:
+        calendar: tools.calendar
+        from: tools.from
+        to: tools.to
+        timeZone: tools.timeZone
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.

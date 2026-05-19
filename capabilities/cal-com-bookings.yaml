@@ -1,0 +1,1205 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Bookings
+  description: 'Cal.diy API v2 — Bookings. 17 operations. Lead operation: Create a booking. Self-contained Naftiko capability
+    covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Bookings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-bookings
+    baseUri: ''
+    description: Cal.diy API v2 — Bookings business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-bookings
+      path: /v2/bookings
+      operations:
+      - name: bookingscontroller20240813createbooking
+        method: POST
+        description: Create a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: For platform customers - OAuth client secret key
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bookingscontroller20240813getbookings
+        method: GET
+        description: Get all bookings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: status
+          in: query
+          type: array
+          description: Filter bookings by status. If you want to filter by multiple statuses, separate them with a comma.
+        - name: attendeeEmail
+          in: query
+          type: string
+          description: Filter bookings by the attendee's email address.
+        - name: attendeeName
+          in: query
+          type: string
+          description: Filter bookings by the attendee's name.
+        - name: bookingUid
+          in: query
+          type: string
+          description: Filter bookings by the booking Uid.
+        - name: eventTypeIds
+          in: query
+          type: string
+          description: Filter bookings by event type ids belonging to the user. Event type ids must be separated by a comma.
+        - name: eventTypeId
+          in: query
+          type: string
+          description: Filter bookings by event type id belonging to the user.
+        - name: teamsIds
+          in: query
+          type: string
+          description: Filter bookings by team ids that user is part of. Team ids must be separated by a comma.
+        - name: teamId
+          in: query
+          type: string
+          description: Filter bookings by team id that user is part of
+        - name: afterStart
+          in: query
+          type: string
+          description: Filter bookings with start after this date string.
+        - name: beforeEnd
+          in: query
+          type: string
+          description: Filter bookings with end before this date string.
+        - name: afterCreatedAt
+          in: query
+          type: string
+          description: Filter bookings that have been created after this date string.
+        - name: beforeCreatedAt
+          in: query
+          type: string
+          description: Filter bookings that have been created before this date string.
+        - name: afterUpdatedAt
+          in: query
+          type: string
+          description: Filter bookings that have been updated after this date string.
+        - name: beforeUpdatedAt
+          in: query
+          type: string
+          description: Filter bookings that have been updated before this date string.
+        - name: sortStart
+          in: query
+          type: string
+          description: Sort results by their start time in ascending or descending order.
+        - name: sortEnd
+          in: query
+          type: string
+          description: Sort results by their end time in ascending or descending order.
+        - name: sortCreated
+          in: query
+          type: string
+          description: Sort results by their creation time (when booking was made) in ascending or descending order.
+        - name: sortUpdatedAt
+          in: query
+          type: string
+          description: Sort results by their updated time (for example when booking status changes) in ascending or descending
+            order.
+        - name: take
+          in: query
+          type: number
+          description: The number of items to return
+        - name: skip
+          in: query
+          type: number
+          description: The number of items to skip
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-by-seat-seatUid
+      path: /v2/bookings/by-seat/{seatUid}
+      operations:
+      - name: bookingscontroller20240813getbookingbyseatuid
+        method: GET
+        description: Get a booking by seat UID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: seatUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: For platform customers - OAuth client secret key
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+    - name: v2-bookings-bookingUid
+      path: /v2/bookings/{bookingUid}
+      operations:
+      - name: bookingscontroller20240813getbooking
+        method: GET
+        description: Get a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: For platform customers - OAuth client secret key
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+    - name: v2-bookings-bookingUid-calendar-links
+      path: /v2/bookings/{bookingUid}/calendar-links
+      operations:
+      - name: bookingscontroller20240813getcalendarlinks
+        method: GET
+        description: Get 'Add to Calendar' links for a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-bookingUid-cancel
+      path: /v2/bookings/{bookingUid}/cancel
+      operations:
+      - name: bookingscontroller20240813cancelbooking
+        method: POST
+        description: Cancel a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: For platform customers - OAuth client secret key
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-bookings-bookingUid-conferencing-sessions
+      path: /v2/bookings/{bookingUid}/conferencing-sessions
+      operations:
+      - name: bookingscontroller20240813getvideosessions
+        method: GET
+        description: Get Video Meeting Sessions. Only supported for Cal Video
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-bookingUid-confirm
+      path: /v2/bookings/{bookingUid}/confirm
+      operations:
+      - name: bookingscontroller20240813confirmbooking
+        method: POST
+        description: Confirm a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-bookingUid-decline
+      path: /v2/bookings/{bookingUid}/decline
+      operations:
+      - name: bookingscontroller20240813declinebooking
+        method: POST
+        description: Decline a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-bookings-bookingUid-location
+      path: /v2/bookings/{bookingUid}/location
+      operations:
+      - name: bookinglocationcontroller20240813updatebookinglocation
+        method: PATCH
+        description: Update booking location for an existing booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. This header is required as this endpoint does not exist in older API versions.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-bookings-bookingUid-mark-absent
+      path: /v2/bookings/{bookingUid}/mark-absent
+      operations:
+      - name: bookingscontroller20240813marknoshow
+        method: POST
+        description: Mark a booking absence
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-bookings-bookingUid-reassign
+      path: /v2/bookings/{bookingUid}/reassign
+      operations:
+      - name: bookingscontroller20240813reassignbooking
+        method: POST
+        description: Reassign a booking to auto-selected host
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-bookingUid-reassign-userId
+      path: /v2/bookings/{bookingUid}/reassign/{userId}
+      operations:
+      - name: bookingscontroller20240813reassignbookingtouser
+        method: POST
+        description: Reassign a booking to a specific host
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: userId
+          in: path
+          type: number
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-bookings-bookingUid-recordings
+      path: /v2/bookings/{bookingUid}/recordings
+      operations:
+      - name: bookingscontroller20240813getbookingrecordings
+        method: GET
+        description: Get all the recordings for the booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-bookingUid-references
+      path: /v2/bookings/{bookingUid}/references
+      operations:
+      - name: bookingscontroller20240813getbookingreferences
+        method: GET
+        description: Get booking references
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: type
+          in: query
+          type: string
+          description: Filter booking references by type
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-bookings-bookingUid-reschedule
+      path: /v2/bookings/{bookingUid}/reschedule
+      operations:
+      - name: bookingscontroller20240813reschedulebooking
+        method: POST
+        description: Reschedule a booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: For platform customers - OAuth client secret key
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-bookings-bookingUid-transcripts
+      path: /v2/bookings/{bookingUid}/transcripts
+      operations:
+      - name: bookingscontroller20240813getbookingtranscripts
+        method: GET
+        description: Get Cal Video real time transcript download links for the booking
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: bookingUid
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-bookings-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Bookings. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/bookings
+      name: v2-bookings
+      description: REST surface for v2-bookings.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813createbooking
+        description: Create a booking
+        call: cal-com-bookings.bookingscontroller20240813createbooking
+        with:
+          cal-api-version: rest.cal-api-version
+          Authorization: rest.Authorization
+          x-cal-secret-key: rest.x-cal-secret-key
+          x-cal-client-id: rest.x-cal-client-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: bookingscontroller20240813getbookings
+        description: Get all bookings
+        call: cal-com-bookings.bookingscontroller20240813getbookings
+        with:
+          cal-api-version: rest.cal-api-version
+          status: rest.status
+          attendeeEmail: rest.attendeeEmail
+          attendeeName: rest.attendeeName
+          bookingUid: rest.bookingUid
+          eventTypeIds: rest.eventTypeIds
+          eventTypeId: rest.eventTypeId
+          teamsIds: rest.teamsIds
+          teamId: rest.teamId
+          afterStart: rest.afterStart
+          beforeEnd: rest.beforeEnd
+          afterCreatedAt: rest.afterCreatedAt
+          beforeCreatedAt: rest.beforeCreatedAt
+          afterUpdatedAt: rest.afterUpdatedAt
+          beforeUpdatedAt: rest.beforeUpdatedAt
+          sortStart: rest.sortStart
+          sortEnd: rest.sortEnd
+          sortCreated: rest.sortCreated
+          sortUpdatedAt: rest.sortUpdatedAt
+          take: rest.take
+          skip: rest.skip
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/by-seat/{seatuid}
+      name: v2-bookings-by-seat-seatuid
+      description: REST surface for v2-bookings-by-seat-seatUid.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getbookingbyseatuid
+        description: Get a booking by seat UID
+        call: cal-com-bookings.bookingscontroller20240813getbookingbyseatuid
+        with:
+          cal-api-version: rest.cal-api-version
+          seatUid: rest.seatUid
+          Authorization: rest.Authorization
+          x-cal-secret-key: rest.x-cal-secret-key
+          x-cal-client-id: rest.x-cal-client-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}
+      name: v2-bookings-bookinguid
+      description: REST surface for v2-bookings-bookingUid.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getbooking
+        description: Get a booking
+        call: cal-com-bookings.bookingscontroller20240813getbooking
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          x-cal-secret-key: rest.x-cal-secret-key
+          x-cal-client-id: rest.x-cal-client-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/calendar-links
+      name: v2-bookings-bookinguid-calendar-links
+      description: REST surface for v2-bookings-bookingUid-calendar-links.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getcalendarlinks
+        description: Get 'Add to Calendar' links for a booking
+        call: cal-com-bookings.bookingscontroller20240813getcalendarlinks
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/cancel
+      name: v2-bookings-bookinguid-cancel
+      description: REST surface for v2-bookings-bookingUid-cancel.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813cancelbooking
+        description: Cancel a booking
+        call: cal-com-bookings.bookingscontroller20240813cancelbooking
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          x-cal-secret-key: rest.x-cal-secret-key
+          x-cal-client-id: rest.x-cal-client-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/conferencing-sessions
+      name: v2-bookings-bookinguid-conferencing-sessions
+      description: REST surface for v2-bookings-bookingUid-conferencing-sessions.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getvideosessions
+        description: Get Video Meeting Sessions. Only supported for Cal Video
+        call: cal-com-bookings.bookingscontroller20240813getvideosessions
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/confirm
+      name: v2-bookings-bookinguid-confirm
+      description: REST surface for v2-bookings-bookingUid-confirm.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813confirmbooking
+        description: Confirm a booking
+        call: cal-com-bookings.bookingscontroller20240813confirmbooking
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/decline
+      name: v2-bookings-bookinguid-decline
+      description: REST surface for v2-bookings-bookingUid-decline.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813declinebooking
+        description: Decline a booking
+        call: cal-com-bookings.bookingscontroller20240813declinebooking
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/location
+      name: v2-bookings-bookinguid-location
+      description: REST surface for v2-bookings-bookingUid-location.
+      operations:
+      - method: PATCH
+        name: bookinglocationcontroller20240813updatebookinglocation
+        description: Update booking location for an existing booking
+        call: cal-com-bookings.bookinglocationcontroller20240813updatebookinglocation
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/mark-absent
+      name: v2-bookings-bookinguid-mark-absent
+      description: REST surface for v2-bookings-bookingUid-mark-absent.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813marknoshow
+        description: Mark a booking absence
+        call: cal-com-bookings.bookingscontroller20240813marknoshow
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/reassign
+      name: v2-bookings-bookinguid-reassign
+      description: REST surface for v2-bookings-bookingUid-reassign.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813reassignbooking
+        description: Reassign a booking to auto-selected host
+        call: cal-com-bookings.bookingscontroller20240813reassignbooking
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/reassign/{userid}
+      name: v2-bookings-bookinguid-reassign-userid
+      description: REST surface for v2-bookings-bookingUid-reassign-userId.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813reassignbookingtouser
+        description: Reassign a booking to a specific host
+        call: cal-com-bookings.bookingscontroller20240813reassignbookingtouser
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          userId: rest.userId
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/recordings
+      name: v2-bookings-bookinguid-recordings
+      description: REST surface for v2-bookings-bookingUid-recordings.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getbookingrecordings
+        description: Get all the recordings for the booking
+        call: cal-com-bookings.bookingscontroller20240813getbookingrecordings
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/references
+      name: v2-bookings-bookinguid-references
+      description: REST surface for v2-bookings-bookingUid-references.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getbookingreferences
+        description: Get booking references
+        call: cal-com-bookings.bookingscontroller20240813getbookingreferences
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          type: rest.type
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/reschedule
+      name: v2-bookings-bookinguid-reschedule
+      description: REST surface for v2-bookings-bookingUid-reschedule.
+      operations:
+      - method: POST
+        name: bookingscontroller20240813reschedulebooking
+        description: Reschedule a booking
+        call: cal-com-bookings.bookingscontroller20240813reschedulebooking
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+          x-cal-secret-key: rest.x-cal-secret-key
+          x-cal-client-id: rest.x-cal-client-id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/bookings/{bookinguid}/transcripts
+      name: v2-bookings-bookinguid-transcripts
+      description: REST surface for v2-bookings-bookingUid-transcripts.
+      operations:
+      - method: GET
+        name: bookingscontroller20240813getbookingtranscripts
+        description: Get Cal Video real time transcript download links for the booking
+        call: cal-com-bookings.bookingscontroller20240813getbookingtranscripts
+        with:
+          cal-api-version: rest.cal-api-version
+          bookingUid: rest.bookingUid
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-bookings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Bookings. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-booking
+      description: Create a booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813createbooking
+      with:
+        cal-api-version: tools.cal-api-version
+        Authorization: tools.Authorization
+        x-cal-secret-key: tools.x-cal-secret-key
+        x-cal-client-id: tools.x-cal-client-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-bookings
+      description: Get all bookings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getbookings
+      with:
+        cal-api-version: tools.cal-api-version
+        status: tools.status
+        attendeeEmail: tools.attendeeEmail
+        attendeeName: tools.attendeeName
+        bookingUid: tools.bookingUid
+        eventTypeIds: tools.eventTypeIds
+        eventTypeId: tools.eventTypeId
+        teamsIds: tools.teamsIds
+        teamId: tools.teamId
+        afterStart: tools.afterStart
+        beforeEnd: tools.beforeEnd
+        afterCreatedAt: tools.afterCreatedAt
+        beforeCreatedAt: tools.beforeCreatedAt
+        afterUpdatedAt: tools.afterUpdatedAt
+        beforeUpdatedAt: tools.beforeUpdatedAt
+        sortStart: tools.sortStart
+        sortEnd: tools.sortEnd
+        sortCreated: tools.sortCreated
+        sortUpdatedAt: tools.sortUpdatedAt
+        take: tools.take
+        skip: tools.skip
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-booking-seat-uid
+      description: Get a booking by seat UID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getbookingbyseatuid
+      with:
+        cal-api-version: tools.cal-api-version
+        seatUid: tools.seatUid
+        Authorization: tools.Authorization
+        x-cal-secret-key: tools.x-cal-secret-key
+        x-cal-client-id: tools.x-cal-client-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-booking
+      description: Get a booking
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getbooking
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        x-cal-secret-key: tools.x-cal-secret-key
+        x-cal-client-id: tools.x-cal-client-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-add-calendar-links-booking
+      description: Get 'Add to Calendar' links for a booking
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getcalendarlinks
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-booking
+      description: Cancel a booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813cancelbooking
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        x-cal-secret-key: tools.x-cal-secret-key
+        x-cal-client-id: tools.x-cal-client-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-video-meeting-sessions-only
+      description: Get Video Meeting Sessions. Only supported for Cal Video
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getvideosessions
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: confirm-booking
+      description: Confirm a booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813confirmbooking
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: decline-booking
+      description: Decline a booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813declinebooking
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-booking-location-existing-booking
+      description: Update booking location for an existing booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookinglocationcontroller20240813updatebookinglocation
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: mark-booking-absence
+      description: Mark a booking absence
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813marknoshow
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reassign-booking-auto-selected-host
+      description: Reassign a booking to auto-selected host
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813reassignbooking
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reassign-booking-specific-host
+      description: Reassign a booking to a specific host
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813reassignbookingtouser
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        userId: tools.userId
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-recordings-booking
+      description: Get all the recordings for the booking
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getbookingrecordings
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-booking-references
+      description: Get booking references
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getbookingreferences
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        type: tools.type
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reschedule-booking
+      description: Reschedule a booking
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-bookings.bookingscontroller20240813reschedulebooking
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+        x-cal-secret-key: tools.x-cal-secret-key
+        x-cal-client-id: tools.x-cal-client-id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-cal-video-real-time
+      description: Get Cal Video real time transcript download links for the booking
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-bookings.bookingscontroller20240813getbookingtranscripts
+      with:
+        cal-api-version: tools.cal-api-version
+        bookingUid: tools.bookingUid
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.

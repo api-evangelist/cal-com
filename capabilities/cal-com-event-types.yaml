@@ -1,0 +1,345 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Event Types
+  description: 'Cal.diy API v2 — Event Types. 5 operations. Lead operation: Create an event type. Self-contained Naftiko capability
+    covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Event Types
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-event-types
+    baseUri: ''
+    description: Cal.diy API v2 — Event Types business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-event-types
+      path: /v2/event-types
+      operations:
+      - name: eventtypescontroller20240614createeventtype
+        method: POST
+        description: Create an event type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: eventtypescontroller20240614geteventtypes
+        method: GET
+        description: Get all event types
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: username
+          in: query
+          type: string
+          description: The username of the user to get event types for. If only username provided will get all event types.
+        - name: eventSlug
+          in: query
+          type: string
+          description: Slug of event type to return. Notably, if eventSlug is provided then username must be provided too,
+            because multiple users can have event with same slug.
+        - name: usernames
+          in: query
+          type: string
+          description: Get dynamic event type for multiple usernames separated by comma. e.g `usernames=alice,bob`
+        - name: orgSlug
+          in: query
+          type: string
+          description: slug of the user's organization if he is in one, orgId is not required if using this parameter
+        - name: orgId
+          in: query
+          type: number
+          description: ID of the organization of the user you want the get the event-types of, orgSlug is not needed when
+            using this parameter
+        - name: sortCreatedAt
+          in: query
+          type: string
+          description: Sort event types by creation date. When not provided, no explicit ordering is applied.
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: For platform customers - OAuth client secret key
+        - name: x-cal-client-id
+          in: header
+          type: string
+          description: For platform customers - OAuth client ID
+    - name: v2-event-types-eventTypeId
+      path: /v2/event-types/{eventTypeId}
+      operations:
+      - name: eventtypescontroller20240614geteventtypebyid
+        method: GET
+        description: Get an event type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: eventTypeId
+          in: path
+          type: string
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+      - name: eventtypescontroller20240614updateeventtype
+        method: PATCH
+        description: Update an event type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: eventTypeId
+          in: path
+          type: number
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: eventtypescontroller20240614deleteeventtype
+        method: DELETE
+        description: Delete an event type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cal-api-version
+          in: header
+          type: string
+          description: Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.
+          required: true
+        - name: eventTypeId
+          in: path
+          type: number
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-event-types-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Event Types. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/event-types
+      name: v2-event-types
+      description: REST surface for v2-event-types.
+      operations:
+      - method: POST
+        name: eventtypescontroller20240614createeventtype
+        description: Create an event type
+        call: cal-com-event-types.eventtypescontroller20240614createeventtype
+        with:
+          cal-api-version: rest.cal-api-version
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: eventtypescontroller20240614geteventtypes
+        description: Get all event types
+        call: cal-com-event-types.eventtypescontroller20240614geteventtypes
+        with:
+          cal-api-version: rest.cal-api-version
+          username: rest.username
+          eventSlug: rest.eventSlug
+          usernames: rest.usernames
+          orgSlug: rest.orgSlug
+          orgId: rest.orgId
+          sortCreatedAt: rest.sortCreatedAt
+          Authorization: rest.Authorization
+          x-cal-secret-key: rest.x-cal-secret-key
+          x-cal-client-id: rest.x-cal-client-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/event-types/{eventtypeid}
+      name: v2-event-types-eventtypeid
+      description: REST surface for v2-event-types-eventTypeId.
+      operations:
+      - method: GET
+        name: eventtypescontroller20240614geteventtypebyid
+        description: Get an event type
+        call: cal-com-event-types.eventtypescontroller20240614geteventtypebyid
+        with:
+          cal-api-version: rest.cal-api-version
+          eventTypeId: rest.eventTypeId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: eventtypescontroller20240614updateeventtype
+        description: Update an event type
+        call: cal-com-event-types.eventtypescontroller20240614updateeventtype
+        with:
+          cal-api-version: rest.cal-api-version
+          eventTypeId: rest.eventTypeId
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: eventtypescontroller20240614deleteeventtype
+        description: Delete an event type
+        call: cal-com-event-types.eventtypescontroller20240614deleteeventtype
+        with:
+          cal-api-version: rest.cal-api-version
+          eventTypeId: rest.eventTypeId
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-event-types-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Event Types. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-event-type
+      description: Create an event type
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-event-types.eventtypescontroller20240614createeventtype
+      with:
+        cal-api-version: tools.cal-api-version
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-event-types
+      description: Get all event types
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-event-types.eventtypescontroller20240614geteventtypes
+      with:
+        cal-api-version: tools.cal-api-version
+        username: tools.username
+        eventSlug: tools.eventSlug
+        usernames: tools.usernames
+        orgSlug: tools.orgSlug
+        orgId: tools.orgId
+        sortCreatedAt: tools.sortCreatedAt
+        Authorization: tools.Authorization
+        x-cal-secret-key: tools.x-cal-secret-key
+        x-cal-client-id: tools.x-cal-client-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-event-type
+      description: Get an event type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-event-types.eventtypescontroller20240614geteventtypebyid
+      with:
+        cal-api-version: tools.cal-api-version
+        eventTypeId: tools.eventTypeId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-event-type
+      description: Update an event type
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-event-types.eventtypescontroller20240614updateeventtype
+      with:
+        cal-api-version: tools.cal-api-version
+        eventTypeId: tools.eventTypeId
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-event-type
+      description: Delete an event type
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-event-types.eventtypescontroller20240614deleteeventtype
+      with:
+        cal-api-version: tools.cal-api-version
+        eventTypeId: tools.eventTypeId
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.

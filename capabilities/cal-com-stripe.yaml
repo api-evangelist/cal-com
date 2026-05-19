@@ -1,0 +1,168 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Stripe
+  description: 'Cal.diy API v2 — Stripe. 3 operations. Lead operation: Check Stripe connection. Self-contained Naftiko capability
+    covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Stripe
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-stripe
+    baseUri: ''
+    description: Cal.diy API v2 — Stripe business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-stripe-check
+      path: /v2/stripe/check
+      operations:
+      - name: stripecontrollercheck
+        method: GET
+        description: Check Stripe connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-stripe-connect
+      path: /v2/stripe/connect
+      operations:
+      - name: stripecontrollerredirect
+        method: GET
+        description: Get Stripe connect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-stripe-save
+      path: /v2/stripe/save
+      operations:
+      - name: stripecontrollersave
+        method: GET
+        description: Save Stripe credentials
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: state
+          in: query
+          type: string
+          required: true
+        - name: code
+          in: query
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-stripe-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Stripe. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/stripe/check
+      name: v2-stripe-check
+      description: REST surface for v2-stripe-check.
+      operations:
+      - method: GET
+        name: stripecontrollercheck
+        description: Check Stripe connection
+        call: cal-com-stripe.stripecontrollercheck
+        with:
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/stripe/connect
+      name: v2-stripe-connect
+      description: REST surface for v2-stripe-connect.
+      operations:
+      - method: GET
+        name: stripecontrollerredirect
+        description: Get Stripe connect URL
+        call: cal-com-stripe.stripecontrollerredirect
+        with:
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/stripe/save
+      name: v2-stripe-save
+      description: REST surface for v2-stripe-save.
+      operations:
+      - method: GET
+        name: stripecontrollersave
+        description: Save Stripe credentials
+        call: cal-com-stripe.stripecontrollersave
+        with:
+          state: rest.state
+          code: rest.code
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-stripe-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Stripe. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: check-stripe-connection
+      description: Check Stripe connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-stripe.stripecontrollercheck
+      with:
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-stripe-connect-url
+      description: Get Stripe connect URL
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-stripe.stripecontrollerredirect
+      with:
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: save-stripe-credentials
+      description: Save Stripe credentials
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-stripe.stripecontrollersave
+      with:
+        state: tools.state
+        code: tools.code
+      outputParameters:
+      - type: object
+        mapping: $.

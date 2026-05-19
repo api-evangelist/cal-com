@@ -1,0 +1,443 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Verified Resources
+  description: 'Cal.diy API v2 — Verified Resources. 8 operations. Lead operation: Get list of verified emails. Self-contained
+    Naftiko capability covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Verified Resources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-verified-resources
+    baseUri: ''
+    description: Cal.diy API v2 — Verified Resources business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-verified-resources-emails
+      path: /v2/verified-resources/emails
+      operations:
+      - name: userverifiedresourcescontrollergetverifiedemails
+        method: GET
+        description: Get list of verified emails
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: take
+          in: query
+          type: number
+          description: Maximum number of items to return
+        - name: skip
+          in: query
+          type: number
+          description: Number of items to skip
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-verified-resources-emails-verification-code-request
+      path: /v2/verified-resources/emails/verification-code/request
+      operations:
+      - name: userverifiedresourcescontrollerrequestemailverificationcode
+        method: POST
+        description: Request email verification code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-verified-resources-emails-verification-code-verify
+      path: /v2/verified-resources/emails/verification-code/verify
+      operations:
+      - name: userverifiedresourcescontrollerverifyemail
+        method: POST
+        description: Verify an email
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-verified-resources-emails-id
+      path: /v2/verified-resources/emails/{id}
+      operations:
+      - name: userverifiedresourcescontrollergetverifiedemailbyid
+        method: GET
+        description: Get verified email by id
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: number
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-verified-resources-phones
+      path: /v2/verified-resources/phones
+      operations:
+      - name: userverifiedresourcescontrollergetverifiedphonenumbers
+        method: GET
+        description: Get list of verified phone numbers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: take
+          in: query
+          type: number
+          description: Maximum number of items to return
+        - name: skip
+          in: query
+          type: number
+          description: Number of items to skip
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+    - name: v2-verified-resources-phones-verification-code-request
+      path: /v2/verified-resources/phones/verification-code/request
+      operations:
+      - name: userverifiedresourcescontrollerrequestphoneverificationcode
+        method: POST
+        description: Request phone number verification code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-verified-resources-phones-verification-code-verify
+      path: /v2/verified-resources/phones/verification-code/verify
+      operations:
+      - name: userverifiedresourcescontrollerverifyphonenumber
+        method: POST
+        description: Verify a phone number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-verified-resources-phones-id
+      path: /v2/verified-resources/phones/{id}
+      operations:
+      - name: userverifiedresourcescontrollergetverifiedphonebyid
+        method: GET
+        description: Get verified phone number by id
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: number
+          required: true
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access
+            token
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-verified-resources-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Verified Resources. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/verified-resources/emails
+      name: v2-verified-resources-emails
+      description: REST surface for v2-verified-resources-emails.
+      operations:
+      - method: GET
+        name: userverifiedresourcescontrollergetverifiedemails
+        description: Get list of verified emails
+        call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedemails
+        with:
+          take: rest.take
+          skip: rest.skip
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/emails/verification-code/request
+      name: v2-verified-resources-emails-verification-code-request
+      description: REST surface for v2-verified-resources-emails-verification-code-request.
+      operations:
+      - method: POST
+        name: userverifiedresourcescontrollerrequestemailverificationcode
+        description: Request email verification code
+        call: cal-com-verified-resources.userverifiedresourcescontrollerrequestemailverificationcode
+        with:
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/emails/verification-code/verify
+      name: v2-verified-resources-emails-verification-code-verify
+      description: REST surface for v2-verified-resources-emails-verification-code-verify.
+      operations:
+      - method: POST
+        name: userverifiedresourcescontrollerverifyemail
+        description: Verify an email
+        call: cal-com-verified-resources.userverifiedresourcescontrollerverifyemail
+        with:
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/emails/{id}
+      name: v2-verified-resources-emails-id
+      description: REST surface for v2-verified-resources-emails-id.
+      operations:
+      - method: GET
+        name: userverifiedresourcescontrollergetverifiedemailbyid
+        description: Get verified email by id
+        call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedemailbyid
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/phones
+      name: v2-verified-resources-phones
+      description: REST surface for v2-verified-resources-phones.
+      operations:
+      - method: GET
+        name: userverifiedresourcescontrollergetverifiedphonenumbers
+        description: Get list of verified phone numbers
+        call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedphonenumbers
+        with:
+          take: rest.take
+          skip: rest.skip
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/phones/verification-code/request
+      name: v2-verified-resources-phones-verification-code-request
+      description: REST surface for v2-verified-resources-phones-verification-code-request.
+      operations:
+      - method: POST
+        name: userverifiedresourcescontrollerrequestphoneverificationcode
+        description: Request phone number verification code
+        call: cal-com-verified-resources.userverifiedresourcescontrollerrequestphoneverificationcode
+        with:
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/phones/verification-code/verify
+      name: v2-verified-resources-phones-verification-code-verify
+      description: REST surface for v2-verified-resources-phones-verification-code-verify.
+      operations:
+      - method: POST
+        name: userverifiedresourcescontrollerverifyphonenumber
+        description: Verify a phone number
+        call: cal-com-verified-resources.userverifiedresourcescontrollerverifyphonenumber
+        with:
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/verified-resources/phones/{id}
+      name: v2-verified-resources-phones-id
+      description: REST surface for v2-verified-resources-phones-id.
+      operations:
+      - method: GET
+        name: userverifiedresourcescontrollergetverifiedphonebyid
+        description: Get verified phone number by id
+        call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedphonebyid
+        with:
+          id: rest.id
+          Authorization: rest.Authorization
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-verified-resources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Verified Resources. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-list-verified-emails
+      description: Get list of verified emails
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedemails
+      with:
+        take: tools.take
+        skip: tools.skip
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: request-email-verification-code
+      description: Request email verification code
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-verified-resources.userverifiedresourcescontrollerrequestemailverificationcode
+      with:
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: verify-email
+      description: Verify an email
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-verified-resources.userverifiedresourcescontrollerverifyemail
+      with:
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-verified-email-id
+      description: Get verified email by id
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedemailbyid
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-verified-phone-numbers
+      description: Get list of verified phone numbers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedphonenumbers
+      with:
+        take: tools.take
+        skip: tools.skip
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: request-phone-number-verification-code
+      description: Request phone number verification code
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-verified-resources.userverifiedresourcescontrollerrequestphoneverificationcode
+      with:
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: verify-phone-number
+      description: Verify a phone number
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-verified-resources.userverifiedresourcescontrollerverifyphonenumber
+      with:
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-verified-phone-number-id
+      description: Get verified phone number by id
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-verified-resources.userverifiedresourcescontrollergetverifiedphonebyid
+      with:
+        id: tools.id
+        Authorization: tools.Authorization
+      outputParameters:
+      - type: object
+        mapping: $.

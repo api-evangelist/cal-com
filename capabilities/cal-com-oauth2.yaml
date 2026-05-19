@@ -1,0 +1,118 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — OAuth2
+  description: 'Cal.diy API v2 — OAuth2. 2 operations. Lead operation: Get OAuth2 client. Self-contained Naftiko capability
+    covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - OAuth2
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-oauth2
+    baseUri: ''
+    description: Cal.diy API v2 — OAuth2 business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-auth-oauth2-clients-clientId
+      path: /v2/auth/oauth2/clients/{clientId}
+      operations:
+      - name: oauth2controllergetclient
+        method: GET
+        description: Get OAuth2 client
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: clientId
+          in: path
+          type: string
+          required: true
+    - name: v2-auth-oauth2-token
+      path: /v2/auth/oauth2/token
+      operations:
+      - name: oauth2controllertoken
+        method: POST
+        description: Exchange authorization code or refresh token for tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-oauth2-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — OAuth2. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/auth/oauth2/clients/{clientid}
+      name: v2-auth-oauth2-clients-clientid
+      description: REST surface for v2-auth-oauth2-clients-clientId.
+      operations:
+      - method: GET
+        name: oauth2controllergetclient
+        description: Get OAuth2 client
+        call: cal-com-oauth2.oauth2controllergetclient
+        with:
+          clientId: rest.clientId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/auth/oauth2/token
+      name: v2-auth-oauth2-token
+      description: REST surface for v2-auth-oauth2-token.
+      operations:
+      - method: POST
+        name: oauth2controllertoken
+        description: Exchange authorization code or refresh token for tokens
+        call: cal-com-oauth2.oauth2controllertoken
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-oauth2-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — OAuth2. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-oauth2-client
+      description: Get OAuth2 client
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-oauth2.oauth2controllergetclient
+      with:
+        clientId: tools.clientId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: exchange-authorization-code-refresh-token
+      description: Exchange authorization code or refresh token for tokens
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-oauth2.oauth2controllertoken
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

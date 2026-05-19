@@ -1,0 +1,84 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Cal.diy API v2 — Api Keys
+  description: 'Cal.diy API v2 — Api Keys. 1 operations. Lead operation: Refresh API Key. Self-contained Naftiko capability
+    covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - Api Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-api-keys
+    baseUri: ''
+    description: Cal.diy API v2 — Api Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-api-keys-refresh
+      path: /v2/api-keys/refresh
+      operations:
+      - name: apikeyscontrollerrefresh
+        method: POST
+        description: Refresh API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Authorization
+          in: header
+          type: string
+          description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-api-keys-rest
+    port: 8080
+    description: REST adapter for Cal.diy API v2 — Api Keys. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/api-keys/refresh
+      name: v2-api-keys-refresh
+      description: REST surface for v2-api-keys-refresh.
+      operations:
+      - method: POST
+        name: apikeyscontrollerrefresh
+        description: Refresh API Key
+        call: cal-com-api-keys.apikeyscontrollerrefresh
+        with:
+          Authorization: rest.Authorization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-api-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Cal.diy API v2 — Api Keys. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: refresh-api-key
+      description: Refresh API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-api-keys.apikeyscontrollerrefresh
+      with:
+        Authorization: tools.Authorization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

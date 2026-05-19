@@ -1,0 +1,339 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: 'Cal.diy API v2 — Deprecated: Platform / Webhooks'
+  description: 'Cal.diy API v2 — Deprecated: Platform / Webhooks. 6 operations. Lead operation: Create a webhook. Self-contained
+    Naftiko capability covering one Cal Com business surface.'
+  tags:
+  - Cal Com
+  - 'Deprecated: Platform / Webhooks'
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    CAL_COM_API_KEY: CAL_COM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: cal-com-deprecated-platform-webhooks
+    baseUri: ''
+    description: 'Cal.diy API v2 — Deprecated: Platform / Webhooks business capability. Self-contained, no shared references.'
+    resources:
+    - name: v2-oauth-clients-clientId-webhooks
+      path: /v2/oauth-clients/{clientId}/webhooks
+      operations:
+      - name: oauthclientwebhookscontrollercreateoauthclientwebhook
+        method: POST
+        description: Create a webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: oauthclientwebhookscontrollergetoauthclientwebhooks
+        method: GET
+        description: Get all webhooks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: take
+          in: query
+          type: number
+          description: Maximum number of items to return
+        - name: skip
+          in: query
+          type: number
+          description: Number of items to skip
+      - name: oauthclientwebhookscontrollerdeletealloauthclientwebhooks
+        method: DELETE
+        description: Delete all webhooks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+    - name: v2-oauth-clients-clientId-webhooks-webhookId
+      path: /v2/oauth-clients/{clientId}/webhooks/{webhookId}
+      operations:
+      - name: oauthclientwebhookscontrollerupdateoauthclientwebhook
+        method: PATCH
+        description: Update a webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: webhookId
+          in: path
+          type: string
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: oauthclientwebhookscontrollergetoauthclientwebhook
+        method: GET
+        description: Get a webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: webhookId
+          in: path
+          type: string
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+      - name: oauthclientwebhookscontrollerdeleteoauthclientwebhook
+        method: DELETE
+        description: Delete a webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-cal-secret-key
+          in: header
+          type: string
+          description: OAuth client secret key
+          required: true
+        - name: webhookId
+          in: path
+          type: string
+          required: true
+        - name: clientId
+          in: path
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: cal-com-deprecated-platform-webhooks-rest
+    port: 8080
+    description: 'REST adapter for Cal.diy API v2 — Deprecated: Platform / Webhooks. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.'
+    resources:
+    - path: /v1/v2/oauth-clients/{clientid}/webhooks
+      name: v2-oauth-clients-clientid-webhooks
+      description: REST surface for v2-oauth-clients-clientId-webhooks.
+      operations:
+      - method: POST
+        name: oauthclientwebhookscontrollercreateoauthclientwebhook
+        description: Create a webhook
+        call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollercreateoauthclientwebhook
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: oauthclientwebhookscontrollergetoauthclientwebhooks
+        description: Get all webhooks
+        call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollergetoauthclientwebhooks
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+          take: rest.take
+          skip: rest.skip
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: oauthclientwebhookscontrollerdeletealloauthclientwebhooks
+        description: Delete all webhooks
+        call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollerdeletealloauthclientwebhooks
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          clientId: rest.clientId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/oauth-clients/{clientid}/webhooks/{webhookid}
+      name: v2-oauth-clients-clientid-webhooks-webhookid
+      description: REST surface for v2-oauth-clients-clientId-webhooks-webhookId.
+      operations:
+      - method: PATCH
+        name: oauthclientwebhookscontrollerupdateoauthclientwebhook
+        description: Update a webhook
+        call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollerupdateoauthclientwebhook
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          webhookId: rest.webhookId
+          clientId: rest.clientId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: oauthclientwebhookscontrollergetoauthclientwebhook
+        description: Get a webhook
+        call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollergetoauthclientwebhook
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          webhookId: rest.webhookId
+          clientId: rest.clientId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: oauthclientwebhookscontrollerdeleteoauthclientwebhook
+        description: Delete a webhook
+        call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollerdeleteoauthclientwebhook
+        with:
+          x-cal-secret-key: rest.x-cal-secret-key
+          webhookId: rest.webhookId
+          clientId: rest.clientId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: cal-com-deprecated-platform-webhooks-mcp
+    port: 9090
+    transport: http
+    description: 'MCP adapter for Cal.diy API v2 — Deprecated: Platform / Webhooks. One tool per consumed operation, routed
+      inline through this capability''s consumes block.'
+    tools:
+    - name: create-webhook
+      description: Create a webhook
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollercreateoauthclientwebhook
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-webhooks
+      description: Get all webhooks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollergetoauthclientwebhooks
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+        take: tools.take
+        skip: tools.skip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-all-webhooks
+      description: Delete all webhooks
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollerdeletealloauthclientwebhooks
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        clientId: tools.clientId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-webhook
+      description: Update a webhook
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollerupdateoauthclientwebhook
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        webhookId: tools.webhookId
+        clientId: tools.clientId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-webhook
+      description: Get a webhook
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollergetoauthclientwebhook
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        webhookId: tools.webhookId
+        clientId: tools.clientId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-webhook
+      description: Delete a webhook
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: cal-com-deprecated-platform-webhooks.oauthclientwebhookscontrollerdeleteoauthclientwebhook
+      with:
+        x-cal-secret-key: tools.x-cal-secret-key
+        webhookId: tools.webhookId
+        clientId: tools.clientId
+      outputParameters:
+      - type: object
+        mapping: $.
