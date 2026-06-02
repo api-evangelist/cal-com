@@ -1,0 +1,1222 @@
+asyncapi: '2.6.0'
+info:
+  title: Cal.com Webhooks
+  version: '2021-10-20'
+  description: |
+    AsyncAPI definition for Cal.com's webhook surface. Cal.com webhooks are
+    HTTP POST deliveries from Cal.com to a developer-defined `subscriberUrl`
+    registered via the Cal.com Webhooks API (`/v2/webhooks`).
+
+    Subscribers register a webhook with one or more `triggers` (event types).
+    Each delivery is a JSON document with a `triggerEvent` field, a
+    `createdAt` timestamp, and a `payload` object whose shape varies by
+    trigger. `MEETING_STARTED` and `MEETING_ENDED` deliver booking fields
+    flat at the root rather than nested under `payload`.
+
+    Payload signing is optional: when the webhook was created with a
+    `secret`, deliveries include an `X-Cal-Signature-256` header containing
+    an HMAC-SHA256 hex digest of the raw request body computed with the
+    secret. The webhook payload version is communicated via the
+    `x-cal-webhook-version` header (currently `2021-10-20`).
+
+    Sourced from https://cal.com/docs/api-reference/v2/webhooks and
+    https://cal.com/docs/core-features/webhooks. Fields that the Cal.com
+    documentation does not describe are not invented here.
+  contact:
+    name: Cal.com
+    url: https://cal.com/docs/core-features/webhooks
+  license:
+    name: AGPL-3.0
+    url: https://github.com/calcom/cal.com/blob/main/LICENSE
+  tags:
+    - name: Cal.com
+    - name: Webhooks
+    - name: Scheduling
+    - name: Bookings
+
+defaultContentType: application/json
+
+servers:
+  subscriber:
+    url: '{subscriberUrl}'
+    protocol: https
+    description: |
+      The HTTPS endpoint that the webhook subscriber registers with Cal.com
+      via `POST /v2/webhooks` (`subscriberUrl`). Cal.com delivers all events
+      this subscription opts into to this URL via HTTP POST with a JSON
+      body.
+    variables:
+      subscriberUrl:
+        description: Subscriber-controlled URL configured on the Cal.com webhook.
+        default: https://example.com/webhooks/cal-com
+
+channels:
+  BOOKING_CREATED:
+    description: A new booking has been scheduled on an event type.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking created
+      operationId: onBookingCreated
+      bindings:
+        http:
+          type: request
+          method: POST
+          bindingVersion: 0.3.0
+      message:
+        $ref: '#/components/messages/BookingCreated'
+
+  BOOKING_RESCHEDULED:
+    description: An existing booking has been rescheduled.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking rescheduled
+      operationId: onBookingRescheduled
+      message:
+        $ref: '#/components/messages/BookingRescheduled'
+
+  BOOKING_CANCELLED:
+    description: A booking has been cancelled by the organizer or attendee.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking cancelled
+      operationId: onBookingCancelled
+      message:
+        $ref: '#/components/messages/BookingCancelled'
+
+  BOOKING_REJECTED:
+    description: A booking that required confirmation was rejected by the organizer.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking rejected
+      operationId: onBookingRejected
+      message:
+        $ref: '#/components/messages/BookingRejected'
+
+  BOOKING_REQUESTED:
+    description: |
+      A booking has been requested on an event type that requires
+      confirmation. The booking is in PENDING state until accepted or
+      rejected.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking requested
+      operationId: onBookingRequested
+      message:
+        $ref: '#/components/messages/BookingRequested'
+
+  BOOKING_PAYMENT_INITIATED:
+    description: A booking that requires payment has been initiated; awaiting payment.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking payment initiated
+      operationId: onBookingPaymentInitiated
+      message:
+        $ref: '#/components/messages/BookingPaymentInitiated'
+
+  BOOKING_PAID:
+    description: Payment for a booking has been completed.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking paid
+      operationId: onBookingPaid
+      message:
+        $ref: '#/components/messages/BookingPaid'
+
+  BOOKING_NO_SHOW_UPDATED:
+    description: An attendee on a booking has been marked or unmarked as a no-show.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Booking no-show updated
+      operationId: onBookingNoShowUpdated
+      message:
+        $ref: '#/components/messages/BookingNoShowUpdated'
+
+  MEETING_STARTED:
+    description: |
+      A scheduled meeting's start time has been reached. Payload is flat at
+      the root (no nested `payload` wrapper). Custom payload templates do
+      not apply to this trigger.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Meeting started
+      operationId: onMeetingStarted
+      message:
+        $ref: '#/components/messages/MeetingStarted'
+
+  MEETING_ENDED:
+    description: |
+      A scheduled meeting's end time has been reached. Payload is flat at
+      the root (no nested `payload` wrapper). Custom payload templates do
+      not apply to this trigger.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Meeting ended
+      operationId: onMeetingEnded
+      message:
+        $ref: '#/components/messages/MeetingEnded'
+
+  RECORDING_READY:
+    description: A Cal Video meeting recording is ready for download.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Recording ready
+      operationId: onRecordingReady
+      message:
+        $ref: '#/components/messages/RecordingReady'
+
+  RECORDING_TRANSCRIPTION_GENERATED:
+    description: A transcription for a Cal Video recording has been generated.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Recording transcription generated
+      operationId: onRecordingTranscriptionGenerated
+      message:
+        $ref: '#/components/messages/RecordingTranscriptionGenerated'
+
+  INSTANT_MEETING:
+    description: An instant meeting has been created and is awaiting host acceptance.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Instant meeting
+      operationId: onInstantMeeting
+      message:
+        $ref: '#/components/messages/InstantMeeting'
+
+  INSTANT_MEETING_ACCEPTED:
+    description: A host has accepted an instant meeting; full booking details delivered.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Instant meeting accepted
+      operationId: onInstantMeetingAccepted
+      message:
+        $ref: '#/components/messages/InstantMeetingAccepted'
+
+  OOO_CREATED:
+    description: An out-of-office entry has been created for a user.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Out-of-office created
+      operationId: onOooCreated
+      message:
+        $ref: '#/components/messages/OooCreated'
+
+  FORM_SUBMITTED:
+    description: A Cal.com routing form has been submitted.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Form submitted
+      operationId: onFormSubmitted
+      message:
+        $ref: '#/components/messages/FormSubmitted'
+
+  FORM_SUBMITTED_NO_EVENT:
+    description: |
+      A routing form was submitted but no booking was created within
+      ~15 minutes of submission.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Form submitted, no event scheduled
+      operationId: onFormSubmittedNoEvent
+      message:
+        $ref: '#/components/messages/FormSubmittedNoEvent'
+
+  AFTER_HOSTS_CAL_VIDEO_NO_SHOW:
+    description: |
+      The host did not join a Cal Video meeting within the configured
+      grace period.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: After-hosts Cal Video no-show
+      operationId: onAfterHostsCalVideoNoShow
+      message:
+        $ref: '#/components/messages/AfterHostsCalVideoNoShow'
+
+  AFTER_GUESTS_CAL_VIDEO_NO_SHOW:
+    description: |
+      Guests did not join a Cal Video meeting within the configured grace
+      period.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: After-guests Cal Video no-show
+      operationId: onAfterGuestsCalVideoNoShow
+      message:
+        $ref: '#/components/messages/AfterGuestsCalVideoNoShow'
+
+  ROUTING_FORM_FALLBACK_HIT:
+    description: |
+      A routing form submission matched the configured fallback route
+      rather than a specific routing rule.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Routing form fallback hit
+      operationId: onRoutingFormFallbackHit
+      message:
+        $ref: '#/components/messages/RoutingFormFallbackHit'
+
+  DELEGATION_CREDENTIAL_ERROR:
+    description: |
+      A delegation credential error occurred (organization-wide calendar
+      delegation could not be exercised for a user).
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Delegation credential error
+      operationId: onDelegationCredentialError
+      message:
+        $ref: '#/components/messages/DelegationCredentialError'
+
+  WRONG_ASSIGNMENT_REPORT:
+    description: |
+      A booking was reported as routed to the wrong assignee on a routing
+      form.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: 0.3.0
+    subscribe:
+      summary: Wrong-assignment report
+      operationId: onWrongAssignmentReport
+      message:
+        $ref: '#/components/messages/WrongAssignmentReport'
+
+components:
+  messageTraits:
+    CalWebhookHeaders:
+      headers:
+        type: object
+        properties:
+          Content-Type:
+            type: string
+            const: application/json
+          X-Cal-Signature-256:
+            type: string
+            description: |
+              HMAC-SHA256 hex digest of the raw JSON request body, computed
+              with the webhook's configured `secret`. Present only when the
+              webhook was created with a secret. Recipients should
+              recompute the digest and compare in constant time.
+          x-cal-webhook-version:
+            type: string
+            description: |
+              Payload schema version negotiated when the webhook was
+              created. Cal.com currently documents version `2021-10-20`.
+            example: '2021-10-20'
+
+  messages:
+    BookingCreated:
+      name: BookingCreated
+      title: BOOKING_CREATED
+      summary: A booking was created.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_CREATED
+              payload:
+                $ref: '#/components/schemas/BookingPayload'
+
+    BookingRescheduled:
+      name: BookingRescheduled
+      title: BOOKING_RESCHEDULED
+      summary: A booking was rescheduled.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_RESCHEDULED
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - type: object
+                    properties:
+                      rescheduleId:
+                        type: integer
+                        description: Numeric ID of the prior booking.
+                      rescheduleUid:
+                        type: string
+                        description: UID of the prior booking.
+                      rescheduleStartTime:
+                        type: string
+                        format: date-time
+                        description: Original start time before the reschedule.
+                      rescheduleEndTime:
+                        type: string
+                        format: date-time
+                        description: Original end time before the reschedule.
+
+    BookingCancelled:
+      name: BookingCancelled
+      title: BOOKING_CANCELLED
+      summary: A booking was cancelled.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_CANCELLED
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - type: object
+                    properties:
+                      cancellationReason:
+                        type: string
+                        description: Reason supplied for the cancellation.
+
+    BookingRejected:
+      name: BookingRejected
+      title: BOOKING_REJECTED
+      summary: A booking request was rejected by the organizer.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_REJECTED
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - type: object
+                    properties:
+                      rejectionReason:
+                        type: string
+                        description: Reason supplied by the organizer.
+                      status:
+                        type: string
+                        const: REJECTED
+
+    BookingRequested:
+      name: BookingRequested
+      title: BOOKING_REQUESTED
+      summary: A booking that requires confirmation was requested.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_REQUESTED
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - type: object
+                    properties:
+                      requiresConfirmation:
+                        type: boolean
+                        const: true
+                      status:
+                        type: string
+                        const: PENDING
+                      oneTimePassword:
+                        type: string
+                        nullable: true
+                        description: Optional one-time password used for confirmation flows.
+
+    BookingPaymentInitiated:
+      name: BookingPaymentInitiated
+      title: BOOKING_PAYMENT_INITIATED
+      summary: Payment has been initiated for a booking.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_PAYMENT_INITIATED
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - $ref: '#/components/schemas/PaymentFields'
+
+    BookingPaid:
+      name: BookingPaid
+      title: BOOKING_PAID
+      summary: Payment for a booking has been completed.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_PAID
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - $ref: '#/components/schemas/PaymentFields'
+
+    BookingNoShowUpdated:
+      name: BookingNoShowUpdated
+      title: BOOKING_NO_SHOW_UPDATED
+      summary: An attendee no-show status was updated on a booking.
+      description: |
+        Compact payload distinct from full booking events. Carries only the
+        marked attendee(s) and booking identifiers.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: BOOKING_NO_SHOW_UPDATED
+              payload:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Human-readable summary, e.g. `email@domain.com marked as no-show`.
+                  attendees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                          format: email
+                        noShow:
+                          type: boolean
+                  bookingUid:
+                    type: string
+                  bookingId:
+                    type: integer
+
+    MeetingStarted:
+      name: MeetingStarted
+      title: MEETING_STARTED
+      summary: Scheduled meeting start time has been reached.
+      description: |
+        MEETING_STARTED delivers booking fields flat at the root next to
+        `triggerEvent` rather than nested under `payload`.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - type: object
+            properties:
+              triggerEvent:
+                type: string
+                const: MEETING_STARTED
+              createdAt:
+                type: string
+                format: date-time
+          - $ref: '#/components/schemas/BookingPayload'
+
+    MeetingEnded:
+      name: MeetingEnded
+      title: MEETING_ENDED
+      summary: Scheduled meeting end time has been reached.
+      description: |
+        MEETING_ENDED delivers booking fields flat at the root next to
+        `triggerEvent` rather than nested under `payload`.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - type: object
+            properties:
+              triggerEvent:
+                type: string
+                const: MEETING_ENDED
+              createdAt:
+                type: string
+                format: date-time
+          - $ref: '#/components/schemas/BookingPayload'
+
+    RecordingReady:
+      name: RecordingReady
+      title: RECORDING_READY
+      summary: Meeting recording is available for download.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: RECORDING_READY
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - type: object
+                    properties:
+                      downloadLink:
+                        type: string
+                        format: uri
+                        description: URL to download the meeting recording.
+
+    RecordingTranscriptionGenerated:
+      name: RecordingTranscriptionGenerated
+      title: RECORDING_TRANSCRIPTION_GENERATED
+      summary: A transcription has been generated for a recording.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: RECORDING_TRANSCRIPTION_GENERATED
+              payload:
+                allOf:
+                  - $ref: '#/components/schemas/BookingPayload'
+                  - type: object
+                    properties:
+                      downloadLinks:
+                        type: object
+                        description: |
+                          Object containing transcription file URLs by
+                          format and the corresponding recording URL.
+                        properties:
+                          transcription:
+                            type: object
+                            properties:
+                              json:
+                                type: string
+                                format: uri
+                              srt:
+                                type: string
+                                format: uri
+                              txt:
+                                type: string
+                                format: uri
+                              vtt:
+                                type: string
+                                format: uri
+                          recording:
+                            type: string
+                            format: uri
+
+    InstantMeeting:
+      name: InstantMeeting
+      title: INSTANT_MEETING
+      summary: An instant meeting has been requested.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: INSTANT_MEETING
+              payload:
+                type: object
+                properties:
+                  connectAndJoinUrl:
+                    type: string
+                    format: uri
+                    description: Authenticated URL the host follows to accept and join.
+                  eventTypeTitle:
+                    type: string
+                  eventTypeId:
+                    type: integer
+                  responses:
+                    $ref: '#/components/schemas/Responses'
+                  bookingId:
+                    type: integer
+                    nullable: true
+
+    InstantMeetingAccepted:
+      name: InstantMeetingAccepted
+      title: INSTANT_MEETING_ACCEPTED
+      summary: A host accepted an instant meeting.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: INSTANT_MEETING_ACCEPTED
+              payload:
+                $ref: '#/components/schemas/BookingPayload'
+
+    OooCreated:
+      name: OooCreated
+      title: OOO_CREATED
+      summary: An out-of-office entry was created.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: OOO_CREATED
+              payload:
+                type: object
+                properties:
+                  oooEntry:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      start:
+                        type: string
+                        format: date
+                      end:
+                        type: string
+                        format: date
+                      reason:
+                        type: object
+                        properties:
+                          emoji:
+                            type: string
+                          reason:
+                            type: string
+                      notes:
+                        type: string
+                        nullable: true
+                      user:
+                        $ref: '#/components/schemas/Person'
+                      toUser:
+                        description: Delegate user, if redirecting OOO bookings.
+                        nullable: true
+                        allOf:
+                          - $ref: '#/components/schemas/Person'
+
+    FormSubmitted:
+      name: FormSubmitted
+      title: FORM_SUBMITTED
+      summary: A routing form was submitted.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: FORM_SUBMITTED
+              payload:
+                $ref: '#/components/schemas/FormSubmissionPayload'
+
+    FormSubmittedNoEvent:
+      name: FormSubmittedNoEvent
+      title: FORM_SUBMITTED_NO_EVENT
+      summary: A routing form submission did not result in a booking.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: FORM_SUBMITTED_NO_EVENT
+              payload:
+                $ref: '#/components/schemas/FormSubmissionPayload'
+
+    AfterHostsCalVideoNoShow:
+      name: AfterHostsCalVideoNoShow
+      title: AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+      summary: Hosts did not join a Cal Video meeting within the grace period.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+              payload:
+                $ref: '#/components/schemas/CalVideoNoShowPayload'
+
+    AfterGuestsCalVideoNoShow:
+      name: AfterGuestsCalVideoNoShow
+      title: AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+      summary: Guests did not join a Cal Video meeting within the grace period.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+              payload:
+                $ref: '#/components/schemas/CalVideoNoShowPayload'
+
+    RoutingFormFallbackHit:
+      name: RoutingFormFallbackHit
+      title: ROUTING_FORM_FALLBACK_HIT
+      summary: A routing form submission was routed via the fallback.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: ROUTING_FORM_FALLBACK_HIT
+              payload:
+                $ref: '#/components/schemas/FormSubmissionPayload'
+
+    DelegationCredentialError:
+      name: DelegationCredentialError
+      title: DELEGATION_CREDENTIAL_ERROR
+      summary: A delegation credential error was detected.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: DELEGATION_CREDENTIAL_ERROR
+              payload:
+                type: object
+                description: |
+                  Cal.com documentation describes this trigger without a
+                  fully published payload schema. Subscribers should treat
+                  unknown fields permissively.
+                additionalProperties: true
+
+    WrongAssignmentReport:
+      name: WrongAssignmentReport
+      title: WRONG_ASSIGNMENT_REPORT
+      summary: A booking was reported as routed to the wrong assignee.
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/CalWebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/WebhookEnvelope'
+          - type: object
+            properties:
+              triggerEvent:
+                const: WRONG_ASSIGNMENT_REPORT
+              payload:
+                type: object
+                properties:
+                  booking:
+                    type: object
+                    description: Reference to the original booking.
+                    properties:
+                      uid:
+                        type: string
+                      id:
+                        type: integer
+                  report:
+                    type: object
+                    properties:
+                      reportedBy:
+                        $ref: '#/components/schemas/Person'
+                      reason:
+                        type: string
+                      assignedTo:
+                        $ref: '#/components/schemas/Person'
+                      shouldHaveBeenAssignedTo:
+                        $ref: '#/components/schemas/Person'
+                      notes:
+                        type: string
+                        nullable: true
+
+  schemas:
+    WebhookEnvelope:
+      type: object
+      description: |
+        Standard Cal.com webhook envelope (used by every trigger except
+        MEETING_STARTED and MEETING_ENDED, which deliver booking fields
+        flat at the root).
+      required:
+        - triggerEvent
+        - createdAt
+        - payload
+      properties:
+        triggerEvent:
+          type: string
+          description: Event name (e.g. BOOKING_CREATED).
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp at which the webhook was generated.
+        payload:
+          type: object
+          description: Event-specific payload (shape varies by trigger).
+
+    Person:
+      type: object
+      description: Organizer or attendee.
+      properties:
+        id:
+          type: integer
+          nullable: true
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+          nullable: true
+        timeZone:
+          type: string
+          example: America/New_York
+        language:
+          type: object
+          properties:
+            locale:
+              type: string
+              example: en
+        utcOffset:
+          type: integer
+          description: UTC offset in minutes.
+
+    Location:
+      oneOf:
+        - type: string
+          description: |
+            Free-form location string (e.g. `integrations:zoom`,
+            `integrations:daily`, `inPerson`, or a meeting URL).
+        - type: object
+          additionalProperties: true
+
+    DestinationCalendar:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: integer
+        integration:
+          type: string
+          example: google_calendar
+        externalId:
+          type: string
+        primaryEmail:
+          type: string
+          format: email
+          nullable: true
+        userId:
+          type: integer
+          nullable: true
+        eventTypeId:
+          type: integer
+          nullable: true
+        credentialId:
+          type: integer
+          nullable: true
+
+    Responses:
+      type: object
+      description: |
+        Booking form responses keyed by field slug. Each entry has a
+        human-readable label and the submitted value.
+      additionalProperties:
+        type: object
+        properties:
+          label:
+            type: string
+          value:
+            oneOf:
+              - type: string
+              - type: number
+              - type: boolean
+              - type: array
+                items:
+                  type: string
+
+    AppStatus:
+      type: object
+      properties:
+        appName:
+          type: string
+        type:
+          type: string
+        success:
+          type: integer
+        failures:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+
+    VideoCallData:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Video provider type (e.g. daily_video, zoom_video).
+        id:
+          type: string
+        password:
+          type: string
+          nullable: true
+        url:
+          type: string
+          format: uri
+
+    BookingPayload:
+      type: object
+      description: |
+        Common booking fields delivered with booking-related triggers.
+        Field names mirror those documented by Cal.com; subscribers should
+        accept additional properties.
+      additionalProperties: true
+      properties:
+        type:
+          type: string
+          description: Event type slug.
+        title:
+          type: string
+          description: Event type / booking title.
+        description:
+          type: string
+          nullable: true
+        additionalNotes:
+          type: string
+          nullable: true
+        customInputs:
+          type: object
+          additionalProperties: true
+        responses:
+          $ref: '#/components/schemas/Responses'
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        organizer:
+          $ref: '#/components/schemas/Person'
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
+        location:
+          $ref: '#/components/schemas/Location'
+        destinationCalendar:
+          $ref: '#/components/schemas/DestinationCalendar'
+        hideCalendarNotes:
+          type: boolean
+        requiresConfirmation:
+          type: boolean
+          nullable: true
+        eventTypeId:
+          type: integer
+        seatsPerTimeSlot:
+          type: integer
+          nullable: true
+        seatsShowAttendees:
+          type: boolean
+          nullable: true
+        uid:
+          type: string
+          description: Unique booking UID.
+        bookingId:
+          type: integer
+        conferenceData:
+          type: object
+          additionalProperties: true
+          description: Conference creation/request details from the provider.
+        videoCallData:
+          $ref: '#/components/schemas/VideoCallData'
+        appsStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppStatus'
+        metadata:
+          type: object
+          description: Booking metadata, including `videoCallUrl` for video meetings.
+          additionalProperties: true
+        iCalUID:
+          type: string
+        iCalSequence:
+          type: integer
+        status:
+          type: string
+          description: |
+            Booking status (e.g. ACCEPTED, PENDING, CANCELLED, REJECTED).
+
+    PaymentFields:
+      type: object
+      properties:
+        price:
+          type: number
+        currency:
+          type: string
+          example: USD
+        paymentId:
+          type: string
+
+    FormSubmissionPayload:
+      type: object
+      properties:
+        formId:
+          type: string
+        formName:
+          type: string
+        teamId:
+          type: integer
+          nullable: true
+        responses:
+          $ref: '#/components/schemas/Responses'
+        redirect:
+          type: object
+          nullable: true
+          additionalProperties: true
+
+    CalVideoNoShowPayload:
+      type: object
+      properties:
+        message:
+          type: string
+        bookingUid:
+          type: string
+        bookingId:
+          type: integer
+        hostEmail:
+          type: string
+          format: email
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+              name:
+                type: string
+                nullable: true
+              joined:
+                type: boolean

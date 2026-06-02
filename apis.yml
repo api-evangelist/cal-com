@@ -14,7 +14,7 @@ tags:
 - Open Source
 - Booking
 created: '2026-05-08'
-modified: '2026-05-19'
+modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
 - aid: cal-com:cal-com-bookings-api
@@ -149,6 +149,8 @@ apis:
     type: APIReference
   - url: openapi/cal-com-openapi.json
     type: OpenAPI
+  - url: asyncapi/cal-com-webhooks-asyncapi.yaml
+    type: AsyncAPI
   description: Subscribe to BOOKING_CREATED, BOOKING_RESCHEDULED, BOOKING_CANCELLED, MEETING_STARTED, and other events; deliveries
     POST to a developer-defined endpoint.
 - aid: cal-com:cal-com-oauth-api
