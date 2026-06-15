@@ -1,0 +1,3841 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Api Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Refresh API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/api-keys/refresh",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a new API key and delete the current one. Provide API key to refresh as a Bearer token in the Authorization header (e.g. \"Authorization: Bearer <apiKey>\")."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bookings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all bookings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by status. If you want to filter by multiple statuses, separate them with a comma."
+              },
+              {
+                "name": "attendeeEmail",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by the attendee's email address."
+              },
+              {
+                "name": "attendeeName",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by the attendee's name."
+              },
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by the booking Uid."
+              },
+              {
+                "name": "eventTypeIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by event type ids belonging to the user. Event type ids must be separated by a comma."
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by event type id belonging to the user."
+              },
+              {
+                "name": "teamsIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by team ids that user is part of. Team ids must be separated by a comma."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by team id that user is part of"
+              },
+              {
+                "name": "afterStart",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings with start after this date string."
+              },
+              {
+                "name": "beforeEnd",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings with end before this date string."
+              },
+              {
+                "name": "afterCreatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been created after this date string."
+              },
+              {
+                "name": "beforeCreatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been created before this date string."
+              },
+              {
+                "name": "afterUpdatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been updated after this date string."
+              },
+              {
+                "name": "beforeUpdatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been updated before this date string."
+              },
+              {
+                "name": "sortStart",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their start time in ascending or descending order."
+              },
+              {
+                "name": "sortEnd",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their end time in ascending or descending order."
+              },
+              {
+                "name": "sortCreated",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their creation time (when booking was made) in ascending or descending order."
+              },
+              {
+                "name": "sortUpdatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their updated time (for example when booking status changes) in ascending or descending order."
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to skip"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Create a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n      POST /v2/bookings is used to create regular bookings, recurring bookings and instant bookings. The request bodies for all 3 are almost the same except:\n      If eventTypeId in the request body is id of a regular event, then regular booking is created.\n\n      If it is an id of a recurring event type, then recurring booking is created.\n\n      Meaning that the request bodies are equal but the outcome depends on what kind of event type it is with the goal of making it as seamless for develope"
+        },
+        {
+          "info": {
+            "name": "Get a booking by seat UID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/by-seat/:seatUid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "seatUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a seated booking by its seat reference UID. This is useful when you have a seatUid from a seated booking and want to retrieve the full booking details.\n\n      If you are fetching a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to provide an authentication method of event type owner, host, team admin or owner or org admin or owner.\n\n      <Note>Please make su"
+        },
+        {
+          "info": {
+            "name": "Get a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "`:bookingUid` can be\n\n      1. uid of a normal booking\n\n      2. uid of one of the recurring booking recurrences\n\n      3. uid of recurring booking which will return an array of all recurring booking recurrences (stored as recurringBookingUid on one of the individual recurrences).\n\n      If you are fetching a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to prov"
+        },
+        {
+          "info": {
+            "name": "Get all the recordings for the booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/recordings",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetches all the recordings for the booking `:bookingUid`. Requires authentication and proper authorization. Access is granted if you are the booking organizer, team admin or org admin/owner.\n\n    <Note>cal-api-version: `2024-08-13` is required in the request header.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Get Cal Video real time transcript download links for the booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/transcripts",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetches all the transcript download links for the booking `:bookingUid`\n\n    <Note>\n    Transcripts are generated when clicking \"Transcribe\" during a Cal Video meeting. Download links are valid for 1 hour only - make a new request to generate fresh links after expiration.\n\n    Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.\n    </Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Reschedule a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/reschedule",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reschedule a booking or seated booking\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Cancel a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/cancel",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ":bookingUid can be :bookingUid of an usual booking, individual recurrence or recurring booking to cancel all recurrences.\n\n    \nCancelling normal bookings:\n    If the booking is not seated and not recurring, simply pass :bookingUid in the request URL `/bookings/:bookingUid/cancel` and optionally cancellationReason in the request body `{\"cancellationReason\": \"Will travel\"}`.\n\n    \nCancelling seated bookings:\n    It is possible to cancel specific seat within a booking as an attendee or all of the "
+        },
+        {
+          "info": {
+            "name": "Mark a booking absence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/mark-absent",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Reassign a booking to auto-selected host",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/reassign",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Currently only supports reassigning host for round robin bookings. The provided authorization header refers to the owner of the booking.\n\n       <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Reassign a booking to a specific host",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/reassign/:userId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Currently only supports reassigning host for round robin bookings. The provided authorization header refers to the owner of the booking.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Confirm a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/confirm",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Decline a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/decline",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Get 'Add to Calendar' links for a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/calendar-links",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve calendar links for a booking that can be used to add the event to various calendar services. Returns links for Google Calendar, Microsoft Office, Microsoft Outlook, and a downloadable ICS file.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Get booking references",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/references",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter booking references by type"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get Video Meeting Sessions. Only supported for Cal Video",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/conferencing-sessions",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires authentication and proper authorization. Access is granted if you are the booking organizer, team admin or org admin/owner.\n\n    <Note>cal-api-version: `2024-08-13` is required in the request header.</Note>"
+        },
+        {
+          "info": {
+            "name": "Update booking location for an existing booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/location",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the location for an existing booking.\n\n**Integration Fallback Behavior:**\n- **Google Meet**: Requires Google Calendar to be connected. If the booking has no Google Calendar event, it will automatically fall back to Cal Video.\n- **MS Teams**: If Office 365 Calendar is connected, generates the meeting link via calendar. Otherwise, uses the MS Teams video integration directly.\n\n<Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bookings / Attendees",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all attendees for a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/attendees",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve all attendees for a specific booking by its UID.\n    \n    <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Add an attendee to a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/attendees",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new attendee to an existing booking by its UID.\n\n      **Side effects:**\n      - The booking's attendee list is updated in the database\n      - The calendar event is updated on connected calendars (Google Calendar, Outlook, etc.) to include the new attendee\n      - An email notification is sent to the new attendee with the booking details\n\n      **Permissions:**\n      - The authenticated user must be either the booking organizer, an existing attendee, or have the `booking.update` permissio"
+        },
+        {
+          "info": {
+            "name": "Get a specific attendee for a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/attendees/:attendeeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attendeeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific attendee by their ID for a booking identified by its UID.\n        \n      <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Remove an attendee from a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/attendees/:attendeeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attendeeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove an attendee from an existing booking by their attendee ID. The primary attendee (first attendee) cannot be removed — to remove them, cancel the booking instead. The removed attendee will receive a cancellation email notification.\n\n    <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n    "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bookings / Guests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add guests to an existing booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/guests",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add one or more guests to an existing booking. Maximum 10 guests per request, with a limit of 30 total guests per booking.\n    \n    **Rate Limiting:**\n    This endpoint is rate limited to 5 requests per minute to prevent abuse.\n    \n    **Email Notifications:**\n    When guests are added, the following notifications are sent (unless disabled by event type settings):\n    \n    - **Organizer & Team Members:** Receive an \"Add Guests\" notification email informing them that new guests have been added t"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cal Unified Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List calendar connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns all calendar connections for the authenticated user (Google, Office 365, Apple). Use connectionId in connection-scoped endpoints. Note: Event CRUD (list/create/get/update/delete events) is currently only supported for Google Calendar connections; other types will return 400."
+        },
+        {
+          "info": {
+            "name": "List events for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Calendar connection ID from GET /connections"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone for the request (e.g. America/New_York)"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query",
+                "description": "Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar."
+              }
+            ]
+          },
+          "docs": "List events in a date range for a specific calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Create event on a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Get event for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events/:eventId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a single event by ID for the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Update event for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events/:eventId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Delete event for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events/:eventId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete/cancel an event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Get free/busy for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/freebusy",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone (e.g. America/New_York)"
+              }
+            ]
+          },
+          "docs": "Get busy time slots for the specified calendar connection."
+        },
+        {
+          "info": {
+            "name": "Get meeting details from calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a meeting including attendance metrics. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use GET /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "Update meeting details in calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates event information in the specified calendar provider. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use PATCH /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "Delete a calendar event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The calendar provider's event ID (e.g. Google Calendar event ID)"
+              }
+            ]
+          },
+          "docs": "Delete/cancel an event on the authenticated user's calendar. Currently only Google Calendar is supported."
+        },
+        {
+          "info": {
+            "name": "Get meeting details from calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/event/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a meeting including attendance metrics. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use GET /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "Update meeting details in calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/event/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates event information in the specified calendar provider. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use PATCH /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "List calendar events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone for the request (e.g. America/New_York)"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query",
+                "description": "Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar."
+              }
+            ]
+          },
+          "docs": "List events in a date range for the authenticated user's calendar. Currently only Google Calendar is supported."
+        },
+        {
+          "info": {
+            "name": "Create a calendar event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new event on the authenticated user's calendar. Currently only Google Calendar is supported."
+        },
+        {
+          "info": {
+            "name": "Get free/busy times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/freebusy",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone (e.g. America/New_York)"
+              }
+            ]
+          },
+          "docs": "Get busy time slots for the authenticated user's selected calendars in the given date range. Currently only Google Calendar is supported."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Save an ICS feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/ics-feed/save",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save an ICS feed"
+        },
+        {
+          "info": {
+            "name": "Check an ICS feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/ics-feed/check",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Check an ICS feed"
+        },
+        {
+          "info": {
+            "name": "Get busy times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/busy-times",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "loggedInUsersTz",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated: Use timeZone instead. The timezone of the user represented as a string"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "The timezone for the busy times query represented as a string"
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "The starting date for the busy times query"
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "The ending date for the busy times query"
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get busy times from a calendar. Example request URL is `https://api.cal.com/v2/calendars/busy-times?timeZone=Europe%2FMadrid&dateFrom=2024-12-18&dateTo=2024-12-18&calendarsToLoad[0][credentialId]=135&calendarsToLoad[0][externalId]=skrauciz%40gmail.com`. Note: loggedInUsersTz is deprecated, use timeZone instead."
+        },
+        {
+          "info": {
+            "name": "Get all calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all calendars"
+        },
+        {
+          "info": {
+            "name": "Get OAuth connect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/connect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "isDryRun",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "redir",
+                "value": "",
+                "type": "query",
+                "description": "Redirect URL after successful calendar authorization."
+              }
+            ]
+          },
+          "docs": "Get OAuth connect URL"
+        },
+        {
+          "info": {
+            "name": "Save Google or Outlook calendar credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/save",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Save Google or Outlook calendar credentials"
+        },
+        {
+          "info": {
+            "name": "Save Apple calendar credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/credentials",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save Apple calendar credentials"
+        },
+        {
+          "info": {
+            "name": "Check a calendar connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/check",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Check a calendar connection"
+        },
+        {
+          "info": {
+            "name": "Disconnect a calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/disconnect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disconnect a calendar"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Conferencing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connect your conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/conferencing/:app/connect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              }
+            ]
+          },
+          "docs": "Connect your conferencing application"
+        },
+        {
+          "info": {
+            "name": "Get OAuth conferencing app auth URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing/:app/oauth/auth-url",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              },
+              {
+                "name": "returnTo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "onErrorReturnTo",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get OAuth conferencing app auth URL"
+        },
+        {
+          "info": {
+            "name": "Conferencing app OAuth callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing/:app/oauth/callback",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Conferencing app OAuth callback"
+        },
+        {
+          "info": {
+            "name": "List your conferencing applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List your conferencing applications"
+        },
+        {
+          "info": {
+            "name": "Set your default conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/conferencing/:app/default",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              }
+            ]
+          },
+          "docs": "Set your default conferencing application"
+        },
+        {
+          "info": {
+            "name": "Get your default conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing/default",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get your default conferencing application"
+        },
+        {
+          "info": {
+            "name": "Disconnect your conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/conferencing/:app/disconnect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              }
+            ]
+          },
+          "docs": "Disconnect your conferencing application"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deprecated: Platform / Managed Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all managed users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to skip"
+              },
+              {
+                "name": "emails",
+                "value": "",
+                "type": "query",
+                "description": "Filter managed users by email. If you want to filter by multiple emails, separate them with a comma."
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Create a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Get a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Update a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Delete a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Force refresh tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId/force-refresh",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning> If you have lost managed user access or refresh token, then you can get new ones by using OAuth credentials. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.\nResponse also contains `accessTokenExpiresAt` and `refreshTokenExpiresAt` fields, but if you decode the jwt t"
+        },
+        {
+          "info": {
+            "name": "Refresh managed user tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth/:clientId/refresh",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning> If managed user access token is expired then get a new one using this endpoint - it will also refresh the refresh token, because we use\n    \"refresh token rotation\" mechanism. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.\nResponse also contains `accessTokenExpires"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deprecated: Platform / Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/webhooks",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/webhooks",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Delete all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/webhooks",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Get a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deprecated: Platform OAuth Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all OAuth clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Create an OAuth client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth-clients",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Get an OAuth client",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Update an OAuth client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Delete an OAuth client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Destination Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update destination calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/destination-calendars",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update destination calendars"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Event Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The username of the user to get event types for. If only username provided will get all event types."
+              },
+              {
+                "name": "eventSlug",
+                "value": "",
+                "type": "query",
+                "description": "Slug of event type to return. Notably, if eventSlug is provided then username must be provided too, because multiple users can have event with same slug."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "Get dynamic event type for multiple usernames separated by comma. e.g `usernames=alice,bob`"
+              },
+              {
+                "name": "orgSlug",
+                "value": "",
+                "type": "query",
+                "description": "slug of the user's organization if he is in one, orgId is not required if using this parameter"
+              },
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the organization of the user you want the get the event-types of, orgSlug is not needed when using this parameter"
+              },
+              {
+                "name": "sortCreatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Sort event types by creation date. When not provided, no explicit ordering is applied."
+              }
+            ]
+          },
+          "docs": "Hidden event types are returned only if authentication is provided and it belongs to the event type owner.\n      \n      Use the optional `sortCreatedAt` query parameter to order results by creation date (by ID). Accepts \"asc\" (oldest first) or \"desc\" (newest first). When not provided, no explicit ordering is applied.\n      \n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version o"
+        },
+        {
+          "info": {
+            "name": "Create an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/event-types",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    \n    Access control: This endpoint fetches an event type by ID and returns it only if the authenticated user is authorized. Authorization is granted to:\n    - System admins\n    - The event type owner\n    - Hosts of the event type or users assigned to the event type\n    - Team admins/owners of the team t"
+        },
+        {
+          "info": {
+            "name": "Update an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Delete an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Event Types / Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip"
+              }
+            ]
+          },
+          "docs": "Get all webhooks"
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a webhook"
+        },
+        {
+          "info": {
+            "name": "Delete all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete all webhooks"
+        },
+        {
+          "info": {
+            "name": "Get a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a webhook"
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a webhook"
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a webhook"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Event Types Private Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all private links for an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/private-links",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all private links for an event type"
+        },
+        {
+          "info": {
+            "name": "Create a private link for an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/private-links",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a private link for an event type"
+        },
+        {
+          "info": {
+            "name": "Update a private link for an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/private-links/:linkId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "linkId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a private link for an event type"
+        },
+        {
+          "info": {
+            "name": "Delete a private link for an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId/private-links/:linkId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "linkId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a private link for an event type"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Me",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get my profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/me",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get my profile"
+        },
+        {
+          "info": {
+            "name": "Update my profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/me",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the authenticated user's profile. Email changes require verification and the primary email stays unchanged until verification completes, unless the new email is already a verified secondary email or the user is platform-managed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OAuth2 client",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/auth/oauth2/clients/:clientId",
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the OAuth2 client information for the given client ID"
+        },
+        {
+          "info": {
+            "name": "Exchange authorization code or refresh token for tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/auth/oauth2/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "RFC 6749-compliant token endpoint. Pass client_id in the request body (Section 2.3.1). Use grant_type 'authorization_code' to exchange an auth code for tokens, or 'refresh_token' to refresh an access token. Accepts both application/x-www-form-urlencoded (standard per RFC 6749 Section 4.1.3) and application/json content types."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all schedules of the authenticated user.\n    \n     <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Create a schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/schedules",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n      Create a schedule for the authenticated user.\n\n      The point of creating schedules is for event types to be available at specific times.\n\n      The first goal of schedules is to have a default schedule. If you are platform customer and created managed users, then it is important to note that each managed user should have a default schedule.\n      1. If you passed `timeZone` when creating managed user, then the default schedule from Monday to Friday from 9AM to 5PM will be created with t"
+        },
+        {
+          "info": {
+            "name": "Get default schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schedules/default",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get the default schedule of the authenticated user.\n    \n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Get a schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schedules/:scheduleId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Update a schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/schedules/:scheduleId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Delete a schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/schedules/:scheduleId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Selected Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a selected calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/selected-calendars",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a selected calendar"
+        },
+        {
+          "info": {
+            "name": "Delete a selected calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/selected-calendars",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "integration",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "delegationCredentialId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a selected calendar"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Slots",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available time slots for an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/slots",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUidToReschedule",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the booking being rescheduled. When provided will ensure that the original booking time appears within the returned available slots when rescheduling."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "\n      Time starting from which available slots should be checked.\n\n      Must be in UTC timezone as ISO 8601 datestring.\n\n      You can pass date without hours which defaults to start of day or specify hours:\n      2024-08-13 (will have hours 00:00:00 aka at very beginning of the date) or you can specify hours manually like 2024-08-13T09:00:00Z."
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "\n    Time until which available slots should be checked.\n\n    Must be in UTC timezone as ISO 8601 datestring.\n\n    You can pass date without hours which defaults to end of day or specify hours:\n    2024-08-20 (will have hours 23:59:59 aka at the very end of the date) or you can specify hours manually like 2024-08-20T18:00:00Z."
+              },
+              {
+                "name": "organizationSlug",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the organization to which user with username belongs or team with teamSlug belongs."
+              },
+              {
+                "name": "teamSlug",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the team who owns event type with eventTypeSlug - used when slots are checked for team event type."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The username of the user who owns event type with eventTypeSlug - used when slots are checked for individual user event type."
+              },
+              {
+                "name": "eventTypeSlug",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the event type for which available slots should be checked. If slug is provided then username or teamSlug must be provided too and if relevant organizationSlug too."
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the event type for which available slots should be checked."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "The usernames for which available slots should be checked separated by a comma.\n\n    Checking slots by usernames is used mainly for dynamic events where there is no specific event but we just want to know when 2 or more people are available.\n\n    Must contain at least 2 usernames."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Format of slot times in response. Use 'range' to get start and end times. Use 'time' or omit this query parameter to get only start time."
+              },
+              {
+                "name": "duration",
+                "value": "",
+                "type": "query",
+                "description": "If event type has multiple possible durations then you can specify the desired duration here. Also, if you are fetching slots for a dynamic event then you can specify the duration her which defaults to 30, meaning that returned slots will be each 30 minutes long."
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "Time zone in which the available slots should be returned. Defaults to UTC."
+              }
+            ]
+          },
+          "docs": "\n      There are 4 ways to get available slots for event type of an individual user:\n\n      1. By event type id. Example '/v2/slots?eventTypeId=10&start=2050-09-05&end=2050-09-06&timeZone=Europe/Rome'\n\n      2. By event type slug + username. Example '/v2/slots?eventTypeSlug=intro&username=bob&start=2050-09-05&end=2050-09-06'\n\n      3. By event type slug + username + organization slug when searching within an organization. Example '/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&username="
+        },
+        {
+          "info": {
+            "name": "Reserve a slot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/slots/reservations",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Make a slot not available for others to book for a certain period of time. If you authenticate using oAuth credentials, api key or access token\n    then you can also specify custom duration for how long the slot should be reserved for (defaults to 5 minutes).\n    \n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>    \n    "
+        },
+        {
+          "info": {
+            "name": "Get reserved slot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/slots/reservations/:uid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Update a reserved slot",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/slots/reservations/:uid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Delete a reserved slot",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/slots/reservations/:uid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stripe",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Stripe connect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/stripe/connect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get Stripe connect URL"
+        },
+        {
+          "info": {
+            "name": "Save Stripe credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/stripe/save",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Save Stripe credentials"
+        },
+        {
+          "info": {
+            "name": "Check Stripe connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/stripe/check",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Check Stripe connection"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Verified Resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request email verification code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/verified-resources/emails/verification-code/request",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a verification code to the email"
+        },
+        {
+          "info": {
+            "name": "Request phone number verification code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/verified-resources/phones/verification-code/request",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a verification code to the phone number"
+        },
+        {
+          "info": {
+            "name": "Verify an email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/verified-resources/emails/verification-code/verify",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use code to verify an email"
+        },
+        {
+          "info": {
+            "name": "Verify a phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/verified-resources/phones/verification-code/verify",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use code to verify a phone number"
+        },
+        {
+          "info": {
+            "name": "Get list of verified emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/verified-resources/emails",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip"
+              }
+            ]
+          },
+          "docs": "Get list of verified emails"
+        },
+        {
+          "info": {
+            "name": "Get list of verified phone numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/verified-resources/phones",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip"
+              }
+            ]
+          },
+          "docs": "Get list of verified phone numbers"
+        },
+        {
+          "info": {
+            "name": "Get verified email by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/verified-resources/emails/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get verified email by id"
+        },
+        {
+          "info": {
+            "name": "Get verified phone number by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/verified-resources/phones/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get verified phone number by id"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip"
+              }
+            ]
+          },
+          "docs": "Gets a paginated list of webhooks for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/webhooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a webhook"
+        },
+        {
+          "info": {
+            "name": "Get a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a webhook"
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a webhook"
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/webhooks/:webhookId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
