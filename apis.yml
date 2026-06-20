@@ -7,7 +7,7 @@ description: >-
   self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks,
   OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding
   scheduling primitives into other apps.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Productivity
   - Scheduling
@@ -23,7 +23,7 @@ apis:
     tags:
       - Bookings
       - CRUD
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/bookings
     baseURL: https://api.cal.com/v2
     properties:
@@ -39,7 +39,7 @@ apis:
     tags:
       - Event Types
       - Configuration
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/event-types
     baseURL: https://api.cal.com/v2
     properties:
@@ -55,7 +55,7 @@ apis:
     tags:
       - Schedules
       - Working Hours
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/schedules
     baseURL: https://api.cal.com/v2
     properties:
@@ -69,7 +69,7 @@ apis:
     tags:
       - Availability
       - Calendar
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/availability
     baseURL: https://api.cal.com/v2
     properties:
@@ -83,7 +83,7 @@ apis:
     tags:
       - Slots
       - Time
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/slots
     baseURL: https://api.cal.com/v2
     properties:
@@ -99,7 +99,7 @@ apis:
     tags:
       - Webhooks
       - Events
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/webhooks
     baseURL: https://api.cal.com/v2
     properties:
@@ -117,7 +117,7 @@ apis:
     tags:
       - OAuth
       - Authentication
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/oauth
     baseURL: https://api.cal.com/v2
     properties:
@@ -133,7 +133,7 @@ apis:
     tags:
       - Teams
       - Membership
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/teams
     baseURL: https://api.cal.com/v2
     properties:
@@ -147,7 +147,7 @@ apis:
     tags:
       - Organizations
       - Enterprise
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/organizations
     baseURL: https://api.cal.com/v2
     properties:
@@ -161,7 +161,7 @@ apis:
     tags:
       - OOO
       - Availability
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/out-of-office
     baseURL: https://api.cal.com/v2
     properties:
@@ -175,7 +175,7 @@ apis:
     tags:
       - Conferencing
       - Video
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/conferencing
     baseURL: https://api.cal.com/v2
     properties:
@@ -191,7 +191,7 @@ apis:
     tags:
       - Calendars
       - Integration
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/api-reference/v2/destination-calendars
     baseURL: https://api.cal.com/v2
     properties:
@@ -208,7 +208,7 @@ apis:
       - Atoms
       - SDK
       - Embed
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://cal.com/docs/platform
     baseURL: https://api.cal.com/v2
     properties:
