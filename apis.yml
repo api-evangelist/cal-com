@@ -215,7 +215,7 @@ apis:
       - url: https://cal.com/docs/platform
         type: Documentation
       - url: https://www.npmjs.com/package/@calcom/atoms
-        type: SDK
+        type: SDKs
       - url: openapi/cal-com-openapi.json
         type: OpenAPI
     description: >-
