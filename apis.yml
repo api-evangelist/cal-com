@@ -223,6 +223,12 @@ apis:
       embed scheduling primitives end-to-end. Used by platforms that want to ship Cal.com features under their own
       brand.
 common:
+  - type: TrustCenter
+    url: security/cal-com-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/cal-com-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/cal-com-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/cal-com
   - type: Website
@@ -239,6 +245,8 @@ common:
     url: rate-limits/cal-com-rate-limits.yml
   - type: FinOps
     url: finops/cal-com-finops.yml
+  - url: https://cal.com/blog
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
