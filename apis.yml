@@ -223,6 +223,8 @@ apis:
       embed scheduling primitives end-to-end. Used by platforms that want to ship Cal.com features under their own
       brand.
 common:
+  - type: AgenticAccess
+    url: agentic-access/cal-com-agentic-access.yml
   - type: TrustCenter
     url: security/cal-com-trust-center.yml
   - type: VulnerabilityDisclosure
