@@ -1,0 +1,657 @@
+openapi: 3.0.0
+info:
+  title: Cal.diy API v2 Api Keys Calendars API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Calendars
+paths:
+  /v2/calendars/ics-feed/save:
+    post:
+      operationId: CalendarsController_createIcsFeed
+      summary: Save an ICS feed
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIcsFeedInputDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateIcsFeedOutputResponseDto'
+      tags:
+      - Calendars
+  /v2/calendars/ics-feed/check:
+    get:
+      operationId: CalendarsController_checkIcsFeed
+      summary: Check an ICS feed
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Calendars
+  /v2/calendars/busy-times:
+    get:
+      operationId: CalendarsController_getBusyTimes
+      summary: Get busy times
+      description: 'Get busy times from a calendar. Example request URL is `https://api.cal.com/v2/calendars/busy-times?timeZone=Europe%2FMadrid&dateFrom=2024-12-18&dateTo=2024-12-18&calendarsToLoad[0][credentialId]=135&calendarsToLoad[0][externalId]=skrauciz%40gmail.com`. Note: loggedInUsersTz is deprecated, use timeZone instead.'
+      parameters:
+      - name: loggedInUsersTz
+        required: false
+        in: query
+        deprecated: true
+        description: 'Deprecated: Use timeZone instead. The timezone of the user represented as a string'
+        schema:
+          example: America/New_York
+          type: string
+      - name: timeZone
+        required: false
+        in: query
+        description: The timezone for the busy times query represented as a string
+        schema:
+          example: America/New_York
+          type: string
+      - name: dateFrom
+        required: false
+        in: query
+        description: The starting date for the busy times query
+        schema:
+          example: '2023-10-01'
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        description: The ending date for the busy times query
+        schema:
+          example: '2023-10-31'
+          type: string
+      - name: credentialId
+        in: query
+        required: true
+        schema:
+          type: number
+      - name: externalId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBusyTimesOutput'
+      tags:
+      - Calendars
+  /v2/calendars:
+    get:
+      operationId: CalendarsController_getCalendars
+      summary: Get all calendars
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedCalendarsOutput'
+      tags:
+      - Calendars
+  /v2/calendars/{calendar}/connect:
+    get:
+      operationId: CalendarsController_redirect
+      summary: Get OAuth connect URL
+      parameters:
+      - name: Authorization
+        required: true
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        schema:
+          type: string
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - office365
+          - google
+          type: string
+      - name: isDryRun
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: redir
+        required: false
+        in: query
+        description: Redirect URL after successful calendar authorization.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Calendars
+  /v2/calendars/{calendar}/save:
+    get:
+      operationId: CalendarsController_save
+      summary: Save Google or Outlook calendar credentials
+      parameters:
+      - name: state
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: code
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - office365
+          - google
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Calendars
+  /v2/calendars/{calendar}/credentials:
+    post:
+      operationId: CalendarsController_syncCredentials
+      summary: Save Apple calendar credentials
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - apple
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCalendarCredentialsInput'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Calendars
+  /v2/calendars/{calendar}/check:
+    get:
+      operationId: CalendarsController_check
+      summary: Check a calendar connection
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - apple
+          - google
+          - office365
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Calendars
+  /v2/calendars/{calendar}/disconnect:
+    post:
+      operationId: CalendarsController_deleteCalendarCredentials
+      summary: Disconnect a calendar
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - apple
+          - google
+          - office365
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCalendarCredentialsInputBodyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedCalendarCredentialsOutputResponseDto'
+      tags:
+      - Calendars
+components:
+  schemas:
+    CreateIcsFeedOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1234567890
+          description: The id of the calendar credential
+        type:
+          type: string
+          example: ics-feed_calendar
+          description: The type of the calendar
+        userId:
+          type: integer
+          nullable: true
+          example: 1234567890
+          description: The user id of the user that created the calendar
+        teamId:
+          type: integer
+          nullable: true
+          example: 1234567890
+          description: The team id of the user that created the calendar
+        appId:
+          type: string
+          nullable: true
+          example: ics-feed
+          description: The slug of the calendar
+        invalid:
+          type: boolean
+          nullable: true
+          example: false
+          description: Whether the calendar credentials are valid or not
+      required:
+      - id
+      - type
+      - userId
+      - teamId
+      - appId
+      - invalid
+    ConnectedCalendar:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/Integration'
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type: string
+          nullable: true
+        primary:
+          $ref: '#/components/schemas/Primary'
+        calendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Calendar'
+      required:
+      - integration
+      - credentialId
+    ConnectedCalendarsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ConnectedCalendarsData'
+      required:
+      - status
+      - data
+    Integration:
+      type: object
+      properties:
+        appData:
+          type: object
+          nullable: true
+        dirName:
+          type: string
+        __template:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        installed:
+          type: boolean
+        type:
+          type: string
+        title:
+          type: string
+        variant:
+          type: string
+        category:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        logo:
+          type: string
+        publisher:
+          type: string
+        slug:
+          type: string
+        url:
+          type: string
+        email:
+          type: string
+        locationOption:
+          type: object
+          nullable: true
+      required:
+      - name
+      - description
+      - type
+      - variant
+      - categories
+      - logo
+      - publisher
+      - slug
+      - url
+      - email
+      - locationOption
+    ConnectedCalendarsData:
+      type: object
+      properties:
+        connectedCalendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedCalendar'
+        destinationCalendar:
+          $ref: '#/components/schemas/DestinationCalendar'
+      required:
+      - connectedCalendars
+      - destinationCalendar
+    BusyTimesOutput:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        source:
+          type: string
+          nullable: true
+      required:
+      - start
+      - end
+    DeletedCalendarCredentialsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/DeletedCalendarCredentialsOutputDto'
+      required:
+      - status
+      - data
+    DeletedCalendarCredentialsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+        userId:
+          type: number
+          nullable: true
+        teamId:
+          type: number
+          nullable: true
+        appId:
+          type: string
+          nullable: true
+        invalid:
+          type: boolean
+          nullable: true
+      required:
+      - id
+      - type
+      - userId
+      - teamId
+      - appId
+      - invalid
+    Primary:
+      type: object
+      properties:
+        externalId:
+          type: string
+        integration:
+          type: string
+        name:
+          type: string
+        primary:
+          type: boolean
+          nullable: true
+        readOnly:
+          type: boolean
+        email:
+          type: string
+        isSelected:
+          type: boolean
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type: string
+          nullable: true
+      required:
+      - externalId
+      - primary
+      - readOnly
+      - isSelected
+      - credentialId
+    CreateIcsFeedOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/CreateIcsFeedOutput'
+      required:
+      - status
+      - data
+    Calendar:
+      type: object
+      properties:
+        externalId:
+          type: string
+        integration:
+          type: string
+        name:
+          type: string
+        primary:
+          type: boolean
+          nullable: true
+        readOnly:
+          type: boolean
+        email:
+          type: string
+        isSelected:
+          type: boolean
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type: string
+          nullable: true
+      required:
+      - externalId
+      - readOnly
+      - isSelected
+      - credentialId
+    CreateIcsFeedInputDto:
+      type: object
+      properties:
+        urls:
+          type: array
+          example:
+          - https://cal.com/ics/feed.ics
+          - http://cal.com/ics/feed.ics
+          description: An array of ICS URLs
+          items:
+            type: string
+            example: https://cal.com/ics/feed.ics
+        readOnly:
+          type: boolean
+          default: true
+          example: false
+          description: Whether to allowing writing to the calendar or not
+      required:
+      - urls
+    DestinationCalendar:
+      type: object
+      properties:
+        id:
+          type: object
+        integration:
+          type: string
+        externalId:
+          type: string
+        primaryEmail:
+          type: string
+          nullable: true
+        userId:
+          type: number
+          nullable: true
+        eventTypeId:
+          type: number
+          nullable: true
+        credentialId:
+          type: number
+          nullable: true
+        delegationCredentialId:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        primary:
+          type: boolean
+        readOnly:
+          type: boolean
+        email:
+          type: string
+        integrationTitle:
+          type: string
+      required:
+      - id
+      - integration
+      - externalId
+      - primaryEmail
+      - userId
+      - eventTypeId
+      - credentialId
+    CreateCalendarCredentialsInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - username
+      - password
+    DeleteCalendarCredentialsInputBodyDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+          description: Credential ID of the calendar to delete, as returned by the /calendars endpoint
+      required:
+      - id
+    GetBusyTimesOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusyTimesOutput'
+      required:
+      - status
+      - data

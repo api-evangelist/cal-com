@@ -1,0 +1,1103 @@
+openapi: 3.0.0
+info:
+  title: Cal.diy API v2 Api Keys Cal Unified Calendars API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Cal Unified Calendars
+paths:
+  /v2/calendars/connections:
+    get:
+      operationId: CalUnifiedCalendarsController_listConnections
+      summary: List calendar connections
+      description: 'Returns all calendar connections for the authenticated user (Google, Office 365, Apple). Use connectionId in connection-scoped endpoints. Note: Event CRUD (list/create/get/update/delete events) is currently only supported for Google Calendar connections; other types will return 400.'
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListConnectionsOutput'
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/connections/{connectionId}/events:
+    get:
+      operationId: CalUnifiedCalendarsController_listConnectionEvents
+      summary: List events for a connection
+      description: List events in a date range for a specific calendar connection. Only supported for Google Calendar connections; other connection types return 400.
+      parameters:
+      - name: connectionId
+        required: true
+        in: path
+        description: Calendar connection ID from GET /connections
+        schema:
+          type: string
+      - name: from
+        required: true
+        in: query
+        description: Start of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-01'
+          type: string
+      - name: to
+        required: true
+        in: query
+        description: End of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-31'
+          type: string
+      - name: timeZone
+        required: false
+        in: query
+        description: IANA time zone for the request (e.g. America/New_York)
+        schema:
+          type: string
+      - name: calendarId
+        required: false
+        in: query
+        description: Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar.
+        schema:
+          default: primary
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUnifiedCalendarEventsOutput'
+      tags:
+      - Cal Unified Calendars
+    post:
+      operationId: CalUnifiedCalendarsController_createConnectionEvent
+      summary: Create event on a connection
+      description: Create a new event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400.
+      parameters:
+      - name: connectionId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: calendarId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUnifiedCalendarEventInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/connections/{connectionId}/events/{eventId}:
+    get:
+      operationId: CalUnifiedCalendarsController_getConnectionEvent
+      summary: Get event for a connection
+      description: Get a single event by ID for the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400.
+      parameters:
+      - name: connectionId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: eventId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: calendarId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+    patch:
+      operationId: CalUnifiedCalendarsController_updateConnectionEvent
+      summary: Update event for a connection
+      description: Update an event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400.
+      parameters:
+      - name: connectionId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: eventId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: calendarId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUnifiedCalendarEventInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+    delete:
+      operationId: CalUnifiedCalendarsController_deleteConnectionEvent
+      summary: Delete event for a connection
+      description: Delete/cancel an event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400.
+      parameters:
+      - name: connectionId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: eventId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: calendarId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/connections/{connectionId}/freebusy:
+    get:
+      operationId: CalUnifiedCalendarsController_getConnectionFreeBusy
+      summary: Get free/busy for a connection
+      description: Get busy time slots for the specified calendar connection.
+      parameters:
+      - name: connectionId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: from
+        required: true
+        in: query
+        description: Start of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-10'
+          type: string
+      - name: to
+        required: true
+        in: query
+        description: End of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-10'
+          type: string
+      - name: timeZone
+        required: false
+        in: query
+        description: IANA time zone (e.g. America/New_York)
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBusyTimesOutput'
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/{calendar}/events/{eventUid}:
+    get:
+      operationId: CalUnifiedCalendarsController_getCalendarEventDetails
+      summary: Get meeting details from calendar
+      description: Returns detailed information about a meeting including attendance metrics. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use GET /connections/{connectionId}/events/{eventId}.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          type: string
+      - name: eventUid
+        required: true
+        in: path
+        description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:
+
+
+          - For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references
+
+
+          - For user events: GET /v2/bookings/{bookingUid}/references'
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+    patch:
+      operationId: CalUnifiedCalendarsController_updateCalendarEvent
+      summary: Update meeting details in calendar
+      description: Updates event information in the specified calendar provider. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use PATCH /connections/{connectionId}/events/{eventId}.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          type: string
+      - name: eventUid
+        required: true
+        in: path
+        description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:
+
+
+          - For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references
+
+
+          - For user events: GET /v2/bookings/{bookingUid}/references'
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUnifiedCalendarEventInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+    delete:
+      operationId: CalUnifiedCalendarsController_deleteCalendarEvent
+      summary: Delete a calendar event
+      description: Delete/cancel an event on the authenticated user's calendar. Currently only Google Calendar is supported.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          - office365
+          - apple
+          type: string
+      - name: eventUid
+        required: true
+        in: path
+        description: The calendar provider's event ID (e.g. Google Calendar event ID)
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/{calendar}/event/{eventUid}:
+    get:
+      operationId: CalUnifiedCalendarsController_getCalendarEventDetails
+      summary: Get meeting details from calendar
+      description: Returns detailed information about a meeting including attendance metrics. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use GET /connections/{connectionId}/events/{eventId}.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          type: string
+      - name: eventUid
+        required: true
+        in: path
+        description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:
+
+
+          - For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references
+
+
+          - For user events: GET /v2/bookings/{bookingUid}/references'
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+    patch:
+      operationId: CalUnifiedCalendarsController_updateCalendarEvent
+      summary: Update meeting details in calendar
+      description: Updates event information in the specified calendar provider. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use PATCH /connections/{connectionId}/events/{eventId}.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          type: string
+      - name: eventUid
+        required: true
+        in: path
+        description: 'The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:
+
+
+          - For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references
+
+
+          - For user events: GET /v2/bookings/{bookingUid}/references'
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUnifiedCalendarEventInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/{calendar}/events:
+    get:
+      operationId: CalUnifiedCalendarsController_listCalendarEvents
+      summary: List calendar events
+      description: List events in a date range for the authenticated user's calendar. Currently only Google Calendar is supported.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          - office365
+          - apple
+          type: string
+      - name: from
+        required: true
+        in: query
+        description: Start of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-01'
+          type: string
+      - name: to
+        required: true
+        in: query
+        description: End of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-31'
+          type: string
+      - name: timeZone
+        required: false
+        in: query
+        description: IANA time zone for the request (e.g. America/New_York)
+        schema:
+          type: string
+      - name: calendarId
+        required: false
+        in: query
+        description: Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar.
+        schema:
+          default: primary
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUnifiedCalendarEventsOutput'
+      tags:
+      - Cal Unified Calendars
+    post:
+      operationId: CalUnifiedCalendarsController_createCalendarEvent
+      summary: Create a calendar event
+      description: Create a new event on the authenticated user's calendar. Currently only Google Calendar is supported.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          - office365
+          - apple
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUnifiedCalendarEventInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUnifiedCalendarEventOutput'
+      tags:
+      - Cal Unified Calendars
+  /v2/calendars/{calendar}/freebusy:
+    get:
+      operationId: CalUnifiedCalendarsController_getFreeBusy
+      summary: Get free/busy times
+      description: Get busy time slots for the authenticated user's selected calendars in the given date range. Currently only Google Calendar is supported.
+      parameters:
+      - name: calendar
+        required: true
+        in: path
+        schema:
+          enum:
+          - google
+          - office365
+          - apple
+          type: string
+      - name: from
+        required: true
+        in: query
+        description: Start of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-10'
+          type: string
+      - name: to
+        required: true
+        in: query
+        description: End of the date range (ISO 8601 date or date-time)
+        schema:
+          example: '2026-03-10'
+          type: string
+      - name: timeZone
+        required: false
+        in: query
+        description: IANA time zone (e.g. America/New_York)
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBusyTimesOutput'
+      tags:
+      - Cal Unified Calendars
+components:
+  schemas:
+    CalendarEventSipLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: sip
+          enum:
+          - sip
+          description: Indicates this is a SIP (Session Initiation Protocol) conference location
+        url:
+          type: string
+          description: SIP URL for joining the conference
+        label:
+          type: string
+          nullable: true
+          description: Display name for the SIP conference
+        pin:
+          type: string
+          nullable: true
+          description: PIN number required for the SIP conference
+        password:
+          type: string
+          nullable: true
+          description: Password required for the SIP conference
+      required:
+      - type
+      - url
+    ListConnectionsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ListConnectionsData'
+      required:
+      - status
+      - data
+    CalendarConnectionItem:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          description: Stable ID for this calendar connection (use in connection-scoped endpoints)
+          example: '123'
+        type:
+          type: string
+          enum:
+          - google
+          - office365
+          - apple
+          description: Calendar provider type
+          example: google
+        email:
+          type: string
+          nullable: true
+          description: Primary email for this connection (null if unavailable)
+          example: user@gmail.com
+      required:
+      - connectionId
+      - type
+    BusyTimesOutput:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        source:
+          type: string
+          nullable: true
+      required:
+      - start
+      - end
+    CalendarEventMoreLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: more
+          enum:
+          - more
+          description: Indicates this is an additional conference location type
+        url:
+          type: string
+          description: URL for accessing this location
+        label:
+          type: string
+          nullable: true
+          description: Display name for this location
+      required:
+      - type
+      - url
+    ListConnectionsData:
+      type: object
+      properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarConnectionItem'
+      required:
+      - connections
+    UnifiedCalendarEventOutput:
+      type: object
+      properties:
+        start:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            timeZone:
+              type: string
+          description: Start date and time of the calendar event with timezone information
+        end:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            timeZone:
+              type: string
+          description: End date and time of the calendar event with timezone information
+        id:
+          type: string
+          description: Unique identifier of the calendar event
+        title:
+          type: string
+          description: Title of the calendar event
+        description:
+          type: string
+          nullable: true
+          description: Detailed description of the calendar event
+        locations:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CalendarEventVideoLocation'
+            - $ref: '#/components/schemas/CalendarEventPhoneLocation'
+            - $ref: '#/components/schemas/CalendarEventSipLocation'
+            - $ref: '#/components/schemas/CalendarEventMoreLocation'
+            discriminator:
+              propertyName: type
+          nullable: true
+          description: Conference locations with entry points (video, phone, sip, more)
+        attendees:
+          nullable: true
+          description: List of attendees with their response status
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarEventAttendee'
+        status:
+          nullable: true
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventStatus'
+        hosts:
+          nullable: true
+          description: Information about the event hosts (organizers)
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarEventHost'
+        calendarEventOwner:
+          nullable: true
+          description: The calendar account that owns this event. This is the primary calendar where the event is stored and cannot be modified without appropriate permissions. Changing this would require moving the event to a different calendar
+          allOf:
+          - $ref: '#/components/schemas/calendarEventOwner'
+        source:
+          example: google
+          $ref: '#/components/schemas/CalendarSource'
+      required:
+      - start
+      - end
+      - id
+      - title
+      - source
+    ListUnifiedCalendarEventsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnifiedCalendarEventOutput'
+      required:
+      - status
+      - data
+    CalendarEventVideoLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: video
+          enum:
+          - video
+          description: Indicates this is a video conference location
+        url:
+          type: string
+          description: URL for joining the video conference
+        label:
+          type: string
+          nullable: true
+          description: Display name for the video conference
+        password:
+          type: string
+          nullable: true
+          description: Password required to join the video conference
+        meetingCode:
+          type: string
+          nullable: true
+          description: Meeting code or ID required to join the conference
+        accessCode:
+          type: string
+          nullable: true
+          description: Access code required to join the conference
+      required:
+      - type
+      - url
+    CalendarEventStatus:
+      type: string
+      description: Status of the event (accepted, pending, declined, cancelled)
+      enum:
+      - accepted
+      - pending
+      - declined
+      - cancelled
+    UpdateCalendarEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+        responseStatus:
+          nullable: true
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
+        self:
+          type: boolean
+          nullable: true
+          description: Indicates if this attendee is the current user
+        optional:
+          type: boolean
+          nullable: true
+          description: Indicates if this attendee's attendance is optional
+        host:
+          type: boolean
+          nullable: true
+          description: Indicates if this attendee is the host
+    CalendarEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+        responseStatus:
+          nullable: true
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
+        self:
+          type: boolean
+          nullable: true
+          description: Indicates if this attendee is the current user
+        optional:
+          type: boolean
+          nullable: true
+          description: Indicates if this attendee's attendance is optional
+        host:
+          type: boolean
+          nullable: true
+          description: Indicates if this attendee is the host
+      required:
+      - email
+    CalendarEventResponseStatus:
+      type: string
+      description: Response status of the attendee
+      enum:
+      - accepted
+      - pending
+      - declined
+      - needsAction
+    CreateEventDateTimeWithZone:
+      type: object
+      properties:
+        time:
+          type: string
+          format: date-time
+          description: Start or end time in ISO 8601 format
+        timeZone:
+          type: string
+          description: IANA time zone (e.g. America/New_York)
+      required:
+      - time
+      - timeZone
+    GetUnifiedCalendarEventOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UnifiedCalendarEventOutput'
+      required:
+      - status
+      - data
+    CalendarEventHost:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the event host
+        name:
+          type: string
+          nullable: true
+          description: Display name of the event host
+        responseStatus:
+          nullable: true
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
+      required:
+      - email
+    GetBusyTimesOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusyTimesOutput'
+      required:
+      - status
+      - data
+    UpdateUnifiedCalendarEventInput:
+      type: object
+      properties:
+        start:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            timeZone:
+              type: string
+          description: Start date and time of the calendar event with timezone information
+        end:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            timeZone:
+              type: string
+          description: End date and time of the calendar event with timezone information
+        title:
+          type: string
+          description: Title of the calendar event
+        description:
+          type: string
+          nullable: true
+          description: Detailed description of the calendar event
+        attendees:
+          nullable: true
+          description: 'List of attendees. CAUTION: You must pass the entire array with all updated values. Any attendees not included in this array will be removed from the event.'
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCalendarEventAttendee'
+        status:
+          nullable: true
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventStatus'
+    CalendarSource:
+      type: string
+      description: Calendar integration source (e.g., Google Calendar, Office 365, Apple Calendar). Currently only Google Calendar is supported.
+      enum:
+      - google
+      - office365
+      - apple
+    CreateUnifiedCalendarEventInput:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the calendar event
+        start:
+          description: Start date and time with time zone
+          allOf:
+          - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
+        end:
+          description: End date and time with time zone
+          allOf:
+          - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
+        description:
+          type: string
+          nullable: true
+          description: Description of the event
+        attendees:
+          description: List of attendees
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEventAttendee'
+      required:
+      - title
+      - start
+      - end
+    CalendarEventPhoneLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: phone
+          enum:
+          - phone
+          description: Indicates this is a phone conference location
+        url:
+          type: string
+          description: Phone number or URL for dialing into the conference
+        label:
+          type: string
+          nullable: true
+          description: Display name for the phone conference
+        pin:
+          type: string
+          nullable: true
+          description: PIN number required for the phone conference
+        password:
+          type: string
+          nullable: true
+          description: Password required for the phone conference
+        accessCode:
+          type: string
+          nullable: true
+          description: Access code required for the phone conference
+        regionCode:
+          type: string
+          nullable: true
+          description: Country/region code for the phone number
+      required:
+      - type
+      - url
+    calendarEventOwner:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the event host
+        name:
+          type: string
+          nullable: true
+          description: Display name of the event host
+      required:
+      - email
+    CreateEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+      required:
+      - email

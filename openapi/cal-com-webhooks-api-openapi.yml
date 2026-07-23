@@ -1,0 +1,345 @@
+openapi: 3.0.0
+info:
+  title: Cal.diy API v2 Api Keys Webhooks API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Webhooks
+paths:
+  /v2/webhooks:
+    post:
+      operationId: WebhooksController_createWebhook
+      summary: Create a webhook
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookInputDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWebhookOutputResponseDto'
+      tags:
+      - Webhooks
+    get:
+      operationId: WebhooksController_getWebhooks
+      summary: Get all webhooks
+      description: Gets a paginated list of webhooks for the authenticated user.
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWebhooksOutputResponseDto'
+      tags:
+      - Webhooks
+  /v2/webhooks/{webhookId}:
+    patch:
+      operationId: WebhooksController_updateWebhook
+      summary: Update a webhook
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: webhookId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWebhookInputDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWebhookOutputResponseDto'
+      tags:
+      - Webhooks
+    get:
+      operationId: WebhooksController_getWebhook
+      summary: Get a webhook
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: webhookId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWebhookOutputResponseDto'
+      tags:
+      - Webhooks
+    delete:
+      operationId: WebhooksController_deleteWebhook
+      summary: Delete a webhook
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: webhookId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWebhookOutputResponseDto'
+      tags:
+      - Webhooks
+components:
+  schemas:
+    UserWebhookOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UserWebhookOutputDto'
+      required:
+      - status
+      - data
+    CreateWebhookInputDto:
+      type: object
+      properties:
+        payloadTemplate:
+          type: string
+          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
+          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
+        active:
+          type: boolean
+        subscriberUrl:
+          type: string
+        triggers:
+          type: array
+          example:
+          - BOOKING_CREATED
+          - BOOKING_RESCHEDULED
+          - BOOKING_CANCELLED
+          - BOOKING_CONFIRMED
+          - BOOKING_REJECTED
+          - BOOKING_COMPLETED
+          - BOOKING_NO_SHOW
+          - BOOKING_REOPENED
+          items:
+            type: string
+            enum:
+            - BOOKING_CREATED
+            - BOOKING_PAYMENT_INITIATED
+            - BOOKING_PAID
+            - BOOKING_RESCHEDULED
+            - BOOKING_REQUESTED
+            - BOOKING_CANCELLED
+            - BOOKING_REJECTED
+            - BOOKING_NO_SHOW_UPDATED
+            - FORM_SUBMITTED
+            - MEETING_ENDED
+            - MEETING_STARTED
+            - RECORDING_READY
+            - INSTANT_MEETING
+            - RECORDING_TRANSCRIPTION_GENERATED
+            - OOO_CREATED
+            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+            - FORM_SUBMITTED_NO_EVENT
+            - DELEGATION_CREDENTIAL_ERROR
+            - WRONG_ASSIGNMENT_REPORT
+        secret:
+          type: string
+        version:
+          type: string
+          description: The version of the webhook
+          example: '2021-10-20'
+          enum:
+          - '2021-10-20'
+      required:
+      - active
+      - subscriberUrl
+      - triggers
+    UpdateWebhookInputDto:
+      type: object
+      properties:
+        payloadTemplate:
+          type: string
+          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
+          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
+        active:
+          type: boolean
+        subscriberUrl:
+          type: string
+        triggers:
+          type: array
+          example:
+          - BOOKING_CREATED
+          - BOOKING_RESCHEDULED
+          - BOOKING_CANCELLED
+          - BOOKING_CONFIRMED
+          - BOOKING_REJECTED
+          - BOOKING_COMPLETED
+          - BOOKING_NO_SHOW
+          - BOOKING_REOPENED
+          items:
+            type: string
+            enum:
+            - BOOKING_CREATED
+            - BOOKING_PAYMENT_INITIATED
+            - BOOKING_PAID
+            - BOOKING_RESCHEDULED
+            - BOOKING_REQUESTED
+            - BOOKING_CANCELLED
+            - BOOKING_REJECTED
+            - BOOKING_NO_SHOW_UPDATED
+            - FORM_SUBMITTED
+            - MEETING_ENDED
+            - MEETING_STARTED
+            - RECORDING_READY
+            - INSTANT_MEETING
+            - RECORDING_TRANSCRIPTION_GENERATED
+            - OOO_CREATED
+            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+            - FORM_SUBMITTED_NO_EVENT
+            - DELEGATION_CREDENTIAL_ERROR
+            - WRONG_ASSIGNMENT_REPORT
+        secret:
+          type: string
+        version:
+          type: string
+          description: The version of the webhook
+          example: '2021-10-20'
+          enum:
+          - '2021-10-20'
+    UserWebhookOutputDto:
+      type: object
+      properties:
+        payloadTemplate:
+          type: string
+          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
+          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
+        triggers:
+          type: array
+          items:
+            type: string
+            enum:
+            - BOOKING_CREATED
+            - BOOKING_PAYMENT_INITIATED
+            - BOOKING_PAID
+            - BOOKING_RESCHEDULED
+            - BOOKING_REQUESTED
+            - BOOKING_CANCELLED
+            - BOOKING_REJECTED
+            - BOOKING_NO_SHOW_UPDATED
+            - FORM_SUBMITTED
+            - MEETING_ENDED
+            - MEETING_STARTED
+            - RECORDING_READY
+            - INSTANT_MEETING
+            - RECORDING_TRANSCRIPTION_GENERATED
+            - OOO_CREATED
+            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+            - FORM_SUBMITTED_NO_EVENT
+            - DELEGATION_CREDENTIAL_ERROR
+            - WRONG_ASSIGNMENT_REPORT
+        userId:
+          type: number
+        id:
+          type: number
+        subscriberUrl:
+          type: string
+        active:
+          type: boolean
+        secret:
+          type: string
+      required:
+      - payloadTemplate
+      - triggers
+      - userId
+      - id
+      - subscriberUrl
+      - active
+    UserWebhooksOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserWebhookOutputDto'
+      required:
+      - status
+      - data

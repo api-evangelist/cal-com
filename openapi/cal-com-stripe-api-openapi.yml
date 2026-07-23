@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: Cal.diy API v2 Api Keys Stripe API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Stripe
+paths:
+  /v2/stripe/connect:
+    get:
+      operationId: StripeController_redirect
+      summary: Get Stripe connect URL
+      parameters:
+      - name: Authorization
+        required: true
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripConnectOutputResponseDto'
+      tags:
+      - Stripe
+  /v2/stripe/save:
+    get:
+      operationId: StripeController_save
+      summary: Save Stripe credentials
+      parameters:
+      - name: state
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: code
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripCredentialsSaveOutputResponseDto'
+      tags:
+      - Stripe
+  /v2/stripe/check:
+    get:
+      operationId: StripeController_check
+      summary: Check Stripe connection
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripCredentialsCheckOutputResponseDto'
+      tags:
+      - Stripe
+components:
+  schemas:
+    StripConnectOutputDto:
+      type: object
+      properties:
+        authUrl:
+          type: string
+      required:
+      - authUrl
+    StripConnectOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/StripConnectOutputDto'
+      required:
+      - status
+      - data
+    StripCredentialsCheckOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: object
+          example: success
+      required:
+      - status
+    StripCredentialsSaveOutputResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url

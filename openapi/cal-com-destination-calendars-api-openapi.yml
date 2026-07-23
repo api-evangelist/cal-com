@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: Cal.diy API v2 Api Keys Destination Calendars API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Destination Calendars
+paths:
+  /v2/destination-calendars:
+    put:
+      operationId: DestinationCalendarsController_updateDestinationCalendars
+      summary: Update destination calendars
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationCalendarsInputBodyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationCalendarsOutputResponseDto'
+      tags:
+      - Destination Calendars
+components:
+  schemas:
+    DestinationCalendarsInputBodyDto:
+      type: object
+      properties:
+        integration:
+          type: string
+          example: apple_calendar
+          description: The calendar service you want to integrate, as returned by the /calendars endpoint
+          enum:
+          - apple_calendar
+          - google_calendar
+          - office365_calendar
+        externalId:
+          type: string
+          example: https://caldav.icloud.com/26962146906/calendars/1644422A-1945-4438-BBC0-4F0Q23A57R7S/
+          description: Unique identifier used to represent the specific calendar, as returned by the /calendars endpoint
+        delegationCredentialId:
+          type: string
+      required:
+      - integration
+      - externalId
+    DestinationCalendarsOutputDto:
+      type: object
+      properties:
+        userId:
+          type: number
+        integration:
+          type: string
+        externalId:
+          type: string
+        credentialId:
+          type: number
+          nullable: true
+      required:
+      - userId
+      - integration
+      - externalId
+      - credentialId
+    DestinationCalendarsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/DestinationCalendarsOutputDto'
+      required:
+      - status
+      - data

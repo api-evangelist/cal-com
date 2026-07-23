@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: Cal.diy API v2 Api Keys Selected Calendars API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Selected Calendars
+paths:
+  /v2/selected-calendars:
+    post:
+      operationId: SelectedCalendarsController_addSelectedCalendar
+      summary: Add a selected calendar
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectedCalendarsInputDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelectedCalendarOutputResponseDto'
+      tags:
+      - Selected Calendars
+    delete:
+      operationId: SelectedCalendarsController_deleteSelectedCalendar
+      summary: Delete a selected calendar
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        required: true
+        schema:
+          type: string
+      - name: integration
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: externalId
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: credentialId
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: delegationCredentialId
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelectedCalendarOutputResponseDto'
+      tags:
+      - Selected Calendars
+components:
+  schemas:
+    SelectedCalendarsInputDto:
+      type: object
+      properties:
+        integration:
+          type: string
+        externalId:
+          type: string
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type: string
+      required:
+      - integration
+      - externalId
+      - credentialId
+    SelectedCalendarOutputDto:
+      type: object
+      properties:
+        userId:
+          type: number
+        integration:
+          type: string
+        externalId:
+          type: string
+        credentialId:
+          type: number
+          nullable: true
+      required:
+      - userId
+      - integration
+      - externalId
+      - credentialId
+    SelectedCalendarOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/SelectedCalendarOutputDto'
+      required:
+      - status
+      - data
