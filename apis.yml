@@ -7,7 +7,19 @@ description: >-
   self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks,
   OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding
   scheduling primitives into other apps.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/cal-com.png
 tags:
   - Productivity
   - Scheduling
@@ -18,210 +30,936 @@ created: '2026-05-08'
 modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
-  - aid: cal-com:cal-com-bookings-api
-    name: Cal.com Bookings API
-    tags:
-      - Bookings
-      - CRUD
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/bookings
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference
-        type: Documentation
-      - url: https://cal.com/docs/api-reference/v2/bookings
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: Create, read, update, cancel, and reschedule bookings. Supports recurring, seated, and round-robin booking flows.
-  - aid: cal-com:cal-com-event-types-api
-    name: Cal.com Event Types API
-    tags:
-      - Event Types
-      - Configuration
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/event-types
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/event-types
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: >-
-      Manage event types (meeting templates) — duration, location, fields, locations, payment, recurrence, and team
-      round-robin assignments.
-  - aid: cal-com:cal-com-schedules-api
-    name: Cal.com Schedules API
-    tags:
-      - Schedules
-      - Working Hours
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/schedules
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/schedules
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: Manage user schedules — weekly working hours, date overrides, and timezone defaults.
-  - aid: cal-com:cal-com-availability-api
-    name: Cal.com Availability API
-    tags:
-      - Availability
-      - Calendar
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/availability
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/availability
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: Compute and read user/team availability across event types, accounting for connected calendars and overrides.
-  - aid: cal-com:cal-com-slots-api
-    name: Cal.com Slots API
-    tags:
-      - Slots
-      - Time
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/slots
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/slots
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: >-
-      Reserve, list, and release bookable time slots for event types — used by booking page UIs to lock a slot before
-      confirmation.
-  - aid: cal-com:cal-com-webhooks-api
-    name: Cal.com Webhooks API
-    tags:
-      - Webhooks
-      - Events
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/webhooks
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/webhooks
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-      - url: asyncapi/cal-com-webhooks-asyncapi.yaml
-        type: AsyncAPI
-    description: >-
-      Subscribe to BOOKING_CREATED, BOOKING_RESCHEDULED, BOOKING_CANCELLED, MEETING_STARTED, and other events;
-      deliveries POST to a developer-defined endpoint.
-  - aid: cal-com:cal-com-oauth-api
-    name: Cal.com OAuth & Auth API
-    tags:
-      - OAuth
-      - Authentication
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/oauth
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/oauth
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: >-
-      OAuth client management, token issuance, and refresh — primarily used by Cal.com Platform integrations to manage
-      end-user accounts under a hosting application.
-  - aid: cal-com:cal-com-teams-api
-    name: Cal.com Teams API
-    tags:
-      - Teams
-      - Membership
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/teams
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/teams
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: Manage teams, team members, and team event types for collective and round-robin scheduling.
-  - aid: cal-com:cal-com-organizations-api
-    name: Cal.com Organizations API
-    tags:
-      - Organizations
-      - Enterprise
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/organizations
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/organizations
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: Top-level organizations API for managing sub-teams, members, and organization-wide event types and routing forms.
-  - aid: cal-com:cal-com-ooo-api
-    name: Cal.com Out-of-Office API
-    tags:
-      - OOO
-      - Availability
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/out-of-office
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/out-of-office
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: Mark users as out-of-office for a date range, with optional automatic forwarding to a delegate.
-  - aid: cal-com:cal-com-conferencing-api
-    name: Cal.com Conferencing API
-    tags:
-      - Conferencing
-      - Video
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/conferencing
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/conferencing
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: >-
-      Connect and manage video-conferencing apps (Zoom, Google Meet, Microsoft Teams, Cal Video, Daily, etc.) used as
-      event-type locations.
-  - aid: cal-com:cal-com-destination-calendars-api
-    name: Cal.com Destination Calendars API
-    tags:
-      - Calendars
-      - Integration
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/api-reference/v2/destination-calendars
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/api-reference/v2/destination-calendars
-        type: APIReference
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: >-
-      Connect Google, Outlook/Office 365, Apple, and CalDAV calendars; choose where new bookings are written and where
-      conflicts are read from.
-  - aid: cal-com:cal-com-atoms-api
-    name: Cal.com Atoms (Platform)
-    tags:
-      - Atoms
-      - SDK
-      - Embed
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://cal.com/docs/platform
-    baseURL: https://api.cal.com/v2
-    properties:
-      - url: https://cal.com/docs/platform
-        type: Documentation
-      - url: https://www.npmjs.com/package/@calcom/atoms
-        type: SDKs
-      - url: openapi/cal-com-openapi.json
-        type: OpenAPI
-    description: >-
-      Cal.com Platform exposes pre-built React components ("Atoms") and a managed-user OAuth model so SaaS apps can
-      embed scheduling primitives end-to-end. Used by platforms that want to ship Cal.com features under their own
-      brand.
+- aid: cal-com:cal-com-api-keys-api
+  name: Cal.com Api Keys API
+  description: The Api Keys API from Cal.com — 1 operation(s) for api keys.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Api Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-bookings-api
+  name: Cal.com Bookings API
+  description: The Bookings API from Cal.com — 16 operation(s) for bookings.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-bookings-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-bookings-attendees-api
+  name: Cal.com Bookings / Attendees API
+  description: The Bookings / Attendees API from Cal.com — 2 operation(s) for bookings / attendees.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Bookings / Attendees
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-bookings-attendees-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-bookings-guests-api
+  name: Cal.com Bookings / Guests API
+  description: The Bookings / Guests API from Cal.com — 1 operation(s) for bookings / guests.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Bookings / Guests
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-bookings-guests-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-cal-unified-calendars-api
+  name: Cal.com Cal Unified Calendars API
+  description: The Cal Unified Calendars API from Cal.com — 8 operation(s) for cal unified calendars.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Cal Unified Calendars
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-cal-unified-calendars-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-calendars-api
+  name: Cal.com Calendars API
+  description: The Calendars API from Cal.com — 9 operation(s) for calendars.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Calendars
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-calendars-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-conferencing-api
+  name: Cal.com Conferencing API
+  description: The Conferencing API from Cal.com — 7 operation(s) for conferencing.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Conferencing
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-conferencing-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-deprecated-platform-managed-users-api
+  name: 'Cal.com Deprecated: Platform / Managed Users API'
+  description: >-
+    The Deprecated: Platform / Managed Users API from Cal.com — 4 operation(s) for deprecated: platform
+    / managed users.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - 'Deprecated: Platform / Managed Users'
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-deprecated-platform-managed-users-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-deprecated-platform-oauth-clients-api
+  name: 'Cal.com Deprecated: Platform OAuth Clients API'
+  description: >-
+    The Deprecated: Platform OAuth Clients API from Cal.com — 2 operation(s) for deprecated: platform
+    oauth clients.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - 'Deprecated: Platform OAuth Clients'
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-deprecated-platform-oauth-clients-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-deprecated-platform-webhooks-api
+  name: 'Cal.com Deprecated: Platform / Webhooks API'
+  description: >-
+    The Deprecated: Platform / Webhooks API from Cal.com — 2 operation(s) for deprecated: platform / webhooks.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - 'Deprecated: Platform / Webhooks'
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-deprecated-platform-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-destination-calendars-api
+  name: Cal.com Destination Calendars API
+  description: The Destination Calendars API from Cal.com — 1 operation(s) for destination calendars.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Destination Calendars
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-destination-calendars-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-event-types-api
+  name: Cal.com Event Types API
+  description: The Event Types API from Cal.com — 2 operation(s) for event types.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Event Types
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-event-types-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-event-types-private-links-api
+  name: Cal.com Event Types Private Links API
+  description: >-
+    The Event Types Private Links API from Cal.com — 2 operation(s) for event types private links.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Event Types Private Links
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-event-types-private-links-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-event-types-webhooks-api
+  name: Cal.com Event Types / Webhooks API
+  description: The Event Types / Webhooks API from Cal.com — 2 operation(s) for event types / webhooks.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Event Types / Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-event-types-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-me-api
+  name: Cal.com Me API
+  description: The Me API from Cal.com — 1 operation(s) for me.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Me
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-me-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-oauth2-api
+  name: Cal.com OAuth2 API
+  description: The OAuth2 API from Cal.com — 2 operation(s) for oauth2.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - OAuth2
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-oauth2-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-schedules-api
+  name: Cal.com Schedules API
+  description: The Schedules API from Cal.com — 3 operation(s) for schedules.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-selected-calendars-api
+  name: Cal.com Selected Calendars API
+  description: The Selected Calendars API from Cal.com — 1 operation(s) for selected calendars.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Selected Calendars
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-selected-calendars-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-slots-api
+  name: Cal.com Slots API
+  description: The Slots API from Cal.com — 3 operation(s) for slots.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Slots
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-slots-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-stripe-api
+  name: Cal.com Stripe API
+  description: The Stripe API from Cal.com — 3 operation(s) for stripe.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Stripe
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-stripe-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-verified-resources-api
+  name: Cal.com Verified Resources API
+  description: The Verified Resources API from Cal.com — 8 operation(s) for verified resources.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Verified Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-verified-resources-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-webhooks-api
+  name: Cal.com Webhooks API
+  description: The Webhooks API from Cal.com — 2 operation(s) for webhooks.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://cal.com/docs/api-reference
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/bookings
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/event-types
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/schedules
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/availability
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/slots
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/webhooks
+  - type: AsyncAPI
+    url: asyncapi/cal-com-webhooks-asyncapi.yaml
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/oauth
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/teams
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/organizations
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/out-of-office
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/conferencing
+  - type: APIReference
+    url: https://cal.com/docs/api-reference/v2/destination-calendars
+  - type: Documentation
+    url: https://cal.com/docs/platform
+  - type: SDKs
+    url: https://www.npmjs.com/package/@calcom/atoms
 common:
   - type: AgenticAccess
     url: agentic-access/cal-com-agentic-access.yml
