@@ -28,7 +28,7 @@ tags:
   - Booking
 created: '2026-05-08'
 modified: '2026-05-30'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: cal-com:cal-com-api-keys-api
   name: Cal.com Api Keys API
