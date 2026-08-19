@@ -1,0 +1,924 @@
+{
+  "item": [
+    {
+      "id": "34d55976-bfe1-4302-b5a1-011b5a0d128a",
+      "name": "Deprecated: Platform / Managed Users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b7439618-3dfa-48a5-937c-c325265fc599",
+          "name": "Get all managed users",
+          "request": {
+            "name": "Get all managed users",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "The number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<number>",
+                  "description": "The number of items to skip"
+                },
+                {
+                  "disabled": false,
+                  "key": "emails",
+                  "value": "<string>",
+                  "description": "Filter managed users by email. If you want to filter by multiple emails, separate them with a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "emails",
+                  "value": "<string>",
+                  "description": "Filter managed users by email. If you want to filter by multiple emails, separate them with a comma."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "62b7a979-9994-483a-a017-0962bd09f6b3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emails",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"email\": \"alice+cluo37fwd0001khkzqqynkpj3@example.com\",\n      \"username\": \"alice\",\n      \"name\": \"alice\",\n      \"bio\": \"bio\",\n      \"timeZone\": \"America/New_York\",\n      \"weekStart\": \"Sunday\",\n      \"createdDate\": \"2024-04-01T00:00:00.000Z\",\n      \"timeFormat\": 12,\n      \"defaultScheduleId\": null,\n      \"locale\": \"en\",\n      \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n      \"metadata\": {\n        \"key\": \"value\"\n      }\n    },\n    {\n      \"id\": 1,\n      \"email\": \"alice+cluo37fwd0001khkzqqynkpj3@example.com\",\n      \"username\": \"alice\",\n      \"name\": \"alice\",\n      \"bio\": \"bio\",\n      \"timeZone\": \"America/New_York\",\n      \"weekStart\": \"Sunday\",\n      \"createdDate\": \"2024-04-01T00:00:00.000Z\",\n      \"timeFormat\": 12,\n      \"defaultScheduleId\": null,\n      \"locale\": \"en\",\n      \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n      \"metadata\": {\n        \"key\": \"value\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f86922f1-f5f2-43f0-b1f6-85ba1d925276",
+          "name": "Create a managed user",
+          "request": {
+            "name": "Create a managed user",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"timeFormat\": \"<number>\",\n  \"weekStart\": \"<string>\",\n  \"timeZone\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"avatarUrl\": \"<string>\",\n  \"bio\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aefa484e-c435-4764-9689-b83ddad781c1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"alice@example.com\",\n  \"name\": \"Alice Smith\",\n  \"timeFormat\": 12,\n  \"weekStart\": \"Monday\",\n  \"timeZone\": \"America/New_York\",\n  \"locale\": \"en\",\n  \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n  \"bio\": \"I am a bio\",\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\",\n    \"user\": {\n      \"id\": 1,\n      \"email\": \"alice+cluo37fwd0001khkzqqynkpj3@example.com\",\n      \"username\": \"alice\",\n      \"name\": \"alice\",\n      \"bio\": \"bio\",\n      \"timeZone\": \"America/New_York\",\n      \"weekStart\": \"Sunday\",\n      \"createdDate\": \"2024-04-01T00:00:00.000Z\",\n      \"timeFormat\": 12,\n      \"defaultScheduleId\": null,\n      \"locale\": \"en\",\n      \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n      \"metadata\": {\n        \"key\": \"value\"\n      }\n    },\n    \"accessTokenExpiresAt\": 2641.152167602642,\n    \"refreshTokenExpiresAt\": 787.3538697068982\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d413dadf-bfea-4039-949d-03929ae25195",
+          "name": "Get a managed user",
+          "request": {
+            "name": "Get a managed user",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "userId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5c7f61a-5649-48f6-a239-098013415734",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "userId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"email\": \"alice+cluo37fwd0001khkzqqynkpj3@example.com\",\n    \"username\": \"alice\",\n    \"name\": \"alice\",\n    \"bio\": \"bio\",\n    \"timeZone\": \"America/New_York\",\n    \"weekStart\": \"Sunday\",\n    \"createdDate\": \"2024-04-01T00:00:00.000Z\",\n    \"timeFormat\": 12,\n    \"defaultScheduleId\": null,\n    \"locale\": \"en\",\n    \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n    \"metadata\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4a2fd41-683f-4037-b9e4-7b12e8ba4bfa",
+          "name": "Update a managed user",
+          "request": {
+            "name": "Update a managed user",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "userId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"timeFormat\": \"<number>\",\n  \"defaultScheduleId\": \"<number>\",\n  \"weekStart\": \"<string>\",\n  \"timeZone\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"avatarUrl\": \"<string>\",\n  \"bio\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0c62ae50-e0c0-435b-bd73-b48c03cd0afc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "userId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"timeFormat\": 12,\n  \"defaultScheduleId\": \"<number>\",\n  \"weekStart\": \"Monday\",\n  \"timeZone\": \"<string>\",\n  \"locale\": \"en\",\n  \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n  \"bio\": \"I am a bio\",\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"email\": \"alice+cluo37fwd0001khkzqqynkpj3@example.com\",\n    \"username\": \"alice\",\n    \"name\": \"alice\",\n    \"bio\": \"bio\",\n    \"timeZone\": \"America/New_York\",\n    \"weekStart\": \"Sunday\",\n    \"createdDate\": \"2024-04-01T00:00:00.000Z\",\n    \"timeFormat\": 12,\n    \"defaultScheduleId\": null,\n    \"locale\": \"en\",\n    \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n    \"metadata\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa96214d-ffca-4a12-8cac-7f1e7539551d",
+          "name": "Delete a managed user",
+          "request": {
+            "name": "Delete a managed user",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "userId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb18fb80-edce-4f28-9bfe-b8de3b1c39b3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "userId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"email\": \"alice+cluo37fwd0001khkzqqynkpj3@example.com\",\n    \"username\": \"alice\",\n    \"name\": \"alice\",\n    \"bio\": \"bio\",\n    \"timeZone\": \"America/New_York\",\n    \"weekStart\": \"Sunday\",\n    \"createdDate\": \"2024-04-01T00:00:00.000Z\",\n    \"timeFormat\": 12,\n    \"defaultScheduleId\": null,\n    \"locale\": \"en\",\n    \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n    \"metadata\": {\n      \"key\": \"value\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41431356-aea4-4aa5-aea1-4612fd8ab275",
+          "name": "Force refresh tokens",
+          "request": {
+            "name": "Force refresh tokens",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning> If you have lost managed user access or refresh token, then you can get new ones by using OAuth credentials. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.\nResponse also contains `accessTokenExpiresAt` and `refreshTokenExpiresAt` fields, but if you decode the jwt token the payload will contain `clientId` (OAuth client ID), `ownerId` (user to whom token belongs ID), `iat` (issued at time) and `expiresAt` (when does the token expire) fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "users",
+                ":userId",
+                "force-refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "userId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ff64913-4c70-4ee9-bbd4-4b48def28906",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "users",
+                    ":userId",
+                    "force-refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "userId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\",\n    \"accessTokenExpiresAt\": 447.6796765092772,\n    \"refreshTokenExpiresAt\": 8855.143633691643\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddea348c-cfd0-4447-a92b-27d3e81ccd25",
+          "name": "Refresh managed user tokens",
+          "request": {
+            "name": "Refresh managed user tokens",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning> If managed user access token is expired then get a new one using this endpoint - it will also refresh the refresh token, because we use\n    \"refresh token rotation\" mechanism. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.\nResponse also contains `accessTokenExpiresAt` and `refreshTokenExpiresAt` fields, but if you decode the jwt token the payload will contain `clientId` (OAuth client ID), `ownerId` (user to whom token belongs ID), `iat` (issued at time) and `expiresAt` (when does the token expire) fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth",
+                ":clientId",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key.",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f98d2c50-aee7-4e29-bb0b-3e8c45040f78",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth",
+                    ":clientId",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key.",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\",\n    \"accessTokenExpiresAt\": 447.6796765092772,\n    \"refreshTokenExpiresAt\": 8855.143633691643\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7961b53f-0e87-4a80-a69b-38f437dc1d8b",
+    "name": "Cal.diy API v2 Api Keys Deprecated: Platform / Managed Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

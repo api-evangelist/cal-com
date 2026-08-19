@@ -1,0 +1,514 @@
+{
+  "item": [
+    {
+      "id": "780354c9-d2ff-43a4-908e-adc6105fa8b7",
+      "name": "Deprecated: Platform OAuth Clients",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c3d280a8-3225-4110-8828-885e1121f14a",
+          "name": "Create an OAuth client",
+          "request": {
+            "name": "Create an OAuth client",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"redirectUris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"permissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"logo\": \"<string>\",\n  \"bookingRedirectUri\": \"<string>\",\n  \"bookingCancelRedirectUri\": \"<string>\",\n  \"bookingRescheduleRedirectUri\": \"<string>\",\n  \"areEmailsEnabled\": \"<boolean>\",\n  \"areDefaultEventTypesEnabled\": false,\n  \"areCalendarEventsEnabled\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60337b1b-58f4-4c47-bdf7-559f71ccdbcc",
+              "name": "Create an OAuth client",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirectUris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"permissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"logo\": \"<string>\",\n  \"bookingRedirectUri\": \"<string>\",\n  \"bookingCancelRedirectUri\": \"<string>\",\n  \"bookingRescheduleRedirectUri\": \"<string>\",\n  \"areEmailsEnabled\": \"<boolean>\",\n  \"areDefaultEventTypesEnabled\": false,\n  \"areCalendarEventsEnabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"clientId\": \"clsx38nbl0001vkhlwin9fmt0\",\n    \"clientSecret\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72184c42-9031-49d3-b912-a43f22ab9df9",
+          "name": "Get all OAuth clients",
+          "request": {
+            "name": "Get all OAuth clients",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f719658-56ec-44ec-ad46-f3a3d8bbf957",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": \"clsx38nbl0001vkhlwin9fmt0\",\n      \"name\": \"MyClient\",\n      \"secret\": \"secretValue\",\n      \"permissions\": [\n        \"BOOKING_READ\",\n        \"BOOKING_WRITE\"\n      ],\n      \"redirectUris\": [\n        \"https://example.com/callback\"\n      ],\n      \"organizationId\": 1,\n      \"createdAt\": \"2024-03-23T08:33:21.851Z\",\n      \"areEmailsEnabled\": true,\n      \"areDefaultEventTypesEnabled\": true,\n      \"areCalendarEventsEnabled\": true,\n      \"logo\": {},\n      \"bookingRedirectUri\": \"https://example.com/booking-redirect\",\n      \"bookingCancelRedirectUri\": \"https://example.com/booking-cancel\",\n      \"bookingRescheduleRedirectUri\": \"https://example.com/booking-reschedule\"\n    },\n    {\n      \"id\": \"clsx38nbl0001vkhlwin9fmt0\",\n      \"name\": \"MyClient\",\n      \"secret\": \"secretValue\",\n      \"permissions\": [\n        \"BOOKING_READ\",\n        \"BOOKING_WRITE\"\n      ],\n      \"redirectUris\": [\n        \"https://example.com/callback\"\n      ],\n      \"organizationId\": 1,\n      \"createdAt\": \"2024-03-23T08:33:21.851Z\",\n      \"areEmailsEnabled\": true,\n      \"areDefaultEventTypesEnabled\": true,\n      \"areCalendarEventsEnabled\": true,\n      \"logo\": {},\n      \"bookingRedirectUri\": \"https://example.com/booking-redirect\",\n      \"bookingCancelRedirectUri\": \"https://example.com/booking-cancel\",\n      \"bookingRescheduleRedirectUri\": \"https://example.com/booking-reschedule\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbd6261a-f3eb-48a6-bacd-4c5ae1733637",
+          "name": "Get an OAuth client",
+          "request": {
+            "name": "Get an OAuth client",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5f6de425-cdfc-4414-aef8-b86fc0671c1b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": \"clsx38nbl0001vkhlwin9fmt0\",\n    \"name\": \"MyClient\",\n    \"secret\": \"secretValue\",\n    \"permissions\": [\n      \"BOOKING_READ\",\n      \"BOOKING_WRITE\"\n    ],\n    \"redirectUris\": [\n      \"https://example.com/callback\"\n    ],\n    \"organizationId\": 1,\n    \"createdAt\": \"2024-03-23T08:33:21.851Z\",\n    \"areEmailsEnabled\": true,\n    \"areDefaultEventTypesEnabled\": true,\n    \"areCalendarEventsEnabled\": true,\n    \"logo\": {},\n    \"bookingRedirectUri\": \"https://example.com/booking-redirect\",\n    \"bookingCancelRedirectUri\": \"https://example.com/booking-cancel\",\n    \"bookingRescheduleRedirectUri\": \"https://example.com/booking-reschedule\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5c72850-3508-416e-8bcd-5900d2cfc10c",
+          "name": "Update an OAuth client",
+          "request": {
+            "name": "Update an OAuth client",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"logo\": \"<string>\",\n  \"name\": \"<string>\",\n  \"redirectUris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"bookingRedirectUri\": \"<string>\",\n  \"bookingCancelRedirectUri\": \"<string>\",\n  \"bookingRescheduleRedirectUri\": \"<string>\",\n  \"areEmailsEnabled\": \"<boolean>\",\n  \"areDefaultEventTypesEnabled\": \"<boolean>\",\n  \"areCalendarEventsEnabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f6487553-3547-4198-82a9-3941e128bcce",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"logo\": \"<string>\",\n  \"name\": \"<string>\",\n  \"redirectUris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"bookingRedirectUri\": \"<string>\",\n  \"bookingCancelRedirectUri\": \"<string>\",\n  \"bookingRescheduleRedirectUri\": \"<string>\",\n  \"areEmailsEnabled\": \"<boolean>\",\n  \"areDefaultEventTypesEnabled\": \"<boolean>\",\n  \"areCalendarEventsEnabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": \"clsx38nbl0001vkhlwin9fmt0\",\n    \"name\": \"MyClient\",\n    \"secret\": \"secretValue\",\n    \"permissions\": [\n      \"BOOKING_READ\",\n      \"BOOKING_WRITE\"\n    ],\n    \"redirectUris\": [\n      \"https://example.com/callback\"\n    ],\n    \"organizationId\": 1,\n    \"createdAt\": \"2024-03-23T08:33:21.851Z\",\n    \"areEmailsEnabled\": true,\n    \"areDefaultEventTypesEnabled\": true,\n    \"areCalendarEventsEnabled\": true,\n    \"logo\": {},\n    \"bookingRedirectUri\": \"https://example.com/booking-redirect\",\n    \"bookingCancelRedirectUri\": \"https://example.com/booking-cancel\",\n    \"bookingRescheduleRedirectUri\": \"https://example.com/booking-reschedule\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b074036c-d7e2-4d53-8d8f-0321315c115e",
+          "name": "Delete an OAuth client",
+          "request": {
+            "name": "Delete an OAuth client",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "548fec59-a231-4012-a635-2e3aea83c5e3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": \"clsx38nbl0001vkhlwin9fmt0\",\n    \"name\": \"MyClient\",\n    \"secret\": \"secretValue\",\n    \"permissions\": [\n      \"BOOKING_READ\",\n      \"BOOKING_WRITE\"\n    ],\n    \"redirectUris\": [\n      \"https://example.com/callback\"\n    ],\n    \"organizationId\": 1,\n    \"createdAt\": \"2024-03-23T08:33:21.851Z\",\n    \"areEmailsEnabled\": true,\n    \"areDefaultEventTypesEnabled\": true,\n    \"areCalendarEventsEnabled\": true,\n    \"logo\": {},\n    \"bookingRedirectUri\": \"https://example.com/booking-redirect\",\n    \"bookingCancelRedirectUri\": \"https://example.com/booking-cancel\",\n    \"bookingRescheduleRedirectUri\": \"https://example.com/booking-reschedule\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f4ef38ed-9bb3-4ca8-8130-080c2c244723",
+    "name": "Cal.diy API v2 Api Keys Deprecated: Platform OAuth Clients API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

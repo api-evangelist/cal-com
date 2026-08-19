@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2 Api Keys Deprecated: Platform / Managed Users API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deprecated: Platform / Managed Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all managed users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to skip"
+              },
+              {
+                "name": "emails",
+                "value": "",
+                "type": "query",
+                "description": "Filter managed users by email. If you want to filter by multiple emails, separate them with a comma."
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Create a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Get a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Update a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Delete a managed user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>"
+        },
+        {
+          "info": {
+            "name": "Force refresh tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth-clients/:clientId/users/:userId/force-refresh",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning> If you have lost managed user access or refresh token, then you can get new ones by using OAuth credentials. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.\nResponse also contains `accessTokenExpiresAt` and `refreshTokenExpiresAt` fields, but if you decode the jwt t"
+        },
+        {
+          "info": {
+            "name": "Refresh managed user tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/oauth/:clientId/refresh",
+            "headers": [
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "clientId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning> If managed user access token is expired then get a new one using this endpoint - it will also refresh the refresh token, because we use\n    \"refresh token rotation\" mechanism. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.\nResponse also contains `accessTokenExpires"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

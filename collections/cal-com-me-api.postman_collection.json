@@ -1,0 +1,204 @@
+{
+  "item": [
+    {
+      "id": "19fbab40-b8ce-4815-9a12-2483511977db",
+      "name": "Me",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "790e069f-05a9-48b9-b1c9-9a4fd6e7ed74",
+          "name": "Get my profile",
+          "request": {
+            "name": "Get my profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9ffb2b7-e420-40e2-bce4-319a771c6629",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 212.1224929719545,\n    \"username\": \"string\",\n    \"email\": \"string\",\n    \"name\": \"string\",\n    \"avatarUrl\": \"string\",\n    \"bio\": \"string\",\n    \"timeFormat\": 6170.363669333085,\n    \"defaultScheduleId\": 1321.4779661718535,\n    \"weekStart\": \"string\",\n    \"timeZone\": \"string\",\n    \"organizationId\": 7596.216796469292,\n    \"organization\": {\n      \"isPlatform\": true,\n      \"id\": 1974.8346401344374\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d977881-d605-4223-96c5-578d673e0b75",
+          "name": "Update my profile",
+          "request": {
+            "name": "Update my profile",
+            "description": {
+              "content": "Updates the authenticated user's profile. Email changes require verification and the primary email stays unchanged until verification completes, unless the new email is already a verified secondary email or the user is platform-managed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"timeFormat\": \"<number>\",\n  \"defaultScheduleId\": \"<number>\",\n  \"weekStart\": \"<string>\",\n  \"timeZone\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"avatarUrl\": \"<string>\",\n  \"bio\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "816f6468-579f-42ca-9fa7-ca8713022b42",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"timeFormat\": 12,\n  \"defaultScheduleId\": \"<number>\",\n  \"weekStart\": \"Monday\",\n  \"timeZone\": \"<string>\",\n  \"locale\": \"en\",\n  \"avatarUrl\": \"https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png\",\n  \"bio\": \"I am a bio\",\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 212.1224929719545,\n    \"username\": \"string\",\n    \"email\": \"string\",\n    \"name\": \"string\",\n    \"avatarUrl\": \"string\",\n    \"bio\": \"string\",\n    \"timeFormat\": 6170.363669333085,\n    \"defaultScheduleId\": 1321.4779661718535,\n    \"weekStart\": \"string\",\n    \"timeZone\": \"string\",\n    \"organizationId\": 7596.216796469292,\n    \"organization\": {\n      \"isPlatform\": true,\n      \"id\": 1974.8346401344374\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c08b74fd-70f0-48bf-a64e-73bacd8bd190",
+    "name": "Cal.diy API v2 Api Keys Me API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

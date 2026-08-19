@@ -1,0 +1,692 @@
+{
+  "item": [
+    {
+      "id": "725a4713-bfa1-4b4b-8d0c-5ce271e1aa38",
+      "name": "Slots",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4d035b91-31b1-4b0c-9b7e-12d503c08da0",
+          "name": "Get available time slots for an event type",
+          "request": {
+            "name": "Get available time slots for an event type",
+            "description": {
+              "content": "\n      There are 4 ways to get available slots for event type of an individual user:\n\n      1. By event type id. Example '/v2/slots?eventTypeId=10&start=2050-09-05&end=2050-09-06&timeZone=Europe/Rome'\n\n      2. By event type slug + username. Example '/v2/slots?eventTypeSlug=intro&username=bob&start=2050-09-05&end=2050-09-06'\n\n      3. By event type slug + username + organization slug when searching within an organization. Example '/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&username=bob&start=2050-09-05&end=2050-09-06'\n\n      4. By usernames only (used for dynamic event type - there is no specific event but you want to know when 2 or more people are available). Example '/v2/slots?usernames=alice,bob&username=bob&organizationSlug=org-slug&start=2050-09-05&end=2050-09-06'. As you see you also need to provide the slug of the organization to which each user in the 'usernames' array belongs.\n\n      And 3 ways to get available slots for team event type:\n\n      1. By team event type id. Example '/v2/slots?eventTypeId=10&start=2050-09-05&end=2050-09-06&timeZone=Europe/Rome'.\n         **Note for managed event types**: Managed event types are templates that create individual child event types for each team member. You cannot fetch slots for the parent managed event type directly. Instead, you must:\n         - Find the child event type IDs (the ones assigned to specific users)\n         - Use those child event type IDs to fetch slots as individual user event types using as described in the individual user section above.\n\n      2. By team event type slug + team slug. Example '/v2/slots?eventTypeSlug=intro&teamSlug=team-slug&start=2050-09-05&end=2050-09-06'\n\n      3. By team event type slug + team slug + organization slug when searching within an organization. Example '/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&teamSlug=team-slug&start=2050-09-05&end=2050-09-06'\n\n      All of them require \"start\" and \"end\" query parameters which define the time range for which available slots should be checked.\n      Optional parameters are:\n      - timeZone: Time zone in which the available slots should be returned. Defaults to UTC.\n      - duration: Only use for event types that allow multiple durations or for dynamic event types. If not passed for multiple duration event types defaults to default duration. For dynamic event types defaults to 30 aka each returned slot is 30 minutes long. So duration=60 means that returned slots will be each 60 minutes long.\n      - format: Format of the slots. By default return is an object where each key is date and value is array of slots as string. If you want to get start and end of each slot use \"range\" as value.\n      - bookingUidToReschedule: When rescheduling an existing booking, provide the booking's unique identifier to exclude its time slot from busy time calculations. This ensures the original booking time appears as available for rescheduling.\n\n       <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "slots"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bookingUidToReschedule",
+                  "value": "<string>",
+                  "description": "The unique identifier of the booking being rescheduled. When provided will ensure that the original booking time appears within the returned available slots when rescheduling."
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<string>",
+                  "description": "(Required) \n      Time starting from which available slots should be checked.\n\n      Must be in UTC timezone as ISO 8601 datestring.\n\n      You can pass date without hours which defaults to start of day or specify hours:\n      2024-08-13 (will have hours 00:00:00 aka at very beginning of the date) or you can specify hours manually like 2024-08-13T09:00:00Z."
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<string>",
+                  "description": "(Required) \n    Time until which available slots should be checked.\n\n    Must be in UTC timezone as ISO 8601 datestring.\n\n    You can pass date without hours which defaults to end of day or specify hours:\n    2024-08-20 (will have hours 23:59:59 aka at the very end of the date) or you can specify hours manually like 2024-08-20T18:00:00Z."
+                },
+                {
+                  "disabled": false,
+                  "key": "organizationSlug",
+                  "value": "<string>",
+                  "description": "The slug of the organization to which user with username belongs or team with teamSlug belongs."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamSlug",
+                  "value": "<string>",
+                  "description": "The slug of the team who owns event type with eventTypeSlug - used when slots are checked for team event type."
+                },
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "The username of the user who owns event type with eventTypeSlug - used when slots are checked for individual user event type."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeSlug",
+                  "value": "<string>",
+                  "description": "The slug of the event type for which available slots should be checked. If slug is provided then username or teamSlug must be provided too and if relevant organizationSlug too."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeId",
+                  "value": "<number>",
+                  "description": "The ID of the event type for which available slots should be checked."
+                },
+                {
+                  "disabled": false,
+                  "key": "usernames",
+                  "value": "<string>",
+                  "description": "The usernames for which available slots should be checked separated by a comma.\n\n    Checking slots by usernames is used mainly for dynamic events where there is no specific event but we just want to know when 2 or more people are available.\n\n    Must contain at least 2 usernames."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Format of slot times in response. Use 'range' to get start and end times. Use 'time' or omit this query parameter to get only start time."
+                },
+                {
+                  "disabled": false,
+                  "key": "duration",
+                  "value": "<number>",
+                  "description": "If event type has multiple possible durations then you can specify the desired duration here. Also, if you are fetching slots for a dynamic event then you can specify the duration her which defaults to 30, meaning that returned slots will be each 30 minutes long."
+                },
+                {
+                  "disabled": false,
+                  "key": "timeZone",
+                  "value": "<string>",
+                  "description": "Time zone in which the available slots should be returned. Defaults to UTC."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-09-04"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "716a8519-0990-4887-8d94-7504df3edcb4",
+              "name": "A map of available slots indexed by date, where each date is associated with an array of time slots. If format=range is specified, each slot will be an object with start and end properties denoting start and end of the slot.\n      For seated slots each object will have attendeesCount and bookingUid properties.\n      If no slots are available, the data field will be an empty object {}.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "slots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bookingUidToReschedule",
+                      "value": "abc123def456"
+                    },
+                    {
+                      "key": "start",
+                      "value": "2050-09-05"
+                    },
+                    {
+                      "key": "end",
+                      "value": "2050-09-06"
+                    },
+                    {
+                      "key": "organizationSlug",
+                      "value": "org-slug"
+                    },
+                    {
+                      "key": "teamSlug",
+                      "value": "team-slug"
+                    },
+                    {
+                      "key": "username",
+                      "value": "bob"
+                    },
+                    {
+                      "key": "eventTypeSlug",
+                      "value": "event-type-slug"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "usernames",
+                      "value": "alice,bob"
+                    },
+                    {
+                      "key": "format",
+                      "value": "range"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "timeZone",
+                      "value": "Europe/Rome"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-09-04"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4bffe162-e743-4e03-9f40-e01bcbb5fde7",
+          "name": "Reserve a slot",
+          "request": {
+            "name": "Reserve a slot",
+            "description": {
+              "content": "Make a slot not available for others to book for a certain period of time. If you authenticate using oAuth credentials, api key or access token\n    then you can also specify custom duration for how long the slot should be reserved for (defaults to 5 minutes).\n    \n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>    \n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "slots",
+                "reservations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-09-04"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventTypeId\": \"<number>\",\n  \"slotStart\": \"<string>\",\n  \"slotDuration\": \"<number>\",\n  \"reservationDuration\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ea828f0-1f09-4cbe-9f7a-71c44515839a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "slots",
+                    "reservations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-09-04"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventTypeId\": 1,\n  \"slotStart\": \"2024-09-04T09:00:00Z\",\n  \"slotDuration\": \"<number>\",\n  \"reservationDuration\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"eventTypeId\": 1,\n    \"slotStart\": \"2024-09-04T09:00:00Z\",\n    \"slotEnd\": \"2024-09-04T10:00:00Z\",\n    \"slotDuration\": 7551.821996819868,\n    \"reservationUid\": \"e84be5a3-4696-49e3-acc7-b2f3999c3b94\",\n    \"reservationDuration\": 5,\n    \"reservationUntil\": \"2023-09-04T10:00:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9e55001-3af0-4af9-85ef-db1eb53786e3",
+          "name": "Get reserved slot",
+          "request": {
+            "name": "Get reserved slot",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "slots",
+                "reservations",
+                ":uid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "uid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-09-04"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b915777-cf35-4d0a-b09c-d6bdda17040a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "slots",
+                    "reservations",
+                    ":uid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-09-04"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"status\": \"success\",\n    \"data\": {\n      \"nullable\": true,\n      \"value\": \"<Circular reference to #/components/schemas/GetReservedSlotOutput_2024_09_04 detected>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25acbfd9-6f10-41ef-9140-6b9ff1fb8b8a",
+          "name": "Update a reserved slot",
+          "request": {
+            "name": "Update a reserved slot",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "slots",
+                "reservations",
+                ":uid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "uid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-09-04"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventTypeId\": \"<number>\",\n  \"slotStart\": \"<string>\",\n  \"slotDuration\": \"<number>\",\n  \"reservationDuration\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d87a10e-a4c6-49e7-bb59-157afd2b0278",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "slots",
+                    "reservations",
+                    ":uid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-09-04"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventTypeId\": 1,\n  \"slotStart\": \"2024-09-04T09:00:00Z\",\n  \"slotDuration\": \"<number>\",\n  \"reservationDuration\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"eventTypeId\": 1,\n    \"slotStart\": \"2024-09-04T09:00:00Z\",\n    \"slotEnd\": \"2024-09-04T10:00:00Z\",\n    \"slotDuration\": 7551.821996819868,\n    \"reservationUid\": \"e84be5a3-4696-49e3-acc7-b2f3999c3b94\",\n    \"reservationDuration\": 5,\n    \"reservationUntil\": \"2023-09-04T10:00:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c771d3b-8961-4d23-b331-ce2c0b861699",
+          "name": "Delete a reserved slot",
+          "request": {
+            "name": "Delete a reserved slot",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "slots",
+                "reservations",
+                ":uid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "uid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-09-04"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4bff2684-f964-42c7-a12c-83d6e379509e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "slots",
+                    "reservations",
+                    ":uid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-09-04. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-09-04"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3eab6d4d-f0f0-4bbe-83fd-a97f09b88a0e",
+    "name": "Cal.diy API v2 Api Keys Slots API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

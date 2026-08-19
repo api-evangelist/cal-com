@@ -1,0 +1,659 @@
+{
+  "item": [
+    {
+      "id": "e77744f1-b196-42c3-9101-b47d85790eee",
+      "name": "Event Types",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d3d57ce-4791-4051-b9cf-a4a4be5973d3",
+          "name": "Create an event type",
+          "request": {
+            "name": "Create an event type",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "event-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-14"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lengthInMinutes\": \"<number>\",\n  \"title\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"lengthInMinutesOptions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"bookingFields\": [\n    {\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    }\n  ],\n  \"disableGuests\": \"<boolean>\",\n  \"slotInterval\": \"<number>\",\n  \"minimumBookingNotice\": \"<number>\",\n  \"beforeEventBuffer\": \"<number>\",\n  \"afterEventBuffer\": \"<number>\",\n  \"scheduleId\": \"<number>\",\n  \"bookingLimitsCount\": {\n    \"day\": \"<number>\",\n    \"week\": \"<number>\",\n    \"month\": \"<number>\",\n    \"year\": \"<number>\",\n    \"disabled\": false\n  },\n  \"bookerActiveBookingsLimit\": {\n    \"maximumActiveBookings\": \"<number>\",\n    \"offerReschedule\": \"<boolean>\"\n  },\n  \"onlyShowFirstAvailableSlot\": \"<boolean>\",\n  \"bookingLimitsDuration\": {\n    \"day\": \"<number>\",\n    \"week\": \"<number>\",\n    \"month\": \"<number>\",\n    \"year\": \"<number>\"\n  },\n  \"bookingWindow\": {\n    \"type\": \"<string>\",\n    \"value\": \"<number>\",\n    \"rolling\": \"<boolean>\"\n  },\n  \"offsetStart\": \"<number>\",\n  \"bookerLayouts\": {\n    \"defaultLayout\": \"<string>\",\n    \"enabledLayouts\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"confirmationPolicy\": {\n    \"type\": \"<string>\",\n    \"blockUnconfirmedBookingsInBooker\": \"<boolean>\",\n    \"noticeThreshold\": {\n      \"unit\": \"<string>\",\n      \"count\": \"<number>\"\n    }\n  },\n  \"recurrence\": {\n    \"interval\": \"<number>\",\n    \"occurrences\": \"<number>\",\n    \"frequency\": \"<string>\"\n  },\n  \"requiresBookerEmailVerification\": \"<boolean>\",\n  \"hideCalendarNotes\": \"<boolean>\",\n  \"lockTimeZoneToggleOnBookingPage\": \"<boolean>\",\n  \"color\": {\n    \"lightThemeHex\": \"<string>\",\n    \"darkThemeHex\": \"<string>\"\n  },\n  \"seats\": {\n    \"seatsPerTimeSlot\": \"<number>\",\n    \"showAttendeeInfo\": \"<boolean>\",\n    \"showAvailabilityCount\": \"<boolean>\"\n  },\n  \"customName\": \"<string>\",\n  \"destinationCalendar\": {\n    \"integration\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"useDestinationCalendarEmail\": \"<boolean>\",\n  \"hideCalendarEventDetails\": \"<boolean>\",\n  \"successRedirectUrl\": \"<string>\",\n  \"hideOrganizerEmail\": \"<boolean>\",\n  \"calVideoSettings\": {\n    \"disableRecordingForOrganizer\": \"<boolean>\",\n    \"disableRecordingForGuests\": \"<boolean>\",\n    \"redirectUrlOnExit\": \"<object>\",\n    \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n    \"enableAutomaticTranscription\": \"<boolean>\",\n    \"disableTranscriptionForGuests\": \"<boolean>\",\n    \"disableTranscriptionForOrganizer\": \"<boolean>\",\n    \"sendTranscriptionEmails\": true\n  },\n  \"hidden\": \"<boolean>\",\n  \"bookingRequiresAuthentication\": false,\n  \"disableCancelling\": {\n    \"disabled\": \"<boolean>\"\n  },\n  \"disableRescheduling\": {\n    \"disabled\": \"<boolean>\",\n    \"minutesBefore\": \"<number>\"\n  },\n  \"interfaceLanguage\": \"<string>\",\n  \"allowReschedulingPastBookings\": false,\n  \"allowReschedulingCancelledBookings\": false,\n  \"showOptimizedSlots\": false,\n  \"locations\": [\n    {\n      \"type\": \"<string>\",\n      \"address\": \"<string>\",\n      \"public\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"address\": \"<string>\",\n      \"public\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d3751042-26d6-477a-a4a6-79b24fa94e32",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "event-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lengthInMinutes\": 60,\n  \"title\": \"Learn the secrets of masterchief!\",\n  \"slug\": \"learn-the-secrets-of-masterchief\",\n  \"lengthInMinutesOptions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"Discover the culinary wonders of the Argentina by making the best flan ever!\",\n  \"bookingFields\": [\n    {\n      \"type\": \"name\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    },\n    {\n      \"type\": \"name\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    }\n  ],\n  \"disableGuests\": \"<boolean>\",\n  \"slotInterval\": \"<number>\",\n  \"minimumBookingNotice\": \"<number>\",\n  \"beforeEventBuffer\": \"<number>\",\n  \"afterEventBuffer\": \"<number>\",\n  \"scheduleId\": \"<number>\",\n  \"bookingLimitsCount\": {\n    \"day\": 1,\n    \"week\": 2,\n    \"month\": 3,\n    \"year\": 4,\n    \"disabled\": false\n  },\n  \"bookerActiveBookingsLimit\": {\n    \"maximumActiveBookings\": 3,\n    \"offerReschedule\": \"<boolean>\"\n  },\n  \"onlyShowFirstAvailableSlot\": \"<boolean>\",\n  \"bookingLimitsDuration\": {\n    \"day\": 60,\n    \"week\": 120,\n    \"month\": 180,\n    \"year\": 240\n  },\n  \"bookingWindow\": {\n    \"type\": \"<string>\",\n    \"value\": 5,\n    \"rolling\": true\n  },\n  \"offsetStart\": \"<number>\",\n  \"bookerLayouts\": {\n    \"defaultLayout\": \"<string>\",\n    \"enabledLayouts\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"confirmationPolicy\": {\n    \"type\": \"always\",\n    \"blockUnconfirmedBookingsInBooker\": \"<boolean>\",\n    \"noticeThreshold\": {\n      \"unit\": \"minutes\",\n      \"count\": 30\n    }\n  },\n  \"recurrence\": {\n    \"interval\": 10,\n    \"occurrences\": 10,\n    \"frequency\": \"<string>\"\n  },\n  \"requiresBookerEmailVerification\": \"<boolean>\",\n  \"hideCalendarNotes\": \"<boolean>\",\n  \"lockTimeZoneToggleOnBookingPage\": \"<boolean>\",\n  \"color\": {\n    \"lightThemeHex\": \"#292929\",\n    \"darkThemeHex\": \"#fafafa\"\n  },\n  \"seats\": {\n    \"seatsPerTimeSlot\": 4,\n    \"showAttendeeInfo\": true,\n    \"showAvailabilityCount\": true\n  },\n  \"customName\": \"{Event type title} between {Organiser} and {Scheduler}\",\n  \"destinationCalendar\": {\n    \"integration\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"useDestinationCalendarEmail\": \"<boolean>\",\n  \"hideCalendarEventDetails\": \"<boolean>\",\n  \"successRedirectUrl\": \"https://masterchief.com/argentina/flan/video/9129412\",\n  \"hideOrganizerEmail\": \"<boolean>\",\n  \"calVideoSettings\": {\n    \"disableRecordingForOrganizer\": \"<boolean>\",\n    \"disableRecordingForGuests\": \"<boolean>\",\n    \"redirectUrlOnExit\": \"<object>\",\n    \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n    \"enableAutomaticTranscription\": \"<boolean>\",\n    \"disableTranscriptionForGuests\": \"<boolean>\",\n    \"disableTranscriptionForOrganizer\": \"<boolean>\",\n    \"sendTranscriptionEmails\": true\n  },\n  \"hidden\": \"<boolean>\",\n  \"bookingRequiresAuthentication\": false,\n  \"disableCancelling\": {\n    \"disabled\": true\n  },\n  \"disableRescheduling\": {\n    \"disabled\": false,\n    \"minutesBefore\": 60\n  },\n  \"interfaceLanguage\": \"<string>\",\n  \"allowReschedulingPastBookings\": false,\n  \"allowReschedulingCancelledBookings\": false,\n  \"showOptimizedSlots\": false,\n  \"locations\": [\n    {\n      \"type\": \"address\",\n      \"address\": \"123 Example St, City, Country\",\n      \"public\": \"<boolean>\"\n    },\n    {\n      \"type\": \"address\",\n      \"address\": \"123 Example St, City, Country\",\n      \"public\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"lengthInMinutes\": 60,\n    \"title\": \"Learn the secrets of masterchief!\",\n    \"slug\": \"learn-the-secrets-of-masterchief\",\n    \"description\": \"Discover the culinary wonders of Argentina by making the best flan ever!\",\n    \"locations\": [\n      {\n        \"type\": \"address\",\n        \"address\": \"123 Example St, City, Country\",\n        \"public\": true\n      },\n      {\n        \"type\": \"address\",\n        \"address\": \"123 Example St, City, Country\",\n        \"public\": true\n      }\n    ],\n    \"bookingFields\": [\n      {\n        \"type\": \"name\",\n        \"label\": \"string\",\n        \"placeholder\": \"string\",\n        \"isDefault\": true,\n        \"slug\": \"name\",\n        \"required\": true,\n        \"disableOnPrefill\": true\n      },\n      {\n        \"type\": \"name\",\n        \"label\": \"string\",\n        \"placeholder\": \"string\",\n        \"isDefault\": true,\n        \"slug\": \"name\",\n        \"required\": true,\n        \"disableOnPrefill\": true\n      }\n    ],\n    \"disableGuests\": false,\n    \"recurrence\": {\n      \"interval\": 10,\n      \"occurrences\": 10,\n      \"frequency\": \"<string>\"\n    },\n    \"metadata\": {},\n    \"price\": 591.7438338521896,\n    \"currency\": \"string\",\n    \"lockTimeZoneToggleOnBookingPage\": true,\n    \"forwardParamsSuccessRedirect\": {},\n    \"successRedirectUrl\": {},\n    \"isInstantEvent\": true,\n    \"scheduleId\": 7099.9680471295715,\n    \"hidden\": false,\n    \"bookingRequiresAuthentication\": false,\n    \"ownerId\": 10,\n    \"users\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bookingUrl\": \"https://cal.com/john-doe/30min\",\n    \"lengthInMinutesOptions\": [\n      15,\n      30,\n      60\n    ],\n    \"slotInterval\": {},\n    \"minimumBookingNotice\": 0,\n    \"beforeEventBuffer\": 0,\n    \"afterEventBuffer\": 0,\n    \"seatsPerTimeSlot\": {},\n    \"seatsShowAvailabilityCount\": false,\n    \"bookingLimitsCount\": {},\n    \"bookerActiveBookingsLimit\": {\n      \"maximumActiveBookings\": 3,\n      \"offerReschedule\": true\n    },\n    \"onlyShowFirstAvailableSlot\": false,\n    \"bookingLimitsDuration\": {},\n    \"bookingWindow\": [\n      {\n        \"type\": \"<string>\",\n        \"value\": 5,\n        \"rolling\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"value\": 5,\n        \"rolling\": true\n      }\n    ],\n    \"bookerLayouts\": {\n      \"defaultLayout\": \"<string>\",\n      \"enabledLayouts\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"confirmationPolicy\": {},\n    \"requiresBookerEmailVerification\": false,\n    \"hideCalendarNotes\": true,\n    \"color\": {\n      \"lightThemeHex\": \"#292929\",\n      \"darkThemeHex\": \"#fafafa\"\n    },\n    \"seats\": {\n      \"seatsPerTimeSlot\": 4,\n      \"showAttendeeInfo\": true,\n      \"showAvailabilityCount\": true\n    },\n    \"offsetStart\": 7350.193502158484,\n    \"customName\": \"string\",\n    \"destinationCalendar\": {\n      \"integration\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"useDestinationCalendarEmail\": false,\n    \"hideCalendarEventDetails\": true,\n    \"hideOrganizerEmail\": true,\n    \"calVideoSettings\": {\n      \"disableRecordingForOrganizer\": \"<boolean>\",\n      \"disableRecordingForGuests\": \"<boolean>\",\n      \"redirectUrlOnExit\": \"<object>\",\n      \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n      \"enableAutomaticTranscription\": \"<boolean>\",\n      \"disableTranscriptionForGuests\": \"<boolean>\",\n      \"disableTranscriptionForOrganizer\": \"<boolean>\",\n      \"sendTranscriptionEmails\": true\n    },\n    \"disableCancelling\": {\n      \"disabled\": true\n    },\n    \"disableRescheduling\": {\n      \"disabled\": true,\n      \"minutesBefore\": 60\n    },\n    \"interfaceLanguage\": \"string\",\n    \"allowReschedulingPastBookings\": false,\n    \"allowReschedulingCancelledBookings\": false,\n    \"showOptimizedSlots\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f8b5755-a94e-4c22-8bf1-280fe4784313",
+          "name": "Get all event types",
+          "request": {
+            "name": "Get all event types",
+            "description": {
+              "content": "Hidden event types are returned only if authentication is provided and it belongs to the event type owner.\n      \n      Use the optional `sortCreatedAt` query parameter to order results by creation date (by ID). Accepts \"asc\" (oldest first) or \"desc\" (newest first). When not provided, no explicit ordering is applied.\n      \n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "event-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "The username of the user to get event types for. If only username provided will get all event types."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventSlug",
+                  "value": "<string>",
+                  "description": "Slug of event type to return. Notably, if eventSlug is provided then username must be provided too, because multiple users can have event with same slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "usernames",
+                  "value": "<string>",
+                  "description": "Get dynamic event type for multiple usernames separated by comma. e.g `usernames=alice,bob`"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgSlug",
+                  "value": "<string>",
+                  "description": "slug of the user's organization if he is in one, orgId is not required if using this parameter"
+                },
+                {
+                  "disabled": false,
+                  "key": "orgId",
+                  "value": "<number>",
+                  "description": "ID of the organization of the user you want the get the event-types of, orgSlug is not needed when using this parameter"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortCreatedAt",
+                  "value": "<string>",
+                  "description": "Sort event types by creation date. When not provided, no explicit ordering is applied."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-14"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "405fce28-5908-4a11-990f-94e7fab123c4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "event-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventSlug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "usernames",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgSlug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orgId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sortCreatedAt",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"lengthInMinutes\": 60,\n      \"title\": \"Learn the secrets of masterchief!\",\n      \"slug\": \"learn-the-secrets-of-masterchief\",\n      \"description\": \"Discover the culinary wonders of Argentina by making the best flan ever!\",\n      \"locations\": [\n        {\n          \"type\": \"address\",\n          \"address\": \"123 Example St, City, Country\",\n          \"public\": false\n        },\n        {\n          \"type\": \"address\",\n          \"address\": \"123 Example St, City, Country\",\n          \"public\": true\n        }\n      ],\n      \"bookingFields\": [\n        {\n          \"type\": \"name\",\n          \"label\": \"string\",\n          \"placeholder\": \"string\",\n          \"isDefault\": true,\n          \"slug\": \"name\",\n          \"required\": false,\n          \"disableOnPrefill\": false\n        },\n        {\n          \"type\": \"name\",\n          \"label\": \"string\",\n          \"placeholder\": \"string\",\n          \"isDefault\": true,\n          \"slug\": \"name\",\n          \"required\": true,\n          \"disableOnPrefill\": false\n        }\n      ],\n      \"disableGuests\": true,\n      \"recurrence\": {\n        \"interval\": 10,\n        \"occurrences\": 10,\n        \"frequency\": \"<string>\"\n      },\n      \"metadata\": {},\n      \"price\": 6635.989259201968,\n      \"currency\": \"string\",\n      \"lockTimeZoneToggleOnBookingPage\": true,\n      \"forwardParamsSuccessRedirect\": {},\n      \"successRedirectUrl\": {},\n      \"isInstantEvent\": false,\n      \"scheduleId\": 7170.620514132492,\n      \"hidden\": false,\n      \"bookingRequiresAuthentication\": false,\n      \"ownerId\": 10,\n      \"users\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bookingUrl\": \"https://cal.com/john-doe/30min\",\n      \"lengthInMinutesOptions\": [\n        15,\n        30,\n        60\n      ],\n      \"slotInterval\": {},\n      \"minimumBookingNotice\": 0,\n      \"beforeEventBuffer\": 0,\n      \"afterEventBuffer\": 0,\n      \"seatsPerTimeSlot\": {},\n      \"seatsShowAvailabilityCount\": true,\n      \"bookingLimitsCount\": {},\n      \"bookerActiveBookingsLimit\": {\n        \"maximumActiveBookings\": 3,\n        \"offerReschedule\": false\n      },\n      \"onlyShowFirstAvailableSlot\": false,\n      \"bookingLimitsDuration\": {},\n      \"bookingWindow\": [\n        {\n          \"type\": \"<string>\",\n          \"value\": 5,\n          \"rolling\": true\n        },\n        {\n          \"type\": \"<string>\",\n          \"value\": 5,\n          \"rolling\": true\n        }\n      ],\n      \"bookerLayouts\": {\n        \"defaultLayout\": \"<string>\",\n        \"enabledLayouts\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"confirmationPolicy\": {},\n      \"requiresBookerEmailVerification\": true,\n      \"hideCalendarNotes\": false,\n      \"color\": {\n        \"lightThemeHex\": \"#292929\",\n        \"darkThemeHex\": \"#fafafa\"\n      },\n      \"seats\": {\n        \"seatsPerTimeSlot\": 4,\n        \"showAttendeeInfo\": true,\n        \"showAvailabilityCount\": true\n      },\n      \"offsetStart\": 7514.297465358321,\n      \"customName\": \"string\",\n      \"destinationCalendar\": {\n        \"integration\": \"<string>\",\n        \"externalId\": \"<string>\"\n      },\n      \"useDestinationCalendarEmail\": true,\n      \"hideCalendarEventDetails\": false,\n      \"hideOrganizerEmail\": true,\n      \"calVideoSettings\": {\n        \"disableRecordingForOrganizer\": \"<boolean>\",\n        \"disableRecordingForGuests\": \"<boolean>\",\n        \"redirectUrlOnExit\": \"<object>\",\n        \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n        \"enableAutomaticTranscription\": \"<boolean>\",\n        \"disableTranscriptionForGuests\": \"<boolean>\",\n        \"disableTranscriptionForOrganizer\": \"<boolean>\",\n        \"sendTranscriptionEmails\": true\n      },\n      \"disableCancelling\": {\n        \"disabled\": true\n      },\n      \"disableRescheduling\": {\n        \"disabled\": true,\n        \"minutesBefore\": 60\n      },\n      \"interfaceLanguage\": \"string\",\n      \"allowReschedulingPastBookings\": true,\n      \"allowReschedulingCancelledBookings\": true,\n      \"showOptimizedSlots\": true\n    },\n    {\n      \"id\": 1,\n      \"lengthInMinutes\": 60,\n      \"title\": \"Learn the secrets of masterchief!\",\n      \"slug\": \"learn-the-secrets-of-masterchief\",\n      \"description\": \"Discover the culinary wonders of Argentina by making the best flan ever!\",\n      \"locations\": [\n        {\n          \"type\": \"address\",\n          \"address\": \"123 Example St, City, Country\",\n          \"public\": true\n        },\n        {\n          \"type\": \"address\",\n          \"address\": \"123 Example St, City, Country\",\n          \"public\": false\n        }\n      ],\n      \"bookingFields\": [\n        {\n          \"type\": \"name\",\n          \"label\": \"string\",\n          \"placeholder\": \"string\",\n          \"isDefault\": true,\n          \"slug\": \"name\",\n          \"required\": false,\n          \"disableOnPrefill\": true\n        },\n        {\n          \"type\": \"name\",\n          \"label\": \"string\",\n          \"placeholder\": \"string\",\n          \"isDefault\": true,\n          \"slug\": \"name\",\n          \"required\": true,\n          \"disableOnPrefill\": true\n        }\n      ],\n      \"disableGuests\": true,\n      \"recurrence\": {\n        \"interval\": 10,\n        \"occurrences\": 10,\n        \"frequency\": \"<string>\"\n      },\n      \"metadata\": {},\n      \"price\": 1873.0436654606365,\n      \"currency\": \"string\",\n      \"lockTimeZoneToggleOnBookingPage\": false,\n      \"forwardParamsSuccessRedirect\": {},\n      \"successRedirectUrl\": {},\n      \"isInstantEvent\": true,\n      \"scheduleId\": 1495.533714602939,\n      \"hidden\": false,\n      \"bookingRequiresAuthentication\": true,\n      \"ownerId\": 10,\n      \"users\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bookingUrl\": \"https://cal.com/john-doe/30min\",\n      \"lengthInMinutesOptions\": [\n        15,\n        30,\n        60\n      ],\n      \"slotInterval\": {},\n      \"minimumBookingNotice\": 0,\n      \"beforeEventBuffer\": 0,\n      \"afterEventBuffer\": 0,\n      \"seatsPerTimeSlot\": {},\n      \"seatsShowAvailabilityCount\": false,\n      \"bookingLimitsCount\": {},\n      \"bookerActiveBookingsLimit\": {\n        \"maximumActiveBookings\": 3,\n        \"offerReschedule\": true\n      },\n      \"onlyShowFirstAvailableSlot\": false,\n      \"bookingLimitsDuration\": {},\n      \"bookingWindow\": [\n        {\n          \"type\": \"<string>\",\n          \"value\": 5,\n          \"rolling\": true\n        },\n        {\n          \"type\": \"<string>\",\n          \"value\": 5,\n          \"rolling\": true\n        }\n      ],\n      \"bookerLayouts\": {\n        \"defaultLayout\": \"<string>\",\n        \"enabledLayouts\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"confirmationPolicy\": {},\n      \"requiresBookerEmailVerification\": false,\n      \"hideCalendarNotes\": true,\n      \"color\": {\n        \"lightThemeHex\": \"#292929\",\n        \"darkThemeHex\": \"#fafafa\"\n      },\n      \"seats\": {\n        \"seatsPerTimeSlot\": 4,\n        \"showAttendeeInfo\": true,\n        \"showAvailabilityCount\": true\n      },\n      \"offsetStart\": 273.283011025286,\n      \"customName\": \"string\",\n      \"destinationCalendar\": {\n        \"integration\": \"<string>\",\n        \"externalId\": \"<string>\"\n      },\n      \"useDestinationCalendarEmail\": true,\n      \"hideCalendarEventDetails\": false,\n      \"hideOrganizerEmail\": true,\n      \"calVideoSettings\": {\n        \"disableRecordingForOrganizer\": \"<boolean>\",\n        \"disableRecordingForGuests\": \"<boolean>\",\n        \"redirectUrlOnExit\": \"<object>\",\n        \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n        \"enableAutomaticTranscription\": \"<boolean>\",\n        \"disableTranscriptionForGuests\": \"<boolean>\",\n        \"disableTranscriptionForOrganizer\": \"<boolean>\",\n        \"sendTranscriptionEmails\": true\n      },\n      \"disableCancelling\": {\n        \"disabled\": true\n      },\n      \"disableRescheduling\": {\n        \"disabled\": true,\n        \"minutesBefore\": 60\n      },\n      \"interfaceLanguage\": \"string\",\n      \"allowReschedulingPastBookings\": false,\n      \"allowReschedulingCancelledBookings\": false,\n      \"showOptimizedSlots\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ccc7701-b183-42e1-b210-a3026329a633",
+          "name": "Get an event type",
+          "request": {
+            "name": "Get an event type",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    \n    Access control: This endpoint fetches an event type by ID and returns it only if the authenticated user is authorized. Authorization is granted to:\n    - System admins\n    - The event type owner\n    - Hosts of the event type or users assigned to the event type\n    - Team admins/owners of the team that owns the team event type\n    - Organization admins/owners of the event type owner's organization\n    - Organization admins/owners of the team's parent organization\n\n    Note: Update and delete endpoints remain restricted to the event type owner only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "event-types",
+                ":eventTypeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "eventTypeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-14"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5cece950-bd03-4c64-9417-8196628c8ad2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "event-types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"lengthInMinutes\": 60,\n    \"title\": \"Learn the secrets of masterchief!\",\n    \"slug\": \"learn-the-secrets-of-masterchief\",\n    \"description\": \"Discover the culinary wonders of Argentina by making the best flan ever!\",\n    \"locations\": [\n      {\n        \"type\": \"address\",\n        \"address\": \"123 Example St, City, Country\",\n        \"public\": true\n      },\n      {\n        \"type\": \"address\",\n        \"address\": \"123 Example St, City, Country\",\n        \"public\": false\n      }\n    ],\n    \"bookingFields\": [\n      {\n        \"type\": \"name\",\n        \"label\": \"string\",\n        \"placeholder\": \"string\",\n        \"isDefault\": true,\n        \"slug\": \"name\",\n        \"required\": false,\n        \"disableOnPrefill\": true\n      },\n      {\n        \"type\": \"name\",\n        \"label\": \"string\",\n        \"placeholder\": \"string\",\n        \"isDefault\": true,\n        \"slug\": \"name\",\n        \"required\": true,\n        \"disableOnPrefill\": true\n      }\n    ],\n    \"disableGuests\": false,\n    \"recurrence\": {\n      \"interval\": 10,\n      \"occurrences\": 10,\n      \"frequency\": \"<string>\"\n    },\n    \"metadata\": {},\n    \"price\": 5702.759061417605,\n    \"currency\": \"string\",\n    \"lockTimeZoneToggleOnBookingPage\": false,\n    \"forwardParamsSuccessRedirect\": {},\n    \"successRedirectUrl\": {},\n    \"isInstantEvent\": true,\n    \"scheduleId\": 1313.5780619536208,\n    \"hidden\": true,\n    \"bookingRequiresAuthentication\": false,\n    \"ownerId\": 10,\n    \"users\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bookingUrl\": \"https://cal.com/john-doe/30min\",\n    \"lengthInMinutesOptions\": [\n      15,\n      30,\n      60\n    ],\n    \"slotInterval\": {},\n    \"minimumBookingNotice\": 0,\n    \"beforeEventBuffer\": 0,\n    \"afterEventBuffer\": 0,\n    \"seatsPerTimeSlot\": {},\n    \"seatsShowAvailabilityCount\": true,\n    \"bookingLimitsCount\": {},\n    \"bookerActiveBookingsLimit\": {\n      \"maximumActiveBookings\": 3,\n      \"offerReschedule\": true\n    },\n    \"onlyShowFirstAvailableSlot\": false,\n    \"bookingLimitsDuration\": {},\n    \"bookingWindow\": [\n      {\n        \"type\": \"<string>\",\n        \"value\": 5,\n        \"rolling\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"value\": 5,\n        \"rolling\": true\n      }\n    ],\n    \"bookerLayouts\": {\n      \"defaultLayout\": \"<string>\",\n      \"enabledLayouts\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"confirmationPolicy\": {},\n    \"requiresBookerEmailVerification\": false,\n    \"hideCalendarNotes\": false,\n    \"color\": {\n      \"lightThemeHex\": \"#292929\",\n      \"darkThemeHex\": \"#fafafa\"\n    },\n    \"seats\": {\n      \"seatsPerTimeSlot\": 4,\n      \"showAttendeeInfo\": true,\n      \"showAvailabilityCount\": true\n    },\n    \"offsetStart\": 8808.7070927519,\n    \"customName\": \"string\",\n    \"destinationCalendar\": {\n      \"integration\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"useDestinationCalendarEmail\": true,\n    \"hideCalendarEventDetails\": true,\n    \"hideOrganizerEmail\": false,\n    \"calVideoSettings\": {\n      \"disableRecordingForOrganizer\": \"<boolean>\",\n      \"disableRecordingForGuests\": \"<boolean>\",\n      \"redirectUrlOnExit\": \"<object>\",\n      \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n      \"enableAutomaticTranscription\": \"<boolean>\",\n      \"disableTranscriptionForGuests\": \"<boolean>\",\n      \"disableTranscriptionForOrganizer\": \"<boolean>\",\n      \"sendTranscriptionEmails\": true\n    },\n    \"disableCancelling\": {\n      \"disabled\": true\n    },\n    \"disableRescheduling\": {\n      \"disabled\": true,\n      \"minutesBefore\": 60\n    },\n    \"interfaceLanguage\": \"string\",\n    \"allowReschedulingPastBookings\": false,\n    \"allowReschedulingCancelledBookings\": true,\n    \"showOptimizedSlots\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54e60b30-6ba9-4461-b071-f240e6fa2541",
+          "name": "Update an event type",
+          "request": {
+            "name": "Update an event type",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "event-types",
+                ":eventTypeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "eventTypeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-14"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lengthInMinutes\": \"<number>\",\n  \"lengthInMinutesOptions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"description\": \"<string>\",\n  \"bookingFields\": [\n    {\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    }\n  ],\n  \"disableGuests\": \"<boolean>\",\n  \"slotInterval\": \"<number>\",\n  \"minimumBookingNotice\": \"<number>\",\n  \"beforeEventBuffer\": \"<number>\",\n  \"afterEventBuffer\": \"<number>\",\n  \"scheduleId\": \"<number>\",\n  \"bookingLimitsCount\": {\n    \"day\": \"<number>\",\n    \"week\": \"<number>\",\n    \"month\": \"<number>\",\n    \"year\": \"<number>\",\n    \"disabled\": false\n  },\n  \"bookerActiveBookingsLimit\": {\n    \"maximumActiveBookings\": \"<number>\",\n    \"offerReschedule\": \"<boolean>\"\n  },\n  \"onlyShowFirstAvailableSlot\": \"<boolean>\",\n  \"bookingLimitsDuration\": {\n    \"day\": \"<number>\",\n    \"week\": \"<number>\",\n    \"month\": \"<number>\",\n    \"year\": \"<number>\"\n  },\n  \"bookingWindow\": {\n    \"type\": \"<string>\",\n    \"value\": \"<number>\",\n    \"rolling\": \"<boolean>\"\n  },\n  \"offsetStart\": \"<number>\",\n  \"bookerLayouts\": {\n    \"defaultLayout\": \"<string>\",\n    \"enabledLayouts\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"confirmationPolicy\": {\n    \"type\": \"<string>\",\n    \"blockUnconfirmedBookingsInBooker\": \"<boolean>\",\n    \"noticeThreshold\": {\n      \"unit\": \"<string>\",\n      \"count\": \"<number>\"\n    }\n  },\n  \"recurrence\": {\n    \"interval\": \"<number>\",\n    \"occurrences\": \"<number>\",\n    \"frequency\": \"<string>\"\n  },\n  \"requiresBookerEmailVerification\": \"<boolean>\",\n  \"hideCalendarNotes\": \"<boolean>\",\n  \"lockTimeZoneToggleOnBookingPage\": \"<boolean>\",\n  \"color\": {\n    \"lightThemeHex\": \"<string>\",\n    \"darkThemeHex\": \"<string>\"\n  },\n  \"seats\": {\n    \"seatsPerTimeSlot\": \"<number>\",\n    \"showAttendeeInfo\": \"<boolean>\",\n    \"showAvailabilityCount\": \"<boolean>\"\n  },\n  \"customName\": \"<string>\",\n  \"destinationCalendar\": {\n    \"integration\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"useDestinationCalendarEmail\": \"<boolean>\",\n  \"hideCalendarEventDetails\": \"<boolean>\",\n  \"successRedirectUrl\": \"<string>\",\n  \"hideOrganizerEmail\": \"<boolean>\",\n  \"calVideoSettings\": {\n    \"disableRecordingForOrganizer\": \"<boolean>\",\n    \"disableRecordingForGuests\": \"<boolean>\",\n    \"redirectUrlOnExit\": \"<object>\",\n    \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n    \"enableAutomaticTranscription\": \"<boolean>\",\n    \"disableTranscriptionForGuests\": \"<boolean>\",\n    \"disableTranscriptionForOrganizer\": \"<boolean>\",\n    \"sendTranscriptionEmails\": true\n  },\n  \"hidden\": \"<boolean>\",\n  \"bookingRequiresAuthentication\": false,\n  \"disableCancelling\": {\n    \"disabled\": \"<boolean>\"\n  },\n  \"disableRescheduling\": {\n    \"disabled\": \"<boolean>\",\n    \"minutesBefore\": \"<number>\"\n  },\n  \"interfaceLanguage\": \"<string>\",\n  \"allowReschedulingPastBookings\": false,\n  \"allowReschedulingCancelledBookings\": false,\n  \"showOptimizedSlots\": false,\n  \"locations\": [\n    {\n      \"type\": \"<string>\",\n      \"address\": \"<string>\",\n      \"public\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"address\": \"<string>\",\n      \"public\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9569ffc1-60f9-403b-a4eb-0ba729382316",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "event-types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lengthInMinutes\": 60,\n  \"lengthInMinutesOptions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"title\": \"Learn the secrets of masterchief!\",\n  \"slug\": \"learn-the-secrets-of-masterchief\",\n  \"description\": \"Discover the culinary wonders of the Argentina by making the best flan ever!\",\n  \"bookingFields\": [\n    {\n      \"type\": \"name\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    },\n    {\n      \"type\": \"name\",\n      \"label\": \"<string>\",\n      \"placeholder\": \"<string>\",\n      \"disableOnPrefill\": \"<boolean>\"\n    }\n  ],\n  \"disableGuests\": \"<boolean>\",\n  \"slotInterval\": \"<number>\",\n  \"minimumBookingNotice\": \"<number>\",\n  \"beforeEventBuffer\": \"<number>\",\n  \"afterEventBuffer\": \"<number>\",\n  \"scheduleId\": \"<number>\",\n  \"bookingLimitsCount\": {\n    \"day\": 1,\n    \"week\": 2,\n    \"month\": 3,\n    \"year\": 4,\n    \"disabled\": false\n  },\n  \"bookerActiveBookingsLimit\": {\n    \"maximumActiveBookings\": 3,\n    \"offerReschedule\": \"<boolean>\"\n  },\n  \"onlyShowFirstAvailableSlot\": \"<boolean>\",\n  \"bookingLimitsDuration\": {\n    \"day\": 60,\n    \"week\": 120,\n    \"month\": 180,\n    \"year\": 240\n  },\n  \"bookingWindow\": {\n    \"type\": \"<string>\",\n    \"value\": 5,\n    \"rolling\": true\n  },\n  \"offsetStart\": \"<number>\",\n  \"bookerLayouts\": {\n    \"defaultLayout\": \"<string>\",\n    \"enabledLayouts\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"confirmationPolicy\": {\n    \"type\": \"always\",\n    \"blockUnconfirmedBookingsInBooker\": \"<boolean>\",\n    \"noticeThreshold\": {\n      \"unit\": \"minutes\",\n      \"count\": 30\n    }\n  },\n  \"recurrence\": {\n    \"interval\": 10,\n    \"occurrences\": 10,\n    \"frequency\": \"<string>\"\n  },\n  \"requiresBookerEmailVerification\": \"<boolean>\",\n  \"hideCalendarNotes\": \"<boolean>\",\n  \"lockTimeZoneToggleOnBookingPage\": \"<boolean>\",\n  \"color\": {\n    \"lightThemeHex\": \"#292929\",\n    \"darkThemeHex\": \"#fafafa\"\n  },\n  \"seats\": {\n    \"seatsPerTimeSlot\": 4,\n    \"showAttendeeInfo\": true,\n    \"showAvailabilityCount\": true\n  },\n  \"customName\": \"{Event type title} between {Organiser} and {Scheduler}\",\n  \"destinationCalendar\": {\n    \"integration\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"useDestinationCalendarEmail\": \"<boolean>\",\n  \"hideCalendarEventDetails\": \"<boolean>\",\n  \"successRedirectUrl\": \"https://masterchief.com/argentina/flan/video/9129412\",\n  \"hideOrganizerEmail\": \"<boolean>\",\n  \"calVideoSettings\": {\n    \"disableRecordingForOrganizer\": \"<boolean>\",\n    \"disableRecordingForGuests\": \"<boolean>\",\n    \"redirectUrlOnExit\": \"<object>\",\n    \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n    \"enableAutomaticTranscription\": \"<boolean>\",\n    \"disableTranscriptionForGuests\": \"<boolean>\",\n    \"disableTranscriptionForOrganizer\": \"<boolean>\",\n    \"sendTranscriptionEmails\": true\n  },\n  \"hidden\": \"<boolean>\",\n  \"bookingRequiresAuthentication\": false,\n  \"disableCancelling\": {\n    \"disabled\": true\n  },\n  \"disableRescheduling\": {\n    \"disabled\": false,\n    \"minutesBefore\": 60\n  },\n  \"interfaceLanguage\": \"<string>\",\n  \"allowReschedulingPastBookings\": false,\n  \"allowReschedulingCancelledBookings\": false,\n  \"showOptimizedSlots\": false,\n  \"locations\": [\n    {\n      \"type\": \"address\",\n      \"address\": \"123 Example St, City, Country\",\n      \"public\": \"<boolean>\"\n    },\n    {\n      \"type\": \"address\",\n      \"address\": \"123 Example St, City, Country\",\n      \"public\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"lengthInMinutes\": 60,\n    \"title\": \"Learn the secrets of masterchief!\",\n    \"slug\": \"learn-the-secrets-of-masterchief\",\n    \"description\": \"Discover the culinary wonders of Argentina by making the best flan ever!\",\n    \"locations\": [\n      {\n        \"type\": \"address\",\n        \"address\": \"123 Example St, City, Country\",\n        \"public\": true\n      },\n      {\n        \"type\": \"address\",\n        \"address\": \"123 Example St, City, Country\",\n        \"public\": false\n      }\n    ],\n    \"bookingFields\": [\n      {\n        \"type\": \"name\",\n        \"label\": \"string\",\n        \"placeholder\": \"string\",\n        \"isDefault\": true,\n        \"slug\": \"name\",\n        \"required\": false,\n        \"disableOnPrefill\": true\n      },\n      {\n        \"type\": \"name\",\n        \"label\": \"string\",\n        \"placeholder\": \"string\",\n        \"isDefault\": true,\n        \"slug\": \"name\",\n        \"required\": true,\n        \"disableOnPrefill\": true\n      }\n    ],\n    \"disableGuests\": false,\n    \"recurrence\": {\n      \"interval\": 10,\n      \"occurrences\": 10,\n      \"frequency\": \"<string>\"\n    },\n    \"metadata\": {},\n    \"price\": 5702.759061417605,\n    \"currency\": \"string\",\n    \"lockTimeZoneToggleOnBookingPage\": false,\n    \"forwardParamsSuccessRedirect\": {},\n    \"successRedirectUrl\": {},\n    \"isInstantEvent\": true,\n    \"scheduleId\": 1313.5780619536208,\n    \"hidden\": true,\n    \"bookingRequiresAuthentication\": false,\n    \"ownerId\": 10,\n    \"users\": [\n      \"string\",\n      \"string\"\n    ],\n    \"bookingUrl\": \"https://cal.com/john-doe/30min\",\n    \"lengthInMinutesOptions\": [\n      15,\n      30,\n      60\n    ],\n    \"slotInterval\": {},\n    \"minimumBookingNotice\": 0,\n    \"beforeEventBuffer\": 0,\n    \"afterEventBuffer\": 0,\n    \"seatsPerTimeSlot\": {},\n    \"seatsShowAvailabilityCount\": true,\n    \"bookingLimitsCount\": {},\n    \"bookerActiveBookingsLimit\": {\n      \"maximumActiveBookings\": 3,\n      \"offerReschedule\": true\n    },\n    \"onlyShowFirstAvailableSlot\": false,\n    \"bookingLimitsDuration\": {},\n    \"bookingWindow\": [\n      {\n        \"type\": \"<string>\",\n        \"value\": 5,\n        \"rolling\": true\n      },\n      {\n        \"type\": \"<string>\",\n        \"value\": 5,\n        \"rolling\": true\n      }\n    ],\n    \"bookerLayouts\": {\n      \"defaultLayout\": \"<string>\",\n      \"enabledLayouts\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"confirmationPolicy\": {},\n    \"requiresBookerEmailVerification\": false,\n    \"hideCalendarNotes\": false,\n    \"color\": {\n      \"lightThemeHex\": \"#292929\",\n      \"darkThemeHex\": \"#fafafa\"\n    },\n    \"seats\": {\n      \"seatsPerTimeSlot\": 4,\n      \"showAttendeeInfo\": true,\n      \"showAvailabilityCount\": true\n    },\n    \"offsetStart\": 8808.7070927519,\n    \"customName\": \"string\",\n    \"destinationCalendar\": {\n      \"integration\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"useDestinationCalendarEmail\": true,\n    \"hideCalendarEventDetails\": true,\n    \"hideOrganizerEmail\": false,\n    \"calVideoSettings\": {\n      \"disableRecordingForOrganizer\": \"<boolean>\",\n      \"disableRecordingForGuests\": \"<boolean>\",\n      \"redirectUrlOnExit\": \"<object>\",\n      \"enableAutomaticRecordingForOrganizer\": \"<boolean>\",\n      \"enableAutomaticTranscription\": \"<boolean>\",\n      \"disableTranscriptionForGuests\": \"<boolean>\",\n      \"disableTranscriptionForOrganizer\": \"<boolean>\",\n      \"sendTranscriptionEmails\": true\n    },\n    \"disableCancelling\": {\n      \"disabled\": true\n    },\n    \"disableRescheduling\": {\n      \"disabled\": true,\n      \"minutesBefore\": 60\n    },\n    \"interfaceLanguage\": \"string\",\n    \"allowReschedulingPastBookings\": false,\n    \"allowReschedulingCancelledBookings\": true,\n    \"showOptimizedSlots\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b75b4a38-896b-4e2d-b7bb-1813682242ec",
+          "name": "Delete an event type",
+          "request": {
+            "name": "Delete an event type",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "event-types",
+                ":eventTypeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "eventTypeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-14"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7ac93b5-10cd-4268-b3e4-607480f0d744",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "event-types",
+                    ":eventTypeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "eventTypeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-14. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-14"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"lengthInMinutes\": 60,\n    \"title\": \"Learn the secrets of masterchief!\",\n    \"slug\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f7b0574f-1952-41c5-b459-bd10c0f19191",
+    "name": "Cal.diy API v2 Api Keys Event Types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

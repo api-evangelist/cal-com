@@ -1,0 +1,664 @@
+{
+  "item": [
+    {
+      "id": "b812df27-a3b6-455f-b526-71ae09e6409f",
+      "name": "Schedules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8385bdd3-194c-433d-84fb-601d2568a315",
+          "name": "Create a schedule",
+          "request": {
+            "name": "Create a schedule",
+            "description": {
+              "content": "\n      Create a schedule for the authenticated user.\n\n      The point of creating schedules is for event types to be available at specific times.\n\n      The first goal of schedules is to have a default schedule. If you are platform customer and created managed users, then it is important to note that each managed user should have a default schedule.\n      1. If you passed `timeZone` when creating managed user, then the default schedule from Monday to Friday from 9AM to 5PM will be created with that timezone. The managed user can then change the default schedule via the `AvailabilitySettings` atom.\n      2. If you did not, then we assume you want the user to have this specific schedule right away. You should create a default schedule by specifying\n      `\"isDefault\": true` in the request body. Until the user has a default schedule the user can't be booked nor manage their schedule via the AvailabilitySettings atom.\n\n      The second goal of schedules is to create another schedule that event types can point to. This is useful for when an event is booked because availability is not checked against the default schedule but instead against that specific schedule.\n      After creating a non-default schedule, you can update an event type to point to that schedule via the PATCH `event-types/{eventTypeId}` endpoint.\n\n      When specifying start time and end time for each day use the 24 hour format e.g. 08:00, 15:00 etc.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-11"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"timeZone\": \"<string>\",\n  \"isDefault\": \"<boolean>\",\n  \"availability\": [\n    {\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    },\n    {\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    }\n  ],\n  \"overrides\": [\n    {\n      \"date\": \"<string>\",\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    },\n    {\n      \"date\": \"<string>\",\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1104ea9d-cf06-41cb-bb4d-774034dd1ac4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-11"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Catch up hours\",\n  \"timeZone\": \"Europe/Rome\",\n  \"isDefault\": true,\n  \"availability\": [\n    {\n      \"days\": [\n        \"Monday\",\n        \"Tuesday\"\n      ],\n      \"startTime\": \"17:00\",\n      \"endTime\": \"19:00\"\n    },\n    {\n      \"days\": [\n        \"Wednesday\",\n        \"Thursday\"\n      ],\n      \"startTime\": \"16:00\",\n      \"endTime\": \"20:00\"\n    }\n  ],\n  \"overrides\": [\n    {\n      \"date\": \"2024-05-20\",\n      \"startTime\": \"18:00\",\n      \"endTime\": \"21:00\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 254,\n    \"ownerId\": 478,\n    \"name\": \"Catch up hours\",\n    \"timeZone\": \"Europe/Rome\",\n    \"availability\": [\n      {\n        \"days\": [\n          \"Monday\",\n          \"Tuesday\"\n        ],\n        \"startTime\": \"17:00\",\n        \"endTime\": \"19:00\"\n      },\n      {\n        \"days\": [\n          \"Wednesday\",\n          \"Thursday\"\n        ],\n        \"startTime\": \"16:00\",\n        \"endTime\": \"20:00\"\n      }\n    ],\n    \"isDefault\": true,\n    \"overrides\": [\n      {\n        \"date\": \"2024-05-20\",\n        \"startTime\": \"18:00\",\n        \"endTime\": \"21:00\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f7933d6-0e20-4baa-8fda-2c11dff0ce9f",
+          "name": "Get all schedules",
+          "request": {
+            "name": "Get all schedules",
+            "description": {
+              "content": "Get all schedules of the authenticated user.\n    \n     <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-11"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14484ef0-bcaf-4993-9f52-d4415dd63364",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-11"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 254,\n      \"ownerId\": 478,\n      \"name\": \"Catch up hours\",\n      \"timeZone\": \"Europe/Rome\",\n      \"availability\": [\n        {\n          \"days\": [\n            \"Monday\",\n            \"Tuesday\"\n          ],\n          \"startTime\": \"17:00\",\n          \"endTime\": \"19:00\"\n        },\n        {\n          \"days\": [\n            \"Wednesday\",\n            \"Thursday\"\n          ],\n          \"startTime\": \"16:00\",\n          \"endTime\": \"20:00\"\n        }\n      ],\n      \"isDefault\": true,\n      \"overrides\": [\n        {\n          \"date\": \"2024-05-20\",\n          \"startTime\": \"18:00\",\n          \"endTime\": \"21:00\"\n        }\n      ]\n    },\n    {\n      \"id\": 254,\n      \"ownerId\": 478,\n      \"name\": \"Catch up hours\",\n      \"timeZone\": \"Europe/Rome\",\n      \"availability\": [\n        {\n          \"days\": [\n            \"Monday\",\n            \"Tuesday\"\n          ],\n          \"startTime\": \"17:00\",\n          \"endTime\": \"19:00\"\n        },\n        {\n          \"days\": [\n            \"Wednesday\",\n            \"Thursday\"\n          ],\n          \"startTime\": \"16:00\",\n          \"endTime\": \"20:00\"\n        }\n      ],\n      \"isDefault\": true,\n      \"overrides\": [\n        {\n          \"date\": \"2024-05-20\",\n          \"startTime\": \"18:00\",\n          \"endTime\": \"21:00\"\n        }\n      ]\n    }\n  ],\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "780bcb06-cc0a-4d77-bd43-cf295a44a278",
+          "name": "Get default schedule",
+          "request": {
+            "name": "Get default schedule",
+            "description": {
+              "content": "Get the default schedule of the authenticated user.\n    \n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schedules",
+                "default"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-11"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9315bfdc-8737-45a7-bc58-671e419935e9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schedules",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-11"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 254,\n    \"ownerId\": 478,\n    \"name\": \"Catch up hours\",\n    \"timeZone\": \"Europe/Rome\",\n    \"availability\": [\n      {\n        \"days\": [\n          \"Monday\",\n          \"Tuesday\"\n        ],\n        \"startTime\": \"17:00\",\n        \"endTime\": \"19:00\"\n      },\n      {\n        \"days\": [\n          \"Wednesday\",\n          \"Thursday\"\n        ],\n        \"startTime\": \"16:00\",\n        \"endTime\": \"20:00\"\n      }\n    ],\n    \"isDefault\": true,\n    \"overrides\": [\n      {\n        \"date\": \"2024-05-20\",\n        \"startTime\": \"18:00\",\n        \"endTime\": \"21:00\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cae0fc2d-51b9-4484-bef9-389c2a927658",
+          "name": "Get a schedule",
+          "request": {
+            "name": "Get a schedule",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schedules",
+                ":scheduleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "scheduleId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-11"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4af32ce-ad21-4fbb-a8a9-8febb1ccb41c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "scheduleId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-11"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 254,\n    \"ownerId\": 478,\n    \"name\": \"Catch up hours\",\n    \"timeZone\": \"Europe/Rome\",\n    \"availability\": [\n      {\n        \"days\": [\n          \"Monday\",\n          \"Tuesday\"\n        ],\n        \"startTime\": \"17:00\",\n        \"endTime\": \"19:00\"\n      },\n      {\n        \"days\": [\n          \"Wednesday\",\n          \"Thursday\"\n        ],\n        \"startTime\": \"16:00\",\n        \"endTime\": \"20:00\"\n      }\n    ],\n    \"isDefault\": true,\n    \"overrides\": [\n      {\n        \"date\": \"2024-05-20\",\n        \"startTime\": \"18:00\",\n        \"endTime\": \"21:00\"\n      }\n    ]\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9a86a7a-21b0-4ee7-9bd7-2c3000e2c960",
+          "name": "Update a schedule",
+          "request": {
+            "name": "Update a schedule",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schedules",
+                ":scheduleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scheduleId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-11"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"timeZone\": \"<string>\",\n  \"availability\": [\n    {\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    },\n    {\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    }\n  ],\n  \"isDefault\": \"<boolean>\",\n  \"overrides\": [\n    {\n      \"date\": \"<string>\",\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    },\n    {\n      \"date\": \"<string>\",\n      \"startTime\": \"<string>\",\n      \"endTime\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0ac92f7-5fa6-41f6-8890-75c8e744d7a1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-11"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"One-on-one coaching\",\n  \"timeZone\": \"Europe/Rome\",\n  \"availability\": [\n    {\n      \"days\": [\n        \"Monday\",\n        \"Tuesday\"\n      ],\n      \"startTime\": \"09:00\",\n      \"endTime\": \"10:00\"\n    }\n  ],\n  \"isDefault\": true,\n  \"overrides\": [\n    {\n      \"date\": \"2024-05-20\",\n      \"startTime\": \"12:00\",\n      \"endTime\": \"14:00\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 254,\n    \"ownerId\": 478,\n    \"name\": \"Catch up hours\",\n    \"timeZone\": \"Europe/Rome\",\n    \"availability\": [\n      {\n        \"days\": [\n          \"Monday\",\n          \"Tuesday\"\n        ],\n        \"startTime\": \"17:00\",\n        \"endTime\": \"19:00\"\n      },\n      {\n        \"days\": [\n          \"Wednesday\",\n          \"Thursday\"\n        ],\n        \"startTime\": \"16:00\",\n        \"endTime\": \"20:00\"\n      }\n    ],\n    \"isDefault\": true,\n    \"overrides\": [\n      {\n        \"date\": \"2024-05-20\",\n        \"startTime\": \"18:00\",\n        \"endTime\": \"21:00\"\n      }\n    ]\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc797a24-d6a5-48bc-98a8-518ba462b2c3",
+          "name": "Delete a schedule",
+          "request": {
+            "name": "Delete a schedule",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schedules",
+                ":scheduleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "scheduleId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-06-11"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "262bbc89-fd19-4ece-9a5f-6d950f4633a5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "scheduleId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-06-11. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-06-11"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "75cd4049-6433-40cd-b1c6-f01262039085",
+    "name": "Cal.diy API v2 Api Keys Schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

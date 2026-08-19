@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2 Api Keys Event Types API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "The username of the user to get event types for. If only username provided will get all event types."
+              },
+              {
+                "name": "eventSlug",
+                "value": "",
+                "type": "query",
+                "description": "Slug of event type to return. Notably, if eventSlug is provided then username must be provided too, because multiple users can have event with same slug."
+              },
+              {
+                "name": "usernames",
+                "value": "",
+                "type": "query",
+                "description": "Get dynamic event type for multiple usernames separated by comma. e.g `usernames=alice,bob`"
+              },
+              {
+                "name": "orgSlug",
+                "value": "",
+                "type": "query",
+                "description": "slug of the user's organization if he is in one, orgId is not required if using this parameter"
+              },
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the organization of the user you want the get the event-types of, orgSlug is not needed when using this parameter"
+              },
+              {
+                "name": "sortCreatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Sort event types by creation date. When not provided, no explicit ordering is applied."
+              }
+            ]
+          },
+          "docs": "Hidden event types are returned only if authentication is provided and it belongs to the event type owner.\n      \n      Use the optional `sortCreatedAt` query parameter to order results by creation date (by ID). Accepts \"asc\" (oldest first) or \"desc\" (newest first). When not provided, no explicit ordering is applied.\n      \n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version o"
+        },
+        {
+          "info": {
+            "name": "Create an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/event-types",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    \n    Access control: This endpoint fetches an event type by ID and returns it only if the authenticated user is authorized. Authorization is granted to:\n    - System admins\n    - The event type owner\n    - Hosts of the event type or users assigned to the event type\n    - Team admins/owners of the team t"
+        },
+        {
+          "info": {
+            "name": "Update an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Delete an event type",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/event-types/:eventTypeId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,523 @@
+{
+  "item": [
+    {
+      "id": "44e0e0a5-d1f6-4cea-a04a-fcea9221bc39",
+      "name": "Webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26443cc8-6db6-431b-940e-e993583a631b",
+          "name": "Create a webhook",
+          "request": {
+            "name": "Create a webhook",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payloadTemplate\": \"<string>\",\n  \"secret\": \"<string>\",\n  \"version\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "45529547-8099-43a2-a916-2da3d140a6c8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n  \"secret\": \"<string>\",\n  \"version\": \"2021-10-20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"RECORDING_TRANSCRIPTION_GENERATED\",\n      \"INSTANT_MEETING\"\n    ],\n    \"userId\": 6554.990445828775,\n    \"id\": 3780.5274641261412,\n    \"subscriberUrl\": \"string\",\n    \"active\": true,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8863218-9619-465d-86bb-625b0ea612c2",
+          "name": "Get all webhooks",
+          "request": {
+            "name": "Get all webhooks",
+            "description": {
+              "content": "Gets a paginated list of webhooks for the authenticated user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "take",
+                  "value": "250",
+                  "description": "Maximum number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0",
+                  "description": "Number of items to skip"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7bde999c-5663-4c5d-947f-2bb6d41e4c86",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "take",
+                      "value": "25"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n      \"triggers\": [\n        \"OOO_CREATED\",\n        \"FORM_SUBMITTED_NO_EVENT\"\n      ],\n      \"userId\": 6927.2160667112885,\n      \"id\": 4863.7082380650545,\n      \"subscriberUrl\": \"string\",\n      \"active\": false,\n      \"secret\": \"string\"\n    },\n    {\n      \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n      \"triggers\": [\n        \"MEETING_STARTED\",\n        \"BOOKING_CANCELLED\"\n      ],\n      \"userId\": 5501.37532191468,\n      \"id\": 2299.5417432793042,\n      \"subscriberUrl\": \"string\",\n      \"active\": true,\n      \"secret\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cb98f81-4155-462b-a113-954c98e8805b",
+          "name": "Update a webhook",
+          "request": {
+            "name": "Update a webhook",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payloadTemplate\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"secret\": \"<string>\",\n  \"version\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "197e8ffc-d194-459c-a9fc-cf03a5c64867",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"secret\": \"<string>\",\n  \"version\": \"2021-10-20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"WRONG_ASSIGNMENT_REPORT\",\n      \"FORM_SUBMITTED_NO_EVENT\"\n    ],\n    \"userId\": 1602.3811492159145,\n    \"id\": 5744.381675276669,\n    \"subscriberUrl\": \"string\",\n    \"active\": false,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75079cbd-2785-4244-b32a-1256240f2b4e",
+          "name": "Get a webhook",
+          "request": {
+            "name": "Get a webhook",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21b07bb5-45a7-4d2a-a20b-bd774a009566",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"WRONG_ASSIGNMENT_REPORT\",\n      \"FORM_SUBMITTED_NO_EVENT\"\n    ],\n    \"userId\": 1602.3811492159145,\n    \"id\": 5744.381675276669,\n    \"subscriberUrl\": \"string\",\n    \"active\": false,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e71ab79d-eeb2-42f3-8578-0ce13d50fc97",
+          "name": "Delete a webhook",
+          "request": {
+            "name": "Delete a webhook",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "efdc51c8-4cb7-4875-b1bb-065c17a9bd44",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"WRONG_ASSIGNMENT_REPORT\",\n      \"FORM_SUBMITTED_NO_EVENT\"\n    ],\n    \"userId\": 1602.3811492159145,\n    \"id\": 5744.381675276669,\n    \"subscriberUrl\": \"string\",\n    \"active\": false,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "72b36ccd-60d0-4ee6-9fbc-3dda4a1ce075",
+    "name": "Cal.diy API v2 Api Keys Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

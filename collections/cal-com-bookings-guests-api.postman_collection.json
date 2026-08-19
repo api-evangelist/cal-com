@@ -1,0 +1,162 @@
+{
+  "item": [
+    {
+      "id": "c38de109-e11b-48dc-a963-5a62b2eedaea",
+      "name": "Bookings / Guests",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ae075ec4-e525-47f5-a30f-576b6d191ca4",
+          "name": "Add guests to an existing booking",
+          "request": {
+            "name": "Add guests to an existing booking",
+            "description": {
+              "content": "Add one or more guests to an existing booking. Maximum 10 guests per request, with a limit of 30 total guests per booking.\n    \n    **Rate Limiting:**\n    This endpoint is rate limited to 5 requests per minute to prevent abuse.\n    \n    **Email Notifications:**\n    When guests are added, the following notifications are sent (unless disabled by event type settings):\n    \n    - **Organizer & Team Members:** Receive an \"Add Guests\" notification email informing them that new guests have been added to the booking.\n    \n    - **New Guests:** Receive a \"Scheduled Event\" email with full booking details and calendar invite. If they have a phone number, they also receive an SMS notification.\n    \n    - **Existing Guests:** Receive an \"Add Guests\" notification email informing them that additional guests have been added to the booking.\n    \n    <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "guests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. This header is required as this endpoint does not exist in older API versions.",
+                "key": "cal-api-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guests\": [\n    {\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"timeZone\": \"<string>\",\n      \"phoneNumber\": \"<string>\",\n      \"language\": \"en\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"timeZone\": \"<string>\",\n      \"phoneNumber\": \"<string>\",\n      \"language\": \"en\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f69dd6df-3644-4de1-aced-45578aabe6cf",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "guests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. This header is required as this endpoint does not exist in older API versions.",
+                    "key": "cal-api-version",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"guests\": [\n    {\n      \"email\": \"john.doe@example.com\",\n      \"name\": \"John Doe\",\n      \"timeZone\": \"America/New_York\"\n    },\n    {\n      \"email\": \"jane.smith@example.com\",\n      \"name\": \"Jane Smith\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "eff5289f-7ddb-4e31-92c4-91de38e6544b",
+    "name": "Cal.diy API v2 Api Keys Bookings / Guests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2 Api Keys Calendars API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Save an ICS feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/ics-feed/save",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save an ICS feed"
+        },
+        {
+          "info": {
+            "name": "Check an ICS feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/ics-feed/check",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Check an ICS feed"
+        },
+        {
+          "info": {
+            "name": "Get busy times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/busy-times",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "loggedInUsersTz",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated: Use timeZone instead. The timezone of the user represented as a string"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "The timezone for the busy times query represented as a string"
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "The starting date for the busy times query"
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "The ending date for the busy times query"
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get busy times from a calendar. Example request URL is `https://api.cal.com/v2/calendars/busy-times?timeZone=Europe%2FMadrid&dateFrom=2024-12-18&dateTo=2024-12-18&calendarsToLoad[0][credentialId]=135&calendarsToLoad[0][externalId]=skrauciz%40gmail.com`. Note: loggedInUsersTz is deprecated, use timeZone instead."
+        },
+        {
+          "info": {
+            "name": "Get all calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all calendars"
+        },
+        {
+          "info": {
+            "name": "Get OAuth connect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/connect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "isDryRun",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "redir",
+                "value": "",
+                "type": "query",
+                "description": "Redirect URL after successful calendar authorization."
+              }
+            ]
+          },
+          "docs": "Get OAuth connect URL"
+        },
+        {
+          "info": {
+            "name": "Save Google or Outlook calendar credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/save",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Save Google or Outlook calendar credentials"
+        },
+        {
+          "info": {
+            "name": "Save Apple calendar credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/credentials",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save Apple calendar credentials"
+        },
+        {
+          "info": {
+            "name": "Check a calendar connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/check",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Check a calendar connection"
+        },
+        {
+          "info": {
+            "name": "Disconnect a calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/disconnect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disconnect a calendar"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

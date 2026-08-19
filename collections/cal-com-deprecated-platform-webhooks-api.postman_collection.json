@@ -1,0 +1,762 @@
+{
+  "item": [
+    {
+      "id": "c6997226-a063-4cac-bbf4-206b0571bedd",
+      "name": "Deprecated: Platform / Webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "acf8508c-9446-48a6-8534-647d7e3ccc4f",
+          "name": "Create a webhook",
+          "request": {
+            "name": "Create a webhook",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payloadTemplate\": \"<string>\",\n  \"secret\": \"<string>\",\n  \"version\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7ba21fc7-bbf5-4b43-8c0b-bfa9f70baef0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n  \"secret\": \"<string>\",\n  \"version\": \"2021-10-20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"MEETING_ENDED\",\n      \"BOOKING_CANCELLED\"\n    ],\n    \"oAuthClientId\": \"string\",\n    \"id\": 6606.8465882594965,\n    \"subscriberUrl\": \"string\",\n    \"active\": true,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43d33473-8854-4258-958e-fd1b86c94e3f",
+          "name": "Get all webhooks",
+          "request": {
+            "name": "Get all webhooks",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "take",
+                  "value": "250",
+                  "description": "Maximum number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0",
+                  "description": "Number of items to skip"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b323deb6-236d-44de-930f-30181e9f8141",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "take",
+                      "value": "25"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n      \"triggers\": [\n        \"BOOKING_CREATED\",\n        \"BOOKING_PAYMENT_INITIATED\"\n      ],\n      \"oAuthClientId\": \"string\",\n      \"id\": 90.79397053554428,\n      \"subscriberUrl\": \"string\",\n      \"active\": true,\n      \"secret\": \"string\"\n    },\n    {\n      \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n      \"triggers\": [\n        \"BOOKING_CANCELLED\",\n        \"BOOKING_RESCHEDULED\"\n      ],\n      \"oAuthClientId\": \"string\",\n      \"id\": 8187.457601970212,\n      \"subscriberUrl\": \"string\",\n      \"active\": false,\n      \"secret\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "006c32ac-3d36-443d-9b0f-2ea513ba3479",
+          "name": "Delete all webhooks",
+          "request": {
+            "name": "Delete all webhooks",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "webhooks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8aa49fbc-4a99-464b-84a3-80e2b27b3045",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "webhooks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9bcd348b-642e-439a-843c-cb49d082fae6",
+          "name": "Update a webhook",
+          "request": {
+            "name": "Update a webhook",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payloadTemplate\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"secret\": \"<string>\",\n  \"version\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e5d1790b-244e-4ecc-a4ee-06489338e456",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n  \"active\": \"<boolean>\",\n  \"subscriberUrl\": \"<string>\",\n  \"triggers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"secret\": \"<string>\",\n  \"version\": \"2021-10-20\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"MEETING_ENDED\",\n      \"WRONG_ASSIGNMENT_REPORT\"\n    ],\n    \"oAuthClientId\": \"string\",\n    \"id\": 639.6781917080963,\n    \"subscriberUrl\": \"string\",\n    \"active\": true,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7feb5e65-d88f-43f7-927c-3c0a9374b50c",
+          "name": "Get a webhook",
+          "request": {
+            "name": "Get a webhook",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1c1e1d2-4f1a-4a31-93a3-bac105a38489",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"MEETING_ENDED\",\n      \"WRONG_ASSIGNMENT_REPORT\"\n    ],\n    \"oAuthClientId\": \"string\",\n    \"id\": 639.6781917080963,\n    \"subscriberUrl\": \"string\",\n    \"active\": true,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d79ec47-0d72-4654-b8dd-879925664da9",
+          "name": "Delete a webhook",
+          "request": {
+            "name": "Delete a webhook",
+            "description": {
+              "content": "<Warning>These endpoints are deprecated and will be removed in the future.</Warning>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-clients",
+                ":clientId",
+                "webhooks",
+                ":webhookId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webhookId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5f12f812-cd09-475b-bde2-e0a5448a0e96",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-clients",
+                    ":clientId",
+                    "webhooks",
+                    ":webhookId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webhookId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"payloadTemplate\": \"{\\\"content\\\":\\\"A new event has been scheduled\\\",\\\"type\\\":\\\"{{type}}\\\",\\\"name\\\":\\\"{{title}}\\\",\\\"organizer\\\":\\\"{{organizer.name}}\\\",\\\"booker\\\":\\\"{{attendees.0.name}}\\\"}\",\n    \"triggers\": [\n      \"MEETING_ENDED\",\n      \"WRONG_ASSIGNMENT_REPORT\"\n    ],\n    \"oAuthClientId\": \"string\",\n    \"id\": 639.6781917080963,\n    \"subscriberUrl\": \"string\",\n    \"active\": true,\n    \"secret\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2f0f0923-ffff-4528-8ffd-7ba76acb58fc",
+    "name": "Cal.diy API v2 Api Keys Deprecated: Platform / Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

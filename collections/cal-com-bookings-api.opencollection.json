@@ -1,0 +1,681 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2 Api Keys Bookings API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bookings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all bookings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by status. If you want to filter by multiple statuses, separate them with a comma."
+              },
+              {
+                "name": "attendeeEmail",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by the attendee's email address."
+              },
+              {
+                "name": "attendeeName",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by the attendee's name."
+              },
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by the booking Uid."
+              },
+              {
+                "name": "eventTypeIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by event type ids belonging to the user. Event type ids must be separated by a comma."
+              },
+              {
+                "name": "eventTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by event type id belonging to the user."
+              },
+              {
+                "name": "teamsIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by team ids that user is part of. Team ids must be separated by a comma."
+              },
+              {
+                "name": "teamId",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings by team id that user is part of"
+              },
+              {
+                "name": "afterStart",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings with start after this date string."
+              },
+              {
+                "name": "beforeEnd",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings with end before this date string."
+              },
+              {
+                "name": "afterCreatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been created after this date string."
+              },
+              {
+                "name": "beforeCreatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been created before this date string."
+              },
+              {
+                "name": "afterUpdatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been updated after this date string."
+              },
+              {
+                "name": "beforeUpdatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Filter bookings that have been updated before this date string."
+              },
+              {
+                "name": "sortStart",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their start time in ascending or descending order."
+              },
+              {
+                "name": "sortEnd",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their end time in ascending or descending order."
+              },
+              {
+                "name": "sortCreated",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their creation time (when booking was made) in ascending or descending order."
+              },
+              {
+                "name": "sortUpdatedAt",
+                "value": "",
+                "type": "query",
+                "description": "Sort results by their updated time (for example when booking status changes) in ascending or descending order."
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to return"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "The number of items to skip"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Create a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n      POST /v2/bookings is used to create regular bookings, recurring bookings and instant bookings. The request bodies for all 3 are almost the same except:\n      If eventTypeId in the request body is id of a regular event, then regular booking is created.\n\n      If it is an id of a recurring event type, then recurring booking is created.\n\n      Meaning that the request bodies are equal but the outcome depends on what kind of event type it is with the goal of making it as seamless for develope"
+        },
+        {
+          "info": {
+            "name": "Get a booking by seat UID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/by-seat/:seatUid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "seatUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a seated booking by its seat reference UID. This is useful when you have a seatUid from a seated booking and want to retrieve the full booking details.\n\n      If you are fetching a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to provide an authentication method of event type owner, host, team admin or owner or org admin or owner.\n\n      <Note>Please make su"
+        },
+        {
+          "info": {
+            "name": "Get a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "`:bookingUid` can be\n\n      1. uid of a normal booking\n\n      2. uid of one of the recurring booking recurrences\n\n      3. uid of recurring booking which will return an array of all recurring booking recurrences (stored as recurringBookingUid on one of the individual recurrences).\n\n      If you are fetching a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to prov"
+        },
+        {
+          "info": {
+            "name": "Get all the recordings for the booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/recordings",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetches all the recordings for the booking `:bookingUid`. Requires authentication and proper authorization. Access is granted if you are the booking organizer, team admin or org admin/owner.\n\n    <Note>cal-api-version: `2024-08-13` is required in the request header.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Get Cal Video real time transcript download links for the booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/transcripts",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetches all the transcript download links for the booking `:bookingUid`\n\n    <Note>\n    Transcripts are generated when clicking \"Transcribe\" during a Cal Video meeting. Download links are valid for 1 hour only - make a new request to generate fresh links after expiration.\n\n    Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.\n    </Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Reschedule a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/reschedule",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reschedule a booking or seated booking\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Cancel a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/cancel",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "x-cal-secret-key",
+                "value": ""
+              },
+              {
+                "name": "x-cal-client-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": ":bookingUid can be :bookingUid of an usual booking, individual recurrence or recurring booking to cancel all recurrences.\n\n    \nCancelling normal bookings:\n    If the booking is not seated and not recurring, simply pass :bookingUid in the request URL `/bookings/:bookingUid/cancel` and optionally cancellationReason in the request body `{\"cancellationReason\": \"Will travel\"}`.\n\n    \nCancelling seated bookings:\n    It is possible to cancel specific seat within a booking as an attendee or all of the "
+        },
+        {
+          "info": {
+            "name": "Mark a booking absence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/mark-absent",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Reassign a booking to auto-selected host",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/reassign",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Currently only supports reassigning host for round robin bookings. The provided authorization header refers to the owner of the booking.\n\n       <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Reassign a booking to a specific host",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/reassign/:userId",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Currently only supports reassigning host for round robin bookings. The provided authorization header refers to the owner of the booking.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Confirm a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/confirm",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Decline a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/decline",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+        },
+        {
+          "info": {
+            "name": "Get 'Add to Calendar' links for a booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/calendar-links",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve calendar links for a booking that can be used to add the event to various calendar services. Returns links for Google Calendar, Microsoft Office, Microsoft Outlook, and a downloadable ICS file.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+        },
+        {
+          "info": {
+            "name": "Get booking references",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/references",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter booking references by type"
+              }
+            ]
+          },
+          "docs": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>"
+        },
+        {
+          "info": {
+            "name": "Get Video Meeting Sessions. Only supported for Cal Video",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/conferencing-sessions",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Requires authentication and proper authorization. Access is granted if you are the booking organizer, team admin or org admin/owner.\n\n    <Note>cal-api-version: `2024-08-13` is required in the request header.</Note>"
+        },
+        {
+          "info": {
+            "name": "Update booking location for an existing booking",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/bookings/:bookingUid/location",
+            "headers": [
+              {
+                "name": "cal-api-version",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "bookingUid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the location for an existing booking.\n\n**Integration Fallback Behavior:**\n- **Google Meet**: Requires Google Calendar to be connected. If the booking has no Google Calendar event, it will automatically fall back to Cal Video.\n- **MS Teams**: If Office 365 Calendar is connected, generates the meeting link via calendar. Otherwise, uses the MS Teams video integration directly.\n\n<Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

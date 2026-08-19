@@ -1,0 +1,2350 @@
+{
+  "item": [
+    {
+      "id": "fefa235b-5219-460a-a0aa-10eb97f8ec69",
+      "name": "Bookings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d08c559-bdff-4d74-ba30-83165238ad48",
+          "name": "Create a booking",
+          "request": {
+            "name": "Create a booking",
+            "description": {
+              "content": "\n      POST /v2/bookings is used to create regular bookings, recurring bookings and instant bookings. The request bodies for all 3 are almost the same except:\n      If eventTypeId in the request body is id of a regular event, then regular booking is created.\n\n      If it is an id of a recurring event type, then recurring booking is created.\n\n      Meaning that the request bodies are equal but the outcome depends on what kind of event type it is with the goal of making it as seamless for developers as possible.\n\n      The start needs to be in UTC aka if the timezone is GMT+2 in Rome and meeting should start at 11, then UTC time should have hours 09:00 aka without time zone.\n\n      Finally, there are 2 ways to book an event type belonging to an individual user:\n      1. Provide `eventTypeId` in the request body.\n      2. Provide `eventTypeSlug` and `username` and optionally `organizationSlug` if the user with the username is within an organization.\n\n      And 2 ways to book and event type belonging to a team:\n      1. Provide `eventTypeId` in the request body.\n      2. Provide `eventTypeSlug` and `teamSlug` and optionally `organizationSlug` if the team with the teamSlug is within an organization.\n\n      If you are creating a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to provide an authentication method of event type owner, host, team admin or owner or org admin or owner.\n\n      For event types that have SMS reminders enabled, you need to pass the attendee's phone number in the request body via `attendee.phoneNumber` (e.g., \"+19876543210\" in international format). This is an optional field, but becomes required when SMS reminders are enabled for the event type. For the complete attendee object structure, see the attendee schema in the `/docs` Swagger endpoint.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start\": \"<string>\",\n  \"attendee\": {\n    \"name\": \"<string>\",\n    \"timeZone\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"language\": \"en\",\n    \"email\": \"<string>\"\n  },\n  \"bookingFieldsResponses\": \"<object>\",\n  \"eventTypeId\": \"<number>\",\n  \"eventTypeSlug\": \"<string>\",\n  \"username\": \"<string>\",\n  \"teamSlug\": \"<string>\",\n  \"organizationSlug\": \"<string>\",\n  \"guests\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meetingUrl\": \"<string>\",\n  \"location\": {\n    \"type\": \"<string>\"\n  },\n  \"metadata\": \"<object>\",\n  \"lengthInMinutes\": \"<number>\",\n  \"routing\": {\n    \"responseId\": \"<number>\",\n    \"teamMemberIds\": [\n      \"<number>\",\n      \"<number>\"\n    ],\n    \"teamMemberEmail\": \"<string>\",\n    \"skipContactOwner\": \"<boolean>\",\n    \"crmAppSlug\": \"<string>\",\n    \"crmOwnerRecordType\": \"<string>\"\n  },\n  \"emailVerificationCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a7cc9c25-017f-4a51-ad4f-8ab40af8654f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"2024-08-13T09:00:00Z\",\n  \"attendee\": {\n    \"name\": \"John Doe\",\n    \"timeZone\": \"America/New_York\",\n    \"phoneNumber\": \"+919876543210\",\n    \"language\": \"it\",\n    \"email\": \"john.doe@example.com\"\n  },\n  \"bookingFieldsResponses\": {\n    \"customField\": \"customValue\"\n  },\n  \"eventTypeId\": 123,\n  \"eventTypeSlug\": \"my-event-type\",\n  \"username\": \"john-doe\",\n  \"teamSlug\": \"john-doe\",\n  \"organizationSlug\": \"acme-corp\",\n  \"guests\": [\n    \"guest1@example.com\",\n    \"guest2@example.com\"\n  ],\n  \"meetingUrl\": \"https://example.com/meeting\",\n  \"location\": {\n    \"type\": \"address\"\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"lengthInMinutes\": 30,\n  \"routing\": {\n    \"responseId\": 123,\n    \"teamMemberIds\": [\n      101,\n      102\n    ]\n  },\n  \"emailVerificationCode\": \"123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bcd01e98-c638-4403-b305-dd20e2edb58b",
+          "name": "Get all bookings",
+          "request": {
+            "name": "Get all bookings",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter bookings by status. If you want to filter by multiple statuses, separate them with a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter bookings by status. If you want to filter by multiple statuses, separate them with a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "attendeeEmail",
+                  "value": "<string>",
+                  "description": "Filter bookings by the attendee's email address."
+                },
+                {
+                  "disabled": false,
+                  "key": "attendeeName",
+                  "value": "<string>",
+                  "description": "Filter bookings by the attendee's name."
+                },
+                {
+                  "disabled": false,
+                  "key": "bookingUid",
+                  "value": "<string>",
+                  "description": "Filter bookings by the booking Uid."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeIds",
+                  "value": "<string>",
+                  "description": "Filter bookings by event type ids belonging to the user. Event type ids must be separated by a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeId",
+                  "value": "<string>",
+                  "description": "Filter bookings by event type id belonging to the user."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamsIds",
+                  "value": "<string>",
+                  "description": "Filter bookings by team ids that user is part of. Team ids must be separated by a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "teamId",
+                  "value": "<string>",
+                  "description": "Filter bookings by team id that user is part of"
+                },
+                {
+                  "disabled": false,
+                  "key": "afterStart",
+                  "value": "<string>",
+                  "description": "Filter bookings with start after this date string."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeEnd",
+                  "value": "<string>",
+                  "description": "Filter bookings with end before this date string."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCreatedAt",
+                  "value": "<string>",
+                  "description": "Filter bookings that have been created after this date string."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCreatedAt",
+                  "value": "<string>",
+                  "description": "Filter bookings that have been created before this date string."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterUpdatedAt",
+                  "value": "<string>",
+                  "description": "Filter bookings that have been updated after this date string."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeUpdatedAt",
+                  "value": "<string>",
+                  "description": "Filter bookings that have been updated before this date string."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortStart",
+                  "value": "<string>",
+                  "description": "Sort results by their start time in ascending or descending order."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortEnd",
+                  "value": "<string>",
+                  "description": "Sort results by their end time in ascending or descending order."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortCreated",
+                  "value": "<string>",
+                  "description": "Sort results by their creation time (when booking was made) in ascending or descending order."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortUpdatedAt",
+                  "value": "<string>",
+                  "description": "Sort results by their updated time (for example when booking status changes) in ascending or descending order."
+                },
+                {
+                  "disabled": false,
+                  "key": "take",
+                  "value": "100",
+                  "description": "The number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "0",
+                  "description": "The number of items to skip"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7567f10-f746-4a17-8ee2-9b144804e434",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attendeeEmail",
+                      "value": "example@domain.com"
+                    },
+                    {
+                      "key": "attendeeName",
+                      "value": "John Doe"
+                    },
+                    {
+                      "key": "bookingUid",
+                      "value": "2NtaeaVcKfpmSZ4CthFdfk"
+                    },
+                    {
+                      "key": "eventTypeIds",
+                      "value": "?eventTypeIds=100,200"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "?eventTypeId=100"
+                    },
+                    {
+                      "key": "teamsIds",
+                      "value": "?teamIds=50,60"
+                    },
+                    {
+                      "key": "teamId",
+                      "value": "?teamId=50"
+                    },
+                    {
+                      "key": "afterStart",
+                      "value": "?afterStart=2025-03-07T10:00:00.000Z"
+                    },
+                    {
+                      "key": "beforeEnd",
+                      "value": "?beforeEnd=2025-03-07T11:00:00.000Z"
+                    },
+                    {
+                      "key": "afterCreatedAt",
+                      "value": "?afterCreatedAt=2025-03-07T10:00:00.000Z"
+                    },
+                    {
+                      "key": "beforeCreatedAt",
+                      "value": "?beforeCreatedAt=2025-03-14T11:00:00.000Z"
+                    },
+                    {
+                      "key": "afterUpdatedAt",
+                      "value": "?afterUpdatedAt=2025-03-07T10:00:00.000Z"
+                    },
+                    {
+                      "key": "beforeUpdatedAt",
+                      "value": "?beforeUpdatedAt=2025-03-14T11:00:00.000Z"
+                    },
+                    {
+                      "key": "sortStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortCreated",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortUpdatedAt",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "take",
+                      "value": "10"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 123,\n      \"uid\": \"booking_uid_123\",\n      \"title\": \"Consultation\",\n      \"description\": \"Learn how to integrate scheduling into marketplace.\",\n      \"hosts\": [\n        {\n          \"id\": 1,\n          \"name\": \"Jane Doe\",\n          \"email\": \"jane100@example.com\",\n          \"displayEmail\": \"jane100@example.com\",\n          \"username\": \"jane100\",\n          \"timeZone\": \"America/Los_Angeles\"\n        },\n        {\n          \"id\": 1,\n          \"name\": \"Jane Doe\",\n          \"email\": \"jane100@example.com\",\n          \"displayEmail\": \"jane100@example.com\",\n          \"username\": \"jane100\",\n          \"timeZone\": \"America/Los_Angeles\"\n        }\n      ],\n      \"status\": \"accepted\",\n      \"start\": \"2024-08-13T15:30:00Z\",\n      \"end\": \"2024-08-13T16:30:00Z\",\n      \"duration\": 60,\n      \"eventTypeId\": 50,\n      \"eventType\": {\n        \"id\": 1,\n        \"slug\": \"some-event\"\n      },\n      \"location\": \"https://example.com/meeting\",\n      \"absentHost\": true,\n      \"createdAt\": \"2024-08-13T15:30:00Z\",\n      \"updatedAt\": \"2024-08-13T15:30:00Z\",\n      \"attendees\": [\n        {\n          \"name\": \"John Doe\",\n          \"email\": \"john@example.com\",\n          \"displayEmail\": \"john@example.com\",\n          \"timeZone\": \"America/New_York\",\n          \"absent\": false,\n          \"language\": \"en\",\n          \"phoneNumber\": \"+1234567890\"\n        },\n        {\n          \"name\": \"John Doe\",\n          \"email\": \"john@example.com\",\n          \"displayEmail\": \"john@example.com\",\n          \"timeZone\": \"America/New_York\",\n          \"absent\": false,\n          \"language\": \"en\",\n          \"phoneNumber\": \"+1234567890\"\n        }\n      ],\n      \"bookingFieldsResponses\": {\n        \"customField\": \"customValue\"\n      },\n      \"cancellationReason\": \"User requested cancellation\",\n      \"cancelledByEmail\": \"canceller@example.com\",\n      \"reschedulingReason\": \"User rescheduled the event\",\n      \"rescheduledByEmail\": \"rescheduler@example.com\",\n      \"rescheduledFromUid\": \"previous_uid_123\",\n      \"rescheduledToUid\": \"new_uid_456\",\n      \"meetingUrl\": \"https://example.com/recurring-meeting\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"rating\": 4,\n      \"icsUid\": \"ics_uid_123\",\n      \"guests\": [\n        \"guest1@example.com\",\n        \"guest2@example.com\"\n      ]\n    },\n    {\n      \"id\": 123,\n      \"uid\": \"booking_uid_123\",\n      \"title\": \"Consultation\",\n      \"description\": \"Learn how to integrate scheduling into marketplace.\",\n      \"hosts\": [\n        {\n          \"id\": 1,\n          \"name\": \"Jane Doe\",\n          \"email\": \"jane100@example.com\",\n          \"displayEmail\": \"jane100@example.com\",\n          \"username\": \"jane100\",\n          \"timeZone\": \"America/Los_Angeles\"\n        },\n        {\n          \"id\": 1,\n          \"name\": \"Jane Doe\",\n          \"email\": \"jane100@example.com\",\n          \"displayEmail\": \"jane100@example.com\",\n          \"username\": \"jane100\",\n          \"timeZone\": \"America/Los_Angeles\"\n        }\n      ],\n      \"status\": \"accepted\",\n      \"start\": \"2024-08-13T15:30:00Z\",\n      \"end\": \"2024-08-13T16:30:00Z\",\n      \"duration\": 60,\n      \"eventTypeId\": 50,\n      \"eventType\": {\n        \"id\": 1,\n        \"slug\": \"some-event\"\n      },\n      \"location\": \"https://example.com/meeting\",\n      \"absentHost\": true,\n      \"createdAt\": \"2024-08-13T15:30:00Z\",\n      \"updatedAt\": \"2024-08-13T15:30:00Z\",\n      \"attendees\": [\n        {\n          \"name\": \"John Doe\",\n          \"email\": \"john@example.com\",\n          \"displayEmail\": \"john@example.com\",\n          \"timeZone\": \"America/New_York\",\n          \"absent\": false,\n          \"language\": \"en\",\n          \"phoneNumber\": \"+1234567890\"\n        },\n        {\n          \"name\": \"John Doe\",\n          \"email\": \"john@example.com\",\n          \"displayEmail\": \"john@example.com\",\n          \"timeZone\": \"America/New_York\",\n          \"absent\": false,\n          \"language\": \"en\",\n          \"phoneNumber\": \"+1234567890\"\n        }\n      ],\n      \"bookingFieldsResponses\": {\n        \"customField\": \"customValue\"\n      },\n      \"cancellationReason\": \"User requested cancellation\",\n      \"cancelledByEmail\": \"canceller@example.com\",\n      \"reschedulingReason\": \"User rescheduled the event\",\n      \"rescheduledByEmail\": \"rescheduler@example.com\",\n      \"rescheduledFromUid\": \"previous_uid_123\",\n      \"rescheduledToUid\": \"new_uid_456\",\n      \"meetingUrl\": \"https://example.com/recurring-meeting\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"rating\": 4,\n      \"icsUid\": \"ics_uid_123\",\n      \"guests\": [\n        \"guest1@example.com\",\n        \"guest2@example.com\"\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"totalItems\": 123,\n    \"remainingItems\": 103,\n    \"returnedItems\": 10,\n    \"itemsPerPage\": 10,\n    \"currentPage\": 2,\n    \"totalPages\": 13,\n    \"hasNextPage\": true,\n    \"hasPreviousPage\": true\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e461ef5-68ec-453d-bc1a-0d2d61b3b299",
+          "name": "Get a booking by seat UID",
+          "request": {
+            "name": "Get a booking by seat UID",
+            "description": {
+              "content": "Get a seated booking by its seat reference UID. This is useful when you have a seatUid from a seated booking and want to retrieve the full booking details.\n\n      If you are fetching a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to provide an authentication method of event type owner, host, team admin or owner or org admin or owner.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                "by-seat",
+                ":seatUid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "seatUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98e343f7-04f9-4e9c-8e4a-3ab46b35a1d1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    "by-seat",
+                    ":seatUid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "seatUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2855975-4041-4035-bc19-7d96e03bbc3c",
+          "name": "Get a booking",
+          "request": {
+            "name": "Get a booking",
+            "description": {
+              "content": "`:bookingUid` can be\n\n      1. uid of a normal booking\n\n      2. uid of one of the recurring booking recurrences\n\n      3. uid of recurring booking which will return an array of all recurring booking recurrences (stored as recurringBookingUid on one of the individual recurrences).\n\n      If you are fetching a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n      you have to provide an authentication method of event type owner, host, team admin or owner or org admin or owner.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e4a64a8-592a-422f-9ff8-c619880f001b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39cd073a-bccf-443d-b462-10618f1707f0",
+          "name": "Get all the recordings for the booking",
+          "request": {
+            "name": "Get all the recordings for the booking",
+            "description": {
+              "content": "Fetches all the recordings for the booking `:bookingUid`. Requires authentication and proper authorization. Access is granted if you are the booking organizer, team admin or org admin/owner.\n\n    <Note>cal-api-version: `2024-08-13` is required in the request header.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "recordings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e9d84abe-3816-4111-a511-ad2691db6df9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "recordings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": \"1234567890\",\n      \"roomName\": \"daily-video-room-123\",\n      \"startTs\": 1678901234,\n      \"status\": \"completed\",\n      \"duration\": 3600,\n      \"shareToken\": \"share-token-123\",\n      \"maxParticipants\": 10,\n      \"downloadLink\": \"https://cal-video-recordings.s3.us-east-2.amazonaws.com/meetco/123s\",\n      \"error\": \"Error message\"\n    },\n    {\n      \"id\": \"1234567890\",\n      \"roomName\": \"daily-video-room-123\",\n      \"startTs\": 1678901234,\n      \"status\": \"completed\",\n      \"duration\": 3600,\n      \"shareToken\": \"share-token-123\",\n      \"maxParticipants\": 10,\n      \"downloadLink\": \"https://cal-video-recordings.s3.us-east-2.amazonaws.com/meetco/123s\",\n      \"error\": \"Error message\"\n    }\n  ],\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f72674f-4374-4902-bc5f-aeb9eb35a9f6",
+          "name": "Get Cal Video real time transcript download links for the booking",
+          "request": {
+            "name": "Get Cal Video real time transcript download links for the booking",
+            "description": {
+              "content": "Fetches all the transcript download links for the booking `:bookingUid`\n\n    <Note>\n    Transcripts are generated when clicking \"Transcribe\" during a Cal Video meeting. Download links are valid for 1 hour only - make a new request to generate fresh links after expiration.\n\n    Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.\n    </Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "transcripts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d59ee5aa-052d-49f8-923e-d046d96277bc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "transcripts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    \"https://transcript1.com\",\n    \"https://transcript2.com\"\n  ],\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4724cb4c-ea0d-423a-98d0-f191e8f6e7cd",
+          "name": "Reschedule a booking",
+          "request": {
+            "name": "Reschedule a booking",
+            "description": {
+              "content": "Reschedule a booking or seated booking\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "reschedule"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start\": \"<string>\",\n  \"rescheduledBy\": \"<string>\",\n  \"reschedulingReason\": \"<string>\",\n  \"emailVerificationCode\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e76b5e1b-d198-4dfb-8852-208adc86ecf9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "reschedule"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"2024-08-13T09:00:00Z\",\n  \"rescheduledBy\": \"<string>\",\n  \"reschedulingReason\": \"User requested reschedule\",\n  \"emailVerificationCode\": \"123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c0a655c-ba9b-4e1c-8aa6-c5c228062f73",
+          "name": "Cancel a booking",
+          "request": {
+            "name": "Cancel a booking",
+            "description": {
+              "content": ":bookingUid can be :bookingUid of an usual booking, individual recurrence or recurring booking to cancel all recurrences.\n\n    \nCancelling normal bookings:\n    If the booking is not seated and not recurring, simply pass :bookingUid in the request URL `/bookings/:bookingUid/cancel` and optionally cancellationReason in the request body `{\"cancellationReason\": \"Will travel\"}`.\n\n    \nCancelling seated bookings:\n    It is possible to cancel specific seat within a booking as an attendee or all of the seats as the host.\n    \n1. As an attendee - provide :bookingUid in the request URL `/bookings/:bookingUid/cancel` and seatUid in the request body `{\"seatUid\": \"123-123-123\"}` . This will remove this particular attendance from the booking.\n    \n2. As the host or org admin of host - host can cancel booking for all attendees aka for every seat, this also applies to org admins. Provide :bookingUid in the request URL `/bookings/:bookingUid/cancel` and cancellationReason in the request body `{\"cancellationReason\": \"Will travel\"}` and `Authorization: Bearer token` request header where token is event type owner (host) credential. This will cancel the booking for all attendees.\n\n    \nCancelling recurring seated bookings:\n    For recurring seated bookings it is not possible to cancel all of them with 1 call\n    like with non-seated recurring bookings by providing recurring bookind uid - you have to cancel each recurrence booking by its bookingUid + seatUid.\n\n    If you are cancelling a seated booking for an event type with 'show attendees' disabled, then to retrieve attendees in the response either set 'show attendees' to true on event type level or\n    you have to provide an authentication method of event type owner, host, team admin or owner or org admin or owner.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client secret key",
+                "key": "x-cal-secret-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "For platform customers - OAuth client ID",
+                "key": "x-cal-client-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cancellationReason\": \"<string>\",\n  \"cancelSubsequentBookings\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac907ca7-4e27-4b42-81af-fe0b1f5c8288",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client secret key",
+                    "key": "x-cal-secret-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "For platform customers - OAuth client ID",
+                    "key": "x-cal-client-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cancellationReason\": \"User requested cancellation\",\n  \"cancelSubsequentBookings\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef4420b8-4eec-4425-9b2d-b8b995683de7",
+          "name": "Mark a booking absence",
+          "request": {
+            "name": "Mark a booking absence",
+            "description": {
+              "content": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "mark-absent"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"host\": \"<boolean>\",\n  \"attendees\": [\n    {\n      \"email\": \"<string>\",\n      \"absent\": \"<boolean>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"absent\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "336bf038-9d61-483a-8183-8be96f7e7b32",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "mark-absent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"host\": false,\n  \"attendees\": [\n    {\n      \"email\": \"<string>\",\n      \"absent\": \"<boolean>\"\n    },\n    {\n      \"email\": \"<string>\",\n      \"absent\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e2e6894-1793-4928-9eb4-368a10dacd0a",
+          "name": "Reassign a booking to auto-selected host",
+          "request": {
+            "name": "Reassign a booking to auto-selected host",
+            "description": {
+              "content": "Currently only supports reassigning host for round robin bookings. The provided authorization header refers to the owner of the booking.\n\n       <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "reassign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ecd35cef-fb3b-44cc-b20e-c060d0090c3f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "reassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"status\": \"success\",\n    \"data\": {\n      \"value\": \"<Circular reference to #/components/schemas/ReassignBookingOutput_2024_08_13 detected>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0104cb4-0d8b-4510-9d71-5661ef47fa60",
+          "name": "Reassign a booking to a specific host",
+          "request": {
+            "name": "Reassign a booking to a specific host",
+            "description": {
+              "content": "Currently only supports reassigning host for round robin bookings. The provided authorization header refers to the owner of the booking.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "reassign",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "userId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3d262fbd-04f6-427e-9b41-16e43a5314fb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "reassign",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "userId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Host has to take another call\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"status\": \"success\",\n    \"data\": {\n      \"value\": \"<Circular reference to #/components/schemas/ReassignBookingOutput_2024_08_13 detected>\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bff40fb4-c24d-4d2a-8fdd-a196a821587c",
+          "name": "Confirm a booking",
+          "request": {
+            "name": "Confirm a booking",
+            "description": {
+              "content": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "confirm"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c051ce55-6e6c-4fe1-905c-29ecc8842a76",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "confirm"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db63bf05-d94c-4207-a6fd-62721c722ac0",
+          "name": "Decline a booking",
+          "request": {
+            "name": "Decline a booking",
+            "description": {
+              "content": "The provided authorization header refers to the owner of the booking.\n\n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "decline"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "de2c4533-37d1-42fc-b236-3ba3d41e7cd7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "decline"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Host has to take another call\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  },\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94fcea2c-8177-43a8-81b9-b3c6c45b3b59",
+          "name": "Get 'Add to Calendar' links for a booking",
+          "request": {
+            "name": "Get 'Add to Calendar' links for a booking",
+            "description": {
+              "content": "Retrieve calendar links for a booking that can be used to add the event to various calendar services. Returns links for Google Calendar, Microsoft Office, Microsoft Outlook, and a downloadable ICS file.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "calendar-links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0487768f-c1f9-4333-b521-384855feaded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "calendar-links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": {},\n  \"data\": [\n    {\n      \"label\": \"string\",\n      \"link\": \"string\"\n    },\n    {\n      \"label\": \"string\",\n      \"link\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f290e89-d3c3-4f04-826e-6f115fd5a323",
+          "name": "Get booking references",
+          "request": {
+            "name": "Get booking references",
+            "description": {
+              "content": "<Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter booking references by type"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "79d67b41-82f0-478f-8af5-c111977ff025",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "google_calendar"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": {},\n  \"data\": [\n    {\n      \"type\": \"string\",\n      \"eventUid\": \"string\",\n      \"destinationCalendarId\": \"string\",\n      \"id\": 3369.056773011809\n    },\n    {\n      \"type\": \"string\",\n      \"eventUid\": \"string\",\n      \"destinationCalendarId\": \"string\",\n      \"id\": 421.20038059910047\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b51dc2f-b21e-4693-8215-6d112b59a852",
+          "name": "Get Video Meeting Sessions. Only supported for Cal Video",
+          "request": {
+            "name": "Get Video Meeting Sessions. Only supported for Cal Video",
+            "description": {
+              "content": "Requires authentication and proper authorization. Access is granted if you are the booking organizer, team admin or org admin/owner.\n\n    <Note>cal-api-version: `2024-08-13` is required in the request header.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "conferencing-sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                "key": "cal-api-version",
+                "value": "2024-08-13"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5668afa-3e67-4c80-a901-c1a920633b70",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "conferencing-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. If not set to this value, the endpoint will default to an older version.",
+                    "key": "cal-api-version",
+                    "value": "2024-08-13"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": \"session123\",\n      \"room\": \"daily-video-room-123\",\n      \"startTime\": 1678901234,\n      \"duration\": 3600,\n      \"ongoing\": false,\n      \"maxParticipants\": 10,\n      \"participants\": [\n        {\n          \"userId\": \"user123\",\n          \"userName\": \"John Doe\",\n          \"joinTime\": 1678901234,\n          \"duration\": 3600\n        },\n        {\n          \"userId\": \"user123\",\n          \"userName\": \"John Doe\",\n          \"joinTime\": 1678901234,\n          \"duration\": 3600\n        }\n      ]\n    },\n    {\n      \"id\": \"session123\",\n      \"room\": \"daily-video-room-123\",\n      \"startTime\": 1678901234,\n      \"duration\": 3600,\n      \"ongoing\": false,\n      \"maxParticipants\": 10,\n      \"participants\": [\n        {\n          \"userId\": \"user123\",\n          \"userName\": \"John Doe\",\n          \"joinTime\": 1678901234,\n          \"duration\": 3600\n        },\n        {\n          \"userId\": \"user123\",\n          \"userName\": \"John Doe\",\n          \"joinTime\": 1678901234,\n          \"duration\": 3600\n        }\n      ]\n    }\n  ],\n  \"error\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f487833c-c7ad-4f52-8f15-2158a847c00c",
+          "name": "Update booking location for an existing booking",
+          "request": {
+            "name": "Update booking location for an existing booking",
+            "description": {
+              "content": "Updates the location for an existing booking.\n\n**Integration Fallback Behavior:**\n- **Google Meet**: Requires Google Calendar to be connected. If the booking has no Google Calendar event, it will automatically fall back to Cal Video.\n- **MS Teams**: If Office 365 Calendar is connected, generates the meeting link via calendar. Otherwise, uses the MS Teams video integration directly.\n\n<Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "bookings",
+                ":bookingUid",
+                "location"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bookingUid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Must be set to 2024-08-13. This header is required as this endpoint does not exist in older API versions.",
+                "key": "cal-api-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location\": {\n    \"type\": \"<string>\",\n    \"address\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99c6c328-c6de-43b9-b7c4-f06b90c28069",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "bookings",
+                    ":bookingUid",
+                    "location"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bookingUid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Must be set to 2024-08-13. This header is required as this endpoint does not exist in older API versions.",
+                    "key": "cal-api-version",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"location\": {\n    \"type\": \"address\",\n    \"address\": \"123 Example St, City, Country\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 123,\n    \"uid\": \"booking_uid_123\",\n    \"title\": \"Consultation\",\n    \"description\": \"Learn how to integrate scheduling into marketplace.\",\n    \"hosts\": [\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"email\": \"jane100@example.com\",\n        \"displayEmail\": \"jane100@example.com\",\n        \"username\": \"jane100\",\n        \"timeZone\": \"America/Los_Angeles\"\n      }\n    ],\n    \"status\": \"accepted\",\n    \"start\": \"2024-08-13T15:30:00Z\",\n    \"end\": \"2024-08-13T16:30:00Z\",\n    \"duration\": 60,\n    \"eventTypeId\": 50,\n    \"eventType\": {\n      \"id\": 1,\n      \"slug\": \"some-event\"\n    },\n    \"location\": \"https://example.com/meeting\",\n    \"absentHost\": true,\n    \"createdAt\": \"2024-08-13T15:30:00Z\",\n    \"updatedAt\": \"2024-08-13T15:30:00Z\",\n    \"attendees\": [\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      },\n      {\n        \"name\": \"John Doe\",\n        \"email\": \"john@example.com\",\n        \"displayEmail\": \"john@example.com\",\n        \"timeZone\": \"America/New_York\",\n        \"absent\": false,\n        \"language\": \"en\",\n        \"phoneNumber\": \"+1234567890\"\n      }\n    ],\n    \"bookingFieldsResponses\": {\n      \"customField\": \"customValue\"\n    },\n    \"cancellationReason\": \"User requested cancellation\",\n    \"cancelledByEmail\": \"canceller@example.com\",\n    \"reschedulingReason\": \"User rescheduled the event\",\n    \"rescheduledByEmail\": \"rescheduler@example.com\",\n    \"rescheduledFromUid\": \"previous_uid_123\",\n    \"rescheduledToUid\": \"new_uid_456\",\n    \"meetingUrl\": \"https://example.com/recurring-meeting\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"rating\": 4,\n    \"icsUid\": \"ics_uid_123\",\n    \"guests\": [\n      \"guest1@example.com\",\n      \"guest2@example.com\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "74397c05-d985-458d-a9cf-4ffdea2acd7a",
+    "name": "Cal.diy API v2 Api Keys Bookings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,954 @@
+{
+  "item": [
+    {
+      "id": "5c1b1706-116a-432c-817d-b30bbbbf13ef",
+      "name": "Calendars",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e965bbfb-dd3c-497b-a649-84df9ebc772c",
+          "name": "Save an ICS feed",
+          "request": {
+            "name": "Save an ICS feed",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                "ics-feed",
+                "save"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"readOnly\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "66e11f64-b5ca-4a2b-b202-619f263ded54",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    "ics-feed",
+                    "save"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"urls\": [\n    \"https://cal.com/ics/feed.ics\",\n    \"http://cal.com/ics/feed.ics\"\n  ],\n  \"readOnly\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1234567890,\n    \"type\": \"ics-feed_calendar\",\n    \"userId\": 1234567890,\n    \"teamId\": 1234567890,\n    \"appId\": \"ics-feed\",\n    \"invalid\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1307b542-f636-414a-911d-fcec8bb98f9f",
+          "name": "Check an ICS feed",
+          "request": {
+            "name": "Check an ICS feed",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                "ics-feed",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "972ca976-e228-436a-ac60-69aea9d5b774",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    "ics-feed",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51972fd0-5243-4443-b317-0ffffa257205",
+          "name": "Get busy times",
+          "request": {
+            "name": "Get busy times",
+            "description": {
+              "content": "Get busy times from a calendar. Example request URL is `https://api.cal.com/v2/calendars/busy-times?timeZone=Europe%2FMadrid&dateFrom=2024-12-18&dateTo=2024-12-18&calendarsToLoad[0][credentialId]=135&calendarsToLoad[0][externalId]=skrauciz%40gmail.com`. Note: loggedInUsersTz is deprecated, use timeZone instead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                "busy-times"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "loggedInUsersTz",
+                  "value": "<string>",
+                  "description": "Deprecated: Use timeZone instead. The timezone of the user represented as a string"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeZone",
+                  "value": "<string>",
+                  "description": "The timezone for the busy times query represented as a string"
+                },
+                {
+                  "disabled": false,
+                  "key": "dateFrom",
+                  "value": "<string>",
+                  "description": "The starting date for the busy times query"
+                },
+                {
+                  "disabled": false,
+                  "key": "dateTo",
+                  "value": "<string>",
+                  "description": "The ending date for the busy times query"
+                },
+                {
+                  "disabled": false,
+                  "key": "credentialId",
+                  "value": "<number>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "externalId",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4fa4717a-0127-410b-b7f1-de4109b2a299",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    "busy-times"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "loggedInUsersTz",
+                      "value": "America/New_York"
+                    },
+                    {
+                      "key": "timeZone",
+                      "value": "America/New_York"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "2023-10-01"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "2023-10-31"
+                    },
+                    {
+                      "key": "credentialId",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "externalId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"start\": \"2013-02-10T03:48:45.504Z\",\n      \"end\": \"1959-11-17T03:45:01.780Z\",\n      \"source\": \"string\"\n    },\n    {\n      \"start\": \"1970-03-28T17:44:36.835Z\",\n      \"end\": \"1979-06-04T14:11:44.210Z\",\n      \"source\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bab6b60d-a309-4cef-a032-ed73218c6776",
+          "name": "Get all calendars",
+          "request": {
+            "name": "Get all calendars",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d8f3753-bc0a-49b1-bb9e-70459f677065",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"connectedCalendars\": [\n      {\n        \"integration\": {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"string\",\n          \"variant\": \"string\",\n          \"categories\": [\n            \"string\",\n            \"string\"\n          ],\n          \"logo\": \"string\",\n          \"publisher\": \"string\",\n          \"slug\": \"string\",\n          \"url\": \"string\",\n          \"email\": \"string\",\n          \"locationOption\": {},\n          \"appData\": {},\n          \"dirName\": \"string\",\n          \"__template\": \"string\",\n          \"installed\": true,\n          \"title\": \"string\",\n          \"category\": \"string\"\n        },\n        \"credentialId\": 1962.7232333374677,\n        \"delegationCredentialId\": \"string\",\n        \"primary\": {\n          \"externalId\": \"string\",\n          \"primary\": false,\n          \"readOnly\": false,\n          \"isSelected\": false,\n          \"credentialId\": 6460.423459779129,\n          \"integration\": \"string\",\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"delegationCredentialId\": \"string\"\n        },\n        \"calendars\": [\n          {\n            \"externalId\": \"string\",\n            \"readOnly\": true,\n            \"isSelected\": true,\n            \"credentialId\": 740.9410582311948,\n            \"integration\": \"string\",\n            \"name\": \"string\",\n            \"primary\": true,\n            \"email\": \"string\",\n            \"delegationCredentialId\": \"string\"\n          },\n          {\n            \"externalId\": \"string\",\n            \"readOnly\": false,\n            \"isSelected\": false,\n            \"credentialId\": 6569.0222770032315,\n            \"integration\": \"string\",\n            \"name\": \"string\",\n            \"primary\": true,\n            \"email\": \"string\",\n            \"delegationCredentialId\": \"string\"\n          }\n        ]\n      },\n      {\n        \"integration\": {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"string\",\n          \"variant\": \"string\",\n          \"categories\": [\n            \"string\",\n            \"string\"\n          ],\n          \"logo\": \"string\",\n          \"publisher\": \"string\",\n          \"slug\": \"string\",\n          \"url\": \"string\",\n          \"email\": \"string\",\n          \"locationOption\": {},\n          \"appData\": {},\n          \"dirName\": \"string\",\n          \"__template\": \"string\",\n          \"installed\": false,\n          \"title\": \"string\",\n          \"category\": \"string\"\n        },\n        \"credentialId\": 414.15156320692705,\n        \"delegationCredentialId\": \"string\",\n        \"primary\": {\n          \"externalId\": \"string\",\n          \"primary\": false,\n          \"readOnly\": true,\n          \"isSelected\": true,\n          \"credentialId\": 1268.7454077942384,\n          \"integration\": \"string\",\n          \"name\": \"string\",\n          \"email\": \"string\",\n          \"delegationCredentialId\": \"string\"\n        },\n        \"calendars\": [\n          {\n            \"externalId\": \"string\",\n            \"readOnly\": true,\n            \"isSelected\": true,\n            \"credentialId\": 4387.082754317035,\n            \"integration\": \"string\",\n            \"name\": \"string\",\n            \"primary\": true,\n            \"email\": \"string\",\n            \"delegationCredentialId\": \"string\"\n          },\n          {\n            \"externalId\": \"string\",\n            \"readOnly\": false,\n            \"isSelected\": true,\n            \"credentialId\": 9638.55505896231,\n            \"integration\": \"string\",\n            \"name\": \"string\",\n            \"primary\": true,\n            \"email\": \"string\",\n            \"delegationCredentialId\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"destinationCalendar\": {\n      \"id\": {},\n      \"integration\": \"string\",\n      \"externalId\": \"string\",\n      \"primaryEmail\": \"string\",\n      \"userId\": 8097.220389522425,\n      \"eventTypeId\": 3696.622759523326,\n      \"credentialId\": 8951.014319954573,\n      \"delegationCredentialId\": \"string\",\n      \"name\": \"string\",\n      \"primary\": true,\n      \"readOnly\": true,\n      \"email\": \"string\",\n      \"integrationTitle\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd739fba-6b5d-4b5e-987c-c354dda16e81",
+          "name": "Get OAuth connect URL",
+          "request": {
+            "name": "Get OAuth connect URL",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                ":calendar",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "isDryRun",
+                  "value": "<boolean>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "redir",
+                  "value": "<string>",
+                  "description": "Redirect URL after successful calendar authorization."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9550586e-562f-4a39-8093-6a818df6bc05",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    ":calendar",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "isDryRun",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "redir",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4bf3957-87d2-4757-aa8b-4c2f8f836bf5",
+          "name": "Save Google or Outlook calendar credentials",
+          "request": {
+            "name": "Save Google or Outlook calendar credentials",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                ":calendar",
+                "save"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e727e9a-efd1-4d64-9124-1c2f0b03f3f1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    ":calendar",
+                    "save"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7fbf56b5-11d4-4d6b-8abe-a107944df981",
+          "name": "Save Apple calendar credentials",
+          "request": {
+            "name": "Save Apple calendar credentials",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                ":calendar",
+                "credentials"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eaf340e3-6e87-4e17-a44d-1a88dc4a8c6e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    ":calendar",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1519a9d-7407-440d-98dd-0ecd74428178",
+          "name": "Check a calendar connection",
+          "request": {
+            "name": "Check a calendar connection",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                ":calendar",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44731a8f-f83b-41a5-a84c-e5ba3b6612e5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    ":calendar",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a3df0f5-670e-4493-9088-d310d5f6aad2",
+          "name": "Disconnect a calendar",
+          "request": {
+            "name": "Disconnect a calendar",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "calendars",
+                ":calendar",
+                "disconnect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "994f2b4b-c943-450c-92f1-02538c61a514",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "calendars",
+                    ":calendar",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 8948.289962811,\n    \"type\": \"string\",\n    \"userId\": 4499.716288356959,\n    \"teamId\": 4826.184893882646,\n    \"appId\": \"string\",\n    \"invalid\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4b15552c-e6b3-47f5-b98e-3fa7abb27860",
+    "name": "Cal.diy API v2 Api Keys Calendars API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

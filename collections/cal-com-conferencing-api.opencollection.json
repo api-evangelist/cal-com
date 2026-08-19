@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2 Api Keys Conferencing API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conferencing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connect your conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/conferencing/:app/connect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              }
+            ]
+          },
+          "docs": "Connect your conferencing application"
+        },
+        {
+          "info": {
+            "name": "Get OAuth conferencing app auth URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing/:app/oauth/auth-url",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              },
+              {
+                "name": "returnTo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "onErrorReturnTo",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get OAuth conferencing app auth URL"
+        },
+        {
+          "info": {
+            "name": "Conferencing app OAuth callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing/:app/oauth/callback",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Conferencing app OAuth callback"
+        },
+        {
+          "info": {
+            "name": "List your conferencing applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List your conferencing applications"
+        },
+        {
+          "info": {
+            "name": "Set your default conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/conferencing/:app/default",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              }
+            ]
+          },
+          "docs": "Set your default conferencing application"
+        },
+        {
+          "info": {
+            "name": "Get your default conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/conferencing/default",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get your default conferencing application"
+        },
+        {
+          "info": {
+            "name": "Disconnect your conferencing application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/conferencing/:app/disconnect",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "app",
+                "value": "",
+                "type": "path",
+                "description": "Conferencing application type"
+              }
+            ]
+          },
+          "docs": "Disconnect your conferencing application"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

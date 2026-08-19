@@ -1,0 +1,541 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cal.diy API v2 Api Keys Cal Unified Calendars API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cal Unified Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List calendar connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns all calendar connections for the authenticated user (Google, Office 365, Apple). Use connectionId in connection-scoped endpoints. Note: Event CRUD (list/create/get/update/delete events) is currently only supported for Google Calendar connections; other types will return 400."
+        },
+        {
+          "info": {
+            "name": "List events for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Calendar connection ID from GET /connections"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone for the request (e.g. America/New_York)"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query",
+                "description": "Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar."
+              }
+            ]
+          },
+          "docs": "List events in a date range for a specific calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Create event on a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Get event for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events/:eventId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a single event by ID for the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Update event for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events/:eventId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Delete event for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/events/:eventId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete/cancel an event on the specified calendar connection. Only supported for Google Calendar connections; other connection types return 400."
+        },
+        {
+          "info": {
+            "name": "Get free/busy for a connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/connections/:connectionId/freebusy",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone (e.g. America/New_York)"
+              }
+            ]
+          },
+          "docs": "Get busy time slots for the specified calendar connection."
+        },
+        {
+          "info": {
+            "name": "Get meeting details from calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a meeting including attendance metrics. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use GET /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "Update meeting details in calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates event information in the specified calendar provider. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use PATCH /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "Delete a calendar event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The calendar provider's event ID (e.g. Google Calendar event ID)"
+              }
+            ]
+          },
+          "docs": "Delete/cancel an event on the authenticated user's calendar. Currently only Google Calendar is supported."
+        },
+        {
+          "info": {
+            "name": "Get meeting details from calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/event/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a meeting including attendance metrics. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use GET /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "Update meeting details in calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/event/:eventUid",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "eventUid",
+                "value": "",
+                "type": "path",
+                "description": "The Google Calendar event ID. You can retrieve this by getting booking references from the following endpoints:\n\n- For team events: GET /v2/organizations/{orgId}/teams/{teamId}/bookings/{bookingUid}/references\n\n- For user events: GET /v2/bookings/{bookingUid}/references"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates event information in the specified calendar provider. The singular /event/ path is deprecated — use /events/ (plural) instead. For connection-scoped access use PATCH /connections/{connectionId}/events/{eventId}."
+        },
+        {
+          "info": {
+            "name": "List calendar events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone for the request (e.g. America/New_York)"
+              },
+              {
+                "name": "calendarId",
+                "value": "",
+                "type": "query",
+                "description": "Calendar ID. Use 'primary' for the user's primary calendar, or the external ID of a connected calendar."
+              }
+            ]
+          },
+          "docs": "List events in a date range for the authenticated user's calendar. Currently only Google Calendar is supported."
+        },
+        {
+          "info": {
+            "name": "Create a calendar event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/events",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new event on the authenticated user's calendar. Currently only Google Calendar is supported."
+        },
+        {
+          "info": {
+            "name": "Get free/busy times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/calendars/:calendar/freebusy",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "calendar",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (ISO 8601 date or date-time)"
+              },
+              {
+                "name": "timeZone",
+                "value": "",
+                "type": "query",
+                "description": "IANA time zone (e.g. America/New_York)"
+              }
+            ]
+          },
+          "docs": "Get busy time slots for the authenticated user's selected calendars in the given date range. Currently only Google Calendar is supported."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
