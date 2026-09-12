@@ -2,11 +2,7 @@ aid: cal-com
 url: https://raw.githubusercontent.com/api-evangelist/cal-com/refs/heads/main/apis.yml
 name: Cal.com
 kind: company
-description: >-
-  Cal.com is open-source scheduling infrastructure (Calendly alternative) available as a managed cloud service or
-  self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks,
-  OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding
-  scheduling primitives into other apps.
+description: Cal.com is open-source scheduling infrastructure (Calendly alternative) available as a managed cloud service or self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks, OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding scheduling primitives into other apps.
 deliveryModel:
   model: saas
   open_source: false
@@ -33,17 +29,17 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/cal-com.png
 tags:
-  - Productivity
-  - Scheduling
-  - Calendar
-  - Open-Source
-  - Booking
+- Productivity
+- Scheduling
+- Calendar
+- Open-Source
+- Booking
 tags_raw:
-  - Productivity
-  - Scheduling
-  - Calendar
-  - Open Source
-  - Booking
+- Productivity
+- Scheduling
+- Calendar
+- Open Source
+- Booking
 created: '2026-05-08'
 modified: '2026-05-30'
 specificationVersion: '0.23'
@@ -346,9 +342,7 @@ apis:
     url: https://www.npmjs.com/package/@calcom/atoms
 - aid: cal-com:cal-com-deprecated-platform-managed-users-api
   name: 'Cal.com Deprecated: Platform / Managed Users API'
-  description: >-
-    The Deprecated: Platform / Managed Users API from Cal.com — 4 operation(s) for deprecated: platform
-    / managed users.
+  description: 'The Deprecated: Platform / Managed Users API from Cal.com — 4 operation(s) for deprecated: platform / managed users.'
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
@@ -390,9 +384,7 @@ apis:
     url: https://www.npmjs.com/package/@calcom/atoms
 - aid: cal-com:cal-com-deprecated-platform-oauth-clients-api
   name: 'Cal.com Deprecated: Platform OAuth Clients API'
-  description: >-
-    The Deprecated: Platform OAuth Clients API from Cal.com — 2 operation(s) for deprecated: platform
-    oauth clients.
+  description: 'The Deprecated: Platform OAuth Clients API from Cal.com — 2 operation(s) for deprecated: platform oauth clients.'
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
@@ -434,8 +426,7 @@ apis:
     url: https://www.npmjs.com/package/@calcom/atoms
 - aid: cal-com:cal-com-deprecated-platform-webhooks-api
   name: 'Cal.com Deprecated: Platform / Webhooks API'
-  description: >-
-    The Deprecated: Platform / Webhooks API from Cal.com — 2 operation(s) for deprecated: platform / webhooks.
+  description: 'The Deprecated: Platform / Webhooks API from Cal.com — 2 operation(s) for deprecated: platform / webhooks.'
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
@@ -561,8 +552,7 @@ apis:
     url: https://www.npmjs.com/package/@calcom/atoms
 - aid: cal-com:cal-com-event-types-private-links-api
   name: Cal.com Event Types Private Links API
-  description: >-
-    The Event Types Private Links API from Cal.com — 2 operation(s) for event types private links.
+  description: The Event Types Private Links API from Cal.com — 2 operation(s) for event types private links.
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
@@ -984,33 +974,53 @@ apis:
     url: https://cal.com/docs/platform
   - type: SDKs
     url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:rest-api-v2
+  name: Cal.com REST API v2
+  description: REST API providing full programmatic control over Cal.com resources including calendars, event types, bookings, schedules, teams, and organizations. Supports OAuth and API key authentication with rate limits starting at 120 requests per minute.
+  tags:
+  - Scheduling
+  - Bookings
+  - Calendars
+  - Event Types
+  - Team
+  tags_raw:
+  - Scheduling
+  - Bookings
+  - Calendars
+  - Event Types
+  - Teams
+  humanURL: https://cal.com/docs/api-reference/v2/introduction
+  baseURL: https://api.cal.com/v2
+  properties:
+  - url: https://cal.com/docs/api-reference/v2/introduction
+    type: Documentation
 common:
-  - type: AgenticAccess
-    url: agentic-access/cal-com-agentic-access.yml
-  - type: TrustCenter
-    url: security/cal-com-trust-center.yml
-  - type: VulnerabilityDisclosure
-    url: security/cal-com-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/cal-com-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/cal-com
-  - type: Website
-    url: https://cal.com/
-  - type: Documentation
-    url: https://cal.com/docs/api-reference
-  - type: Pricing
-    url: https://cal.com/pricing
-  - type: GitHub
-    url: https://github.com/calcom/cal.com
-  - type: Plans
-    url: plans/cal-com-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/cal-com-rate-limits.yml
-  - type: FinOps
-    url: finops/cal-com-finops.yml
-  - url: https://cal.com/blog
-    type: Blog
+- type: AgenticAccess
+  url: agentic-access/cal-com-agentic-access.yml
+- type: TrustCenter
+  url: security/cal-com-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/cal-com-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/cal-com-domain-security.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/cal-com
+- type: Website
+  url: https://cal.com/
+- type: Documentation
+  url: https://cal.com/docs/api-reference
+- type: Pricing
+  url: https://cal.com/pricing
+- type: GitHub
+  url: https://github.com/calcom/cal.com
+- type: Plans
+  url: plans/cal-com-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cal-com-rate-limits.yml
+- type: FinOps
+  url: finops/cal-com-finops.yml
+- url: https://cal.com/blog
+  type: Blog
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
