@@ -94,6 +94,8 @@ apis:
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
+  - Booking
+  tags_raw:
   - Bookings
   properties:
   - type: OpenAPI
@@ -262,6 +264,8 @@ apis:
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
+  - Calendar
+  tags_raw:
   - Calendars
   properties:
   - type: OpenAPI
@@ -688,6 +692,8 @@ apis:
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
@@ -944,8 +950,8 @@ apis:
     limits starting at 120 requests per minute.
   tags:
   - Scheduling
-  - Bookings
-  - Calendars
+  - Booking
+  - Calendar
   - Event Types
   - Team
   tags_raw:
@@ -965,6 +971,8 @@ apis:
   humanURL: https://cal.com/docs/api-reference/v2/bookings
   baseURL: https://api.cal.com/v2
   tags:
+  - Authentication
+  tags_raw:
   - OAuth2
   properties:
   - type: OpenAPI
