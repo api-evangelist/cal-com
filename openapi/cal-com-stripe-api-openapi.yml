@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Stripe API
+  title: Cal.diy API v2 Stripe API
   description: ''
   version: 1.0.0
   contact: {}
@@ -74,6 +74,14 @@ paths:
       - Stripe
 components:
   schemas:
+    StripCredentialsCheckOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: object
+          example: success
+      required:
+      - status
     StripConnectOutputDto:
       type: object
       properties:
@@ -81,6 +89,13 @@ components:
           type: string
       required:
       - authUrl
+    StripCredentialsSaveOutputResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
     StripConnectOutputResponseDto:
       type: object
       properties:
@@ -95,18 +110,3 @@ components:
       required:
       - status
       - data
-    StripCredentialsCheckOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: object
-          example: success
-      required:
-      - status
-    StripCredentialsSaveOutputResponseDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Conferencing API
+  title: Cal.diy API v2 Conferencing API
   description: ''
   version: 1.0.0
   contact: {}
@@ -207,45 +207,6 @@ paths:
       - Conferencing
 components:
   schemas:
-    ConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ConferencingAppsOutputDto'
-      required:
-      - status
-      - data
-    ConferencingAppsOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConferencingAppsOutputDto'
-      required:
-      - status
-      - data
-    DisconnectConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
     GetConferencingAppsOauthUrlResponseDto:
       type: object
       properties:
@@ -271,8 +232,9 @@ components:
           type: number
           description: Id of the user associated to the conferencing app
         invalid:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           example: true
           description: Whether if the connection is working or not.
       required:
@@ -290,6 +252,19 @@ components:
           - error
       required:
       - status
+    ConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
     DefaultConferencingAppsOutputDto:
       type: object
       properties:
@@ -310,3 +285,29 @@ components:
           $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
       required:
       - status
+    DisconnectConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    ConferencingAppsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data

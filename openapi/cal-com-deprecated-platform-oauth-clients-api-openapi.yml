@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: 'Cal.diy API v2 Api Keys Deprecated: Platform OAuth Clients API'
+  title: 'Cal.diy API v2 Deprecated: Platform OAuth Clients API'
   description: ''
   version: 1.0.0
   contact: {}
@@ -12,7 +12,7 @@ paths:
     post:
       operationId: OAuthClientsController_createOAuthClient
       summary: Create an OAuth client
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: Authorization
         in: header
@@ -38,7 +38,7 @@ paths:
     get:
       operationId: OAuthClientsController_getOAuthClients
       summary: Get all OAuth clients
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: Authorization
         in: header
@@ -59,7 +59,7 @@ paths:
     get:
       operationId: OAuthClientsController_getOAuthClientById
       summary: Get an OAuth client
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: Authorization
         in: header
@@ -84,7 +84,7 @@ paths:
     patch:
       operationId: OAuthClientsController_updateOAuthClient
       summary: Update an OAuth client
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: Authorization
         in: header
@@ -115,7 +115,7 @@ paths:
     delete:
       operationId: OAuthClientsController_deleteOAuthClient
       summary: Delete an OAuth client
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: Authorization
         in: header
@@ -139,31 +139,22 @@ paths:
       - 'Deprecated: Platform OAuth Clients'
 components:
   schemas:
-    UpdateOAuthClientInput:
+    GetOAuthClientsResponseDto:
       type: object
       properties:
-        logo:
+        status:
           type: string
-        name:
-          type: string
-        redirectUris:
+          example: success
+          enum:
+          - success
+          - error
+        data:
           type: array
           items:
-            type: string
-        bookingRedirectUri:
-          type: string
-        bookingCancelRedirectUri:
-          type: string
-        bookingRescheduleRedirectUri:
-          type: string
-        areEmailsEnabled:
-          type: boolean
-        areDefaultEventTypesEnabled:
-          type: boolean
-          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
-        areCalendarEventsEnabled:
-          type: boolean
-          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
+            $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data
     CreateOAuthClientInput:
       type: object
       properties:
@@ -212,6 +203,18 @@ components:
       - name
       - redirectUris
       - permissions
+    CreateOAuthClientOutput:
+      type: object
+      properties:
+        clientId:
+          type: string
+          example: clsx38nbl0001vkhlwin9fmt0
+        clientSecret:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
+      required:
+      - clientId
+      - clientSecret
     PlatformOAuthClientDto:
       type: object
       properties:
@@ -290,6 +293,45 @@ components:
       - areEmailsEnabled
       - areDefaultEventTypesEnabled
       - areCalendarEventsEnabled
+    UpdateOAuthClientInput:
+      type: object
+      properties:
+        logo:
+          type: string
+        name:
+          type: string
+        redirectUris:
+          type: array
+          items:
+            type: string
+        bookingRedirectUri:
+          type: string
+        bookingCancelRedirectUri:
+          type: string
+        bookingRescheduleRedirectUri:
+          type: string
+        areEmailsEnabled:
+          type: boolean
+        areDefaultEventTypesEnabled:
+          type: boolean
+          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
+        areCalendarEventsEnabled:
+          type: boolean
+          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
+    GetOAuthClientResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data
     CreateOAuthClientResponseDto:
       type: object
       properties:
@@ -305,48 +347,6 @@ components:
             clientSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
           allOf:
           - $ref: '#/components/schemas/CreateOAuthClientOutput'
-      required:
-      - status
-      - data
-    CreateOAuthClientOutput:
-      type: object
-      properties:
-        clientId:
-          type: string
-          example: clsx38nbl0001vkhlwin9fmt0
-        clientSecret:
-          type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
-      required:
-      - clientId
-      - clientSecret
-    GetOAuthClientsResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlatformOAuthClientDto'
-      required:
-      - status
-      - data
-    GetOAuthClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/PlatformOAuthClientDto'
       required:
       - status
       - data

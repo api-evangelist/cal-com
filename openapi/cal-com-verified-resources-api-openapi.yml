@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Verified Resources API
+  title: Cal.diy API v2 Verified Resources API
   description: ''
   version: 1.0.0
   contact: {}
@@ -246,7 +246,50 @@ paths:
       - Verified Resources
 components:
   schemas:
-    UserVerifiedEmailOutput:
+    UserVerifiedEmailOutputData:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The unique identifier for the verified email.
+          example: 789
+        email:
+          type: string
+          description: The verified email address.
+          example: user@example.com
+          format: email
+        userId:
+          type: number
+          description: The ID of the associated user, if applicable.
+          example: 45
+      required:
+      - id
+      - email
+      - userId
+    RequestPhoneVerificationInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: Phone number to verify.
+          example: +372 5555 6666
+      required:
+      - phone
+    VerifyPhoneInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: phone number to verify.
+          example: '+37255556666'
+        code:
+          type: string
+          description: verification code sent to the phone number to verify
+          example: 1ABG2C
+      required:
+      - phone
+      - code
+    UserVerifiedPhonesOutput:
       type: object
       properties:
         status:
@@ -256,7 +299,9 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/UserVerifiedEmailOutputData'
+          type: array
+          items:
+            $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
       required:
       - status
       - data
@@ -283,6 +328,72 @@ components:
           example: acme@example.com
       required:
       - email
+    VerifyEmailInput:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email to verify.
+          example: example@acme.com
+        code:
+          type: string
+          description: verification code sent to the email to verify
+          example: 1ABG2C
+      required:
+      - email
+      - code
+    RequestPhoneVerificationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    UserVerifiedEmailsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserVerifiedEmailOutputData'
+      required:
+      - status
+      - data
+    RequestEmailVerificationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    UserVerifiedEmailOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UserVerifiedEmailOutputData'
+      required:
+      - status
+      - data
     UserVerifiedPhoneOutputData:
       type: object
       properties:
@@ -303,114 +414,3 @@ components:
       - id
       - phoneNumber
       - userId
-    RequestPhoneVerificationOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    UserVerifiedPhonesOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
-      required:
-      - status
-      - data
-    VerifyPhoneInput:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: phone number to verify.
-          example: '+37255556666'
-        code:
-          type: string
-          description: verification code sent to the phone number to verify
-          example: 1ABG2C
-      required:
-      - phone
-      - code
-    UserVerifiedEmailOutputData:
-      type: object
-      properties:
-        id:
-          type: number
-          description: The unique identifier for the verified email.
-          example: 789
-        email:
-          type: string
-          description: The verified email address.
-          example: user@example.com
-          format: email
-        userId:
-          type: number
-          description: The ID of the associated user, if applicable.
-          example: 45
-      required:
-      - id
-      - email
-      - userId
-    UserVerifiedEmailsOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserVerifiedEmailOutputData'
-      required:
-      - status
-      - data
-    RequestPhoneVerificationInput:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: Phone number to verify.
-          example: +372 5555 6666
-      required:
-      - phone
-    RequestEmailVerificationOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    VerifyEmailInput:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email to verify.
-          example: example@acme.com
-        code:
-          type: string
-          description: verification code sent to the email to verify
-          example: 1ABG2C
-      required:
-      - email
-      - code

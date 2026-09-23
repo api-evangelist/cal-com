@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Me API
+  title: Cal.diy API v2 Me API
   description: ''
   version: 1.0.0
   contact: {}
@@ -56,16 +56,69 @@ paths:
       - Me
 components:
   schemas:
-    MeOrgOutput:
+    GetMeOutput:
       type: object
       properties:
-        isPlatform:
-          type: boolean
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/MeOutput'
+      required:
+      - status
+      - data
+    MeOutput:
+      type: object
+      properties:
         id:
           type: number
+        username:
+          type: string
+        email:
+          type: string
+        name:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        timeFormat:
+          type: number
+        defaultScheduleId:
+          type:
+          - number
+          - 'null'
+        weekStart:
+          type: string
+        timeZone:
+          type: string
+        organizationId:
+          type:
+          - number
+          - 'null'
+        organization:
+          $ref: '#/components/schemas/MeOrgOutput'
       required:
-      - isPlatform
       - id
+      - username
+      - email
+      - name
+      - avatarUrl
+      - bio
+      - timeFormat
+      - defaultScheduleId
+      - weekStart
+      - timeZone
+      - organizationId
     UpdateMeOutput:
       type: object
       properties:
@@ -80,6 +133,16 @@ components:
       required:
       - status
       - data
+    MeOrgOutput:
+      type: object
+      properties:
+        isPlatform:
+          type: boolean
+        id:
+          type: number
+      required:
+      - isPlatform
+      - id
     UpdateManagedUserInput:
       type: object
       properties:
@@ -169,61 +232,3 @@ components:
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
-    MeOutput:
-      type: object
-      properties:
-        id:
-          type: number
-        username:
-          type: string
-        email:
-          type: string
-        name:
-          type: string
-          nullable: true
-        avatarUrl:
-          type: string
-          nullable: true
-        bio:
-          type: string
-          nullable: true
-        timeFormat:
-          type: number
-        defaultScheduleId:
-          type: number
-          nullable: true
-        weekStart:
-          type: string
-        timeZone:
-          type: string
-        organizationId:
-          type: number
-          nullable: true
-        organization:
-          $ref: '#/components/schemas/MeOrgOutput'
-      required:
-      - id
-      - username
-      - email
-      - name
-      - avatarUrl
-      - bio
-      - timeFormat
-      - defaultScheduleId
-      - weekStart
-      - timeZone
-      - organizationId
-    GetMeOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/MeOutput'
-      required:
-      - status
-      - data

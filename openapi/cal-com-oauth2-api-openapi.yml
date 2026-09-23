@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys OAuth2 API
+  title: Cal.diy API v2 O Auth2 API
   description: ''
   version: 1.0.0
   contact: {}
@@ -56,36 +56,6 @@ paths:
       - OAuth2
 components:
   schemas:
-    OAuth2ExchangeConfidentialInput:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The client identifier
-          example: my-client-id
-        grant_type:
-          type: string
-          description: The grant type — must be 'authorization_code'
-          example: authorization_code
-          enum:
-          - authorization_code
-        code:
-          type: string
-          description: The authorization code received from the authorize endpoint
-          example: abc123
-        redirect_uri:
-          type: string
-          description: The redirect URI used in the authorization request
-          example: https://example.com/callback
-        client_secret:
-          type: string
-          description: The client secret for confidential clients
-      required:
-      - client_id
-      - grant_type
-      - code
-      - redirect_uri
-      - client_secret
     OAuth2ExchangePublicInput:
       type: object
       properties:
@@ -116,6 +86,50 @@ components:
       - code
       - redirect_uri
       - code_verifier
+    OAuth2ExchangeConfidentialInput:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The client identifier
+          example: my-client-id
+        grant_type:
+          type: string
+          description: The grant type — must be 'authorization_code'
+          example: authorization_code
+          enum:
+          - authorization_code
+        code:
+          type: string
+          description: The authorization code received from the authorize endpoint
+          example: abc123
+        redirect_uri:
+          type: string
+          description: The redirect URI used in the authorization request
+          example: https://example.com/callback
+        client_secret:
+          type: string
+          description: The client secret for confidential clients
+      required:
+      - client_id
+      - grant_type
+      - code
+      - redirect_uri
+      - client_secret
+    OAuth2ClientResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/OAuth2ClientDto'
+      required:
+      - status
+      - data
     OAuth2ClientDto:
       type: object
       properties:
@@ -135,8 +149,9 @@ components:
           description: The name of the OAuth client
           example: My App
         logo:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The logo URL of the OAuth client
         is_trusted:
           type: boolean
@@ -155,44 +170,6 @@ components:
       - name
       - is_trusted
       - client_type
-    OAuth2ClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/OAuth2ClientDto'
-      required:
-      - status
-      - data
-    OAuth2TokensDto:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: The access token
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type:
-          type: string
-          description: The token type
-          example: bearer
-        refresh_token:
-          type: string
-          description: The refresh token
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        expires_in:
-          type: number
-          description: The number of seconds until the access token expires
-          example: 1800
-      required:
-      - access_token
-      - token_type
-      - refresh_token
-      - expires_in
     OAuth2RefreshConfidentialInput:
       type: object
       properties:
@@ -218,6 +195,30 @@ components:
       - grant_type
       - refresh_token
       - client_secret
+    OAuth2TokensDto:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The access token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: The token type
+          example: bearer
+        refresh_token:
+          type: string
+          description: The refresh token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expires_in:
+          type: number
+          description: The number of seconds until the access token expires
+          example: 1800
+      required:
+      - access_token
+      - token_type
+      - refresh_token
+      - expires_in
     OAuth2RefreshPublicInput:
       type: object
       properties:

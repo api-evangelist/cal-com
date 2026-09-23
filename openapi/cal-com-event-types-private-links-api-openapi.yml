@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Event Types Private Links API
+  title: Cal.diy API v2 Event Types Private Links API
   description: ''
   version: 1.0.0
   contact: {}
@@ -130,55 +130,6 @@ paths:
       - Event Types Private Links
 components:
   schemas:
-    DeletePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          type: object
-          description: Deleted link information
-          properties:
-            linkId:
-              type: string
-              example: abc123def456
-            message:
-              type: string
-              example: Private link deleted successfully
-      required:
-      - status
-      - data
-    CreatePrivateLinkInput:
-      type: object
-      properties:
-        expiresAt:
-          type: string
-          description: Expiration date for time-based links
-          format: date-time
-          example: '2024-12-31T23:59:59.000Z'
-        maxUsageCount:
-          type: number
-          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
-          example: 10
-          minimum: 1
-          default: 1
-    CreatePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          description: Created private link data (either time-based or usage-based)
-          oneOf:
-          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
     UsageBasedPrivateLinkOutput:
       type: object
       properties:
@@ -214,20 +165,7 @@ components:
       - bookingUrl
       - maxUsageCount
       - usageCount
-    UpdatePrivateLinkBody:
-      type: object
-      properties:
-        expiresAt:
-          format: date-time
-          type: string
-          description: New expiration date for time-based links
-          example: '2024-12-31T23:59:59.000Z'
-        maxUsageCount:
-          type: number
-          description: New maximum number of times the link can be used
-          example: 10
-          minimum: 1
-    GetPrivateLinksOutput:
+    CreatePrivateLinkOutput:
       type: object
       properties:
         status:
@@ -235,24 +173,7 @@ components:
           description: Response status
           example: success
         data:
-          type: array
-          description: Array of private links for the event type (mix of time-based and usage-based)
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
-    UpdatePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          description: Updated private link data (either time-based or usage-based)
+          description: Created private link data (either time-based or usage-based)
           oneOf:
           - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
           - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
@@ -290,3 +211,82 @@ components:
       - isExpired
       - bookingUrl
       - expiresAt
+    UpdatePrivateLinkBody:
+      type: object
+      properties:
+        expiresAt:
+          format: date-time
+          type: string
+          description: New expiration date for time-based links
+          example: '2024-12-31T23:59:59.000Z'
+        maxUsageCount:
+          type: number
+          description: New maximum number of times the link can be used
+          example: 10
+          minimum: 1
+    UpdatePrivateLinkOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          description: Updated private link data (either time-based or usage-based)
+          oneOf:
+          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
+    CreatePrivateLinkInput:
+      type: object
+      properties:
+        expiresAt:
+          type: string
+          description: Expiration date for time-based links
+          format: date-time
+          example: '2024-12-31T23:59:59.000Z'
+        maxUsageCount:
+          type: number
+          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
+          example: 10
+          minimum: 1
+          default: 1
+    DeletePrivateLinkOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          type: object
+          description: Deleted link information
+          properties:
+            linkId:
+              type: string
+              example: abc123def456
+            message:
+              type: string
+              example: Private link deleted successfully
+      required:
+      - status
+      - data
+    GetPrivateLinksOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          type: array
+          description: Array of private links for the event type (mix of time-based and usage-based)
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data

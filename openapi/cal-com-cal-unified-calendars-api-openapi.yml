@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Cal Unified Calendars API
+  title: Cal.diy API v2 Cal Unified Calendars API
   description: ''
   version: 1.0.0
   contact: {}
@@ -618,33 +618,6 @@ paths:
       - Cal Unified Calendars
 components:
   schemas:
-    CalendarEventSipLocation:
-      type: object
-      properties:
-        type:
-          type: string
-          default: sip
-          enum:
-          - sip
-          description: Indicates this is a SIP (Session Initiation Protocol) conference location
-        url:
-          type: string
-          description: SIP URL for joining the conference
-        label:
-          type: string
-          nullable: true
-          description: Display name for the SIP conference
-        pin:
-          type: string
-          nullable: true
-          description: PIN number required for the SIP conference
-        password:
-          type: string
-          nullable: true
-          description: Password required for the SIP conference
-      required:
-      - type
-      - url
     ListConnectionsOutput:
       type: object
       properties:
@@ -659,60 +632,102 @@ components:
       required:
       - status
       - data
-    CalendarConnectionItem:
-      type: object
-      properties:
-        connectionId:
-          type: string
-          description: Stable ID for this calendar connection (use in connection-scoped endpoints)
-          example: '123'
-        type:
-          type: string
-          enum:
-          - google
-          - office365
-          - apple
-          description: Calendar provider type
-          example: google
-        email:
-          type: string
-          nullable: true
-          description: Primary email for this connection (null if unavailable)
-          example: user@gmail.com
-      required:
-      - connectionId
-      - type
-    BusyTimesOutput:
-      type: object
-      properties:
-        start:
-          format: date-time
-          type: string
-        end:
-          format: date-time
-          type: string
-        source:
-          type: string
-          nullable: true
-      required:
-      - start
-      - end
-    CalendarEventMoreLocation:
+    CalendarEventPhoneLocation:
       type: object
       properties:
         type:
           type: string
-          default: more
+          default: phone
           enum:
-          - more
-          description: Indicates this is an additional conference location type
+          - phone
+          description: Indicates this is a phone conference location
         url:
           type: string
-          description: URL for accessing this location
+          description: Phone number or URL for dialing into the conference
         label:
+          type:
+          - string
+          - 'null'
+          description: Display name for the phone conference
+        pin:
+          type:
+          - string
+          - 'null'
+          description: PIN number required for the phone conference
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password required for the phone conference
+        accessCode:
+          type:
+          - string
+          - 'null'
+          description: Access code required for the phone conference
+        regionCode:
+          type:
+          - string
+          - 'null'
+          description: Country/region code for the phone number
+      required:
+      - type
+      - url
+    CalendarEventAttendee:
+      type: object
+      properties:
+        email:
           type: string
-          nullable: true
-          description: Display name for this location
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+        responseStatus:
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
+        self:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee is the current user
+        optional:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee's attendance is optional
+        host:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee is the host
+      required:
+      - email
+    CalendarEventSipLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: sip
+          enum:
+          - sip
+          description: Indicates this is a SIP (Session Initiation Protocol) conference location
+        url:
+          type: string
+          description: SIP URL for joining the conference
+        label:
+          type:
+          - string
+          - 'null'
+          description: Display name for the SIP conference
+        pin:
+          type:
+          - string
+          - 'null'
+          description: PIN number required for the SIP conference
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password required for the SIP conference
       required:
       - type
       - url
@@ -725,6 +740,55 @@ components:
             $ref: '#/components/schemas/CalendarConnectionItem'
       required:
       - connections
+    ListUnifiedCalendarEventsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnifiedCalendarEventOutput'
+      required:
+      - status
+      - data
+    UpdateCalendarEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+        responseStatus:
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
+        self:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee is the current user
+        optional:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee's attendance is optional
+        host:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee is the host
+    CalendarSource:
+      type: string
+      description: Calendar integration source (e.g., Google Calendar, Office 365, Apple Calendar). Currently only Google Calendar is supported.
+      enum:
+      - google
+      - office365
+      - apple
     UnifiedCalendarEventOutput:
       type: object
       properties:
@@ -753,11 +817,14 @@ components:
           type: string
           description: Title of the calendar event
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Detailed description of the calendar event
         locations:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             oneOf:
             - $ref: '#/components/schemas/CalendarEventVideoLocation'
@@ -766,26 +833,25 @@ components:
             - $ref: '#/components/schemas/CalendarEventMoreLocation'
             discriminator:
               propertyName: type
-          nullable: true
           description: Conference locations with entry points (video, phone, sip, more)
         attendees:
-          nullable: true
           description: List of attendees with their response status
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/CalendarEventAttendee'
         status:
-          nullable: true
           example: accepted
           $ref: '#/components/schemas/CalendarEventStatus'
         hosts:
-          nullable: true
           description: Information about the event hosts (organizers)
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/CalendarEventHost'
         calendarEventOwner:
-          nullable: true
           description: The calendar account that owns this event. This is the primary calendar where the event is stored and cannot be modified without appropriate permissions. Changing this would require moving the event to a different calendar
           allOf:
           - $ref: '#/components/schemas/calendarEventOwner'
@@ -798,7 +864,73 @@ components:
       - id
       - title
       - source
-    ListUnifiedCalendarEventsOutput:
+    GetUnifiedCalendarEventOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UnifiedCalendarEventOutput'
+      required:
+      - status
+      - data
+    CalendarEventMoreLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: more
+          enum:
+          - more
+          description: Indicates this is an additional conference location type
+        url:
+          type: string
+          description: URL for accessing this location
+        label:
+          type:
+          - string
+          - 'null'
+          description: Display name for this location
+      required:
+      - type
+      - url
+    CalendarEventStatus:
+      type: string
+      description: Status of the event (accepted, pending, declined, cancelled)
+      enum:
+      - accepted
+      - pending
+      - declined
+      - cancelled
+    CalendarConnectionItem:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          description: Stable ID for this calendar connection (use in connection-scoped endpoints)
+          example: '123'
+        type:
+          type: string
+          enum:
+          - google
+          - office365
+          - apple
+          description: Calendar provider type
+          example: google
+        email:
+          type:
+          - string
+          - 'null'
+          description: Primary email for this connection (null if unavailable)
+          example: user@gmail.com
+      required:
+      - connectionId
+      - type
+    GetBusyTimesOutput:
       type: object
       properties:
         status:
@@ -810,10 +942,37 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/UnifiedCalendarEventOutput'
+            $ref: '#/components/schemas/BusyTimesOutput'
       required:
       - status
       - data
+    BusyTimesOutput:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        source:
+          type:
+          - string
+          - 'null'
+      required:
+      - start
+      - end
+    CreateEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+      required:
+      - email
     CalendarEventVideoLocation:
       type: object
       properties:
@@ -827,83 +986,28 @@ components:
           type: string
           description: URL for joining the video conference
         label:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Display name for the video conference
         password:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Password required to join the video conference
         meetingCode:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Meeting code or ID required to join the conference
         accessCode:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Access code required to join the conference
       required:
       - type
       - url
-    CalendarEventStatus:
-      type: string
-      description: Status of the event (accepted, pending, declined, cancelled)
-      enum:
-      - accepted
-      - pending
-      - declined
-      - cancelled
-    UpdateCalendarEventAttendee:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the attendee
-        name:
-          type: string
-          description: Display name of the attendee
-        responseStatus:
-          nullable: true
-          $ref: '#/components/schemas/CalendarEventResponseStatus'
-        self:
-          type: boolean
-          nullable: true
-          description: Indicates if this attendee is the current user
-        optional:
-          type: boolean
-          nullable: true
-          description: Indicates if this attendee's attendance is optional
-        host:
-          type: boolean
-          nullable: true
-          description: Indicates if this attendee is the host
-    CalendarEventAttendee:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the attendee
-        name:
-          type: string
-          description: Display name of the attendee
-        responseStatus:
-          nullable: true
-          example: accepted
-          $ref: '#/components/schemas/CalendarEventResponseStatus'
-        self:
-          type: boolean
-          nullable: true
-          description: Indicates if this attendee is the current user
-        optional:
-          type: boolean
-          nullable: true
-          description: Indicates if this attendee's attendance is optional
-        host:
-          type: boolean
-          nullable: true
-          description: Indicates if this attendee is the host
-      required:
-      - email
     CalendarEventResponseStatus:
       type: string
       description: Response status of the attendee
@@ -925,20 +1029,6 @@ components:
       required:
       - time
       - timeZone
-    GetUnifiedCalendarEventOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/UnifiedCalendarEventOutput'
-      required:
-      - status
-      - data
     CalendarEventHost:
       type: object
       properties:
@@ -946,31 +1036,15 @@ components:
           type: string
           description: Email address of the event host
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Display name of the event host
         responseStatus:
-          nullable: true
           example: accepted
           $ref: '#/components/schemas/CalendarEventResponseStatus'
       required:
       - email
-    GetBusyTimesOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BusyTimesOutput'
-      required:
-      - status
-      - data
     UpdateUnifiedCalendarEventInput:
       type: object
       properties:
@@ -996,26 +1070,20 @@ components:
           type: string
           description: Title of the calendar event
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Detailed description of the calendar event
         attendees:
-          nullable: true
           description: 'List of attendees. CAUTION: You must pass the entire array with all updated values. Any attendees not included in this array will be removed from the event.'
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/UpdateCalendarEventAttendee'
         status:
-          nullable: true
           example: accepted
           $ref: '#/components/schemas/CalendarEventStatus'
-    CalendarSource:
-      type: string
-      description: Calendar integration source (e.g., Google Calendar, Office 365, Apple Calendar). Currently only Google Calendar is supported.
-      enum:
-      - google
-      - office365
-      - apple
     CreateUnifiedCalendarEventInput:
       type: object
       properties:
@@ -1031,8 +1099,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Description of the event
         attendees:
           description: List of attendees
@@ -1043,41 +1112,6 @@ components:
       - title
       - start
       - end
-    CalendarEventPhoneLocation:
-      type: object
-      properties:
-        type:
-          type: string
-          default: phone
-          enum:
-          - phone
-          description: Indicates this is a phone conference location
-        url:
-          type: string
-          description: Phone number or URL for dialing into the conference
-        label:
-          type: string
-          nullable: true
-          description: Display name for the phone conference
-        pin:
-          type: string
-          nullable: true
-          description: PIN number required for the phone conference
-        password:
-          type: string
-          nullable: true
-          description: Password required for the phone conference
-        accessCode:
-          type: string
-          nullable: true
-          description: Access code required for the phone conference
-        regionCode:
-          type: string
-          nullable: true
-          description: Country/region code for the phone number
-      required:
-      - type
-      - url
     calendarEventOwner:
       type: object
       properties:
@@ -1085,19 +1119,9 @@ components:
           type: string
           description: Email address of the event host
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Display name of the event host
-      required:
-      - email
-    CreateEventAttendee:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the attendee
-        name:
-          type: string
-          description: Display name of the attendee
       required:
       - email

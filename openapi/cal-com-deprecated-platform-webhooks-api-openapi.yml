@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: 'Cal.diy API v2 Api Keys Deprecated: Platform / Webhooks API'
+  title: 'Cal.diy API v2 Deprecated: Platform / Webhooks API'
   description: ''
   version: 1.0.0
   contact: {}
@@ -12,7 +12,7 @@ paths:
     post:
       operationId: OAuthClientWebhooksController_createOAuthClientWebhook
       summary: Create a webhook
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -43,7 +43,7 @@ paths:
     get:
       operationId: OAuthClientWebhooksController_getOAuthClientWebhooks
       summary: Get all webhooks
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -87,7 +87,7 @@ paths:
     delete:
       operationId: OAuthClientWebhooksController_deleteAllOAuthClientWebhooks
       summary: Delete all webhooks
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -113,7 +113,7 @@ paths:
     patch:
       operationId: OAuthClientWebhooksController_updateOAuthClientWebhook
       summary: Update a webhook
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -149,7 +149,7 @@ paths:
     get:
       operationId: OAuthClientWebhooksController_getOAuthClientWebhook
       summary: Get a webhook
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -179,7 +179,7 @@ paths:
     delete:
       operationId: OAuthClientWebhooksController_deleteOAuthClientWebhook
       summary: Delete a webhook
-      description: <Warning>These endpoints are deprecated and will be removed in the future.</Warning>
+      description: These endpoints are deprecated and will be removed in the future.
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -208,7 +208,7 @@ paths:
       - 'Deprecated: Platform / Webhooks'
 components:
   schemas:
-    OAuthClientWebhookOutputResponseDto:
+    OAuthClientWebhooksOutputResponseDto:
       type: object
       properties:
         status:
@@ -218,63 +218,12 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
       required:
       - status
       - data
-    UpdateWebhookInputDto:
-      type: object
-      properties:
-        payloadTemplate:
-          type: string
-          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
-          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
-        active:
-          type: boolean
-        subscriberUrl:
-          type: string
-        triggers:
-          type: array
-          example:
-          - BOOKING_CREATED
-          - BOOKING_RESCHEDULED
-          - BOOKING_CANCELLED
-          - BOOKING_CONFIRMED
-          - BOOKING_REJECTED
-          - BOOKING_COMPLETED
-          - BOOKING_NO_SHOW
-          - BOOKING_REOPENED
-          items:
-            type: string
-            enum:
-            - BOOKING_CREATED
-            - BOOKING_PAYMENT_INITIATED
-            - BOOKING_PAID
-            - BOOKING_RESCHEDULED
-            - BOOKING_REQUESTED
-            - BOOKING_CANCELLED
-            - BOOKING_REJECTED
-            - BOOKING_NO_SHOW_UPDATED
-            - FORM_SUBMITTED
-            - MEETING_ENDED
-            - MEETING_STARTED
-            - RECORDING_READY
-            - INSTANT_MEETING
-            - RECORDING_TRANSCRIPTION_GENERATED
-            - OOO_CREATED
-            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
-            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
-            - FORM_SUBMITTED_NO_EVENT
-            - DELEGATION_CREDENTIAL_ERROR
-            - WRONG_ASSIGNMENT_REPORT
-        secret:
-          type: string
-        version:
-          type: string
-          description: The version of the webhook
-          example: '2021-10-20'
-          enum:
-          - '2021-10-20'
     CreateWebhookInputDto:
       type: object
       properties:
@@ -332,20 +281,6 @@ components:
       - active
       - subscriberUrl
       - triggers
-    DeleteManyWebhooksOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: string
-      required:
-      - status
-      - data
     OAuthClientWebhookOutputDto:
       type: object
       properties:
@@ -395,7 +330,60 @@ components:
       - id
       - subscriberUrl
       - active
-    OAuthClientWebhooksOutputResponseDto:
+    UpdateWebhookInputDto:
+      type: object
+      properties:
+        payloadTemplate:
+          type: string
+          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
+          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
+        active:
+          type: boolean
+        subscriberUrl:
+          type: string
+        triggers:
+          type: array
+          example:
+          - BOOKING_CREATED
+          - BOOKING_RESCHEDULED
+          - BOOKING_CANCELLED
+          - BOOKING_CONFIRMED
+          - BOOKING_REJECTED
+          - BOOKING_COMPLETED
+          - BOOKING_NO_SHOW
+          - BOOKING_REOPENED
+          items:
+            type: string
+            enum:
+            - BOOKING_CREATED
+            - BOOKING_PAYMENT_INITIATED
+            - BOOKING_PAID
+            - BOOKING_RESCHEDULED
+            - BOOKING_REQUESTED
+            - BOOKING_CANCELLED
+            - BOOKING_REJECTED
+            - BOOKING_NO_SHOW_UPDATED
+            - FORM_SUBMITTED
+            - MEETING_ENDED
+            - MEETING_STARTED
+            - RECORDING_READY
+            - INSTANT_MEETING
+            - RECORDING_TRANSCRIPTION_GENERATED
+            - OOO_CREATED
+            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+            - FORM_SUBMITTED_NO_EVENT
+            - DELEGATION_CREDENTIAL_ERROR
+            - WRONG_ASSIGNMENT_REPORT
+        secret:
+          type: string
+        version:
+          type: string
+          description: The version of the webhook
+          example: '2021-10-20'
+          enum:
+          - '2021-10-20'
+    OAuthClientWebhookOutputResponseDto:
       type: object
       properties:
         status:
@@ -405,9 +393,21 @@ components:
           - success
           - error
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
+          $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
+      required:
+      - status
+      - data
+    DeleteManyWebhooksOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: string
       required:
       - status
       - data

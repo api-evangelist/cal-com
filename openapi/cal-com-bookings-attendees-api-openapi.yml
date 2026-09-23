@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Bookings / Attendees API
+  title: Cal.diy API v2 Bookings / Attendees API
   description: ''
   version: 1.0.0
   contact: {}
@@ -12,7 +12,10 @@ paths:
     get:
       operationId: BookingAttendeesController_2024_08_13_getBookingAttendees
       summary: Get all attendees for a booking
-      description: "Retrieve all attendees for a specific booking by its UID.\n    \n    <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n    "
+      description: 'Retrieve all attendees for a specific booking by its UID.
+
+
+        The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.'
       parameters:
       - name: cal-api-version
         in: header
@@ -43,7 +46,24 @@ paths:
     post:
       operationId: BookingAttendeesController_2024_08_13_addAttendee
       summary: Add an attendee to a booking
-      description: "Add a new attendee to an existing booking by its UID.\n\n      **Side effects:**\n      - The booking's attendee list is updated in the database\n      - The calendar event is updated on connected calendars (Google Calendar, Outlook, etc.) to include the new attendee\n      - An email notification is sent to the new attendee with the booking details\n\n      **Permissions:**\n      - The authenticated user must be either the booking organizer, an existing attendee, or have the `booking.update` permission for the team\n\n      <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n      "
+      description: 'Add a new attendee to an existing booking by its UID.
+
+
+        **Side effects:**
+
+        - The booking''s attendee list is updated in the database
+
+        - The calendar event is updated on connected calendars (Google Calendar, Outlook, etc.) to include the new attendee
+
+        - An email notification is sent to the new attendee with the booking details
+
+
+        **Permissions:**
+
+        - The authenticated user must be either the booking organizer, an existing attendee, or have the `booking.update` permission for the team
+
+
+        The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.'
       parameters:
       - name: cal-api-version
         in: header
@@ -81,7 +101,10 @@ paths:
     get:
       operationId: BookingAttendeesController_2024_08_13_getBookingAttendee
       summary: Get a specific attendee for a booking
-      description: "Retrieve a specific attendee by their ID for a booking identified by its UID.\n        \n      <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n      "
+      description: 'Retrieve a specific attendee by their ID for a booking identified by its UID.
+
+
+        The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.'
       parameters:
       - name: cal-api-version
         in: header
@@ -117,7 +140,10 @@ paths:
     delete:
       operationId: BookingAttendeesController_2024_08_13_removeAttendee
       summary: Remove an attendee from a booking
-      description: "Remove an attendee from an existing booking by their attendee ID. The primary attendee (first attendee) cannot be removed — to remove them, cancel the booking instead. The removed attendee will receive a cancellation email notification.\n\n    <Note>The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.</Note>\n    "
+      description: 'Remove an attendee from an existing booking by their attendee ID. The primary attendee (first attendee) cannot be removed — to remove them, cancel the booking instead. The removed attendee will receive a cancellation email notification.
+
+
+        The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.'
       parameters:
       - name: cal-api-version
         in: header
@@ -152,123 +178,6 @@ paths:
       - Bookings / Attendees
 components:
   schemas:
-    RemovedAttendeeOutput_2024_08_13:
-      type: object
-      properties:
-        id:
-          type: number
-          description: The ID of the attendee.
-          example: 123
-        bookingId:
-          type: number
-          description: The ID of the booking.
-          example: 456
-        name:
-          type: string
-          description: The name of the attendee.
-          example: John Doe
-        email:
-          type: string
-          description: The email of the attendee.
-          example: john.doe@example.com
-        timeZone:
-          type: string
-          description: The time zone of the attendee.
-          example: America/New_York
-      required:
-      - id
-      - bookingId
-      - name
-      - email
-      - timeZone
-    AddAttendeeInput_2024_08_13:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the attendee.
-          example: John Doe
-        timeZone:
-          type: string
-          description: The time zone of the attendee.
-          example: America/New_York
-        phoneNumber:
-          type: string
-          description: The phone number of the attendee in international format.
-          example: '+919876543210'
-        language:
-          type: string
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          description: The preferred language of the attendee. Used for booking confirmation.
-          example: it
-          default: en
-        email:
-          type: string
-          description: The email of the attendee.
-          example: john.doe@example.com
-      required:
-      - name
-      - timeZone
-      - email
-    GetBookingAttendeesOutput_2024_08_13:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
-      required:
-      - status
-      - data
     BookingAttendeeOutput_2024_08_13:
       type: object
       properties:
@@ -431,7 +340,36 @@ components:
       - timeZone
       - absent
       - id
-    GetBookingAttendeeOutput_2024_08_13:
+    RemovedAttendeeOutput_2024_08_13:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The ID of the attendee.
+          example: 123
+        bookingId:
+          type: number
+          description: The ID of the booking.
+          example: 456
+        name:
+          type: string
+          description: The name of the attendee.
+          example: John Doe
+        email:
+          type: string
+          description: The email of the attendee.
+          example: john.doe@example.com
+        timeZone:
+          type: string
+          description: The time zone of the attendee.
+          example: America/New_York
+      required:
+      - id
+      - bookingId
+      - name
+      - email
+      - timeZone
+    GetBookingAttendeesOutput_2024_08_13:
       type: object
       properties:
         status:
@@ -441,10 +379,84 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
       required:
       - status
       - data
+    AddAttendeeInput_2024_08_13:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the attendee.
+          example: John Doe
+        timeZone:
+          type: string
+          description: The time zone of the attendee.
+          example: America/New_York
+        phoneNumber:
+          type: string
+          description: The phone number of the attendee in international format.
+          example: '+919876543210'
+        language:
+          type: string
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          description: The preferred language of the attendee. Used for booking confirmation.
+          example: it
+          default: en
+        email:
+          type: string
+          description: The email of the attendee.
+          example: john.doe@example.com
+      required:
+      - name
+      - timeZone
+      - email
     RemoveAttendeeOutput_2024_08_13:
       type: object
       properties:
@@ -456,6 +468,20 @@ components:
           - error
         data:
           $ref: '#/components/schemas/RemovedAttendeeOutput_2024_08_13'
+      required:
+      - status
+      - data
+    GetBookingAttendeeOutput_2024_08_13:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
       required:
       - status
       - data

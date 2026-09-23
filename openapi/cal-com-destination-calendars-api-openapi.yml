@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Destination Calendars API
+  title: Cal.diy API v2 Destination Calendars API
   description: ''
   version: 1.0.0
   contact: {}
@@ -66,8 +66,9 @@ components:
         externalId:
           type: string
         credentialId:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
       required:
       - userId
       - integration

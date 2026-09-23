@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys Schedules API
+  title: Cal.diy API v2 Schedules API
   description: ''
   version: 1.0.0
   contact: {}
@@ -12,7 +12,30 @@ paths:
     post:
       operationId: SchedulesController_2024_06_11_createSchedule
       summary: Create a schedule
-      description: "\n      Create a schedule for the authenticated user.\n\n      The point of creating schedules is for event types to be available at specific times.\n\n      The first goal of schedules is to have a default schedule. If you are platform customer and created managed users, then it is important to note that each managed user should have a default schedule.\n      1. If you passed `timeZone` when creating managed user, then the default schedule from Monday to Friday from 9AM to 5PM will be created with that timezone. The managed user can then change the default schedule via the `AvailabilitySettings` atom.\n      2. If you did not, then we assume you want the user to have this specific schedule right away. You should create a default schedule by specifying\n      `\"isDefault\": true` in the request body. Until the user has a default schedule the user can't be booked nor manage their schedule via the AvailabilitySettings atom.\n\n      The second goal of schedules is to create another schedule that event types can point to. This is useful for when an event is booked because availability is not checked against the default schedule but instead against that specific schedule.\n      After creating a non-default schedule, you can update an event type to point to that schedule via the PATCH `event-types/{eventTypeId}` endpoint.\n\n      When specifying start time and end time for each day use the 24 hour format e.g. 08:00, 15:00 etc.\n\n      <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n      "
+      description: 'Create a schedule for the authenticated user.
+
+
+        The point of creating schedules is for event types to be available at specific times.
+
+
+        The first goal of schedules is to have a default schedule. If you are platform customer and created managed users, then it is important to note that each managed user should have a default schedule.
+
+        1. If you passed `timeZone` when creating managed user, then the default schedule from Monday to Friday from 9AM to 5PM will be created with that timezone. The managed user can then change the default schedule via the `AvailabilitySettings` atom.
+
+        2. If you did not, then we assume you want the user to have this specific schedule right away. You should create a default schedule by specifying
+
+        `"isDefault": true` in the request body. Until the user has a default schedule the user can''t be booked nor manage their schedule via the AvailabilitySettings atom.
+
+
+        The second goal of schedules is to create another schedule that event types can point to. This is useful for when an event is booked because availability is not checked against the default schedule but instead against that specific schedule.
+
+        After creating a non-default schedule, you can update an event type to point to that schedule via the PATCH `event-types/{eventTypeId}` endpoint.
+
+
+        When specifying start time and end time for each day use the 24 hour format e.g. 08:00, 15:00 etc.
+
+
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
       parameters:
       - name: Authorization
         in: header
@@ -45,7 +68,10 @@ paths:
     get:
       operationId: SchedulesController_2024_06_11_getSchedules
       summary: Get all schedules
-      description: "Get all schedules of the authenticated user.\n    \n     <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+      description: 'Get all schedules of the authenticated user.
+
+
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
       parameters:
       - name: Authorization
         in: header
@@ -73,7 +99,10 @@ paths:
     get:
       operationId: SchedulesController_2024_06_11_getDefaultSchedule
       summary: Get default schedule
-      description: "Get the default schedule of the authenticated user.\n    \n    <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>\n    "
+      description: 'Get the default schedule of the authenticated user.
+
+
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
       parameters:
       - name: Authorization
         in: header
@@ -101,7 +130,7 @@ paths:
     get:
       operationId: SchedulesController_2024_06_11_getSchedule
       summary: Get a schedule
-      description: <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>
+      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: Authorization
         in: header
@@ -133,7 +162,7 @@ paths:
     patch:
       operationId: SchedulesController_2024_06_11_updateSchedule
       summary: Update a schedule
-      description: <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>
+      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: Authorization
         in: header
@@ -171,7 +200,7 @@ paths:
     delete:
       operationId: SchedulesController_2024_06_11_deleteSchedule
       summary: Delete a schedule
-      description: <Note>Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.</Note>
+      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: Authorization
         in: header
@@ -202,189 +231,6 @@ paths:
       - Schedules
 components:
   schemas:
-    ScheduleOverrideInput_2024_06_11:
-      type: object
-      properties:
-        date:
-          type: string
-          example: '2024-05-20'
-        startTime:
-          type: string
-          example: '12:00'
-          description: startTime must be a valid time in format HH:MM e.g. 12:00
-        endTime:
-          type: string
-          example: '13:00'
-          description: endTime must be a valid time in format HH:MM e.g. 13:00
-      required:
-      - date
-      - startTime
-      - endTime
-    CreateScheduleInput_2024_06_11:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Catch up hours
-        timeZone:
-          type: string
-          example: Europe/Rome
-          description: Timezone is used to calculate available times when an event using the schedule is booked.
-        availability:
-          description: Each object contains days and times when the user is available. If not passed, the default availability is Monday to Friday from 09:00 to 17:00.
-          example:
-          - days:
-            - Monday
-            - Tuesday
-            startTime: '17:00'
-            endTime: '19:00'
-          - days:
-            - Wednesday
-            - Thursday
-            startTime: '16:00'
-            endTime: '20:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
-        isDefault:
-          type: boolean
-          example: true
-          description: "Each user should have 1 default schedule. If you specified `timeZone` when creating managed user, then the default schedule will be created with that timezone.\n    Default schedule means that if an event type is not tied to a specific schedule then the default schedule is used."
-        overrides:
-          description: Need to change availability for a specific date? Add an override.
-          example:
-          - date: '2024-05-20'
-            startTime: '18:00'
-            endTime: '21:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
-      required:
-      - name
-      - timeZone
-      - isDefault
-    GetScheduleOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-        error:
-          type: object
-      required:
-      - status
-      - data
-    DeleteScheduleOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    UpdateScheduleInput_2024_06_11:
-      type: object
-      properties:
-        name:
-          type: string
-          example: One-on-one coaching
-        timeZone:
-          type: string
-          example: Europe/Rome
-        availability:
-          example:
-          - days:
-            - Monday
-            - Tuesday
-            startTime: 09:00
-            endTime: '10:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
-        isDefault:
-          type: boolean
-          example: true
-        overrides:
-          example:
-          - date: '2024-05-20'
-            startTime: '12:00'
-            endTime: '14:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
-    GetDefaultScheduleOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-      required:
-      - status
-      - data
-    GetSchedulesOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-        error:
-          type: object
-      required:
-      - status
-      - data
-    ScheduleAvailabilityInput_2024_06_11:
-      type: object
-      properties:
-        days:
-          type: array
-          example:
-          - Monday
-          - Tuesday
-          description: Array of days when schedule is active.
-          items:
-            type: string
-            enum:
-            - Monday
-            - Tuesday
-            - Wednesday
-            - Thursday
-            - Friday
-            - Saturday
-            - Sunday
-        startTime:
-          type: string
-          example: 08:00
-          description: startTime must be a valid time in format HH:MM e.g. 08:00
-        endTime:
-          type: string
-          example: '15:00'
-          description: endTime must be a valid time in format HH:MM e.g. 15:00
-      required:
-      - days
-      - startTime
-      - endTime
     UpdateScheduleOutput_2024_06_11:
       type: object
       properties:
@@ -398,6 +244,20 @@ components:
           $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
         error:
           type: object
+      required:
+      - status
+      - data
+    CreateScheduleOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
       required:
       - status
       - data
@@ -450,7 +310,18 @@ components:
       - availability
       - isDefault
       - overrides
-    CreateScheduleOutput_2024_06_11:
+    DeleteScheduleOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    GetDefaultScheduleOutput_2024_06_11:
       type: object
       properties:
         status:
@@ -464,3 +335,160 @@ components:
       required:
       - status
       - data
+    GetScheduleOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          allOf:
+          - $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+        error:
+          type: object
+      required:
+      - status
+      - data
+    CreateScheduleInput_2024_06_11:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Catch up hours
+        timeZone:
+          type: string
+          example: Europe/Rome
+          description: Timezone is used to calculate available times when an event using the schedule is booked.
+        availability:
+          description: Each object contains days and times when the user is available. If not passed, the default availability is Monday to Friday from 09:00 to 17:00.
+          example:
+          - days:
+            - Monday
+            - Tuesday
+            startTime: '17:00'
+            endTime: '19:00'
+          - days:
+            - Wednesday
+            - Thursday
+            startTime: '16:00'
+            endTime: '20:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
+        isDefault:
+          type: boolean
+          example: true
+          description: "Each user should have 1 default schedule. If you specified `timeZone` when creating managed user, then the default schedule will be created with that timezone.\n    Default schedule means that if an event type is not tied to a specific schedule then the default schedule is used."
+        overrides:
+          description: Need to change availability for a specific date? Add an override.
+          example:
+          - date: '2024-05-20'
+            startTime: '18:00'
+            endTime: '21:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
+      required:
+      - name
+      - timeZone
+      - isDefault
+    UpdateScheduleInput_2024_06_11:
+      type: object
+      properties:
+        name:
+          type: string
+          example: One-on-one coaching
+        timeZone:
+          type: string
+          example: Europe/Rome
+        availability:
+          example:
+          - days:
+            - Monday
+            - Tuesday
+            startTime: 09:00
+            endTime: '10:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
+        isDefault:
+          type: boolean
+          example: true
+        overrides:
+          example:
+          - date: '2024-05-20'
+            startTime: '12:00'
+            endTime: '14:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
+    GetSchedulesOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+        error:
+          type: object
+      required:
+      - status
+      - data
+    ScheduleAvailabilityInput_2024_06_11:
+      type: object
+      properties:
+        days:
+          type: array
+          example:
+          - Monday
+          - Tuesday
+          description: Array of days when schedule is active.
+          items:
+            type: string
+            enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+        startTime:
+          type: string
+          example: 08:00
+          description: startTime must be a valid time in format HH:MM e.g. 08:00
+        endTime:
+          type: string
+          example: '15:00'
+          description: endTime must be a valid time in format HH:MM e.g. 15:00
+      required:
+      - days
+      - startTime
+      - endTime
+    ScheduleOverrideInput_2024_06_11:
+      type: object
+      properties:
+        date:
+          type: string
+          example: '2024-05-20'
+        startTime:
+          type: string
+          example: '12:00'
+          description: startTime must be a valid time in format HH:MM e.g. 12:00
+        endTime:
+          type: string
+          example: '13:00'
+          description: endTime must be a valid time in format HH:MM e.g. 13:00
+      required:
+      - date
+      - startTime
+      - endTime
