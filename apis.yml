@@ -4,16 +4,22 @@ name: Cal.com
 kind: company
 description: Cal.com is open-source scheduling infrastructure (Calendly alternative) available as a managed cloud service or self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks, OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding scheduling primitives into other apps.
 deliveryModel:
-  model: saas
-  open_source: false
+  model: open-core
+  license: MIT
+  license_evidence:
+    repo: calcom/cal.com
+    spdx: MIT
+    stars: 48646
+  open_source: true
   commercial: true
   callable_host: false
-  label: Hosted service · you call their endpoint
+  label: Open core · an OSS project plus a commercial hosted product
   confidence: medium
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -32,7 +38,7 @@ tags:
 - Productivity
 - Scheduling
 - Calendar
-- Open-Source
+- Open Source
 - Booking
 tags_raw:
 - Productivity
@@ -40,6 +46,7 @@ tags_raw:
 - Calendar
 - Open Source
 - Booking
+- Open-Source
 created: '2026-05-08'
 modified: '2026-05-30'
 specificationVersion: '0.23'

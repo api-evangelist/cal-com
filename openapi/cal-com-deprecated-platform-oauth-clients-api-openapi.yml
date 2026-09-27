@@ -139,6 +139,63 @@ paths:
       - 'Deprecated: Platform OAuth Clients'
 components:
   schemas:
+    CreateOAuthClientResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - error
+          example: success
+        data:
+          example:
+            clientId: clsx38nbl0001vkhlwin9fmt0
+            clientSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
+          allOf:
+          - $ref: '#/components/schemas/CreateOAuthClientOutput'
+      required:
+      - status
+      - data
+    GetOAuthClientResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data
+    UpdateOAuthClientInput:
+      type: object
+      properties:
+        logo:
+          type: string
+        name:
+          type: string
+        redirectUris:
+          type: array
+          items:
+            type: string
+        bookingRedirectUri:
+          type: string
+        bookingCancelRedirectUri:
+          type: string
+        bookingRescheduleRedirectUri:
+          type: string
+        areEmailsEnabled:
+          type: boolean
+        areDefaultEventTypesEnabled:
+          type: boolean
+          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
+        areCalendarEventsEnabled:
+          type: boolean
+          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
     GetOAuthClientsResponseDto:
       type: object
       properties:
@@ -203,18 +260,6 @@ components:
       - name
       - redirectUris
       - permissions
-    CreateOAuthClientOutput:
-      type: object
-      properties:
-        clientId:
-          type: string
-          example: clsx38nbl0001vkhlwin9fmt0
-        clientSecret:
-          type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
-      required:
-      - clientId
-      - clientSecret
     PlatformOAuthClientDto:
       type: object
       properties:
@@ -293,60 +338,15 @@ components:
       - areEmailsEnabled
       - areDefaultEventTypesEnabled
       - areCalendarEventsEnabled
-    UpdateOAuthClientInput:
+    CreateOAuthClientOutput:
       type: object
       properties:
-        logo:
+        clientId:
           type: string
-        name:
+          example: clsx38nbl0001vkhlwin9fmt0
+        clientSecret:
           type: string
-        redirectUris:
-          type: array
-          items:
-            type: string
-        bookingRedirectUri:
-          type: string
-        bookingCancelRedirectUri:
-          type: string
-        bookingRescheduleRedirectUri:
-          type: string
-        areEmailsEnabled:
-          type: boolean
-        areDefaultEventTypesEnabled:
-          type: boolean
-          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
-        areCalendarEventsEnabled:
-          type: boolean
-          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
-    GetOAuthClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/PlatformOAuthClientDto'
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
       required:
-      - status
-      - data
-    CreateOAuthClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
-          example: success
-        data:
-          example:
-            clientId: clsx38nbl0001vkhlwin9fmt0
-            clientSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
-          allOf:
-          - $ref: '#/components/schemas/CreateOAuthClientOutput'
-      required:
-      - status
-      - data
+      - clientId
+      - clientSecret

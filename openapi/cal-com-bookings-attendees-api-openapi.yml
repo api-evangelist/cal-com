@@ -178,6 +178,49 @@ paths:
       - Bookings / Attendees
 components:
   schemas:
+    RemovedAttendeeOutput_2024_08_13:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The ID of the attendee.
+          example: 123
+        bookingId:
+          type: number
+          description: The ID of the booking.
+          example: 456
+        name:
+          type: string
+          description: The name of the attendee.
+          example: John Doe
+        email:
+          type: string
+          description: The email of the attendee.
+          example: john.doe@example.com
+        timeZone:
+          type: string
+          description: The time zone of the attendee.
+          example: America/New_York
+      required:
+      - id
+      - bookingId
+      - name
+      - email
+      - timeZone
+    RemoveAttendeeOutput_2024_08_13:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/RemovedAttendeeOutput_2024_08_13'
+      required:
+      - status
+      - data
     BookingAttendeeOutput_2024_08_13:
       type: object
       properties:
@@ -340,51 +383,6 @@ components:
       - timeZone
       - absent
       - id
-    RemovedAttendeeOutput_2024_08_13:
-      type: object
-      properties:
-        id:
-          type: number
-          description: The ID of the attendee.
-          example: 123
-        bookingId:
-          type: number
-          description: The ID of the booking.
-          example: 456
-        name:
-          type: string
-          description: The name of the attendee.
-          example: John Doe
-        email:
-          type: string
-          description: The email of the attendee.
-          example: john.doe@example.com
-        timeZone:
-          type: string
-          description: The time zone of the attendee.
-          example: America/New_York
-      required:
-      - id
-      - bookingId
-      - name
-      - email
-      - timeZone
-    GetBookingAttendeesOutput_2024_08_13:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
-      required:
-      - status
-      - data
     AddAttendeeInput_2024_08_13:
       type: object
       properties:
@@ -457,7 +455,7 @@ components:
       - name
       - timeZone
       - email
-    RemoveAttendeeOutput_2024_08_13:
+    AddAttendeeOutput_2024_08_13:
       type: object
       properties:
         status:
@@ -467,7 +465,7 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/RemovedAttendeeOutput_2024_08_13'
+          $ref: '#/components/schemas/BookingAttendeeOutput_2024_08_13'
       required:
       - status
       - data
@@ -485,7 +483,7 @@ components:
       required:
       - status
       - data
-    AddAttendeeOutput_2024_08_13:
+    GetBookingAttendeesOutput_2024_08_13:
       type: object
       properties:
         status:
@@ -495,7 +493,9 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/BookingAttendeeOutput_2024_08_13'
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
       required:
       - status
       - data

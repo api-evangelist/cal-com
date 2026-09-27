@@ -27,9 +27,7 @@
     "cal-com-verified-resources-api-openapi.yml",
     "cal-com-webhooks-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -57,8 +55,7 @@
     "cal-com-openapi.json: declared missing tag: Stripe",
     "cal-com-openapi.json: declared missing tag: Verified Resources",
     "cal-com-openapi.json: declared missing tag: Webhooks",
-    "superseded outputs removed: cal-com-o-auth2-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 23 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "cal-com-api-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -76,7 +73,7 @@
     "cal-com-event-types-private-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cal-com-event-types-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cal-com-me-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "cal-com-o-auth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cal-com-oauth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cal-com-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cal-com-selected-calendars-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cal-com-slots-api-openapi.yml: previously refined output, superseded by openapi/_original/",

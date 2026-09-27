@@ -70,6 +70,92 @@ paths:
       - Bookings / Guests
 components:
   schemas:
+    AddGuestsInput_2024_08_13:
+      type: object
+      properties:
+        guests:
+          description: Array of guests to add to the booking. Maximum 10 guests per request.
+          example:
+          - email: john.doe@example.com
+            name: John Doe
+            timeZone: America/New_York
+          - email: jane.smith@example.com
+            name: Jane Smith
+          type: array
+          items:
+            $ref: '#/components/schemas/Guest'
+      required:
+      - guests
+    Guest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email of the guest.
+          example: john.doe@example.com
+        name:
+          type: string
+          description: The name of the guest.
+          example: John Doe
+        timeZone:
+          type: string
+          description: The time zone of the guest.
+          example: America/New_York
+        phoneNumber:
+          type: string
+          description: The phone number of the guest in international format.
+          example: '+919876543210'
+        language:
+          type: string
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          description: The preferred language of the guest. Used for booking confirmation.
+          example: it
+          default: en
+      required:
+      - email
     AddGuestsOutput_2024_08_13:
       type: object
       properties:
@@ -95,34 +181,95 @@ components:
       required:
       - status
       - data
-    EventType:
+    SeatedAttendee:
       type: object
       properties:
-        id:
-          type: number
-          example: 1
-        slug:
+        name:
           type: string
-          example: some-event
-      required:
-      - id
-      - slug
-    AddGuestsInput_2024_08_13:
-      type: object
-      properties:
-        guests:
-          description: Array of guests to add to the booking. Maximum 10 guests per request.
+          example: John Doe
+        email:
+          type: string
+          example: john@example.com
+        displayEmail:
+          type: string
+          example: john@example.com
+          description: Clean email for display purposes
+        timeZone:
+          type: string
+          example: America/New_York
+        language:
+          type: string
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          example: en
+        absent:
+          type: boolean
+          example: false
+        phoneNumber:
+          type: string
+          example: '+1234567890'
+        seatUid:
+          type: string
+          example: 3be561a9-31f1-4b8e-aefc-9d9a085f0dd1
+        bookingFieldsResponses:
+          type: object
+          description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
           example:
-          - email: john.doe@example.com
-            name: John Doe
-            timeZone: America/New_York
-          - email: jane.smith@example.com
-            name: Jane Smith
-          type: array
-          items:
-            $ref: '#/components/schemas/Guest'
+            customField: customValue
+        metadata:
+          type: object
+          example:
+            key: value
       required:
-      - guests
+      - name
+      - email
+      - displayEmail
+      - timeZone
+      - absent
+      - seatUid
+      - bookingFieldsResponses
     RecurringBookingOutput_2024_08_13:
       type: object
       properties:
@@ -252,193 +399,6 @@ components:
       - attendees
       - bookingFieldsResponses
       - recurringBookingUid
-    BookingAttendee:
-      type: object
-      properties:
-        name:
-          type: string
-          example: John Doe
-        email:
-          type: string
-          example: john@example.com
-        displayEmail:
-          type: string
-          example: john@example.com
-          description: Clean email for display purposes
-        timeZone:
-          type: string
-          example: America/New_York
-        language:
-          type: string
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          example: en
-        absent:
-          type: boolean
-          example: false
-        phoneNumber:
-          type: string
-          example: '+1234567890'
-      required:
-      - name
-      - email
-      - displayEmail
-      - timeZone
-      - absent
-    GetSeatedBookingOutput_2024_08_13:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 123
-        uid:
-          type: string
-          example: booking_uid_123
-        title:
-          type: string
-          example: Consultation
-        description:
-          type: string
-          example: Learn how to integrate scheduling into marketplace.
-        hosts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingHost'
-        status:
-          type: string
-          enum:
-          - cancelled
-          - accepted
-          - rejected
-          - pending
-          example: accepted
-        cancellationReason:
-          type: string
-          example: User requested cancellation
-        cancelledByEmail:
-          type: string
-          example: canceller@example.com
-        reschedulingReason:
-          type: string
-          example: User rescheduled the event
-        rescheduledByEmail:
-          type: string
-          example: rescheduler@example.com
-        rescheduledFromUid:
-          type: string
-          example: previous_uid_123
-          description: UID of the previous booking from which this booking was rescheduled.
-        rescheduledToUid:
-          type: string
-          example: new_uid_456
-          description: UID of the new booking to which this booking was rescheduled.
-        start:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        end:
-          type: string
-          example: '2024-08-13T16:30:00Z'
-        duration:
-          type: number
-          example: 60
-        eventTypeId:
-          type: number
-          example: 50
-          deprecated: true
-          description: Deprecated - rely on 'eventType' object containing the id instead.
-        eventType:
-          $ref: '#/components/schemas/EventType'
-        meetingUrl:
-          type: string
-          description: Deprecated - rely on 'location' field instead.
-          example: https://example.com/recurring-meeting
-          deprecated: true
-        location:
-          type: string
-          example: https://example.com/meeting
-        absentHost:
-          type: boolean
-          example: true
-        createdAt:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        updatedAt:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        metadata:
-          type: object
-          example:
-            key: value
-        rating:
-          type: number
-          example: 4
-        icsUid:
-          type: string
-          example: ics_uid_123
-          description: UID of ICS event.
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeatedAttendee'
-      required:
-      - id
-      - uid
-      - title
-      - description
-      - hosts
-      - status
-      - start
-      - end
-      - duration
-      - eventTypeId
-      - eventType
-      - location
-      - absentHost
-      - createdAt
-      - updatedAt
-      - attendees
     BookingOutput_2024_08_13:
       type: object
       properties:
@@ -564,6 +524,18 @@ components:
       - updatedAt
       - attendees
       - bookingFieldsResponses
+    EventType:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        slug:
+          type: string
+          example: some-event
+      required:
+      - id
+      - slug
     GetRecurringSeatedBookingOutput_2024_08_13:
       type: object
       properties:
@@ -680,36 +652,119 @@ components:
       - updatedAt
       - attendees
       - recurringBookingUid
-    BookingHost:
+    GetSeatedBookingOutput_2024_08_13:
       type: object
       properties:
         id:
           type: number
-          example: 1
-        name:
+          example: 123
+        uid:
           type: string
-          example: Jane Doe
-        email:
+          example: booking_uid_123
+        title:
           type: string
-          example: jane100@example.com
-        displayEmail:
+          example: Consultation
+        description:
           type: string
-          example: jane100@example.com
-          description: Clean email for display purposes
-        username:
+          example: Learn how to integrate scheduling into marketplace.
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingHost'
+        status:
           type: string
-          example: jane100
-        timeZone:
+          enum:
+          - cancelled
+          - accepted
+          - rejected
+          - pending
+          example: accepted
+        cancellationReason:
           type: string
-          example: America/Los_Angeles
+          example: User requested cancellation
+        cancelledByEmail:
+          type: string
+          example: canceller@example.com
+        reschedulingReason:
+          type: string
+          example: User rescheduled the event
+        rescheduledByEmail:
+          type: string
+          example: rescheduler@example.com
+        rescheduledFromUid:
+          type: string
+          example: previous_uid_123
+          description: UID of the previous booking from which this booking was rescheduled.
+        rescheduledToUid:
+          type: string
+          example: new_uid_456
+          description: UID of the new booking to which this booking was rescheduled.
+        start:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+        end:
+          type: string
+          example: '2024-08-13T16:30:00Z'
+        duration:
+          type: number
+          example: 60
+        eventTypeId:
+          type: number
+          example: 50
+          deprecated: true
+          description: Deprecated - rely on 'eventType' object containing the id instead.
+        eventType:
+          $ref: '#/components/schemas/EventType'
+        meetingUrl:
+          type: string
+          description: Deprecated - rely on 'location' field instead.
+          example: https://example.com/recurring-meeting
+          deprecated: true
+        location:
+          type: string
+          example: https://example.com/meeting
+        absentHost:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+        updatedAt:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+        metadata:
+          type: object
+          example:
+            key: value
+        rating:
+          type: number
+          example: 4
+        icsUid:
+          type: string
+          example: ics_uid_123
+          description: UID of ICS event.
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeatedAttendee'
       required:
       - id
-      - name
-      - email
-      - displayEmail
-      - username
-      - timeZone
-    SeatedAttendee:
+      - uid
+      - title
+      - description
+      - hosts
+      - status
+      - start
+      - end
+      - duration
+      - eventTypeId
+      - eventType
+      - location
+      - absentHost
+      - createdAt
+      - updatedAt
+      - attendees
+    BookingAttendee:
       type: object
       properties:
         name:
@@ -778,93 +833,38 @@ components:
         phoneNumber:
           type: string
           example: '+1234567890'
-        seatUid:
-          type: string
-          example: 3be561a9-31f1-4b8e-aefc-9d9a085f0dd1
-        bookingFieldsResponses:
-          type: object
-          description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
-          example:
-            customField: customValue
-        metadata:
-          type: object
-          example:
-            key: value
       required:
       - name
       - email
       - displayEmail
       - timeZone
       - absent
-      - seatUid
-      - bookingFieldsResponses
-    Guest:
+    BookingHost:
       type: object
       properties:
-        email:
-          type: string
-          description: The email of the guest.
-          example: john.doe@example.com
+        id:
+          type: number
+          example: 1
         name:
           type: string
-          description: The name of the guest.
-          example: John Doe
+          example: Jane Doe
+        email:
+          type: string
+          example: jane100@example.com
+        displayEmail:
+          type: string
+          example: jane100@example.com
+          description: Clean email for display purposes
+        username:
+          type: string
+          example: jane100
         timeZone:
           type: string
-          description: The time zone of the guest.
-          example: America/New_York
-        phoneNumber:
-          type: string
-          description: The phone number of the guest in international format.
-          example: '+919876543210'
-        language:
-          type: string
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          description: The preferred language of the guest. Used for booking confirmation.
-          example: it
-          default: en
+          example: America/Los_Angeles
       required:
+      - id
+      - name
       - email
+      - displayEmail
+      - username
+      - timeZone

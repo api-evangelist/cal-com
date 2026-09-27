@@ -130,6 +130,52 @@ paths:
       - Event Types Private Links
 components:
   schemas:
+    TimeBasedPrivateLinkOutput:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: The private link ID
+          example: abc123def456
+        eventTypeId:
+          type: number
+          description: Event type ID this link belongs to
+          example: 123
+        isExpired:
+          type: boolean
+          description: Whether the link is currently expired
+          example: false
+        bookingUrl:
+          type: string
+          description: Full booking URL for this private link
+          format: uri
+          example: https://cal.com/d/abc123def456/30min
+        expiresAt:
+          type: string
+          description: Expiration date for this time-based link
+          format: date-time
+          example: '2025-12-31T23:59:59.000Z'
+      required:
+      - linkId
+      - eventTypeId
+      - isExpired
+      - bookingUrl
+      - expiresAt
+    UpdatePrivateLinkOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          description: Updated private link data (either time-based or usage-based)
+          oneOf:
+          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
     UsageBasedPrivateLinkOutput:
       type: object
       properties:
@@ -165,52 +211,6 @@ components:
       - bookingUrl
       - maxUsageCount
       - usageCount
-    CreatePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          description: Created private link data (either time-based or usage-based)
-          oneOf:
-          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
-    TimeBasedPrivateLinkOutput:
-      type: object
-      properties:
-        linkId:
-          type: string
-          description: The private link ID
-          example: abc123def456
-        eventTypeId:
-          type: number
-          description: Event type ID this link belongs to
-          example: 123
-        isExpired:
-          type: boolean
-          description: Whether the link is currently expired
-          example: false
-        bookingUrl:
-          type: string
-          description: Full booking URL for this private link
-          format: uri
-          example: https://cal.com/d/abc123def456/30min
-        expiresAt:
-          type: string
-          description: Expiration date for this time-based link
-          format: date-time
-          example: '2025-12-31T23:59:59.000Z'
-      required:
-      - linkId
-      - eventTypeId
-      - isExpired
-      - bookingUrl
-      - expiresAt
     UpdatePrivateLinkBody:
       type: object
       properties:
@@ -224,7 +224,7 @@ components:
           description: New maximum number of times the link can be used
           example: 10
           minimum: 1
-    UpdatePrivateLinkOutput:
+    GetPrivateLinksOutput:
       type: object
       properties:
         status:
@@ -232,10 +232,12 @@ components:
           description: Response status
           example: success
         data:
-          description: Updated private link data (either time-based or usage-based)
-          oneOf:
-          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+          type: array
+          description: Array of private links for the event type (mix of time-based and usage-based)
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
       required:
       - status
       - data
@@ -273,7 +275,7 @@ components:
       required:
       - status
       - data
-    GetPrivateLinksOutput:
+    CreatePrivateLinkOutput:
       type: object
       properties:
         status:
@@ -281,12 +283,10 @@ components:
           description: Response status
           example: success
         data:
-          type: array
-          description: Array of private links for the event type (mix of time-based and usage-based)
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+          description: Created private link data (either time-based or usage-based)
+          oneOf:
+          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
       required:
       - status
       - data

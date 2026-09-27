@@ -50,6 +50,13 @@ components:
           type: boolean
           description: If true, organization api key never expires.
           example: true
+    ApiKeyOutput:
+      type: object
+      properties:
+        apiKey:
+          type: string
+      required:
+      - apiKey
     RefreshApiKeyOutput:
       type: object
       properties:
@@ -64,10 +71,3 @@ components:
       required:
       - status
       - data
-    ApiKeyOutput:
-      type: object
-      properties:
-        apiKey:
-          type: string
-      required:
-      - apiKey

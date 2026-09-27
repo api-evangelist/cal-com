@@ -207,84 +207,6 @@ paths:
       - Conferencing
 components:
   schemas:
-    GetConferencingAppsOauthUrlResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    ConferencingAppsOutputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          description: Id of the conferencing app credentials
-        type:
-          type: string
-          example: google_video
-          description: Type of conferencing app
-        userId:
-          type: number
-          description: Id of the user associated to the conferencing app
-        invalid:
-          type:
-          - boolean
-          - 'null'
-          example: true
-          description: Whether if the connection is working or not.
-      required:
-      - id
-      - type
-      - userId
-    SetDefaultConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    ConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ConferencingAppsOutputDto'
-      required:
-      - status
-      - data
-    DefaultConferencingAppsOutputDto:
-      type: object
-      properties:
-        appSlug:
-          type: string
-        appLink:
-          type: string
-    GetDefaultConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
-      required:
-      - status
     DisconnectConferencingAppOutputResponseDto:
       type: object
       properties:
@@ -311,3 +233,81 @@ components:
       required:
       - status
       - data
+    SetDefaultConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    GetConferencingAppsOauthUrlResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    ConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
+    ConferencingAppsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the conferencing app credentials
+        type:
+          type: string
+          example: google_video
+          description: Type of conferencing app
+        userId:
+          type: number
+          description: Id of the user associated to the conferencing app
+        invalid:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          description: Whether if the connection is working or not.
+      required:
+      - id
+      - type
+      - userId
+    DefaultConferencingAppsOutputDto:
+      type: object
+      properties:
+        appSlug:
+          type: string
+        appLink:
+          type: string
+    GetDefaultConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
+      required:
+      - status

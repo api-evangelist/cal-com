@@ -56,7 +56,17 @@ paths:
       - Me
 components:
   schemas:
-    GetMeOutput:
+    MeOrgOutput:
+      type: object
+      properties:
+        isPlatform:
+          type: boolean
+        id:
+          type: number
+      required:
+      - isPlatform
+      - id
+    UpdateMeOutput:
       type: object
       properties:
         status:
@@ -119,7 +129,7 @@ components:
       - weekStart
       - timeZone
       - organizationId
-    UpdateMeOutput:
+    GetMeOutput:
       type: object
       properties:
         status:
@@ -133,16 +143,6 @@ components:
       required:
       - status
       - data
-    MeOrgOutput:
-      type: object
-      properties:
-        isPlatform:
-          type: boolean
-        id:
-          type: number
-      required:
-      - isPlatform
-      - id
     UpdateManagedUserInput:
       type: object
       properties:
