@@ -622,54 +622,310 @@ paths:
       - Cal Unified Calendars
 components:
   schemas:
-    CalendarEventMoreLocation:
+    CalendarEventResponseStatus:
+      type: string
+      description: Response status of the attendee
+      enum:
+      - accepted
+      - pending
+      - declined
+      - needsAction
+    CalendarEventHost:
       type: object
       properties:
-        type:
+        email:
           type: string
-          default: more
-          enum:
-          - more
-          description: Indicates this is an additional conference location type
-        url:
-          type: string
-          description: URL for accessing this location
-        label:
+          description: Email address of the event host
+        name:
           type:
           - string
           - 'null'
-          description: Display name for this location
+          description: Display name of the event host
+        responseStatus:
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
       required:
-      - type
-      - url
-    CreateUnifiedCalendarEventInput:
+      - email
+    ListConnectionsData:
       type: object
       properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarConnectionItem'
+      required:
+      - connections
+    UpdateUnifiedCalendarEventInput:
+      type: object
+      properties:
+        start:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            timeZone:
+              type: string
+          description: Start date and time of the calendar event with timezone information
+        end:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            timeZone:
+              type: string
+          description: End date and time of the calendar event with timezone information
         title:
           type: string
           description: Title of the calendar event
-        start:
-          description: Start date and time with time zone
-          allOf:
-          - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
-        end:
-          description: End date and time with time zone
-          allOf:
-          - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
         description:
           type:
           - string
           - 'null'
-          description: Description of the event
+          description: Detailed description of the calendar event
         attendees:
-          description: List of attendees
+          description: 'List of attendees. CAUTION: You must pass the entire array with all updated values. Any attendees not included in this array will be removed from the event.'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/UpdateCalendarEventAttendee'
+        status:
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventStatus'
+    CalendarEventVideoLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: video
+          enum:
+          - video
+          description: Indicates this is a video conference location
+        url:
+          type: string
+          description: URL for joining the video conference
+        label:
+          type:
+          - string
+          - 'null'
+          description: Display name for the video conference
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password required to join the video conference
+        meetingCode:
+          type:
+          - string
+          - 'null'
+          description: Meeting code or ID required to join the conference
+        accessCode:
+          type:
+          - string
+          - 'null'
+          description: Access code required to join the conference
+      required:
+      - type
+      - url
+    GetBusyTimesOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/CreateEventAttendee'
+            $ref: '#/components/schemas/BusyTimesOutput'
       required:
-      - title
+      - status
+      - data
+    CreateEventDateTimeWithZone:
+      type: object
+      properties:
+        time:
+          type: string
+          format: date-time
+          description: Start or end time in ISO 8601 format
+        timeZone:
+          type: string
+          description: IANA time zone (e.g. America/New_York)
+      required:
+      - time
+      - timeZone
+    BusyTimesOutput:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        source:
+          type:
+          - string
+          - 'null'
+      required:
       - start
       - end
+    ListConnectionsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ListConnectionsData'
+      required:
+      - status
+      - data
+    CalendarConnectionItem:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          description: Stable ID for this calendar connection (use in connection-scoped endpoints)
+          example: '123'
+        type:
+          type: string
+          enum:
+          - google
+          - office365
+          - apple
+          description: Calendar provider type
+          example: google
+        email:
+          type:
+          - string
+          - 'null'
+          description: Primary email for this connection (null if unavailable)
+          example: user@gmail.com
+      required:
+      - connectionId
+      - type
+    calendarEventOwner:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the event host
+        name:
+          type:
+          - string
+          - 'null'
+          description: Display name of the event host
+      required:
+      - email
+    ListUnifiedCalendarEventsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnifiedCalendarEventOutput'
+      required:
+      - status
+      - data
+    CalendarEventSipLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: sip
+          enum:
+          - sip
+          description: Indicates this is a SIP (Session Initiation Protocol) conference location
+        url:
+          type: string
+          description: SIP URL for joining the conference
+        label:
+          type:
+          - string
+          - 'null'
+          description: Display name for the SIP conference
+        pin:
+          type:
+          - string
+          - 'null'
+          description: PIN number required for the SIP conference
+        password:
+          type:
+          - string
+          - 'null'
+          description: Password required for the SIP conference
+      required:
+      - type
+      - url
+    CalendarSource:
+      type: string
+      description: Calendar integration source (e.g., Google Calendar, Office 365, Apple Calendar). Currently only Google Calendar is supported.
+      enum:
+      - google
+      - office365
+      - apple
+    CalendarEventStatus:
+      type: string
+      description: Status of the event (accepted, pending, declined, cancelled)
+      enum:
+      - accepted
+      - pending
+      - declined
+      - cancelled
+    CalendarEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+        responseStatus:
+          example: accepted
+          $ref: '#/components/schemas/CalendarEventResponseStatus'
+        self:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee is the current user
+        optional:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee's attendance is optional
+        host:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if this attendee is the host
+      required:
+      - email
+    CreateEventAttendee:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email address of the attendee
+        name:
+          type: string
+          description: Display name of the attendee
+      required:
+      - email
     UnifiedCalendarEventOutput:
       type: object
       properties:
@@ -745,6 +1001,26 @@ components:
       - id
       - title
       - source
+    CalendarEventMoreLocation:
+      type: object
+      properties:
+        type:
+          type: string
+          default: more
+          enum:
+          - more
+          description: Indicates this is an additional conference location type
+        url:
+          type: string
+          description: URL for accessing this location
+        label:
+          type:
+          - string
+          - 'null'
+          description: Display name for this location
+      required:
+      - type
+      - url
     CalendarEventPhoneLocation:
       type: object
       properties:
@@ -785,57 +1061,6 @@ components:
       required:
       - type
       - url
-    CreateEventAttendee:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the attendee
-        name:
-          type: string
-          description: Display name of the attendee
-      required:
-      - email
-    CalendarConnectionItem:
-      type: object
-      properties:
-        connectionId:
-          type: string
-          description: Stable ID for this calendar connection (use in connection-scoped endpoints)
-          example: '123'
-        type:
-          type: string
-          enum:
-          - google
-          - office365
-          - apple
-          description: Calendar provider type
-          example: google
-        email:
-          type:
-          - string
-          - 'null'
-          description: Primary email for this connection (null if unavailable)
-          example: user@gmail.com
-      required:
-      - connectionId
-      - type
-    CalendarEventHost:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the event host
-        name:
-          type:
-          - string
-          - 'null'
-          description: Display name of the event host
-        responseStatus:
-          example: accepted
-          $ref: '#/components/schemas/CalendarEventResponseStatus'
-      required:
-      - email
     UpdateCalendarEventAttendee:
       type: object
       properties:
@@ -862,36 +1087,32 @@ components:
           - boolean
           - 'null'
           description: Indicates if this attendee is the host
-    ListUnifiedCalendarEventsOutput:
+    CreateUnifiedCalendarEventInput:
       type: object
       properties:
-        status:
+        title:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UnifiedCalendarEventOutput'
-      required:
-      - status
-      - data
-    BusyTimesOutput:
-      type: object
-      properties:
+          description: Title of the calendar event
         start:
-          format: date-time
-          type: string
+          description: Start date and time with time zone
+          allOf:
+          - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
         end:
-          format: date-time
-          type: string
-        source:
+          description: End date and time with time zone
+          allOf:
+          - $ref: '#/components/schemas/CreateEventDateTimeWithZone'
+        description:
           type:
           - string
           - 'null'
+          description: Description of the event
+        attendees:
+          description: List of attendees
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEventAttendee'
       required:
+      - title
       - start
       - end
     GetUnifiedCalendarEventOutput:
@@ -908,224 +1129,3 @@ components:
       required:
       - status
       - data
-    CalendarSource:
-      type: string
-      description: Calendar integration source (e.g., Google Calendar, Office 365, Apple Calendar). Currently only Google Calendar is supported.
-      enum:
-      - google
-      - office365
-      - apple
-    GetBusyTimesOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BusyTimesOutput'
-      required:
-      - status
-      - data
-    ListConnectionsData:
-      type: object
-      properties:
-        connections:
-          type: array
-          items:
-            $ref: '#/components/schemas/CalendarConnectionItem'
-      required:
-      - connections
-    calendarEventOwner:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the event host
-        name:
-          type:
-          - string
-          - 'null'
-          description: Display name of the event host
-      required:
-      - email
-    CalendarEventSipLocation:
-      type: object
-      properties:
-        type:
-          type: string
-          default: sip
-          enum:
-          - sip
-          description: Indicates this is a SIP (Session Initiation Protocol) conference location
-        url:
-          type: string
-          description: SIP URL for joining the conference
-        label:
-          type:
-          - string
-          - 'null'
-          description: Display name for the SIP conference
-        pin:
-          type:
-          - string
-          - 'null'
-          description: PIN number required for the SIP conference
-        password:
-          type:
-          - string
-          - 'null'
-          description: Password required for the SIP conference
-      required:
-      - type
-      - url
-    CalendarEventStatus:
-      type: string
-      description: Status of the event (accepted, pending, declined, cancelled)
-      enum:
-      - accepted
-      - pending
-      - declined
-      - cancelled
-    CalendarEventVideoLocation:
-      type: object
-      properties:
-        type:
-          type: string
-          default: video
-          enum:
-          - video
-          description: Indicates this is a video conference location
-        url:
-          type: string
-          description: URL for joining the video conference
-        label:
-          type:
-          - string
-          - 'null'
-          description: Display name for the video conference
-        password:
-          type:
-          - string
-          - 'null'
-          description: Password required to join the video conference
-        meetingCode:
-          type:
-          - string
-          - 'null'
-          description: Meeting code or ID required to join the conference
-        accessCode:
-          type:
-          - string
-          - 'null'
-          description: Access code required to join the conference
-      required:
-      - type
-      - url
-    UpdateUnifiedCalendarEventInput:
-      type: object
-      properties:
-        start:
-          type: object
-          properties:
-            time:
-              type: string
-              format: date-time
-            timeZone:
-              type: string
-          description: Start date and time of the calendar event with timezone information
-        end:
-          type: object
-          properties:
-            time:
-              type: string
-              format: date-time
-            timeZone:
-              type: string
-          description: End date and time of the calendar event with timezone information
-        title:
-          type: string
-          description: Title of the calendar event
-        description:
-          type:
-          - string
-          - 'null'
-          description: Detailed description of the calendar event
-        attendees:
-          description: 'List of attendees. CAUTION: You must pass the entire array with all updated values. Any attendees not included in this array will be removed from the event.'
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/UpdateCalendarEventAttendee'
-        status:
-          example: accepted
-          $ref: '#/components/schemas/CalendarEventStatus'
-    CreateEventDateTimeWithZone:
-      type: object
-      properties:
-        time:
-          type: string
-          format: date-time
-          description: Start or end time in ISO 8601 format
-        timeZone:
-          type: string
-          description: IANA time zone (e.g. America/New_York)
-      required:
-      - time
-      - timeZone
-    ListConnectionsOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ListConnectionsData'
-      required:
-      - status
-      - data
-    CalendarEventResponseStatus:
-      type: string
-      description: Response status of the attendee
-      enum:
-      - accepted
-      - pending
-      - declined
-      - needsAction
-    CalendarEventAttendee:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email address of the attendee
-        name:
-          type: string
-          description: Display name of the attendee
-        responseStatus:
-          example: accepted
-          $ref: '#/components/schemas/CalendarEventResponseStatus'
-        self:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates if this attendee is the current user
-        optional:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates if this attendee's attendance is optional
-        host:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates if this attendee is the host
-      required:
-      - email

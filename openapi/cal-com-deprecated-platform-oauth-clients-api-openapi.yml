@@ -157,45 +157,6 @@ components:
       required:
       - status
       - data
-    GetOAuthClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/PlatformOAuthClientDto'
-      required:
-      - status
-      - data
-    UpdateOAuthClientInput:
-      type: object
-      properties:
-        logo:
-          type: string
-        name:
-          type: string
-        redirectUris:
-          type: array
-          items:
-            type: string
-        bookingRedirectUri:
-          type: string
-        bookingCancelRedirectUri:
-          type: string
-        bookingRescheduleRedirectUri:
-          type: string
-        areEmailsEnabled:
-          type: boolean
-        areDefaultEventTypesEnabled:
-          type: boolean
-          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
-        areCalendarEventsEnabled:
-          type: boolean
-          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
     GetOAuthClientsResponseDto:
       type: object
       properties:
@@ -212,54 +173,6 @@ components:
       required:
       - status
       - data
-    CreateOAuthClientInput:
-      type: object
-      properties:
-        logo:
-          type: string
-        name:
-          type: string
-        redirectUris:
-          type: array
-          items:
-            type: string
-        permissions:
-          type: array
-          description: Array of permission keys like ["BOOKING_READ", "BOOKING_WRITE"]. Use ["*"] to grant all permissions.
-          items:
-            type: string
-            enum:
-            - EVENT_TYPE_READ
-            - EVENT_TYPE_WRITE
-            - BOOKING_READ
-            - BOOKING_WRITE
-            - SCHEDULE_READ
-            - SCHEDULE_WRITE
-            - APPS_READ
-            - APPS_WRITE
-            - PROFILE_READ
-            - PROFILE_WRITE
-            - '*'
-        bookingRedirectUri:
-          type: string
-        bookingCancelRedirectUri:
-          type: string
-        bookingRescheduleRedirectUri:
-          type: string
-        areEmailsEnabled:
-          type: boolean
-        areDefaultEventTypesEnabled:
-          type: boolean
-          default: false
-          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
-        areCalendarEventsEnabled:
-          type: boolean
-          default: true
-          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
-      required:
-      - name
-      - redirectUris
-      - permissions
     PlatformOAuthClientDto:
       type: object
       properties:
@@ -338,6 +251,20 @@ components:
       - areEmailsEnabled
       - areDefaultEventTypesEnabled
       - areCalendarEventsEnabled
+    GetOAuthClientResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data
     CreateOAuthClientOutput:
       type: object
       properties:
@@ -350,3 +277,76 @@ components:
       required:
       - clientId
       - clientSecret
+    UpdateOAuthClientInput:
+      type: object
+      properties:
+        logo:
+          type: string
+        name:
+          type: string
+        redirectUris:
+          type: array
+          items:
+            type: string
+        bookingRedirectUri:
+          type: string
+        bookingCancelRedirectUri:
+          type: string
+        bookingRescheduleRedirectUri:
+          type: string
+        areEmailsEnabled:
+          type: boolean
+        areDefaultEventTypesEnabled:
+          type: boolean
+          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
+        areCalendarEventsEnabled:
+          type: boolean
+          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
+    CreateOAuthClientInput:
+      type: object
+      properties:
+        logo:
+          type: string
+        name:
+          type: string
+        redirectUris:
+          type: array
+          items:
+            type: string
+        permissions:
+          type: array
+          description: Array of permission keys like ["BOOKING_READ", "BOOKING_WRITE"]. Use ["*"] to grant all permissions.
+          items:
+            type: string
+            enum:
+            - EVENT_TYPE_READ
+            - EVENT_TYPE_WRITE
+            - BOOKING_READ
+            - BOOKING_WRITE
+            - SCHEDULE_READ
+            - SCHEDULE_WRITE
+            - APPS_READ
+            - APPS_WRITE
+            - PROFILE_READ
+            - PROFILE_WRITE
+            - '*'
+        bookingRedirectUri:
+          type: string
+        bookingCancelRedirectUri:
+          type: string
+        bookingRescheduleRedirectUri:
+          type: string
+        areEmailsEnabled:
+          type: boolean
+        areDefaultEventTypesEnabled:
+          type: boolean
+          default: false
+          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
+        areCalendarEventsEnabled:
+          type: boolean
+          default: true
+          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
+      required:
+      - name
+      - redirectUris
+      - permissions

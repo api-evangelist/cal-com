@@ -202,6 +202,20 @@ paths:
       - Event Types / Webhooks
 components:
   schemas:
+    DeleteManyWebhooksOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: string
+      required:
+      - status
+      - data
     UpdateWebhookInputDto:
       type: object
       properties:
@@ -255,22 +269,6 @@ components:
           example: '2021-10-20'
           enum:
           - '2021-10-20'
-    EventTypeWebhooksOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventTypeWebhookOutputDto'
-      required:
-      - status
-      - data
     EventTypeWebhookOutputResponseDto:
       type: object
       properties:
@@ -285,7 +283,7 @@ components:
       required:
       - status
       - data
-    DeleteManyWebhooksOutputResponseDto:
+    EventTypeWebhooksOutputResponseDto:
       type: object
       properties:
         status:
@@ -295,7 +293,9 @@ components:
           - success
           - error
         data:
-          type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTypeWebhookOutputDto'
       required:
       - status
       - data

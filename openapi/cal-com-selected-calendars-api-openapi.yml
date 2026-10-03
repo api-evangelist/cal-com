@@ -93,6 +93,20 @@ components:
       - integration
       - externalId
       - credentialId
+    SelectedCalendarOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/SelectedCalendarOutputDto'
+      required:
+      - status
+      - data
     SelectedCalendarsInputDto:
       type: object
       properties:
@@ -108,17 +122,3 @@ components:
       - integration
       - externalId
       - credentialId
-    SelectedCalendarOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/SelectedCalendarOutputDto'
-      required:
-      - status
-      - data

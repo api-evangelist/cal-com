@@ -56,30 +56,6 @@ paths:
       - Me
 components:
   schemas:
-    MeOrgOutput:
-      type: object
-      properties:
-        isPlatform:
-          type: boolean
-        id:
-          type: number
-      required:
-      - isPlatform
-      - id
-    UpdateMeOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/MeOutput'
-      required:
-      - status
-      - data
     MeOutput:
       type: object
       properties:
@@ -143,6 +119,16 @@ components:
       required:
       - status
       - data
+    MeOrgOutput:
+      type: object
+      properties:
+        isPlatform:
+          type: boolean
+        id:
+          type: number
+      required:
+      - isPlatform
+      - id
     UpdateManagedUserInput:
       type: object
       properties:
@@ -232,3 +218,17 @@ components:
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
+    UpdateMeOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/MeOutput'
+      required:
+      - status
+      - data

@@ -130,38 +130,7 @@ paths:
       - Event Types Private Links
 components:
   schemas:
-    TimeBasedPrivateLinkOutput:
-      type: object
-      properties:
-        linkId:
-          type: string
-          description: The private link ID
-          example: abc123def456
-        eventTypeId:
-          type: number
-          description: Event type ID this link belongs to
-          example: 123
-        isExpired:
-          type: boolean
-          description: Whether the link is currently expired
-          example: false
-        bookingUrl:
-          type: string
-          description: Full booking URL for this private link
-          format: uri
-          example: https://cal.com/d/abc123def456/30min
-        expiresAt:
-          type: string
-          description: Expiration date for this time-based link
-          format: date-time
-          example: '2025-12-31T23:59:59.000Z'
-      required:
-      - linkId
-      - eventTypeId
-      - isExpired
-      - bookingUrl
-      - expiresAt
-    UpdatePrivateLinkOutput:
+    CreatePrivateLinkOutput:
       type: object
       properties:
         status:
@@ -169,10 +138,27 @@ components:
           description: Response status
           example: success
         data:
-          description: Updated private link data (either time-based or usage-based)
+          description: Created private link data (either time-based or usage-based)
           oneOf:
           - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
           - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
+    GetPrivateLinksOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          type: array
+          description: Array of private links for the event type (mix of time-based and usage-based)
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
       required:
       - status
       - data
@@ -211,50 +197,37 @@ components:
       - bookingUrl
       - maxUsageCount
       - usageCount
-    UpdatePrivateLinkBody:
+    TimeBasedPrivateLinkOutput:
       type: object
       properties:
-        expiresAt:
-          format: date-time
+        linkId:
           type: string
-          description: New expiration date for time-based links
-          example: '2024-12-31T23:59:59.000Z'
-        maxUsageCount:
+          description: The private link ID
+          example: abc123def456
+        eventTypeId:
           type: number
-          description: New maximum number of times the link can be used
-          example: 10
-          minimum: 1
-    GetPrivateLinksOutput:
-      type: object
-      properties:
-        status:
+          description: Event type ID this link belongs to
+          example: 123
+        isExpired:
+          type: boolean
+          description: Whether the link is currently expired
+          example: false
+        bookingUrl:
           type: string
-          description: Response status
-          example: success
-        data:
-          type: array
-          description: Array of private links for the event type (mix of time-based and usage-based)
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+          description: Full booking URL for this private link
+          format: uri
+          example: https://cal.com/d/abc123def456/30min
+        expiresAt:
+          type: string
+          description: Expiration date for this time-based link
+          format: date-time
+          example: '2025-12-31T23:59:59.000Z'
       required:
-      - status
-      - data
-    CreatePrivateLinkInput:
-      type: object
-      properties:
-        expiresAt:
-          type: string
-          description: Expiration date for time-based links
-          format: date-time
-          example: '2024-12-31T23:59:59.000Z'
-        maxUsageCount:
-          type: number
-          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
-          example: 10
-          minimum: 1
-          default: 1
+      - linkId
+      - eventTypeId
+      - isExpired
+      - bookingUrl
+      - expiresAt
     DeletePrivateLinkOutput:
       type: object
       properties:
@@ -275,7 +248,7 @@ components:
       required:
       - status
       - data
-    CreatePrivateLinkOutput:
+    UpdatePrivateLinkOutput:
       type: object
       properties:
         status:
@@ -283,10 +256,37 @@ components:
           description: Response status
           example: success
         data:
-          description: Created private link data (either time-based or usage-based)
+          description: Updated private link data (either time-based or usage-based)
           oneOf:
           - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
           - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
       required:
       - status
       - data
+    UpdatePrivateLinkBody:
+      type: object
+      properties:
+        expiresAt:
+          format: date-time
+          type: string
+          description: New expiration date for time-based links
+          example: '2024-12-31T23:59:59.000Z'
+        maxUsageCount:
+          type: number
+          description: New maximum number of times the link can be used
+          example: 10
+          minimum: 1
+    CreatePrivateLinkInput:
+      type: object
+      properties:
+        expiresAt:
+          type: string
+          description: Expiration date for time-based links
+          format: date-time
+          example: '2024-12-31T23:59:59.000Z'
+        maxUsageCount:
+          type: number
+          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
+          example: 10
+          minimum: 1
+          default: 1

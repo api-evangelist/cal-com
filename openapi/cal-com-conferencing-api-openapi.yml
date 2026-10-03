@@ -207,7 +207,30 @@ paths:
       - Conferencing
 components:
   schemas:
-    DisconnectConferencingAppOutputResponseDto:
+    ConferencingAppsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the conferencing app credentials
+        type:
+          type: string
+          example: google_video
+          description: Type of conferencing app
+        userId:
+          type: number
+          description: Id of the user associated to the conferencing app
+        invalid:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          description: Whether if the connection is working or not.
+      required:
+      - id
+      - type
+      - userId
+    GetDefaultConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
@@ -216,24 +239,11 @@ components:
           enum:
           - success
           - error
-      required:
-      - status
-    ConferencingAppsOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
       required:
       - status
-      - data
-    SetDefaultConferencingAppOutputResponseDto:
+    DisconnectConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
@@ -268,37 +278,7 @@ components:
       required:
       - status
       - data
-    ConferencingAppsOutputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          description: Id of the conferencing app credentials
-        type:
-          type: string
-          example: google_video
-          description: Type of conferencing app
-        userId:
-          type: number
-          description: Id of the user associated to the conferencing app
-        invalid:
-          type:
-          - boolean
-          - 'null'
-          example: true
-          description: Whether if the connection is working or not.
-      required:
-      - id
-      - type
-      - userId
-    DefaultConferencingAppsOutputDto:
-      type: object
-      properties:
-        appSlug:
-          type: string
-        appLink:
-          type: string
-    GetDefaultConferencingAppOutputResponseDto:
+    SetDefaultConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
@@ -307,7 +287,27 @@ components:
           enum:
           - success
           - error
-        data:
-          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
       required:
       - status
+    ConferencingAppsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
+    DefaultConferencingAppsOutputDto:
+      type: object
+      properties:
+        appSlug:
+          type: string
+        appLink:
+          type: string
