@@ -246,6 +246,33 @@ paths:
       - Verified Resources
 components:
   schemas:
+    RequestEmailVerificationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    UserVerifiedPhonesOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
+      required:
+      - status
+      - data
     UserVerifiedPhoneOutputData:
       type: object
       properties:
@@ -266,6 +293,91 @@ components:
       - id
       - phoneNumber
       - userId
+    RequestPhoneVerificationInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: Phone number to verify.
+          example: +372 5555 6666
+      required:
+      - phone
+    RequestEmailVerificationInput:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email to verify.
+          example: acme@example.com
+      required:
+      - email
+    VerifyEmailInput:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email to verify.
+          example: example@acme.com
+        code:
+          type: string
+          description: verification code sent to the email to verify
+          example: 1ABG2C
+      required:
+      - email
+      - code
+    UserVerifiedEmailOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UserVerifiedEmailOutputData'
+      required:
+      - status
+      - data
+    RequestPhoneVerificationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    UserVerifiedPhoneOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
+      required:
+      - status
+      - data
+    VerifyPhoneInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: phone number to verify.
+          example: '+37255556666'
+        code:
+          type: string
+          description: verification code sent to the phone number to verify
+          example: 1ABG2C
+      required:
+      - phone
+      - code
     UserVerifiedEmailOutputData:
       type: object
       properties:
@@ -286,104 +398,6 @@ components:
       - id
       - email
       - userId
-    RequestEmailVerificationOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    RequestEmailVerificationInput:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email to verify.
-          example: acme@example.com
-      required:
-      - email
-    UserVerifiedPhonesOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
-      required:
-      - status
-      - data
-    UserVerifiedPhoneOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
-      required:
-      - status
-      - data
-    RequestPhoneVerificationOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    RequestPhoneVerificationInput:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: Phone number to verify.
-          example: +372 5555 6666
-      required:
-      - phone
-    UserVerifiedEmailOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/UserVerifiedEmailOutputData'
-      required:
-      - status
-      - data
-    VerifyEmailInput:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email to verify.
-          example: example@acme.com
-        code:
-          type: string
-          description: verification code sent to the email to verify
-          example: 1ABG2C
-      required:
-      - email
-      - code
     UserVerifiedEmailsOutput:
       type: object
       properties:
@@ -400,17 +414,3 @@ components:
       required:
       - status
       - data
-    VerifyPhoneInput:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: phone number to verify.
-          example: '+37255556666'
-        code:
-          type: string
-          description: verification code sent to the phone number to verify
-          example: 1ABG2C
-      required:
-      - phone
-      - code

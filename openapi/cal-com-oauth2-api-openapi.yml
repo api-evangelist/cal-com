@@ -70,7 +70,32 @@ components:
       required:
       - status
       - data
-    OAuth2ExchangeConfidentialInput:
+    OAuth2RefreshConfidentialInput:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The client identifier
+          example: my-client-id
+        grant_type:
+          type: string
+          description: The grant type — must be 'refresh_token'
+          example: refresh_token
+          enum:
+          - refresh_token
+        refresh_token:
+          type: string
+          description: The refresh token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        client_secret:
+          type: string
+          description: The client secret for confidential clients
+      required:
+      - client_id
+      - grant_type
+      - refresh_token
+      - client_secret
+    OAuth2ExchangePublicInput:
       type: object
       properties:
         client_id:
@@ -91,15 +116,39 @@ components:
           type: string
           description: The redirect URI used in the authorization request
           example: https://example.com/callback
-        client_secret:
+        code_verifier:
           type: string
-          description: The client secret for confidential clients
+          description: PKCE code verifier (required for public clients that used code_challenge)
       required:
       - client_id
       - grant_type
       - code
       - redirect_uri
-      - client_secret
+      - code_verifier
+    OAuth2TokensDto:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The access token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: The token type
+          example: bearer
+        refresh_token:
+          type: string
+          description: The refresh token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expires_in:
+          type: number
+          description: The number of seconds until the access token expires
+          example: 1800
+      required:
+      - access_token
+      - token_type
+      - refresh_token
+      - expires_in
     OAuth2RefreshPublicInput:
       type: object
       properties:
@@ -161,56 +210,7 @@ components:
       - name
       - is_trusted
       - client_type
-    OAuth2RefreshConfidentialInput:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The client identifier
-          example: my-client-id
-        grant_type:
-          type: string
-          description: The grant type — must be 'refresh_token'
-          example: refresh_token
-          enum:
-          - refresh_token
-        refresh_token:
-          type: string
-          description: The refresh token
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        client_secret:
-          type: string
-          description: The client secret for confidential clients
-      required:
-      - client_id
-      - grant_type
-      - refresh_token
-      - client_secret
-    OAuth2TokensDto:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: The access token
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        token_type:
-          type: string
-          description: The token type
-          example: bearer
-        refresh_token:
-          type: string
-          description: The refresh token
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        expires_in:
-          type: number
-          description: The number of seconds until the access token expires
-          example: 1800
-      required:
-      - access_token
-      - token_type
-      - refresh_token
-      - expires_in
-    OAuth2ExchangePublicInput:
+    OAuth2ExchangeConfidentialInput:
       type: object
       properties:
         client_id:
@@ -231,12 +231,12 @@ components:
           type: string
           description: The redirect URI used in the authorization request
           example: https://example.com/callback
-        code_verifier:
+        client_secret:
           type: string
-          description: PKCE code verifier (required for public clients that used code_challenge)
+          description: The client secret for confidential clients
       required:
       - client_id
       - grant_type
       - code
       - redirect_uri
-      - code_verifier
+      - client_secret

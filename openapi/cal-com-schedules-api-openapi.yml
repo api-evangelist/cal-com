@@ -231,22 +231,63 @@ paths:
       - Schedules
 components:
   schemas:
-    ScheduleOverrideInput_2024_06_11:
+    CreateScheduleOutput_2024_06_11:
       type: object
       properties:
-        date:
+        status:
           type: string
-          example: '2024-05-20'
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+      required:
+      - status
+      - data
+    GetDefaultScheduleOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+      required:
+      - status
+      - data
+    ScheduleAvailabilityInput_2024_06_11:
+      type: object
+      properties:
+        days:
+          type: array
+          example:
+          - Monday
+          - Tuesday
+          description: Array of days when schedule is active.
+          items:
+            type: string
+            enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
         startTime:
           type: string
-          example: '12:00'
-          description: startTime must be a valid time in format HH:MM e.g. 12:00
+          example: 08:00
+          description: startTime must be a valid time in format HH:MM e.g. 08:00
         endTime:
           type: string
-          example: '13:00'
-          description: endTime must be a valid time in format HH:MM e.g. 13:00
+          example: '15:00'
+          description: endTime must be a valid time in format HH:MM e.g. 15:00
       required:
-      - date
+      - days
       - startTime
       - endTime
     DeleteScheduleOutput_2024_06_11:
@@ -260,24 +301,6 @@ components:
           - error
       required:
       - status
-    GetSchedulesOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-        error:
-          type: object
-      required:
-      - status
-      - data
     ScheduleOutput_2024_06_11:
       type: object
       properties:
@@ -327,68 +350,7 @@ components:
       - availability
       - isDefault
       - overrides
-    ScheduleAvailabilityInput_2024_06_11:
-      type: object
-      properties:
-        days:
-          type: array
-          example:
-          - Monday
-          - Tuesday
-          description: Array of days when schedule is active.
-          items:
-            type: string
-            enum:
-            - Monday
-            - Tuesday
-            - Wednesday
-            - Thursday
-            - Friday
-            - Saturday
-            - Sunday
-        startTime:
-          type: string
-          example: 08:00
-          description: startTime must be a valid time in format HH:MM e.g. 08:00
-        endTime:
-          type: string
-          example: '15:00'
-          description: endTime must be a valid time in format HH:MM e.g. 15:00
-      required:
-      - days
-      - startTime
-      - endTime
-    UpdateScheduleInput_2024_06_11:
-      type: object
-      properties:
-        name:
-          type: string
-          example: One-on-one coaching
-        timeZone:
-          type: string
-          example: Europe/Rome
-        availability:
-          example:
-          - days:
-            - Monday
-            - Tuesday
-            startTime: 09:00
-            endTime: '10:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
-        isDefault:
-          type: boolean
-          example: true
-        overrides:
-          example:
-          - date: '2024-05-20'
-            startTime: '12:00'
-            endTime: '14:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
-    CreateScheduleOutput_2024_06_11:
+    GetScheduleOutput_2024_06_11:
       type: object
       properties:
         status:
@@ -398,10 +360,31 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+          allOf:
+          - $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+        error:
+          type: object
       required:
       - status
       - data
+    ScheduleOverrideInput_2024_06_11:
+      type: object
+      properties:
+        date:
+          type: string
+          example: '2024-05-20'
+        startTime:
+          type: string
+          example: '12:00'
+          description: startTime must be a valid time in format HH:MM e.g. 12:00
+        endTime:
+          type: string
+          example: '13:00'
+          description: endTime must be a valid time in format HH:MM e.g. 13:00
+      required:
+      - date
+      - startTime
+      - endTime
     CreateScheduleInput_2024_06_11:
       type: object
       properties:
@@ -445,7 +428,37 @@ components:
       - name
       - timeZone
       - isDefault
-    GetDefaultScheduleOutput_2024_06_11:
+    UpdateScheduleInput_2024_06_11:
+      type: object
+      properties:
+        name:
+          type: string
+          example: One-on-one coaching
+        timeZone:
+          type: string
+          example: Europe/Rome
+        availability:
+          example:
+          - days:
+            - Monday
+            - Tuesday
+            startTime: 09:00
+            endTime: '10:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
+        isDefault:
+          type: boolean
+          example: true
+        overrides:
+          example:
+          - date: '2024-05-20'
+            startTime: '12:00'
+            endTime: '14:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
+    GetSchedulesOutput_2024_06_11:
       type: object
       properties:
         status:
@@ -455,22 +468,9 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-      required:
-      - status
-      - data
-    GetScheduleOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          allOf:
-          - $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
         error:
           type: object
       required:

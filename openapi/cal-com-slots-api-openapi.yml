@@ -372,35 +372,6 @@ components:
       - reservationUid
       - reservationDuration
       - reservationUntil
-    ReserveSlotOutputResponse_2024_09_04:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ReserveSlotOutput_2024_09_04'
-      required:
-      - status
-      - data
-    GetReservedSlotOutput_2024_09_04:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          allOf:
-          - $ref: '#/components/schemas/GetReservedSlotOutput_2024_09_04'
-      required:
-      - status
-      - data
     ReserveSlotInput_2024_09_04:
       type: object
       properties:
@@ -423,3 +394,32 @@ components:
       required:
       - eventTypeId
       - slotStart
+    GetReservedSlotOutput_2024_09_04:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          allOf:
+          - $ref: '#/components/schemas/GetReservedSlotOutput_2024_09_04'
+      required:
+      - status
+      - data
+    ReserveSlotOutputResponse_2024_09_04:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ReserveSlotOutput_2024_09_04'
+      required:
+      - status
+      - data

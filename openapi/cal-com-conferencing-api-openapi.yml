@@ -207,29 +207,6 @@ paths:
       - Conferencing
 components:
   schemas:
-    ConferencingAppsOutputDto:
-      type: object
-      properties:
-        id:
-          type: number
-          description: Id of the conferencing app credentials
-        type:
-          type: string
-          example: google_video
-          description: Type of conferencing app
-        userId:
-          type: number
-          description: Id of the user associated to the conferencing app
-        invalid:
-          type:
-          - boolean
-          - 'null'
-          example: true
-          description: Whether if the connection is working or not.
-      required:
-      - id
-      - type
-      - userId
     GetDefaultConferencingAppOutputResponseDto:
       type: object
       properties:
@@ -243,18 +220,7 @@ components:
           $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
       required:
       - status
-    DisconnectConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
-    GetConferencingAppsOauthUrlResponseDto:
+    SetDefaultConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
@@ -278,7 +244,48 @@ components:
       required:
       - status
       - data
-    SetDefaultConferencingAppOutputResponseDto:
+    GetConferencingAppsOauthUrlResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    DefaultConferencingAppsOutputDto:
+      type: object
+      properties:
+        appSlug:
+          type: string
+        appLink:
+          type: string
+    ConferencingAppsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the conferencing app credentials
+        type:
+          type: string
+          example: google_video
+          description: Type of conferencing app
+        userId:
+          type: number
+          description: Id of the user associated to the conferencing app
+        invalid:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          description: Whether if the connection is working or not.
+      required:
+      - id
+      - type
+      - userId
+    DisconnectConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
@@ -304,10 +311,3 @@ components:
       required:
       - status
       - data
-    DefaultConferencingAppsOutputDto:
-      type: object
-      properties:
-        appSlug:
-          type: string
-        appLink:
-          type: string

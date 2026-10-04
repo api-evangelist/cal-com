@@ -81,6 +81,21 @@ components:
           type: string
       required:
       - authUrl
+    StripCredentialsSaveOutputResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    StripCredentialsCheckOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: object
+          example: success
+      required:
+      - status
     StripConnectOutputResponseDto:
       type: object
       properties:
@@ -95,18 +110,3 @@ components:
       required:
       - status
       - data
-    StripCredentialsCheckOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: object
-          example: success
-      required:
-      - status
-    StripCredentialsSaveOutputResponseDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url

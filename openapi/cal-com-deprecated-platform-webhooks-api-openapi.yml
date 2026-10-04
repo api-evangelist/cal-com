@@ -208,20 +208,55 @@ paths:
       - 'Deprecated: Platform / Webhooks'
 components:
   schemas:
-    OAuthClientWebhookOutputResponseDto:
+    OAuthClientWebhookOutputDto:
       type: object
       properties:
-        status:
+        payloadTemplate:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
+          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
+          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
+        triggers:
+          type: array
+          items:
+            type: string
+            enum:
+            - BOOKING_CREATED
+            - BOOKING_PAYMENT_INITIATED
+            - BOOKING_PAID
+            - BOOKING_RESCHEDULED
+            - BOOKING_REQUESTED
+            - BOOKING_CANCELLED
+            - BOOKING_REJECTED
+            - BOOKING_NO_SHOW_UPDATED
+            - FORM_SUBMITTED
+            - MEETING_ENDED
+            - MEETING_STARTED
+            - RECORDING_READY
+            - INSTANT_MEETING
+            - RECORDING_TRANSCRIPTION_GENERATED
+            - OOO_CREATED
+            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+            - FORM_SUBMITTED_NO_EVENT
+            - DELEGATION_CREDENTIAL_ERROR
+            - WRONG_ASSIGNMENT_REPORT
+        oAuthClientId:
+          type: string
+        id:
+          type: number
+        subscriberUrl:
+          type: string
+        active:
+          type: boolean
+        secret:
+          type: string
       required:
-      - status
-      - data
+      - payloadTemplate
+      - triggers
+      - oAuthClientId
+      - id
+      - subscriberUrl
+      - active
     UpdateWebhookInputDto:
       type: object
       properties:
@@ -275,6 +310,36 @@ components:
           example: '2021-10-20'
           enum:
           - '2021-10-20'
+    OAuthClientWebhooksOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
+      required:
+      - status
+      - data
+    OAuthClientWebhookOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
+      required:
+      - status
+      - data
     DeleteManyWebhooksOutputResponseDto:
       type: object
       properties:
@@ -289,55 +354,6 @@ components:
       required:
       - status
       - data
-    OAuthClientWebhookOutputDto:
-      type: object
-      properties:
-        payloadTemplate:
-          type: string
-          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
-          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
-        triggers:
-          type: array
-          items:
-            type: string
-            enum:
-            - BOOKING_CREATED
-            - BOOKING_PAYMENT_INITIATED
-            - BOOKING_PAID
-            - BOOKING_RESCHEDULED
-            - BOOKING_REQUESTED
-            - BOOKING_CANCELLED
-            - BOOKING_REJECTED
-            - BOOKING_NO_SHOW_UPDATED
-            - FORM_SUBMITTED
-            - MEETING_ENDED
-            - MEETING_STARTED
-            - RECORDING_READY
-            - INSTANT_MEETING
-            - RECORDING_TRANSCRIPTION_GENERATED
-            - OOO_CREATED
-            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
-            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
-            - FORM_SUBMITTED_NO_EVENT
-            - DELEGATION_CREDENTIAL_ERROR
-            - WRONG_ASSIGNMENT_REPORT
-        oAuthClientId:
-          type: string
-        id:
-          type: number
-        subscriberUrl:
-          type: string
-        active:
-          type: boolean
-        secret:
-          type: string
-      required:
-      - payloadTemplate
-      - triggers
-      - oAuthClientId
-      - id
-      - subscriberUrl
-      - active
     CreateWebhookInputDto:
       type: object
       properties:
@@ -395,19 +411,3 @@ components:
       - active
       - subscriberUrl
       - triggers
-    OAuthClientWebhooksOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OAuthClientWebhookOutputDto'
-      required:
-      - status
-      - data

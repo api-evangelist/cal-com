@@ -36,20 +36,6 @@ paths:
       - Destination Calendars
 components:
   schemas:
-    DestinationCalendarsOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/DestinationCalendarsOutputDto'
-      required:
-      - status
-      - data
     DestinationCalendarsOutputDto:
       type: object
       properties:
@@ -88,3 +74,17 @@ components:
       required:
       - integration
       - externalId
+    DestinationCalendarsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/DestinationCalendarsOutputDto'
+      required:
+      - status
+      - data

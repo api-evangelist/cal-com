@@ -296,213 +296,6 @@ paths:
       - Calendars
 components:
   schemas:
-    DeletedCalendarCredentialsOutputDto:
-      type: object
-      properties:
-        id:
-          type: number
-        type:
-          type: string
-        userId:
-          type:
-          - number
-          - 'null'
-        teamId:
-          type:
-          - number
-          - 'null'
-        appId:
-          type:
-          - string
-          - 'null'
-        invalid:
-          type:
-          - boolean
-          - 'null'
-      required:
-      - id
-      - type
-      - userId
-      - teamId
-      - appId
-      - invalid
-    CreateCalendarCredentialsInput:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-      required:
-      - username
-      - password
-    ConnectedCalendarsData:
-      type: object
-      properties:
-        connectedCalendars:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectedCalendar'
-        destinationCalendar:
-          $ref: '#/components/schemas/DestinationCalendar'
-      required:
-      - connectedCalendars
-      - destinationCalendar
-    Calendar:
-      type: object
-      properties:
-        externalId:
-          type: string
-        integration:
-          type: string
-        name:
-          type: string
-        primary:
-          type:
-          - boolean
-          - 'null'
-        readOnly:
-          type: boolean
-        email:
-          type: string
-        isSelected:
-          type: boolean
-        credentialId:
-          type: number
-        delegationCredentialId:
-          type:
-          - string
-          - 'null'
-      required:
-      - externalId
-      - readOnly
-      - isSelected
-      - credentialId
-    BusyTimesOutput:
-      type: object
-      properties:
-        start:
-          format: date-time
-          type: string
-        end:
-          format: date-time
-          type: string
-        source:
-          type:
-          - string
-          - 'null'
-      required:
-      - start
-      - end
-    DeletedCalendarCredentialsOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/DeletedCalendarCredentialsOutputDto'
-      required:
-      - status
-      - data
-    DeleteCalendarCredentialsInputBodyDto:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 10
-          description: Credential ID of the calendar to delete, as returned by the /calendars endpoint
-      required:
-      - id
-    Integration:
-      type: object
-      properties:
-        appData:
-          type:
-          - object
-          - 'null'
-        dirName:
-          type: string
-        __template:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        installed:
-          type: boolean
-        type:
-          type: string
-        title:
-          type: string
-        variant:
-          type: string
-        category:
-          type: string
-        categories:
-          type: array
-          items:
-            type: string
-        logo:
-          type: string
-        publisher:
-          type: string
-        slug:
-          type: string
-        url:
-          type: string
-        email:
-          type: string
-        locationOption:
-          type:
-          - object
-          - 'null'
-      required:
-      - name
-      - description
-      - type
-      - variant
-      - categories
-      - logo
-      - publisher
-      - slug
-      - url
-      - email
-      - locationOption
-    Primary:
-      type: object
-      properties:
-        externalId:
-          type: string
-        integration:
-          type: string
-        name:
-          type: string
-        primary:
-          type:
-          - boolean
-          - 'null'
-        readOnly:
-          type: boolean
-        email:
-          type: string
-        isSelected:
-          type: boolean
-        credentialId:
-          type: number
-        delegationCredentialId:
-          type:
-          - string
-          - 'null'
-      required:
-      - externalId
-      - primary
-      - readOnly
-      - isSelected
-      - credentialId
     GetBusyTimesOutput:
       type: object
       properties:
@@ -568,6 +361,201 @@ components:
       - userId
       - eventTypeId
       - credentialId
+    Integration:
+      type: object
+      properties:
+        appData:
+          type:
+          - object
+          - 'null'
+        dirName:
+          type: string
+        __template:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        installed:
+          type: boolean
+        type:
+          type: string
+        title:
+          type: string
+        variant:
+          type: string
+        category:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        logo:
+          type: string
+        publisher:
+          type: string
+        slug:
+          type: string
+        url:
+          type: string
+        email:
+          type: string
+        locationOption:
+          type:
+          - object
+          - 'null'
+      required:
+      - name
+      - description
+      - type
+      - variant
+      - categories
+      - logo
+      - publisher
+      - slug
+      - url
+      - email
+      - locationOption
+    DeletedCalendarCredentialsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+        userId:
+          type:
+          - number
+          - 'null'
+        teamId:
+          type:
+          - number
+          - 'null'
+        appId:
+          type:
+          - string
+          - 'null'
+        invalid:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - id
+      - type
+      - userId
+      - teamId
+      - appId
+      - invalid
+    DeletedCalendarCredentialsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/DeletedCalendarCredentialsOutputDto'
+      required:
+      - status
+      - data
+    CreateIcsFeedOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/CreateIcsFeedOutput'
+      required:
+      - status
+      - data
+    ConnectedCalendar:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/Integration'
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type:
+          - string
+          - 'null'
+        primary:
+          $ref: '#/components/schemas/Primary'
+        calendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Calendar'
+      required:
+      - integration
+      - credentialId
+    DeleteCalendarCredentialsInputBodyDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+          description: Credential ID of the calendar to delete, as returned by the /calendars endpoint
+      required:
+      - id
+    CreateCalendarCredentialsInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - username
+      - password
+    Primary:
+      type: object
+      properties:
+        externalId:
+          type: string
+        integration:
+          type: string
+        name:
+          type: string
+        primary:
+          type:
+          - boolean
+          - 'null'
+        readOnly:
+          type: boolean
+        email:
+          type: string
+        isSelected:
+          type: boolean
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type:
+          - string
+          - 'null'
+      required:
+      - externalId
+      - primary
+      - readOnly
+      - isSelected
+      - credentialId
+    ConnectedCalendarsData:
+      type: object
+      properties:
+        connectedCalendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedCalendar'
+        destinationCalendar:
+          $ref: '#/components/schemas/DestinationCalendar'
+      required:
+      - connectedCalendars
+      - destinationCalendar
     CreateIcsFeedOutput:
       type: object
       properties:
@@ -610,6 +598,22 @@ components:
       - teamId
       - appId
       - invalid
+    BusyTimesOutput:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        source:
+          type:
+          - string
+          - 'null'
+      required:
+      - start
+      - end
     CreateIcsFeedInputDto:
       type: object
       properties:
@@ -629,39 +633,35 @@ components:
           description: Whether to allowing writing to the calendar or not
       required:
       - urls
-    CreateIcsFeedOutputResponseDto:
+    Calendar:
       type: object
       properties:
-        status:
+        externalId:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/CreateIcsFeedOutput'
-      required:
-      - status
-      - data
-    ConnectedCalendar:
-      type: object
-      properties:
         integration:
-          $ref: '#/components/schemas/Integration'
+          type: string
+        name:
+          type: string
+        primary:
+          type:
+          - boolean
+          - 'null'
+        readOnly:
+          type: boolean
+        email:
+          type: string
+        isSelected:
+          type: boolean
         credentialId:
           type: number
         delegationCredentialId:
           type:
           - string
           - 'null'
-        primary:
-          $ref: '#/components/schemas/Primary'
-        calendars:
-          type: array
-          items:
-            $ref: '#/components/schemas/Calendar'
       required:
-      - integration
+      - externalId
+      - readOnly
+      - isSelected
       - credentialId
     ConnectedCalendarsOutput:
       type: object

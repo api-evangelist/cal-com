@@ -256,122 +256,14 @@ paths:
       - 'Deprecated: Platform / Managed Users'
 components:
   schemas:
-    CreateManagedUserInput:
+    RefreshTokenInput:
       type: object
       properties:
-        email:
-          type: string
-          example: alice@example.com
-        name:
-          type: string
-          example: Alice Smith
-          description: Managed user's name is used in emails
-        timeFormat:
-          type: number
-          enum:
-          - 12
-          - 24
-          example: 12
-          description: Must be a number 12 or 24
-        weekStart:
-          type: string
-          example: Monday
-          enum:
-          - Monday
-          - Tuesday
-          - Wednesday
-          - Thursday
-          - Friday
-          - Saturday
-          - Sunday
-        timeZone:
-          type: string
-          example: America/New_York
-          description: "Timezone is used to create user's default schedule from Monday to Friday from 9AM to 5PM. If it is not passed then user does not have\n      a default schedule and it must be created manually via the /schedules endpoint. Until the schedule is created, the user can't access availability atom to set his / her availability nor booked.\n      It will default to Europe/London if not passed."
-        locale:
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          type: string
-          example: en
-        avatarUrl:
-          type: string
-          example: https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png
-          description: URL of the user's avatar image
-        bio:
-          type: string
-          description: Bio
-          example: I am a bio
-        metadata:
-          type: object
-          description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
-          example:
-            key: value
-      required:
-      - email
-      - name
-    CreateManagedUserData:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
         refreshToken:
           type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-        user:
-          $ref: '#/components/schemas/ManagedUserOutput'
-        accessTokenExpiresAt:
-          type: number
-        refreshTokenExpiresAt:
-          type: number
+          description: Managed user's refresh token.
       required:
-      - accessToken
       - refreshToken
-      - user
-      - accessTokenExpiresAt
-      - refreshTokenExpiresAt
     KeysDto:
       type: object
       properties:
@@ -390,7 +282,7 @@ components:
       - refreshToken
       - accessTokenExpiresAt
       - refreshTokenExpiresAt
-    CreateManagedUserOutput:
+    GetManagedUserOutput:
       type: object
       properties:
         status:
@@ -400,33 +292,7 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/CreateManagedUserData'
-        error:
-          type: object
-      required:
-      - status
-      - data
-    RefreshTokenInput:
-      type: object
-      properties:
-        refreshToken:
-          type: string
-          description: Managed user's refresh token.
-      required:
-      - refreshToken
-    GetManagedUsersOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagedUserOutput'
+          $ref: '#/components/schemas/ManagedUserOutput'
       required:
       - status
       - data
@@ -533,20 +399,27 @@ components:
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
-    GetManagedUserOutput:
+    CreateManagedUserData:
       type: object
       properties:
-        status:
+        accessToken:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        refreshToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        user:
           $ref: '#/components/schemas/ManagedUserOutput'
+        accessTokenExpiresAt:
+          type: number
+        refreshTokenExpiresAt:
+          type: number
       required:
-      - status
-      - data
+      - accessToken
+      - refreshToken
+      - user
+      - accessTokenExpiresAt
+      - refreshTokenExpiresAt
     ManagedUserOutput:
       type: object
       properties:
@@ -658,3 +531,130 @@ components:
       - createdDate
       - timeFormat
       - defaultScheduleId
+    CreateManagedUserOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/CreateManagedUserData'
+        error:
+          type: object
+      required:
+      - status
+      - data
+    GetManagedUsersOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedUserOutput'
+      required:
+      - status
+      - data
+    CreateManagedUserInput:
+      type: object
+      properties:
+        email:
+          type: string
+          example: alice@example.com
+        name:
+          type: string
+          example: Alice Smith
+          description: Managed user's name is used in emails
+        timeFormat:
+          type: number
+          enum:
+          - 12
+          - 24
+          example: 12
+          description: Must be a number 12 or 24
+        weekStart:
+          type: string
+          example: Monday
+          enum:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+          - Sunday
+        timeZone:
+          type: string
+          example: America/New_York
+          description: "Timezone is used to create user's default schedule from Monday to Friday from 9AM to 5PM. If it is not passed then user does not have\n      a default schedule and it must be created manually via the /schedules endpoint. Until the schedule is created, the user can't access availability atom to set his / her availability nor booked.\n      It will default to Europe/London if not passed."
+        locale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          example: en
+        avatarUrl:
+          type: string
+          example: https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png
+          description: URL of the user's avatar image
+        bio:
+          type: string
+          description: Bio
+          example: I am a bio
+        metadata:
+          type: object
+          description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
+          example:
+            key: value
+      required:
+      - email
+      - name

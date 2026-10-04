@@ -178,7 +178,7 @@ paths:
       - Bookings / Attendees
 components:
   schemas:
-    GetBookingAttendeeOutput_2024_08_13:
+    GetBookingAttendeesOutput_2024_08_13:
       type: object
       properties:
         status:
@@ -188,111 +188,12 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
       required:
       - status
       - data
-    AddAttendeeInput_2024_08_13:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the attendee.
-          example: John Doe
-        timeZone:
-          type: string
-          description: The time zone of the attendee.
-          example: America/New_York
-        phoneNumber:
-          type: string
-          description: The phone number of the attendee in international format.
-          example: '+919876543210'
-        language:
-          type: string
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          description: The preferred language of the attendee. Used for booking confirmation.
-          example: it
-          default: en
-        email:
-          type: string
-          description: The email of the attendee.
-          example: john.doe@example.com
-      required:
-      - name
-      - timeZone
-      - email
-    RemovedAttendeeOutput_2024_08_13:
-      type: object
-      properties:
-        id:
-          type: number
-          description: The ID of the attendee.
-          example: 123
-        bookingId:
-          type: number
-          description: The ID of the booking.
-          example: 456
-        name:
-          type: string
-          description: The name of the attendee.
-          example: John Doe
-        email:
-          type: string
-          description: The email of the attendee.
-          example: john.doe@example.com
-        timeZone:
-          type: string
-          description: The time zone of the attendee.
-          example: America/New_York
-      required:
-      - id
-      - bookingId
-      - name
-      - email
-      - timeZone
     BookingAttendeeWithId_2024_08_13:
       type: object
       properties:
@@ -372,6 +273,20 @@ components:
       - timeZone
       - absent
       - id
+    RemoveAttendeeOutput_2024_08_13:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/RemovedAttendeeOutput_2024_08_13'
+      required:
+      - status
+      - data
     BookingAttendeeOutput_2024_08_13:
       type: object
       properties:
@@ -455,7 +370,7 @@ components:
       - absent
       - id
       - bookingId
-    GetBookingAttendeesOutput_2024_08_13:
+    GetBookingAttendeeOutput_2024_08_13:
       type: object
       properties:
         status:
@@ -465,9 +380,7 @@ components:
           - success
           - error
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
+          $ref: '#/components/schemas/BookingAttendeeWithId_2024_08_13'
       required:
       - status
       - data
@@ -485,17 +398,104 @@ components:
       required:
       - status
       - data
-    RemoveAttendeeOutput_2024_08_13:
+    RemovedAttendeeOutput_2024_08_13:
       type: object
       properties:
-        status:
+        id:
+          type: number
+          description: The ID of the attendee.
+          example: 123
+        bookingId:
+          type: number
+          description: The ID of the booking.
+          example: 456
+        name:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/RemovedAttendeeOutput_2024_08_13'
+          description: The name of the attendee.
+          example: John Doe
+        email:
+          type: string
+          description: The email of the attendee.
+          example: john.doe@example.com
+        timeZone:
+          type: string
+          description: The time zone of the attendee.
+          example: America/New_York
       required:
-      - status
-      - data
+      - id
+      - bookingId
+      - name
+      - email
+      - timeZone
+    AddAttendeeInput_2024_08_13:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the attendee.
+          example: John Doe
+        timeZone:
+          type: string
+          description: The time zone of the attendee.
+          example: America/New_York
+        phoneNumber:
+          type: string
+          description: The phone number of the attendee in international format.
+          example: '+919876543210'
+        language:
+          type: string
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          description: The preferred language of the attendee. Used for booking confirmation.
+          example: it
+          default: en
+        email:
+          type: string
+          description: The email of the attendee.
+          example: john.doe@example.com
+      required:
+      - name
+      - timeZone
+      - email

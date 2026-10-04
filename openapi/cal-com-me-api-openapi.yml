@@ -56,6 +56,30 @@ paths:
       - Me
 components:
   schemas:
+    GetMeOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/MeOutput'
+      required:
+      - status
+      - data
+    MeOrgOutput:
+      type: object
+      properties:
+        isPlatform:
+          type: boolean
+        id:
+          type: number
+      required:
+      - isPlatform
+      - id
     MeOutput:
       type: object
       properties:
@@ -105,30 +129,6 @@ components:
       - weekStart
       - timeZone
       - organizationId
-    GetMeOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/MeOutput'
-      required:
-      - status
-      - data
-    MeOrgOutput:
-      type: object
-      properties:
-        isPlatform:
-          type: boolean
-        id:
-          type: number
-      required:
-      - isPlatform
-      - id
     UpdateManagedUserInput:
       type: object
       properties:

@@ -207,20 +207,55 @@ components:
           example: '2021-10-20'
           enum:
           - '2021-10-20'
-    UserWebhookOutputResponseDto:
+    UserWebhookOutputDto:
       type: object
       properties:
-        status:
+        payloadTemplate:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/UserWebhookOutputDto'
+          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
+          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
+        triggers:
+          type: array
+          items:
+            type: string
+            enum:
+            - BOOKING_CREATED
+            - BOOKING_PAYMENT_INITIATED
+            - BOOKING_PAID
+            - BOOKING_RESCHEDULED
+            - BOOKING_REQUESTED
+            - BOOKING_CANCELLED
+            - BOOKING_REJECTED
+            - BOOKING_NO_SHOW_UPDATED
+            - FORM_SUBMITTED
+            - MEETING_ENDED
+            - MEETING_STARTED
+            - RECORDING_READY
+            - INSTANT_MEETING
+            - RECORDING_TRANSCRIPTION_GENERATED
+            - OOO_CREATED
+            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
+            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
+            - FORM_SUBMITTED_NO_EVENT
+            - DELEGATION_CREDENTIAL_ERROR
+            - WRONG_ASSIGNMENT_REPORT
+        userId:
+          type: number
+        id:
+          type: number
+        subscriberUrl:
+          type: string
+        active:
+          type: boolean
+        secret:
+          type: string
       required:
-      - status
-      - data
+      - payloadTemplate
+      - triggers
+      - userId
+      - id
+      - subscriberUrl
+      - active
     CreateWebhookInputDto:
       type: object
       properties:
@@ -294,52 +329,17 @@ components:
       required:
       - status
       - data
-    UserWebhookOutputDto:
+    UserWebhookOutputResponseDto:
       type: object
       properties:
-        payloadTemplate:
+        status:
           type: string
-          description: The template of the payload that will be sent to the subscriberUrl, check cal.com/docs/core-features/webhooks for more information
-          example: '{"content":"A new event has been scheduled","type":"{{type}}","name":"{{title}}","organizer":"{{organizer.name}}","booker":"{{attendees.0.name}}"}'
-        triggers:
-          type: array
-          items:
-            type: string
-            enum:
-            - BOOKING_CREATED
-            - BOOKING_PAYMENT_INITIATED
-            - BOOKING_PAID
-            - BOOKING_RESCHEDULED
-            - BOOKING_REQUESTED
-            - BOOKING_CANCELLED
-            - BOOKING_REJECTED
-            - BOOKING_NO_SHOW_UPDATED
-            - FORM_SUBMITTED
-            - MEETING_ENDED
-            - MEETING_STARTED
-            - RECORDING_READY
-            - INSTANT_MEETING
-            - RECORDING_TRANSCRIPTION_GENERATED
-            - OOO_CREATED
-            - AFTER_HOSTS_CAL_VIDEO_NO_SHOW
-            - AFTER_GUESTS_CAL_VIDEO_NO_SHOW
-            - FORM_SUBMITTED_NO_EVENT
-            - DELEGATION_CREDENTIAL_ERROR
-            - WRONG_ASSIGNMENT_REPORT
-        userId:
-          type: number
-        id:
-          type: number
-        subscriberUrl:
-          type: string
-        active:
-          type: boolean
-        secret:
-          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/UserWebhookOutputDto'
       required:
-      - payloadTemplate
-      - triggers
-      - userId
-      - id
-      - subscriberUrl
-      - active
+      - status
+      - data
