@@ -1,0 +1,54 @@
+slug: cal-com
+provider: Cal.com
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Webhooks
+  spec_file: cal-com-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.85
+  evidence: POST /v2/webhooks WebhooksController_createWebhook Create a webhook; CreateWebhookInputDto,
+    UpdateWebhookInputDto
+  reason: Full CRUD lifecycle over outbound webhook subscriptions exposed to integrators of this platform,
+    which is precisely Webhook & Event Subscription Management within the developer platform/API ecosystem
+    capability. The frame names this capability explicitly, so it is a genuine edge rather than generic
+    plumbing.
+- tag: 'Deprecated: Platform / Webhooks'
+  spec_file: cal-com-deprecated-platform-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.78
+  evidence: OAuthClientWebhooksController_createOAuthClientWebhook  "Create a webhook"; schema CreateWebhookInputDto
+  reason: CRUD over outbound webhook subscriptions registered against a platform OAuth client — the lifecycle
+    of event subscriptions exposed to integrating developers.
+- tag: 'Deprecated: Platform OAuth Clients'
+  spec_file: cal-com-deprecated-platform-oauth-clients-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.78
+  evidence: POST /v2/oauth-clients  "Create an OAuth client"; schema PlatformOAuthClientDto
+  reason: Lifecycle management of OAuth clients issued to platform integrators — issuance and stewardship
+    of developer credentials/OAuth clients on the API platform.
+- tag: Event Types / Webhooks
+  spec_file: cal-com-event-types-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.75
+  evidence: EventTypeWebhooksController_createEventTypeWebhook  "Create a webhook"; DeleteManyWebhooksOutputResponseDto
+  reason: Registers and maintains outbound webhook subscriptions scoped to an event type — webhook/event
+    subscription lifecycle for integrators.

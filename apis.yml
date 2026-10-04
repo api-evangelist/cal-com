@@ -1017,6 +1017,9 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/@calcom/atoms
 common:
+- type: CapabilityMap
+  url: capabilities/cal-com-capability-edges.yml
+  name: Cal.com Business Capability Map
 - type: AgenticAccess
   url: agentic-access/cal-com-agentic-access.yml
 - type: TrustCenter
