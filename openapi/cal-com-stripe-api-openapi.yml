@@ -74,13 +74,6 @@ paths:
       - Stripe
 components:
   schemas:
-    StripConnectOutputDto:
-      type: object
-      properties:
-        authUrl:
-          type: string
-      required:
-      - authUrl
     StripCredentialsSaveOutputResponseDto:
       type: object
       properties:
@@ -96,6 +89,13 @@ components:
           example: success
       required:
       - status
+    StripConnectOutputDto:
+      type: object
+      properties:
+        authUrl:
+          type: string
+      required:
+      - authUrl
     StripConnectOutputResponseDto:
       type: object
       properties:

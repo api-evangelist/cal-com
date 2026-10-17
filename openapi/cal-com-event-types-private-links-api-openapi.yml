@@ -130,23 +130,6 @@ paths:
       - Event Types Private Links
 components:
   schemas:
-    GetPrivateLinksOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          type: array
-          description: Array of private links for the event type (mix of time-based and usage-based)
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
     TimeBasedPrivateLinkOutput:
       type: object
       properties:
@@ -178,6 +161,38 @@ components:
       - isExpired
       - bookingUrl
       - expiresAt
+    GetPrivateLinksOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          type: array
+          description: Array of private links for the event type (mix of time-based and usage-based)
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
+    CreatePrivateLinkOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          description: Created private link data (either time-based or usage-based)
+          oneOf:
+          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
     DeletePrivateLinkOutput:
       type: object
       properties:
@@ -198,48 +213,6 @@ components:
       required:
       - status
       - data
-    UpdatePrivateLinkBody:
-      type: object
-      properties:
-        expiresAt:
-          format: date-time
-          type: string
-          description: New expiration date for time-based links
-          example: '2024-12-31T23:59:59.000Z'
-        maxUsageCount:
-          type: number
-          description: New maximum number of times the link can be used
-          example: 10
-          minimum: 1
-    CreatePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          description: Created private link data (either time-based or usage-based)
-          oneOf:
-          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
-    CreatePrivateLinkInput:
-      type: object
-      properties:
-        expiresAt:
-          type: string
-          description: Expiration date for time-based links
-          format: date-time
-          example: '2024-12-31T23:59:59.000Z'
-        maxUsageCount:
-          type: number
-          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
-          example: 10
-          minimum: 1
-          default: 1
     UsageBasedPrivateLinkOutput:
       type: object
       properties:
@@ -275,6 +248,33 @@ components:
       - bookingUrl
       - maxUsageCount
       - usageCount
+    CreatePrivateLinkInput:
+      type: object
+      properties:
+        expiresAt:
+          type: string
+          description: Expiration date for time-based links
+          format: date-time
+          example: '2024-12-31T23:59:59.000Z'
+        maxUsageCount:
+          type: number
+          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
+          example: 10
+          minimum: 1
+          default: 1
+    UpdatePrivateLinkBody:
+      type: object
+      properties:
+        expiresAt:
+          format: date-time
+          type: string
+          description: New expiration date for time-based links
+          example: '2024-12-31T23:59:59.000Z'
+        maxUsageCount:
+          type: number
+          description: New maximum number of times the link can be used
+          example: 10
+          minimum: 1
     UpdatePrivateLinkOutput:
       type: object
       properties:

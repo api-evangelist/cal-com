@@ -296,71 +296,6 @@ paths:
       - Calendars
 components:
   schemas:
-    GetBusyTimesOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BusyTimesOutput'
-      required:
-      - status
-      - data
-    DestinationCalendar:
-      type: object
-      properties:
-        id:
-          type: object
-        integration:
-          type: string
-        externalId:
-          type: string
-        primaryEmail:
-          type:
-          - string
-          - 'null'
-        userId:
-          type:
-          - number
-          - 'null'
-        eventTypeId:
-          type:
-          - number
-          - 'null'
-        credentialId:
-          type:
-          - number
-          - 'null'
-        delegationCredentialId:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        primary:
-          type: boolean
-        readOnly:
-          type: boolean
-        email:
-          type: string
-        integrationTitle:
-          type: string
-      required:
-      - id
-      - integration
-      - externalId
-      - primaryEmail
-      - userId
-      - eventTypeId
-      - credentialId
     Integration:
       type: object
       properties:
@@ -416,6 +351,31 @@ components:
       - url
       - email
       - locationOption
+    DeleteCalendarCredentialsInputBodyDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+          description: Credential ID of the calendar to delete, as returned by the /calendars endpoint
+      required:
+      - id
+    BusyTimesOutput:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        source:
+          type:
+          - string
+          - 'null'
+      required:
+      - start
+      - end
     DeletedCalendarCredentialsOutputDto:
       type: object
       properties:
@@ -446,7 +406,7 @@ components:
       - teamId
       - appId
       - invalid
-    DeletedCalendarCredentialsOutputResponseDto:
+    ConnectedCalendarsOutput:
       type: object
       properties:
         status:
@@ -456,10 +416,51 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/DeletedCalendarCredentialsOutputDto'
+          $ref: '#/components/schemas/ConnectedCalendarsData'
       required:
       - status
       - data
+    CreateCalendarCredentialsInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - username
+      - password
+    CreateIcsFeedInputDto:
+      type: object
+      properties:
+        urls:
+          type: array
+          example:
+          - https://cal.com/ics/feed.ics
+          - http://cal.com/ics/feed.ics
+          description: An array of ICS URLs
+          items:
+            type: string
+            example: https://cal.com/ics/feed.ics
+        readOnly:
+          type: boolean
+          default: true
+          example: false
+          description: Whether to allowing writing to the calendar or not
+      required:
+      - urls
+    ConnectedCalendarsData:
+      type: object
+      properties:
+        connectedCalendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedCalendar'
+        destinationCalendar:
+          $ref: '#/components/schemas/DestinationCalendar'
+      required:
+      - connectedCalendars
+      - destinationCalendar
     CreateIcsFeedOutputResponseDto:
       type: object
       properties:
@@ -494,26 +495,23 @@ components:
       required:
       - integration
       - credentialId
-    DeleteCalendarCredentialsInputBodyDto:
+    GetBusyTimesOutput:
       type: object
       properties:
-        id:
-          type: integer
-          example: 10
-          description: Credential ID of the calendar to delete, as returned by the /calendars endpoint
-      required:
-      - id
-    CreateCalendarCredentialsInput:
-      type: object
-      properties:
-        username:
+        status:
           type: string
-        password:
-          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BusyTimesOutput'
       required:
-      - username
-      - password
-    Primary:
+      - status
+      - data
+    Calendar:
       type: object
       properties:
         externalId:
@@ -540,22 +538,9 @@ components:
           - 'null'
       required:
       - externalId
-      - primary
       - readOnly
       - isSelected
       - credentialId
-    ConnectedCalendarsData:
-      type: object
-      properties:
-        connectedCalendars:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectedCalendar'
-        destinationCalendar:
-          $ref: '#/components/schemas/DestinationCalendar'
-      required:
-      - connectedCalendars
-      - destinationCalendar
     CreateIcsFeedOutput:
       type: object
       properties:
@@ -598,42 +583,56 @@ components:
       - teamId
       - appId
       - invalid
-    BusyTimesOutput:
+    DestinationCalendar:
       type: object
       properties:
-        start:
-          format: date-time
+        id:
+          type: object
+        integration:
           type: string
-        end:
-          format: date-time
+        externalId:
           type: string
-        source:
+        primaryEmail:
           type:
           - string
           - 'null'
-      required:
-      - start
-      - end
-    CreateIcsFeedInputDto:
-      type: object
-      properties:
-        urls:
-          type: array
-          example:
-          - https://cal.com/ics/feed.ics
-          - http://cal.com/ics/feed.ics
-          description: An array of ICS URLs
-          items:
-            type: string
-            example: https://cal.com/ics/feed.ics
+        userId:
+          type:
+          - number
+          - 'null'
+        eventTypeId:
+          type:
+          - number
+          - 'null'
+        credentialId:
+          type:
+          - number
+          - 'null'
+        delegationCredentialId:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        primary:
+          type: boolean
         readOnly:
           type: boolean
-          default: true
-          example: false
-          description: Whether to allowing writing to the calendar or not
+        email:
+          type: string
+        integrationTitle:
+          type: string
       required:
-      - urls
-    Calendar:
+      - id
+      - integration
+      - externalId
+      - primaryEmail
+      - userId
+      - eventTypeId
+      - credentialId
+    Primary:
       type: object
       properties:
         externalId:
@@ -660,10 +659,11 @@ components:
           - 'null'
       required:
       - externalId
+      - primary
       - readOnly
       - isSelected
       - credentialId
-    ConnectedCalendarsOutput:
+    DeletedCalendarCredentialsOutputResponseDto:
       type: object
       properties:
         status:
@@ -673,7 +673,7 @@ components:
           - success
           - error
         data:
-          $ref: '#/components/schemas/ConnectedCalendarsData'
+          $ref: '#/components/schemas/DeletedCalendarCredentialsOutputDto'
       required:
       - status
       - data

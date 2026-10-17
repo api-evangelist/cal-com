@@ -139,48 +139,6 @@ paths:
       - 'Deprecated: Platform OAuth Clients'
 components:
   schemas:
-    GetOAuthClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/PlatformOAuthClientDto'
-      required:
-      - status
-      - data
-    CreateOAuthClientOutput:
-      type: object
-      properties:
-        clientId:
-          type: string
-          example: clsx38nbl0001vkhlwin9fmt0
-        clientSecret:
-          type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
-      required:
-      - clientId
-      - clientSecret
-    GetOAuthClientsResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlatformOAuthClientDto'
-      required:
-      - status
-      - data
     UpdateOAuthClientInput:
       type: object
       properties:
@@ -302,6 +260,34 @@ components:
       - areEmailsEnabled
       - areDefaultEventTypesEnabled
       - areCalendarEventsEnabled
+    CreateOAuthClientOutput:
+      type: object
+      properties:
+        clientId:
+          type: string
+          example: clsx38nbl0001vkhlwin9fmt0
+        clientSecret:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
+      required:
+      - clientId
+      - clientSecret
+    GetOAuthClientsResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data
     CreateOAuthClientInput:
       type: object
       properties:
@@ -350,3 +336,17 @@ components:
       - name
       - redirectUris
       - permissions
+    GetOAuthClientResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data

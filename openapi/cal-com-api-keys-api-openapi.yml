@@ -44,6 +44,19 @@ components:
           type: string
       required:
       - apiKey
+    RefreshApiKeyInput:
+      type: object
+      properties:
+        apiKeyDaysValid:
+          type: number
+          minimum: 1
+          description: For how many days is managed organization api key valid. Defaults to 30 days.
+          example: 60
+          default: 30
+        apiKeyNeverExpires:
+          type: boolean
+          description: If true, organization api key never expires.
+          example: true
     RefreshApiKeyOutput:
       type: object
       properties:
@@ -58,16 +71,3 @@ components:
       required:
       - status
       - data
-    RefreshApiKeyInput:
-      type: object
-      properties:
-        apiKeyDaysValid:
-          type: number
-          minimum: 1
-          description: For how many days is managed organization api key valid. Defaults to 30 days.
-          example: 60
-          default: 30
-        apiKeyNeverExpires:
-          type: boolean
-          description: If true, organization api key never expires.
-          example: true

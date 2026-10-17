@@ -207,30 +207,6 @@ paths:
       - Conferencing
 components:
   schemas:
-    GetDefaultConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
-      required:
-      - status
-    SetDefaultConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
     ConferencingAppOutputResponseDto:
       type: object
       properties:
@@ -244,6 +220,19 @@ components:
       required:
       - status
       - data
+    GetDefaultConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
+      required:
+      - status
     GetConferencingAppsOauthUrlResponseDto:
       type: object
       properties:
@@ -255,6 +244,32 @@ components:
           - error
       required:
       - status
+    DisconnectConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    ConferencingAppsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
     DefaultConferencingAppsOutputDto:
       type: object
       properties:
@@ -285,7 +300,7 @@ components:
       - id
       - type
       - userId
-    DisconnectConferencingAppOutputResponseDto:
+    SetDefaultConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
@@ -296,18 +311,3 @@ components:
           - error
       required:
       - status
-    ConferencingAppsOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConferencingAppsOutputDto'
-      required:
-      - status
-      - data

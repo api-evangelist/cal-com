@@ -256,6 +256,27 @@ paths:
       - 'Deprecated: Platform / Managed Users'
 components:
   schemas:
+    CreateManagedUserData:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        refreshToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+        user:
+          $ref: '#/components/schemas/ManagedUserOutput'
+        accessTokenExpiresAt:
+          type: number
+        refreshTokenExpiresAt:
+          type: number
+      required:
+      - accessToken
+      - refreshToken
+      - user
+      - accessTokenExpiresAt
+      - refreshTokenExpiresAt
     RefreshTokenInput:
       type: object
       properties:
@@ -282,20 +303,6 @@ components:
       - refreshToken
       - accessTokenExpiresAt
       - refreshTokenExpiresAt
-    GetManagedUserOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ManagedUserOutput'
-      required:
-      - status
-      - data
     KeysResponseDto:
       type: object
       properties:
@@ -399,27 +406,22 @@ components:
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
-    CreateManagedUserData:
+    GetManagedUsersOutput:
       type: object
       properties:
-        accessToken:
+        status:
           type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-        refreshToken:
-          type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-        user:
-          $ref: '#/components/schemas/ManagedUserOutput'
-        accessTokenExpiresAt:
-          type: number
-        refreshTokenExpiresAt:
-          type: number
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedUserOutput'
       required:
-      - accessToken
-      - refreshToken
-      - user
-      - accessTokenExpiresAt
-      - refreshTokenExpiresAt
+      - status
+      - data
     ManagedUserOutput:
       type: object
       properties:
@@ -547,22 +549,6 @@ components:
       required:
       - status
       - data
-    GetManagedUsersOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagedUserOutput'
-      required:
-      - status
-      - data
     CreateManagedUserInput:
       type: object
       properties:
@@ -658,3 +644,17 @@ components:
       required:
       - email
       - name
+    GetManagedUserOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/ManagedUserOutput'
+      required:
+      - status
+      - data

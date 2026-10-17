@@ -75,6 +75,21 @@ paths:
       - Selected Calendars
 components:
   schemas:
+    SelectedCalendarsInputDto:
+      type: object
+      properties:
+        integration:
+          type: string
+        externalId:
+          type: string
+        credentialId:
+          type: number
+        delegationCredentialId:
+          type: string
+      required:
+      - integration
+      - externalId
+      - credentialId
     SelectedCalendarOutputResponseDto:
       type: object
       properties:
@@ -104,21 +119,6 @@ components:
           - 'null'
       required:
       - userId
-      - integration
-      - externalId
-      - credentialId
-    SelectedCalendarsInputDto:
-      type: object
-      properties:
-        integration:
-          type: string
-        externalId:
-          type: string
-        credentialId:
-          type: number
-        delegationCredentialId:
-          type: string
-      required:
       - integration
       - externalId
       - credentialId
