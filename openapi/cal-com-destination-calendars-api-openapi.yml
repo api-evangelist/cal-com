@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Destination Calendars API
+  title: Cal.com API v2 Destination Calendars API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,12 +10,12 @@ tags:
 paths:
   /v2/destination-calendars:
     put:
+      description: If accessed using an OAuth access token, the `APPS_WRITE` scope is required.
       operationId: DestinationCalendarsController_updateDestinationCalendars
-      summary: Update destination calendars
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -32,8 +32,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DestinationCalendarsOutputResponseDto'
+      summary: Update destination calendars
       tags:
       - Destination Calendars
+      x-oauth-scopes:
+      - APPS_WRITE
 components:
   schemas:
     DestinationCalendarsOutputDto:
@@ -58,11 +61,11 @@ components:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           $ref: '#/components/schemas/DestinationCalendarsOutputDto'
       required:
@@ -72,13 +75,13 @@ components:
       type: object
       properties:
         integration:
-          type: string
-          example: apple_calendar
-          description: The calendar service you want to integrate, as returned by the /calendars endpoint
           enum:
           - apple_calendar
           - google_calendar
           - office365_calendar
+          type: string
+          example: apple_calendar
+          description: The calendar service you want to integrate, as returned by the /calendars endpoint
         externalId:
           type: string
           example: https://caldav.icloud.com/26962146906/calendars/1644422A-1945-4438-BBC0-4F0Q23A57R7S/

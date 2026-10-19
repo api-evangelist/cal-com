@@ -1,0 +1,329 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Secondary Domains API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Secondary Domains
+paths:
+  /v2/organizations/{orgId}/secondary-domains:
+    get:
+      description: 'For platform, the plan must be ''ESSENTIALS'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsSecondaryDomainsController_getSecondaryDomains
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSecondaryDomainsResponseOutput'
+      summary: Get all secondary domains of an organization
+      tags:
+      - Orgs / Secondary Domains
+      x-platform-plan: ESSENTIALS
+    post:
+      description: 'Adds an unverified secondary domain. Publish the returned `verificationRecord` as a DNS TXT record and call the verify endpoint. Once verified, members with this email domain join the organization with usernames suffixed by `usernameSuffix` (e.g. john@acme.fr becomes john-fr). For platform, the plan must be ''ESSENTIALS'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsSecondaryDomainsController_createSecondaryDomain
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationSecondaryDomainInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSecondaryDomainResponseOutput'
+      summary: Add a secondary domain to an organization
+      tags:
+      - Orgs / Secondary Domains
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/secondary-domains/{domainId}:
+    get:
+      description: 'For platform, the plan must be ''ESSENTIALS'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsSecondaryDomainsController_getSecondaryDomain
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: domainId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSecondaryDomainResponseOutput'
+      summary: Get a secondary domain of an organization
+      tags:
+      - Orgs / Secondary Domains
+      x-platform-plan: ESSENTIALS
+    delete:
+      description: 'For platform, the plan must be ''ESSENTIALS'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsSecondaryDomainsController_deleteSecondaryDomain
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: domainId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSecondaryDomainResponseOutput'
+      summary: Remove a secondary domain from an organization
+      tags:
+      - Orgs / Secondary Domains
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/secondary-domains/{domainId}/verify:
+    post:
+      description: 'Checks the DNS TXT record returned in `verificationRecord` and marks the domain as verified. For platform, the plan must be ''ESSENTIALS'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsSecondaryDomainsController_verifySecondaryDomain
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: domainId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSecondaryDomainResponseOutput'
+      summary: Verify a secondary domain of an organization
+      tags:
+      - Orgs / Secondary Domains
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    OrganizationSecondaryDomainOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        domain:
+          type: string
+          example: acme.fr
+        usernameSuffix:
+          type: string
+          example: fr
+          description: Usernames of members with this email domain end with -<usernameSuffix>
+        verified:
+          type: boolean
+          example: false
+        verifiedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+          example: null
+        createdAt:
+          format: date-time
+          type: string
+          example: '2026-10-02T09:00:00.000Z'
+        verificationRecord:
+          description: DNS record that must be published to verify ownership of the domain
+          allOf:
+          - $ref: '#/components/schemas/SecondaryDomainVerificationRecordOutput'
+      required:
+      - id
+      - domain
+      - usernameSuffix
+      - verified
+      - verifiedAt
+      - createdAt
+      - verificationRecord
+    OrganizationSecondaryDomainsResponseOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationSecondaryDomainOutput'
+      required:
+      - status
+      - data
+    OrganizationSecondaryDomainResponseOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/OrganizationSecondaryDomainOutput'
+      required:
+      - status
+      - data
+    CreateOrganizationSecondaryDomainInput:
+      type: object
+      properties:
+        domain:
+          type: string
+          minLength: 1
+          maxLength: 253
+          example: acme.fr
+          description: Domain to add as a secondary verified domain
+        usernameSuffix:
+          type: string
+          minLength: 1
+          maxLength: 63
+          example: fr
+          description: Suffix appended to usernames of members with this email domain, e.g. john@acme.fr becomes john-fr. Defaults to the domain ending.
+      required:
+      - domain
+    SecondaryDomainVerificationRecordOutput:
+      type: object
+      properties:
+        type:
+          type: string
+          example: TXT
+          enum:
+          - TXT
+        name:
+          type: string
+          example: _cal-verification.acme.fr
+        value:
+          type: string
+          example: cal-verification=3f1c0d7e9a2b4c6d8e0f1a2b3c4d5e6f
+      required:
+      - type
+      - name
+      - value

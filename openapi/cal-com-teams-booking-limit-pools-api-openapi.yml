@@ -1,0 +1,703 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Teams / Booking limit pools API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Teams / Booking limit pools
+paths:
+  /v2/teams/{teamId}/booking-limit-pools:
+    get:
+      description: Returns the team's booking limit pools and its round-robin event types that can be in one. Requires an accepted membership of the team. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_READ` scope is required.
+      operationId: TeamsBookingLimitPoolsController_list
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingLimitPoolsOutput'
+      summary: List booking limit pools
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_READ
+    post:
+      description: Caps how many bookings each rotating host takes across the pool's round-robin event types. Set at least one interval. Requires permission to update the team's event types. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_create
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookingLimitPoolInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingLimitPoolResponseOutput'
+      summary: Create a booking limit pool
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+  /v2/teams/{teamId}/booking-limit-pools/{poolId}:
+    patch:
+      description: Changes only the fields sent. An interval sent as null is removed. Changing the mode or event types keeps every host's own limit. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_update
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: poolId
+        required: true
+        in: path
+        description: Pool UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookingLimitPoolInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingLimitPoolResponseOutput'
+      summary: Update a booking limit pool
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+    delete:
+      description: Deletes the pool and the hosts' own limits for it. Its event types go back to their own per-host settings. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_delete
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: poolId
+        required: true
+        in: path
+        description: Pool UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '204':
+          description: ''
+      summary: Delete a booking limit pool
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+  /v2/teams/{teamId}/booking-limit-pools/{poolId}/hosts:
+    get:
+      description: Returns the rotating hosts of the pool's event types in user id order, each with their own limit and the limit enforced for them. Requires permission to update the team's event types, since a host's limit can reveal their overall booking limit. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_listHosts
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: poolId
+        required: true
+        in: path
+        description: Pool UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: cursor
+        required: false
+        in: query
+        description: The `nextCursor` of the previous page.
+        schema:
+          format: uuid
+          example: 0bce7b70-d7f0-4e5f-bcce-2f41b6fd5116
+          type: string
+      - name: take
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          maximum: 100
+          default: 50
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingLimitPoolHostsOutput'
+      summary: List a pool's hosts and their limits
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+  /v2/teams/{teamId}/booking-limit-pools/{poolId}/hosts/{userId}:
+    patch:
+      description: Sets the host's own limit for the intervals sent; null returns that interval to the pool's limit. Only intervals the pool limits can be set, and each is capped at the host's overall booking limit. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_updateHost
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: poolId
+        required: true
+        in: path
+        description: Pool UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: userId
+        required: true
+        in: path
+        description: User UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookingLimitPoolHostInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingLimitPoolHostResponseOutput'
+      summary: Set a host's limit for a pool
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+    put:
+      description: Replaces the host's own limit with the intervals sent; an omitted interval returns to the pool's limit, so sending the same body again changes nothing. Only intervals the pool limits can be set, and each is capped at the host's overall booking limit. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_setHost
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: poolId
+        required: true
+        in: path
+        description: Pool UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: userId
+        required: true
+        in: path
+        description: User UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetBookingLimitPoolHostInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingLimitPoolHostResponseOutput'
+      summary: Replace a host's limit for a pool
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+    delete:
+      description: Returns the host to the pool's limits. If accessed using an OAuth access token, the `TEAM_EVENT_TYPE_WRITE` scope is required.
+      operationId: TeamsBookingLimitPoolsController_clearHost
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: poolId
+        required: true
+        in: path
+        description: Pool UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: userId
+        required: true
+        in: path
+        description: User UUID; short UUID form is accepted too.
+        schema:
+          format: uuid
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '204':
+          description: ''
+      summary: Clear a host's limit for a pool
+      tags:
+      - Teams / Booking limit pools
+      x-oauth-scopes:
+      - TEAM_EVENT_TYPE_WRITE
+components:
+  schemas:
+    BookingLimitPoolEventTypeOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+      required:
+      - id
+      - title
+    SetBookingLimitPoolHostInput:
+      type: object
+      properties:
+        hostLimit:
+          description: The host's complete limit; an omitted or null interval uses the pool's limit, and an empty object clears the host's own limit.
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitsPatchInput'
+      required:
+      - hostLimit
+    CreateBookingLimitPoolInput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          example: 2
+        perWeek:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          example: 5
+        perMonth:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        perYear:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        name:
+          type: string
+          minLength: 1
+          example: Engineering interviews
+        mode:
+          enum:
+          - SHARED
+          - PER_EVENT
+          type: string
+          description: 'SHARED: each host has one allowance across every event in the pool. PER_EVENT: the same allowance applies to each event separately.'
+        eventTypeIds:
+          uniqueItems: true
+          minItems: 1
+          maxItems: 100
+          example:
+          - 0bce7b70-d7f0-4e5f-bcce-2f41b6fd5116
+          - 15314c7c-11a0-440d-9ae9-23593c193a2b
+          description: Round-robin event types of the team. Each event type can be in one pool.
+          type: array
+          items:
+            type: string
+            format: uuid
+      required:
+      - name
+      - mode
+      - eventTypeIds
+    BookingLimitPoolHostOutput:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        hostLimit:
+          description: The host's own limits; null while every interval uses the pool's limits.
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitsOutput'
+        effectiveLimit:
+          description: The limits enforced for this host.
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitsOutput'
+      required:
+      - userId
+      - hostLimit
+      - effectiveLimit
+    BookingLimitPoolsData:
+      type: object
+      properties:
+        pools:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingLimitPoolOutput'
+        eventTypes:
+          description: The team's round-robin event types that can be in a pool.
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingLimitPoolCandidateOutput'
+      required:
+      - pools
+      - eventTypes
+    BookingLimitPoolOutput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - number
+          - 'null'
+          example: 4
+        perWeek:
+          type:
+          - number
+          - 'null'
+          example: 20
+        perMonth:
+          type:
+          - number
+          - 'null'
+          example: 60
+        perYear:
+          type:
+          - number
+          - 'null'
+          example: 500
+        id:
+          type: string
+          format: uuid
+        teamId:
+          type: number
+        name:
+          type: string
+        mode:
+          enum:
+          - SHARED
+          - PER_EVENT
+          type: string
+        archived:
+          type: boolean
+          readOnly: true
+          description: An archived pool is skipped by enforcement until it is restored.
+        eventTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingLimitPoolEventTypeOutput'
+      required:
+      - perDay
+      - perWeek
+      - perMonth
+      - perYear
+      - id
+      - teamId
+      - name
+      - mode
+      - archived
+      - eventTypes
+    BookingLimitPoolHostsData:
+      type: object
+      properties:
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingLimitPoolHostOutput'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Pass as `cursor` to fetch the next page; null on the last page.
+      required:
+      - hosts
+      - nextCursor
+    BookingLimitPoolHostsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        data:
+          $ref: '#/components/schemas/BookingLimitPoolHostsData'
+      required:
+      - status
+      - data
+    UpdateBookingLimitPoolHostInput:
+      type: object
+      properties:
+        hostLimit:
+          description: The intervals to change; an omitted interval is left alone and null returns it to the pool's limit.
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitsPatchInput'
+      required:
+      - hostLimit
+    BookingLimitPoolsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        data:
+          $ref: '#/components/schemas/BookingLimitPoolsData'
+      required:
+      - status
+      - data
+    BookingLimitPoolCandidateOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        poolId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: The pool this event type is in, if any.
+      required:
+      - id
+      - title
+      - poolId
+    BookingLimitsPatchInput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          example: 2
+        perWeek:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          example: 5
+        perMonth:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        perYear:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+    BookingLimitPoolResponseOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        data:
+          $ref: '#/components/schemas/BookingLimitPoolOutput'
+      required:
+      - status
+      - data
+    UpdateBookingLimitPoolInput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          example: 2
+        perWeek:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          example: 5
+        perMonth:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        perYear:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        name:
+          type: string
+          minLength: 1
+          example: Engineering interviews
+        mode:
+          enum:
+          - SHARED
+          - PER_EVENT
+          type: string
+          description: Changing the mode keeps every host's own limit.
+        eventTypeIds:
+          uniqueItems: true
+          minItems: 1
+          maxItems: 100
+          example:
+          - 0bce7b70-d7f0-4e5f-bcce-2f41b6fd5116
+          - 15314c7c-11a0-440d-9ae9-23593c193a2b
+          description: Replaces the pool's event types.
+          type: array
+          items:
+            type: string
+            format: uuid
+    BookingLimitPoolHostResponseOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+        data:
+          $ref: '#/components/schemas/BookingLimitPoolHostOutput'
+      required:
+      - status
+      - data
+    BookingLimitsOutput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - number
+          - 'null'
+          example: 4
+        perWeek:
+          type:
+          - number
+          - 'null'
+          example: 20
+        perMonth:
+          type:
+          - number
+          - 'null'
+          example: 60
+        perYear:
+          type:
+          - number
+          - 'null'
+          example: 500
+      required:
+      - perDay
+      - perWeek
+      - perMonth
+      - perYear

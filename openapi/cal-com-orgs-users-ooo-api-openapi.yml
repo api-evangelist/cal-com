@@ -1,0 +1,486 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Users / OOO API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Users / OOO
+paths:
+  /v2/organizations/{orgId}/users/{userId}/ooo:
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `ooo.readOrgOoo`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `ORG_SCHEDULE_READ` scope is required.'
+      operationId: OrganizationsUsersOOOController_getOrganizationUserOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: sortStart
+        required: false
+        in: query
+        description: Sort results by their start time in ascending or descending order.
+        schema:
+          example: ?sortStart=asc OR ?sortStart=desc
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: sortEnd
+        required: false
+        in: query
+        description: Sort results by their end time in ascending or descending order.
+        schema:
+          example: ?sortEnd=asc OR ?sortEnd=desc
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOoosOutputResponseDto'
+      summary: Get all out-of-office entries for a user
+      tags:
+      - Orgs / Users / OOO
+      x-oauth-scopes:
+      - ORG_SCHEDULE_READ
+      x-platform-plan: ESSENTIALS
+    post:
+      description: If accessed using an OAuth access token, the `ORG_SCHEDULE_WRITE` scope is required.
+      operationId: OrganizationsUsersOOOController_createOrganizationUserOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOutOfOfficeEntryDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOooOutputResponseDto'
+      summary: Create an out-of-office entry for a user
+      tags:
+      - Orgs / Users / OOO
+      x-oauth-scopes:
+      - ORG_SCHEDULE_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/users/{userId}/ooo/{oooId}:
+    patch:
+      description: If accessed using an OAuth access token, the `ORG_SCHEDULE_WRITE` scope is required.
+      operationId: OrganizationsUsersOOOController_updateOrganizationUserOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: oooId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOutOfOfficeEntryDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOooOutputResponseDto'
+      summary: Update an out-of-office entry for a user
+      tags:
+      - Orgs / Users / OOO
+      x-oauth-scopes:
+      - ORG_SCHEDULE_WRITE
+      x-platform-plan: ESSENTIALS
+    delete:
+      description: If accessed using an OAuth access token, the `ORG_SCHEDULE_WRITE` scope is required.
+      operationId: OrganizationsUsersOOOController_deleteOrganizationUserOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: oooId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOooOutputResponseDto'
+      summary: Delete an out-of-office entry for a user
+      tags:
+      - Orgs / Users / OOO
+      x-oauth-scopes:
+      - ORG_SCHEDULE_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/ooo:
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `ooo.readOrgOoo`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `ORG_SCHEDULE_READ` scope is required.'
+      operationId: OrganizationsUsersOOOController_getOrganizationUsersOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: sortStart
+        required: false
+        in: query
+        description: Sort results by their start time in ascending or descending order.
+        schema:
+          example: ?sortStart=asc OR ?sortStart=desc
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: sortEnd
+        required: false
+        in: query
+        description: Sort results by their end time in ascending or descending order.
+        schema:
+          example: ?sortEnd=asc OR ?sortEnd=desc
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: email
+        required: false
+        in: query
+        description: Filter ooo entries by the user email address. user must be within your organization.
+        schema:
+          example: example@domain.com
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOoosOutputResponseDto'
+      summary: Get all out-of-office entries for organization users
+      tags:
+      - Orgs / Users / OOO
+      x-oauth-scopes:
+      - ORG_SCHEDULE_READ
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    UserOoosOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOooOutputDto'
+      required:
+      - status
+      - data
+    UserOooOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/UserOooOutputDto'
+      required:
+      - status
+      - data
+    CreateOutOfOfficeEntryDto:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+          description: The start date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-01T00:00:00.000Z'
+        end:
+          format: date-time
+          type: string
+          description: The end date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-10T23:59:59.999Z'
+        notes:
+          type: string
+          description: Optional notes for the out of office entry.
+          example: Vacation in Hawaii
+        toUserId:
+          type: number
+          description: The ID of the user covering for the out of office period, if applicable.
+          example: 2
+        reason:
+          enum:
+          - unspecified
+          - vacation
+          - travel
+          - sick
+          - public_holiday
+          type: string
+          description: the reason for the out of office entry, if applicable
+          example: vacation
+      required:
+      - start
+      - end
+    UserOooOutputDto:
+      type: object
+      properties:
+        userId:
+          type: number
+          description: The ID of the user.
+          example: 2
+        toUserId:
+          type: number
+          description: The ID of the user covering for the out of office period, if applicable.
+          example: 2
+        id:
+          type: number
+          description: The ID of the ooo entry.
+          example: 2
+        uuid:
+          type: string
+          description: The UUID of the ooo entry.
+          example: e84be5a3-4696-49e3-acc7-b2f3999c3b94
+        start:
+          format: date-time
+          type: string
+          description: The start date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-01T00:00:00.000Z'
+        end:
+          format: date-time
+          type: string
+          description: The end date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-10T23:59:59.999Z'
+        notes:
+          type: string
+          description: Optional notes for the out of office entry.
+          example: Vacation in Hawaii
+        reason:
+          enum:
+          - unspecified
+          - vacation
+          - travel
+          - sick
+          - public_holiday
+          type: string
+          description: the reason for the out of office entry, if applicable
+          example: vacation
+      required:
+      - userId
+      - id
+      - uuid
+      - start
+      - end
+    UpdateOutOfOfficeEntryDto:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+          description: The start date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-01T00:00:00.000Z'
+        end:
+          format: date-time
+          type: string
+          description: The end date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-10T23:59:59.999Z'
+        notes:
+          type: string
+          description: Optional notes for the out of office entry.
+          example: Vacation in Hawaii
+        toUserId:
+          type: number
+          description: The ID of the user covering for the out of office period, if applicable.
+          example: 2
+        reason:
+          enum:
+          - unspecified
+          - vacation
+          - travel
+          - sick
+          - public_holiday
+          type: string
+          description: the reason for the out of office entry, if applicable
+          example: vacation

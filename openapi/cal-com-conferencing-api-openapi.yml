@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Conferencing API
+  title: Cal.com API v2 Conferencing API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,8 +10,8 @@ tags:
 paths:
   /v2/conferencing/{app}/connect:
     post:
+      description: 'Only `google-meet` can be connected this way, and only for a user who already has a valid Google Calendar connection. Zoom and Microsoft Teams require an OAuth handshake - start it with `GET /v2/conferencing/{app}/oauth/auth-url` instead. Walkthrough: https://cal.com/docs/api-reference/v2/conferencing-apps. If accessed using an OAuth access token, the `APPS_WRITE` scope is required.'
       operationId: ConferencingController_connect
-      summary: Connect your conferencing application
       parameters:
       - name: app
         required: true
@@ -23,7 +23,7 @@ paths:
           type: string
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -34,17 +34,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConferencingAppOutputResponseDto'
+      summary: Connect your conferencing application
       tags:
       - Conferencing
+      x-oauth-scopes:
+      - APPS_WRITE
   /v2/conferencing/{app}/oauth/auth-url:
     get:
+      description: 'Returns the URL to send the user to so they can authorize Zoom or Microsoft Teams. Redirect the user''s browser to it - the provider then returns them to a callback already registered by Cal.com, which stores the credential against the owner of the access token that started the flow. `returnTo` and `onErrorReturnTo` must each be a relative path or an absolute http(s) URL. The returned URL expires 10 minutes after this call, so redirect immediately rather than caching it. Walkthrough: https://cal.com/docs/api-reference/v2/conferencing-apps. If accessed using an OAuth access token, the `APPS_WRITE` scope is required.'
       operationId: ConferencingController_redirect
-      summary: Get OAuth conferencing app auth URL
       parameters:
       - name: Authorization
         required: true
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         schema:
           type: string
       - name: app
@@ -73,12 +76,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetConferencingAppsOauthUrlResponseDto'
+      summary: Get OAuth conferencing app auth URL
       tags:
       - Conferencing
+      x-oauth-scopes:
+      - APPS_WRITE
   /v2/conferencing/{app}/oauth/callback:
     get:
       operationId: ConferencingController_save
-      summary: Conferencing app OAuth callback
       parameters:
       - name: state
         required: true
@@ -102,16 +107,18 @@ paths:
       responses:
         '200':
           description: ''
+      summary: Conferencing app OAuth callback
       tags:
       - Conferencing
+      x-oauth-scopes: []
   /v2/conferencing:
     get:
+      description: If accessed using an OAuth access token, the `APPS_READ` scope is required.
       operationId: ConferencingController_listInstalledConferencingApps
-      summary: List your conferencing applications
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -122,12 +129,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ConferencingAppsOutputResponseDto'
+      summary: List your conferencing applications
       tags:
       - Conferencing
+      x-mcp:
+        name: get_conferencing_apps
+        guidance: List all conferencing applications connected to the authenticated user's account (e.g. Zoom, Google Meet, Cal Video).
+      x-oauth-scopes:
+      - APPS_READ
   /v2/conferencing/{app}/default:
     post:
+      description: If accessed using an OAuth access token, the `APPS_WRITE` scope is required.
       operationId: ConferencingController_default
-      summary: Set your default conferencing application
       parameters:
       - name: app
         required: true
@@ -142,7 +155,7 @@ paths:
           type: string
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -153,16 +166,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetDefaultConferencingAppOutputResponseDto'
+      summary: Set your default conferencing application
       tags:
       - Conferencing
+      x-oauth-scopes:
+      - APPS_WRITE
   /v2/conferencing/default:
     get:
+      description: If accessed using an OAuth access token, the `APPS_READ` scope is required.
       operationId: ConferencingController_getDefault
-      summary: Get your default conferencing application
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -173,12 +189,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDefaultConferencingAppOutputResponseDto'
+      summary: Get your default conferencing application
       tags:
       - Conferencing
+      x-oauth-scopes:
+      - APPS_READ
   /v2/conferencing/{app}/disconnect:
     delete:
+      description: If accessed using an OAuth access token, the `APPS_WRITE` scope is required.
       operationId: ConferencingController_disconnect
-      summary: Disconnect your conferencing application
       parameters:
       - name: app
         required: true
@@ -192,7 +211,7 @@ paths:
           type: string
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -203,34 +222,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DisconnectConferencingAppOutputResponseDto'
+      summary: Disconnect your conferencing application
       tags:
       - Conferencing
+      x-oauth-scopes:
+      - APPS_WRITE
 components:
   schemas:
-    ConferencingAppOutputResponseDto:
+    SetDefaultConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
-          type: string
           enum:
           - success
           - error
-        data:
-          $ref: '#/components/schemas/ConferencingAppsOutputDto'
-      required:
-      - status
-      - data
-    GetDefaultConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
           type: string
           example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
       required:
       - status
     GetConferencingAppsOauthUrlResponseDto:
@@ -244,29 +251,16 @@ components:
           - error
       required:
       - status
-    DisconnectConferencingAppOutputResponseDto:
+    ConferencingAppOutputResponseDto:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
-      required:
-      - status
-    ConferencingAppsOutputResponseDto:
-      type: object
-      properties:
-        status:
           type: string
-          enum:
-          - success
-          - error
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+          $ref: '#/components/schemas/ConferencingAppsOutputDto'
       required:
       - status
       - data
@@ -277,6 +271,45 @@ components:
           type: string
         appLink:
           type: string
+    ConferencingAppsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
+    GetDefaultConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
+      required:
+      - status
+    DisconnectConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+      required:
+      - status
     ConferencingAppsOutputDto:
       type: object
       properties:
@@ -300,14 +333,3 @@ components:
       - id
       - type
       - userId
-    SetDefaultConferencingAppOutputResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: 'Cal.diy API v2 Deprecated: Platform OAuth Clients API'
+  title: 'Cal.com API v2 Deprecated: Platform OAuth Clients API'
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,9 +10,8 @@ tags:
 paths:
   /v2/oauth-clients:
     post:
-      operationId: OAuthClientsController_createOAuthClient
-      summary: Create an OAuth client
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientsController_createOAuthClient
       parameters:
       - name: Authorization
         in: header
@@ -33,12 +32,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateOAuthClientResponseDto'
+      summary: Create an OAuth client
       tags:
       - 'Deprecated: Platform OAuth Clients'
     get:
-      operationId: OAuthClientsController_getOAuthClients
-      summary: Get all OAuth clients
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientsController_getOAuthClients
       parameters:
       - name: Authorization
         in: header
@@ -53,13 +52,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOAuthClientsResponseDto'
+      summary: Get all OAuth clients
       tags:
       - 'Deprecated: Platform OAuth Clients'
   /v2/oauth-clients/{clientId}:
     get:
-      operationId: OAuthClientsController_getOAuthClientById
-      summary: Get an OAuth client
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientsController_getOAuthClientById
       parameters:
       - name: Authorization
         in: header
@@ -79,12 +78,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOAuthClientResponseDto'
+      summary: Get an OAuth client
       tags:
       - 'Deprecated: Platform OAuth Clients'
     patch:
-      operationId: OAuthClientsController_updateOAuthClient
-      summary: Update an OAuth client
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientsController_updateOAuthClient
       parameters:
       - name: Authorization
         in: header
@@ -110,12 +109,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOAuthClientResponseDto'
+      summary: Update an OAuth client
       tags:
       - 'Deprecated: Platform OAuth Clients'
     delete:
-      operationId: OAuthClientsController_deleteOAuthClient
-      summary: Delete an OAuth client
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientsController_deleteOAuthClient
       parameters:
       - name: Authorization
         in: header
@@ -135,53 +134,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOAuthClientResponseDto'
+      summary: Delete an OAuth client
       tags:
       - 'Deprecated: Platform OAuth Clients'
 components:
   schemas:
-    UpdateOAuthClientInput:
-      type: object
-      properties:
-        logo:
-          type: string
-        name:
-          type: string
-        redirectUris:
-          type: array
-          items:
-            type: string
-        bookingRedirectUri:
-          type: string
-        bookingCancelRedirectUri:
-          type: string
-        bookingRescheduleRedirectUri:
-          type: string
-        areEmailsEnabled:
-          type: boolean
-        areDefaultEventTypesEnabled:
-          type: boolean
-          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
-        areCalendarEventsEnabled:
-          type: boolean
-          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
-    CreateOAuthClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          - error
-          example: success
-        data:
-          example:
-            clientId: clsx38nbl0001vkhlwin9fmt0
-            clientSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
-          allOf:
-          - $ref: '#/components/schemas/CreateOAuthClientOutput'
-      required:
-      - status
-      - data
     PlatformOAuthClientDto:
       type: object
       properties:
@@ -196,7 +153,6 @@ components:
           example: secretValue
         permissions:
           type: array
-          description: Array of permission keys like ["BOOKING_READ", "BOOKING_WRITE"]
           items:
             type: string
             enum:
@@ -210,11 +166,14 @@ components:
             - APPS_WRITE
             - PROFILE_READ
             - PROFILE_WRITE
+          description: Array of permission keys like ["BOOKING_READ", "BOOKING_WRITE"]
           example:
           - BOOKING_READ
           - BOOKING_WRITE
         logo:
-          type: object
+          type:
+          - string
+          - 'null'
           example: https://example.com/logo.png
         redirectUris:
           example:
@@ -242,12 +201,15 @@ components:
           description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
         bookingRedirectUri:
           type: string
+          format: uri
           example: https://example.com/booking-redirect
         bookingCancelRedirectUri:
           type: string
+          format: uri
           example: https://example.com/booking-cancel
         bookingRescheduleRedirectUri:
           type: string
+          format: uri
           example: https://example.com/booking-reschedule
       required:
       - id
@@ -260,34 +222,31 @@ components:
       - areEmailsEnabled
       - areDefaultEventTypesEnabled
       - areCalendarEventsEnabled
-    CreateOAuthClientOutput:
+    UpdateOAuthClientInput:
       type: object
       properties:
-        clientId:
+        logo:
           type: string
-          example: clsx38nbl0001vkhlwin9fmt0
-        clientSecret:
+        name:
           type: string
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
-      required:
-      - clientId
-      - clientSecret
-    GetOAuthClientsResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
+        redirectUris:
           type: array
           items:
-            $ref: '#/components/schemas/PlatformOAuthClientDto'
-      required:
-      - status
-      - data
+            type: string
+        bookingRedirectUri:
+          type: string
+        bookingCancelRedirectUri:
+          type: string
+        bookingRescheduleRedirectUri:
+          type: string
+        areEmailsEnabled:
+          type: boolean
+        areDefaultEventTypesEnabled:
+          type: boolean
+          description: 'If true, when creating a managed user the managed user will have 4 default event types: 30 and 60 minutes without Cal video, 30 and 60 minutes with Cal video. Set this as false if you want to create a managed user and then manually create event types for the user.'
+        areCalendarEventsEnabled:
+          type: boolean
+          description: If true and if managed user has calendar connected, calendar events will be created. Disable it if you manually create calendar events. Default to true.
     CreateOAuthClientInput:
       type: object
       properties:
@@ -301,7 +260,6 @@ components:
             type: string
         permissions:
           type: array
-          description: Array of permission keys like ["BOOKING_READ", "BOOKING_WRITE"]. Use ["*"] to grant all permissions.
           items:
             type: string
             enum:
@@ -316,6 +274,7 @@ components:
             - PROFILE_READ
             - PROFILE_WRITE
             - '*'
+          description: Array of permission keys like ["BOOKING_READ", "BOOKING_WRITE"]. Use ["*"] to grant all permissions.
         bookingRedirectUri:
           type: string
         bookingCancelRedirectUri:
@@ -340,13 +299,59 @@ components:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           $ref: '#/components/schemas/PlatformOAuthClientDto'
+      required:
+      - status
+      - data
+    CreateOAuthClientOutput:
+      type: object
+      properties:
+        clientId:
+          type: string
+          example: clsx38nbl0001vkhlwin9fmt0
+        clientSecret:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
+      required:
+      - clientId
+      - clientSecret
+    CreateOAuthClientResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          example:
+            clientId: clsx38nbl0001vkhlwin9fmt0
+            clientSecret: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoib2F1dGgtY2xpZW50Iiwi
+          allOf:
+          - $ref: '#/components/schemas/CreateOAuthClientOutput'
+      required:
+      - status
+      - data
+    GetOAuthClientsResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformOAuthClientDto'
       required:
       - status
       - data

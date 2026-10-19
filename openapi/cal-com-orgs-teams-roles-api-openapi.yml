@@ -1,0 +1,630 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Roles API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Roles
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/roles:
+    post:
+      operationId: OrganizationsTeamsRolesController_createRole
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRoleInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTeamRoleOutput'
+      summary: Create a new organization team role
+      tags:
+      - Orgs / Teams / Roles
+      x-platform-plan: SCALE
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `role.readTeamRoles`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsTeamsRolesController_getAllRoles
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllTeamRolesOutput'
+      summary: Get all organization team roles
+      tags:
+      - Orgs / Teams / Roles
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/teams/{teamId}/roles/{roleId}:
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `role.readTeamRoles`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsTeamsRolesController_getRole
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRoleOutput'
+      summary: Get a specific organization team role
+      tags:
+      - Orgs / Teams / Roles
+      x-platform-plan: SCALE
+    patch:
+      operationId: OrganizationsTeamsRolesController_updateRole
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamRoleInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTeamRoleOutput'
+      summary: Update an organization team role
+      tags:
+      - Orgs / Teams / Roles
+      x-platform-plan: SCALE
+    delete:
+      operationId: OrganizationsTeamsRolesController_deleteRole
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTeamRoleOutput'
+      summary: Delete an organization team role
+      tags:
+      - Orgs / Teams / Roles
+      x-platform-plan: SCALE
+components:
+  schemas:
+    GetTeamRoleOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamRoleOutput'
+      required:
+      - status
+      - data
+    TeamRoleOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the role
+        name:
+          type: string
+          description: Name of the role
+        color:
+          type:
+          - string
+          - 'null'
+          description: Color for the role (hex code)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the role
+        teamId:
+          type:
+          - number
+          - 'null'
+          description: Team ID this role belongs to
+        type:
+          enum:
+          - SYSTEM
+          - CUSTOM
+          type: string
+          description: Type of role
+        permissions:
+          type: array
+          description: Permissions assigned to this role in 'resource.action' format.
+          example:
+          - booking.read
+          - eventType.create
+          items:
+            type: string
+            enum:
+            - role.create
+            - role.read
+            - role.readTeamRoles
+            - role.update
+            - role.delete
+            - eventType.create
+            - eventType.read
+            - eventType.readTeamEventTypes
+            - eventType.update
+            - eventType.delete
+            - calEvent.create
+            - calEvent.read
+            - calEvent.update
+            - calEvent.delete
+            - team.read
+            - team.readTeamSettings
+            - team.readConferencing
+            - team.readVerifiedResources
+            - team.readMemberships
+            - team.update
+            - team.delete
+            - team.invite
+            - team.remove
+            - team.listMembers
+            - team.listMembersPrivate
+            - team.changeMemberRole
+            - team.impersonate
+            - booking.read
+            - booking.readTeamBookings
+            - booking.readRecordings
+            - booking.update
+            - booking.updateTeamBookings
+            - booking.reassignTeamPastBookings
+            - booking.readTeamAuditLogs
+            - insights.read
+            - workflow.create
+            - workflow.read
+            - workflow.readTeamWorkflows
+            - workflow.update
+            - workflow.delete
+            - routingForm.create
+            - routingForm.read
+            - routingForm.readTeamRoutingForms
+            - routingForm.update
+            - routingForm.delete
+            - routingForm.readTeamAuditLogs
+            - routingForm.readResponsePii
+            - webhook.create
+            - webhook.read
+            - webhook.update
+            - webhook.delete
+            - availability.readTeamAvailability
+            - featureOptIn.read
+            - featureOptIn.update
+            - tag.create
+            - tag.update
+            - tag.delete
+        createdAt:
+          type: string
+          description: When the role was created
+        updatedAt:
+          type: string
+          description: When the role was last updated
+      required:
+      - id
+      - name
+      - type
+      - permissions
+      - createdAt
+      - updatedAt
+    GetAllTeamRolesOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoleOutput'
+      required:
+      - status
+      - data
+    DeleteTeamRoleOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamRoleOutput'
+      required:
+      - status
+      - data
+    UpdateTeamRoleInput:
+      type: object
+      properties:
+        color:
+          type: string
+          description: Color for the role (hex code)
+        description:
+          type: string
+          description: Description of the role
+        permissions:
+          type: array
+          items:
+            type: string
+            enum:
+            - role.create
+            - role.read
+            - role.readTeamRoles
+            - role.update
+            - role.delete
+            - eventType.create
+            - eventType.read
+            - eventType.readTeamEventTypes
+            - eventType.update
+            - eventType.delete
+            - calEvent.create
+            - calEvent.read
+            - calEvent.update
+            - calEvent.delete
+            - team.read
+            - team.readTeamSettings
+            - team.readConferencing
+            - team.readVerifiedResources
+            - team.readMemberships
+            - team.update
+            - team.delete
+            - team.invite
+            - team.remove
+            - team.listMembers
+            - team.listMembersPrivate
+            - team.changeMemberRole
+            - team.impersonate
+            - booking.read
+            - booking.readTeamBookings
+            - booking.readRecordings
+            - booking.update
+            - booking.updateTeamBookings
+            - booking.reassignTeamPastBookings
+            - booking.readTeamAuditLogs
+            - insights.read
+            - workflow.create
+            - workflow.read
+            - workflow.readTeamWorkflows
+            - workflow.update
+            - workflow.delete
+            - routingForm.create
+            - routingForm.read
+            - routingForm.readTeamRoutingForms
+            - routingForm.update
+            - routingForm.delete
+            - routingForm.readTeamAuditLogs
+            - routingForm.readResponsePii
+            - webhook.create
+            - webhook.read
+            - webhook.update
+            - webhook.delete
+            - availability.readTeamAvailability
+            - featureOptIn.read
+            - featureOptIn.update
+            - tag.create
+            - tag.update
+            - tag.delete
+          description: 'Permissions for this role (format: resource.action). On update, this field replaces the entire permission set for the role (full replace). Use granular permission endpoints for one-by-one changes.'
+          example:
+          - eventType.read
+          - eventType.create
+          - booking.read
+        name:
+          type: string
+          minLength: 1
+          description: Name of the role
+    UpdateTeamRoleOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamRoleOutput'
+      required:
+      - status
+      - data
+    CreateTeamRoleInput:
+      type: object
+      properties:
+        color:
+          type: string
+          description: Color for the role (hex code)
+        description:
+          type: string
+          description: Description of the role
+        permissions:
+          type: array
+          items:
+            type: string
+            enum:
+            - role.create
+            - role.read
+            - role.readTeamRoles
+            - role.update
+            - role.delete
+            - eventType.create
+            - eventType.read
+            - eventType.readTeamEventTypes
+            - eventType.update
+            - eventType.delete
+            - calEvent.create
+            - calEvent.read
+            - calEvent.update
+            - calEvent.delete
+            - team.read
+            - team.readTeamSettings
+            - team.readConferencing
+            - team.readVerifiedResources
+            - team.readMemberships
+            - team.update
+            - team.delete
+            - team.invite
+            - team.remove
+            - team.listMembers
+            - team.listMembersPrivate
+            - team.changeMemberRole
+            - team.impersonate
+            - booking.read
+            - booking.readTeamBookings
+            - booking.readRecordings
+            - booking.update
+            - booking.updateTeamBookings
+            - booking.reassignTeamPastBookings
+            - booking.readTeamAuditLogs
+            - insights.read
+            - workflow.create
+            - workflow.read
+            - workflow.readTeamWorkflows
+            - workflow.update
+            - workflow.delete
+            - routingForm.create
+            - routingForm.read
+            - routingForm.readTeamRoutingForms
+            - routingForm.update
+            - routingForm.delete
+            - routingForm.readTeamAuditLogs
+            - routingForm.readResponsePii
+            - webhook.create
+            - webhook.read
+            - webhook.update
+            - webhook.delete
+            - availability.readTeamAvailability
+            - featureOptIn.read
+            - featureOptIn.update
+            - tag.create
+            - tag.update
+            - tag.delete
+          description: 'Permissions for this role (format: resource.action). On update, this field replaces the entire permission set for the role (full replace). Use granular permission endpoints for one-by-one changes.'
+          example:
+          - eventType.read
+          - eventType.create
+          - booking.read
+        name:
+          type: string
+          minLength: 1
+          description: Name of the role
+      required:
+      - name
+    CreateTeamRoleOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamRoleOutput'
+      required:
+      - status
+      - data

@@ -1,0 +1,514 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Notifications API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Notifications
+paths:
+  /v2/notifications/subscriptions/app-push:
+    post:
+      operationId: NotificationsSubscriptionsController_register
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterAppPushSubscriptionInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppPushSubscriptionResponseDto'
+      summary: Register an app push subscription
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+    delete:
+      operationId: NotificationsSubscriptionsController_remove
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveAppPushSubscriptionInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveAppPushSubscriptionResponseDto'
+      summary: Remove an app push subscription
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/subscriptions/slack/link-intents:
+    post:
+      operationId: NotificationsChatSubscriptionsController_createSlackLinkIntent
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatPushLinkIntentResponseDto'
+      summary: Create a Slack push linking intent
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/subscriptions/telegram/link-intents:
+    post:
+      operationId: NotificationsChatSubscriptionsController_createTelegramLinkIntent
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatPushLinkIntentResponseDto'
+      summary: Create a Telegram push linking intent
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/subscriptions/imessage/link-intents:
+    post:
+      operationId: NotificationsChatSubscriptionsController_createImessageLinkIntent
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatPushLinkIntentResponseDto'
+      summary: Create an iMessage push linking intent
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/subscriptions/slack:
+    delete:
+      operationId: NotificationsChatSubscriptionsController_removeSlack
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveSlackSubscriptionInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveSlackSubscriptionResponseDto'
+      summary: Remove a Slack push subscription
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/subscriptions/telegram:
+    delete:
+      operationId: NotificationsChatSubscriptionsController_removeTelegram
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveChatSubscriptionInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveTelegramSubscriptionResponseDto'
+      summary: Remove a Telegram push subscription
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/subscriptions/imessage:
+    delete:
+      operationId: NotificationsChatSubscriptionsController_removeImessage
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveChatSubscriptionInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveImessageSubscriptionResponseDto'
+      summary: Remove an iMessage push subscription
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/notifications/agent-channels:
+    get:
+      operationId: NotificationsAgentChannelsController_getAgentChannels
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChannelsResponseDto'
+      summary: Get the agent notification channel selection
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_READ
+  /v2/notifications/agent-channels/{channel}:
+    patch:
+      operationId: NotificationsAgentChannelsController_updateAgentChannel
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: channel
+        required: true
+        in: path
+        schema:
+          enum:
+          - slack
+          - telegram
+          - imessage
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAgentChannelInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentChannelsResponseDto'
+      summary: Enable or disable an agent notification channel
+      tags:
+      - Notifications
+      x-oauth-scopes:
+      - PROFILE_WRITE
+components:
+  schemas:
+    RemoveSlackSubscriptionResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        message:
+          type: string
+          example: Slack subscription removed successfully
+      required:
+      - status
+      - message
+    AgentChannelsResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/AgentChannelsOutputDto'
+      required:
+      - status
+      - data
+    RemoveAppPushSubscriptionResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        message:
+          type: string
+          example: App push subscription removed successfully
+      required:
+      - status
+      - message
+    RemoveImessageSubscriptionResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        message:
+          type: string
+          example: iMessage subscription removed successfully
+      required:
+      - status
+      - message
+    AppPushSubscriptionOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+        userId:
+          type: number
+        type:
+          type: string
+        platform:
+          type: string
+        identifier:
+          type: string
+        deviceId:
+          type:
+          - string
+          - 'null'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - userId
+      - type
+      - platform
+      - identifier
+      - deviceId
+      - createdAt
+      - updatedAt
+    RemoveChatSubscriptionInput:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: Chat platform identifier to remove
+          example: U0123456789
+        subscriptionId:
+          type: number
+          minimum: 1
+          description: Delete only this subscription ID; requires subscriptionVersion
+        subscriptionVersion:
+          type: string
+          description: Delete only this generation; requires subscriptionId
+      required:
+      - identifier
+    RegisterAppPushSubscriptionInput:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Expo Push Token
+          example: ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
+        platform:
+          enum:
+          - IOS
+          - ANDROID
+          type: string
+          description: Mobile platform
+          example: IOS
+        deviceId:
+          type: string
+          description: Unique device identifier
+          example: device-uuid-123
+      required:
+      - token
+      - platform
+      - deviceId
+    UpdateAgentChannelInput:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          example: true
+      required:
+      - enabled
+    RemoveAppPushSubscriptionInput:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Expo Push Token to remove
+          example: ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
+      required:
+      - token
+    RemoveTelegramSubscriptionResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        message:
+          type: string
+          example: Telegram subscription removed successfully
+      required:
+      - status
+      - message
+    RemoveSlackSubscriptionInput:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: Slack user ID
+          example: U0123456789
+        teamId:
+          type: string
+          description: Slack team (workspace) ID
+          example: T0123456789
+        subscriptionId:
+          type: number
+          minimum: 1
+          description: Delete only this subscription ID; requires subscriptionVersion
+        subscriptionVersion:
+          type: string
+          description: Delete only this generation; requires subscriptionId
+      required:
+      - identifier
+      - teamId
+    ChatPushLinkIntentOutputDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Opaque one-time token for Companion
+        expiresAt:
+          format: date-time
+          type: string
+          description: When the one-time token expires
+      required:
+      - token
+      - expiresAt
+    ChatPushLinkIntentResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        data:
+          $ref: '#/components/schemas/ChatPushLinkIntentOutputDto'
+      required:
+      - status
+      - data
+    AppPushSubscriptionResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/AppPushSubscriptionOutputDto'
+      required:
+      - status
+      - data
+    AgentChannelsOutputDto:
+      type: object
+      properties:
+        slack:
+          type: boolean
+          example: true
+        telegram:
+          type: boolean
+          example: true
+        imessage:
+          type: boolean
+          example: true
+      required:
+      - slack
+      - telegram
+      - imessage

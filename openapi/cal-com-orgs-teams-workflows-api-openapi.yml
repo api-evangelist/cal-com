@@ -1,0 +1,5209 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Workflows API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Workflows
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/workflows/routing-form:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.readTeamWorkflows`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_READ` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_getRoutingFormWorkflows
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoutingFormWorkflowsOutput'
+      summary: Get organization team routing form workflows
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_READ
+      x-platform-plan: SCALE
+    post:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.create`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_WRITE` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_createFormWorkflow
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFormWorkflowDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoutingFormWorkflowOutput'
+      summary: Create organization team workflow for routing-forms
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_WRITE
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/teams/{teamId}/workflows/{workflowId}/routing-form:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.readTeamWorkflows`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_READ` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_getRoutingFormWorkflowById
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoutingFormWorkflowOutput'
+      summary: Get organization team routing form workflow
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_READ
+      x-platform-plan: SCALE
+    patch:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_WRITE` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_updateRoutingFormWorkflow
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFormWorkflowDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoutingFormWorkflowOutput'
+      summary: Update organization routing form team workflow
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_WRITE
+      x-platform-plan: SCALE
+    delete:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.delete`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_WRITE` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_deleteRoutingFormWorkflow
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+      summary: Delete organization team routing-form workflow
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_WRITE
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/teams/{teamId}/workflows:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.readTeamWorkflows`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_READ` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_getWorkflows
+      parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to 2026-09-22 to use this version of the workflow endpoints.
+        required: true
+        schema:
+          type: string
+          example: '2026-09-22'
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventTypeWorkflowsOutput_2026_09_22'
+      summary: Get organization team workflows
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_READ
+      x-platform-plan: SCALE
+    post:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.create`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_WRITE` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_createEventTypeWorkflow
+      parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to 2026-09-22 to use this version of the workflow endpoints.
+        required: true
+        schema:
+          type: string
+          example: '2026-09-22'
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventTypeWorkflowDto_2026_09_22'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventTypeWorkflowOutput_2026_09_22'
+      summary: Create organization team workflow for event-types
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_WRITE
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/teams/{teamId}/workflows/{workflowId}:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.readTeamWorkflows`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_READ` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_getWorkflowById
+      parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to 2026-09-22 to use this version of the workflow endpoints.
+        required: true
+        schema:
+          type: string
+          example: '2026-09-22'
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventTypeWorkflowOutput_2026_09_22'
+      summary: Get organization team workflow
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_READ
+      x-platform-plan: SCALE
+    patch:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_WRITE` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_updateWorkflow
+      parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to 2026-09-22 to use this version of the workflow endpoints.
+        required: true
+        schema:
+          type: string
+          example: '2026-09-22'
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEventTypeWorkflowDto_2026_09_22'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventTypeWorkflowOutput_2026_09_22'
+      summary: Update organization team workflow
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_WRITE
+      x-platform-plan: SCALE
+    delete:
+      description: 'Required membership role: `team admin`. PBAC permission: `workflow.delete`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_WORKFLOW_WRITE` scope is required.'
+      operationId: OrganizationTeamWorkflowsController_deleteWorkflow
+      parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to 2026-09-22 to use this version of the workflow endpoints.
+        required: true
+        schema:
+          type: string
+          example: '2026-09-22'
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+      summary: Delete organization team workflow
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_WRITE
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/teams/{teamId}/workflows/{workflowId}/condition-fields:
+    get:
+      operationId: OrganizationTeamWorkflowsController_2026_09_22_getConditionFields
+      parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to 2026-09-22 to use this version of the workflow endpoints.
+        required: true
+        schema:
+          type: string
+          example: '2026-09-22'
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: workflowId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowConditionFieldsOutput'
+      summary: Get organization team workflow condition fields
+      tags:
+      - Orgs / Teams / Workflows
+      x-oauth-scopes:
+      - TEAM_WORKFLOW_READ
+      x-platform-plan: SCALE
+components:
+  schemas:
+    UpdateFilterWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - filter
+          description: Marks the step that gates everything after it on a set of conditions. Its position relative to the steps it gates is fixed, so it takes no stepNumber. Send `conditions` to author the gate and omit this step to delete it.
+          example: filter
+        id:
+          type: number
+          description: Unique identifier of an existing filter step, from GET. Omit it to create the gate.
+          example: 67244
+        gatedPathId:
+          type: string
+          format: uuid
+          description: Id of the path this filter gates, so steps can name it as their pathId. Generated when omitted; send the gatedPathId from GET to keep the steps already behind this gate.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          - not_all
+          type: string
+          description: 'all: every condition matches; any: at least one matches; none: no conditions match; not_all: at least one condition does not match.'
+          example: all
+          default: all
+        conditions:
+          description: The conditions every following step is gated on. Omit to leave the persisted conditions untouched; send an empty list for a gate that passes everything.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionInputDto_2026_09_22'
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this filter itself sits inside. Omit it for a filter at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - action
+    RoutingFormWorkflowActivationOutputDto:
+      type: object
+      properties:
+        isActiveOnAllRoutingForms:
+          type: boolean
+          default: false
+          description: Whether the workflow is active for all routing forms associated with the team/user
+          example: false
+        activeOnRoutingFormIds:
+          description: List of Event Type IDs the workflow is specifically active on (if not active on all)
+          example:
+          - 5cacdec7-1234-6e1b-78d9-7bcda8a1b332
+          type: array
+          items:
+            type: string
+    OnCreationTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: newEvent
+          enum:
+          - newEvent
+          description: Trigger type for the workflow
+      required:
+      - type
+    WorkflowPhoneAttendeeStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_attendee
+          description: Action to perform, send a text message to the phone numbers of the attendees
+          example: sms_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto'
+        phoneRequired:
+          type: boolean
+          default: false
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+    UpdateEmailAddressWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_address
+          description: Action to perform, send an email to a specific email address
+          example: email_address
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        verifiedEmailId:
+          type: number
+          description: Email address if recipient is EMAIL, required for action EMAIL_ADDRESS
+          example: 31214
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-an-email-for-an-org-team
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedEmailId
+      - includeCalendarEvent
+      - message
+    UpdateEmailAddressWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_address
+          description: Action to perform, send an email to a specific email address
+          example: email_address
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        verifiedEmailId:
+          type: number
+          description: Email address if recipient is EMAIL, required for action EMAIL_ADDRESS
+          example: 31214
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-an-email-for-an-org-team
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto_2026_09_22'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedEmailId
+      - includeCalendarEvent
+      - message
+    UpdateEmailHostWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_host
+          description: Action to perform, send an email to the host of the event
+          example: email_host
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto_2026_09_22'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - includeCalendarEvent
+      - message
+    WorkflowPhoneWhatsAppAttendeeStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: whatsapp_attendee
+          description: Action to perform
+          example: whatsapp_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        message:
+          description: Message content for this step, send a text message via whatsapp to the phone numbers of the attendees
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+        phoneRequired:
+          type: boolean
+          default: false
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+    GetEventTypeWorkflowsOutput_2026_09_22:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          description: Indicates the status of the response
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTypeWorkflowOutput_2026_09_22'
+      required:
+      - status
+      - data
+    UpdatePathsWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - paths
+          description: Marks the step that splits the workflow into conditional paths. It is always placed after every step outside a path, followed by the steps inside its paths, so it takes no stepNumber. Send `paths` to author the split and omit this step to delete it.
+          example: paths
+        id:
+          type: number
+          description: Unique identifier of an existing paths step, from GET. Omit it to create the split.
+          example: 67244
+        paths:
+          minItems: 2
+          description: The branches this step splits into, in the order they should appear on the canvas. A split needs at least two. Omit to leave the persisted branches untouched.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathInputDto_2026_09_22'
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the filter path this split itself sits inside. Omit it for a split at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - action
+    WorkflowConditionFieldsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        data:
+          $ref: '#/components/schemas/WorkflowConditionFieldsDataOutputDto'
+      required:
+      - status
+      - data
+    EventTypeWorkflowTriggerOutputDto:
+      type: object
+      properties:
+        type:
+          enum:
+          - beforeEvent
+          - eventCancelled
+          - newEvent
+          - afterEvent
+          - rescheduleEvent
+          - afterHostsCalVideoNoShow
+          - afterGuestsCalVideoNoShow
+          - bookingRejected
+          - bookingRequested
+          - bookingPaymentInitiated
+          - bookingPaid
+          - bookingNoShowUpdated
+          type: string
+          description: Trigger type for the workflow
+          example: beforeEvent
+        offset:
+          description: Offset details (present for BEFORE_EVENT/AFTER_EVENT)
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetOutputDto'
+      required:
+      - type
+    LeadEnrichmentWorkflowStepOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        action:
+          type: string
+          enum:
+          - lead_enrichment
+          description: The step that looks the attendee or form submitter up with the lead enrichment provider when the workflow runs; the steps after it can use the result in their conditions and messages. It can only be added or configured in the Cal.com app; include this step by id when updating the workflow's steps.
+          example: lead_enrichment
+        pathId:
+          type: string
+          description: Id of the conditional path this step belongs to, when it sits inside a split branch or a filter. Absent at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - id
+      - stepNumber
+      - action
+    OnRejectedTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: bookingRejected
+          enum:
+          - bookingRejected
+          description: Trigger type for the workflow
+      required:
+      - type
+    UpdateDelayWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - delay
+          description: 'Marks an existing delay step. Delays can only be created or edited in the Cal.com app. When updating steps, include this step as { action: "delay", id } using the id returned by GET so the wait is preserved. Its position is fixed, so it takes no stepNumber: an update that moves another step to the other side of it, or reuses the stepNumber GET returned for it, is rejected.'
+          example: delay
+        id:
+          type: number
+          description: Unique identifier of the existing delay step. A delay step cannot be created through the API, so the id is required.
+          example: 67244
+      required:
+      - action
+      - id
+    OnBeforeEventTriggerDto:
+      type: object
+      properties:
+        offset:
+          description: Offset before/after the trigger time; required for BEFORE_EVENT, AFTER_EVENT, and FORM_SUBMITTED_NO_EVENT
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetDto'
+        type:
+          type: string
+          default: beforeEvent
+          enum:
+          - beforeEvent
+          description: Trigger type for the workflow
+          example: beforeEvent
+      required:
+      - offset
+      - type
+    WorkflowMessageOutputDto:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the message
+          example: 'Reminder: Your Meeting {EVENT_NAME} - {EVENT_DATE_ddd, MMM D, YYYY h:mma} with Cal.com'
+        html:
+          type: string
+          description: HTML content of the message
+          example: <p>Reminder for {EVENT_NAME}.</p>
+        text:
+          type: string
+          description: Text content of the message (used for SMS/WhatsApp)
+          example: Reminder for {EVENT_NAME}.
+      required:
+      - subject
+    UpdateEventTypeWorkflowDto_2026_09_22:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the workflow
+          example: Platform Test Workflow
+        activation:
+          description: Activation settings for the workflow
+          allOf:
+          - $ref: '#/components/schemas/WorkflowActivationDto_2026_09_22'
+        trigger:
+          description: Trigger configuration for the event-type workflow, allowed triggers are beforeEvent,eventCancelled,newEvent,afterEvent,rescheduleEvent,afterHostsCalVideoNoShow,afterGuestsCalVideoNoShow,bookingRejected,bookingRequested,bookingPaymentInitiated,bookingPaid,bookingNoShowUpdated
+          oneOf:
+          - title: Before Event
+            $ref: '#/components/schemas/OnBeforeEventTriggerDto'
+          - title: After Event
+            $ref: '#/components/schemas/OnAfterEventTriggerDto'
+          - title: Event Cancelled
+            $ref: '#/components/schemas/OnCancelTriggerDto'
+          - title: New Event
+            $ref: '#/components/schemas/OnCreationTriggerDto'
+          - title: Event Rescheduled
+            $ref: '#/components/schemas/OnRescheduleTriggerDto'
+          - title: After Guest No-Show
+            $ref: '#/components/schemas/OnAfterCalVideoGuestsNoShowTriggerDto'
+          - title: After Host No-Show
+            $ref: '#/components/schemas/OnAfterCalVideoHostsNoShowTriggerDto'
+          - title: Booking Rejected
+            $ref: '#/components/schemas/OnRejectedTriggerDto'
+          - title: Booking Requested
+            $ref: '#/components/schemas/OnRequestedTriggerDto'
+          - title: Booking Paid
+            $ref: '#/components/schemas/OnPaidTriggerDto'
+          - title: Booking Payment Initiated
+            $ref: '#/components/schemas/OnPaymentInitiatedTriggerDto'
+          - title: Booking No-Show Updated
+            $ref: '#/components/schemas/OnNoShowUpdateTriggerDto'
+        steps:
+          type: array
+          minItems: 1
+          description: 'Steps to execute. This is the complete desired step list: omitted steps are deleted and omitted pathId makes a sending step unconditional. Omit steps entirely to preserve the graph. Existing delays and lead enrichment must still be echoed by id and keep their relative order.'
+          items:
+            oneOf:
+            - title: Email Address
+              $ref: '#/components/schemas/UpdateEmailAddressWorkflowStepDto_2026_09_22'
+            - title: Email Attendee
+              $ref: '#/components/schemas/UpdateEmailAttendeeWorkflowStepDto_2026_09_22'
+            - title: Email Host
+              $ref: '#/components/schemas/UpdateEmailHostWorkflowStepDto_2026_09_22'
+            - title: SMS Attendee
+              $ref: '#/components/schemas/UpdatePhoneAttendeeWorkflowStepDto_2026_09_22'
+            - title: WhatsApp Number
+              $ref: '#/components/schemas/UpdatePhoneWhatsAppNumberWorkflowStepDto_2026_09_22'
+            - title: WhatsApp Attendee
+              $ref: '#/components/schemas/UpdateWhatsAppAttendeePhoneWorkflowStepDto_2026_09_22'
+            - title: SMS Number
+              $ref: '#/components/schemas/UpdatePhoneNumberWorkflowStepDto_2026_09_22'
+            - title: Paths
+              $ref: '#/components/schemas/UpdatePathsWorkflowStepDto_2026_09_22'
+            - title: Filter
+              $ref: '#/components/schemas/UpdateFilterWorkflowStepDto_2026_09_22'
+            - title: Delay (existing step)
+              $ref: '#/components/schemas/UpdateDelayWorkflowStepDto_2026_09_22'
+            - title: Lead enrichment (existing step)
+              $ref: '#/components/schemas/UpdateLeadEnrichmentWorkflowStepDto_2026_09_22'
+    WorkflowStepPathOutputDto_2026_09_22:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the path
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        name:
+          type: string
+          description: Name of the path
+          example: Enterprise leads
+        position:
+          type: number
+          description: Position of the path among the branches of its step, starting at 0
+          example: 0
+        conditions:
+          description: The conditions deciding whether this path matches. A path with no conditions always matches.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionOutputDto'
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          - not_all
+          type: string
+          description: 'all: every condition matches; any: at least one matches; none: no conditions match; not_all: at least one condition does not match.'
+          example: all
+      required:
+      - id
+      - name
+      - position
+      - conditions
+      - matches
+    OnAfterEventTriggerDto:
+      type: object
+      properties:
+        offset:
+          description: Offset before/after the trigger time; required for BEFORE_EVENT, AFTER_EVENT, and FORM_SUBMITTED_NO_EVENT
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetDto'
+        type:
+          type: string
+          default: afterEvent
+          enum:
+          - afterEvent
+          description: Trigger type for the workflow
+          example: afterEvent
+      required:
+      - offset
+      - type
+    WorkflowConditionFieldOptionOutputDto:
+      type: object
+      properties:
+        value:
+          type: string
+          description: The value a condition compares against
+          example: enterprise
+        label:
+          type: string
+          description: How the option reads in the editor
+          example: Enterprise
+      required:
+      - value
+      - label
+    UpdatePhoneAttendeeWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_attendee
+          description: Action to perform, send a text message to the phone numbers of the attendees
+          example: sms_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto'
+        phoneRequired:
+          type: boolean
+          default: false
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+    OnFormSubmittedNoEventTriggerDto:
+      type: object
+      properties:
+        offset:
+          description: Offset before/after the trigger time; required for BEFORE_EVENT, AFTER_EVENT, and FORM_SUBMITTED_NO_EVENT
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetDto'
+        type:
+          type: string
+          default: formSubmittedNoEvent
+          enum:
+          - formSubmittedNoEvent
+          description: Trigger type for the workflow
+          example: formSubmittedNoEvent
+      required:
+      - offset
+      - type
+    WorkflowEmailAttendeeStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_attendee
+          description: Action to perform, send an email to the attendees of the event
+          example: email_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        skipNoShowAttendees:
+          type: boolean
+          default: false
+          description: Whether an after-event rating email should skip attendees currently marked as no-show. It has no effect for other workflow triggers or templates.
+          example: false
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - includeCalendarEvent
+      - message
+    WorkflowPhoneNumberStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_number
+          description: Action to perform, send a text message to a specific phone number
+          example: sms_number
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        verifiedPhoneId:
+          type: number
+          description: Phone number if recipient is PHONE_NUMBER, required for actions SMS_NUMBER and WHATSAPP_NUMBER
+          example: 3243434
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-a-phone-number-for-an-org-team
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedPhoneId
+      - message
+    DelayWorkflowStepOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        action:
+          type: string
+          enum:
+          - delay
+          description: A wait before the next sending step. Its duration is read-only through the API and can only be edited in the Cal.com app; include this step by id when updating the workflow's steps.
+          example: delay
+        delay:
+          description: How long this step waits. Absent when the step has no stored duration.
+          allOf:
+          - $ref: '#/components/schemas/WorkflowDelayDurationOutputDto'
+        pathId:
+          type: string
+          description: Id of the conditional path this delay belongs to, when it sits inside a split branch or a filter. Absent at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - id
+      - stepNumber
+      - action
+    PathsWorkflowStepOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        action:
+          type: string
+          enum:
+          - paths
+          description: The step that splits the workflow into conditional paths; include this step by id when updating the workflow's steps.
+          example: paths
+        paths:
+          description: The conditional paths this step splits into, in the order the canvas lays them out
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowStepPathOutputDto'
+        pathId:
+          type: string
+          description: Id of the conditional path this split itself belongs to, when it sits inside a filter's path. Absent at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - id
+      - stepNumber
+      - action
+      - paths
+    UpdatePhoneNumberWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_number
+          description: Action to perform, send a text message to a specific phone number
+          example: sms_number
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        verifiedPhoneId:
+          type: number
+          description: Phone number if recipient is PHONE_NUMBER, required for actions SMS_NUMBER and WHATSAPP_NUMBER
+          example: 3243434
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-a-phone-number-for-an-org-team
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedPhoneId
+      - message
+    EventTypeWorkflowActivationOutputDto:
+      type: object
+      properties:
+        isActiveOnAllEventTypes:
+          type: boolean
+          default: false
+          description: Whether the workflow is active for all event types associated with the team/user
+          example: false
+        activeOnEventTypeIds:
+          description: List of Event Type IDs the workflow is specifically active on (if not active on all)
+          example:
+          - 698191
+          - 698192
+          type: array
+          items:
+            type: number
+    HtmlWorkflowMessageDto_2026_09_22:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the message
+          example: 'Reminder: Your Meeting {EVENT_NAME} - {EVENT_DATE_ddd, MMM D, YYYY h:mma} with Cal.com'
+        html:
+          type: string
+          description: HTML content of the message (used for Emails)
+          example: <p>This is a reminder from {ORGANIZER} of {EVENT_NAME} to {ATTENDEE} starting here  {LOCATION} {MEETING_URL} at {START_TIME_h:mma} {TIMEZONE}.</p>
+      required:
+      - subject
+      - html
+    WorkflowConditionFieldOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The value to send as a condition's `field`
+          example: company-size
+        label:
+          type: string
+          description: How the field reads in the editor
+          example: Company size
+        type:
+          type: string
+          description: What kind of answer the field holds, which decides the operators it accepts
+          example: select
+        operators:
+          description: The comparisons this field accepts
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowConditionOperatorOutputDto'
+        options:
+          description: The values this field can hold, for select and multiselect fields. Empty for the rest.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowConditionFieldOptionOutputDto'
+        missingFrom:
+          description: Names of the event types this workflow is active on that do not ask for this field. A condition on it is scored false for them, so the branch never runs for those triggers.
+          example:
+          - Intro call
+          type: array
+          items:
+            type: string
+        hasTypeConflict:
+          type: boolean
+          description: Whether the entities this workflow is active on disagree about the field's type. The operators listed are those of the first definition, and a condition may behave differently per trigger.
+          example: false
+      required:
+      - id
+      - label
+      - type
+      - operators
+      - options
+      - missingFrom
+      - hasTypeConflict
+    WorkflowEmailAddressStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_address
+          description: Action to perform, send an email to a specific email address
+          example: email_address
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        verifiedEmailId:
+          type: number
+          description: Email address if recipient is EMAIL, required for action EMAIL_ADDRESS
+          example: 31214
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-an-email-for-an-org-team
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto_2026_09_22'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedEmailId
+      - includeCalendarEvent
+      - message
+    UpdateFilterWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - filter
+          description: 'Marks the step that gates everything after it on a set of conditions. Those conditions can only be edited in the Cal.com app. When updating steps, include this step as { action: "filter", id } using the id returned by GET so the gate is preserved. Its position relative to the steps it gates is fixed, so it takes no stepNumber.'
+          example: filter
+        id:
+          type: number
+          description: Unique identifier of the existing filter step. A filter step cannot be created through the API, so the id is required.
+          example: 67244
+      required:
+      - action
+      - id
+    UpdateEmailAttendeeWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_attendee
+          description: Action to perform, send an email to the attendees of the event
+          example: email_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        skipNoShowAttendees:
+          type: boolean
+          default: false
+          description: Whether an after-event rating email should skip attendees currently marked as no-show. It has no effect for other workflow triggers or templates.
+          example: false
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - includeCalendarEvent
+      - message
+    GetRoutingFormWorkflowOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          description: Indicates the status of the response
+          example: success
+        data:
+          description: workflow
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingFormWorkflowOutput'
+      required:
+      - status
+      - data
+    WorkflowEmailAttendeeStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_attendee
+          description: Action to perform, send an email to the attendees of the event
+          example: email_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        skipNoShowAttendees:
+          type: boolean
+          default: false
+          description: Whether an after-event rating email should skip attendees currently marked as no-show. It has no effect for other workflow triggers or templates.
+          example: false
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto_2026_09_22'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - includeCalendarEvent
+      - message
+    WorkflowPhoneWhatsAppNumberStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: whatsapp_number
+          description: Action to perform, send a text message via whatsapp to a specific phone number
+          example: whatsapp_number
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        verifiedPhoneId:
+          type: number
+          description: Phone number if recipient is PHONE_NUMBER, required for actions SMS_NUMBER and WHATSAPP_NUMBER
+          example: 3243434
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-a-phone-number-for-an-org-team
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedPhoneId
+      - message
+    WorkflowPhoneNumberStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_number
+          description: Action to perform, send a text message to a specific phone number
+          example: sms_number
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        verifiedPhoneId:
+          type: number
+          description: Phone number if recipient is PHONE_NUMBER, required for actions SMS_NUMBER and WHATSAPP_NUMBER
+          example: 3243434
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-a-phone-number-for-an-org-team
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedPhoneId
+      - message
+    WorkflowPhoneAttendeeStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_attendee
+          description: Action to perform, send a text message to the phone numbers of the attendees
+          example: sms_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+        phoneRequired:
+          type: boolean
+          default: false
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+    OnFormSubmittedTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: formSubmitted
+          enum:
+          - formSubmitted
+          description: Trigger type for the workflow
+          example: formSubmitted
+      required:
+      - type
+    WorkflowActivationDto_2026_09_22:
+      type: object
+      properties:
+        isActiveOnAllEventTypes:
+          type: boolean
+          default: false
+          description: Whether the workflow is active for all the event-types
+          example: false
+        activeOnEventTypeIds:
+          default: []
+          description: List of event-types IDs the workflow applies to, required if isActiveOnAllEventTypes is false
+          example:
+          - 698191
+          type: array
+          items:
+            type: number
+      required:
+      - isActiveOnAllEventTypes
+    RoutingFormWorkflowOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the workflow
+          example: 101
+        name:
+          type: string
+          description: Name of the workflow
+          example: Platform Test Workflow
+        userId:
+          type: number
+          description: ID of the user who owns the workflow (if not team-owned)
+          example: 2313
+        teamId:
+          type: number
+          description: ID of the team owning the workflow
+          example: 4214321
+        createdAt:
+          type: string
+          description: Timestamp of creation
+          example: '2024-05-12T10:00:00.000Z'
+          format: date-time
+        updatedAt:
+          type: string
+          description: Timestamp of last update
+          example: '2024-05-12T11:30:00.000Z'
+          format: date-time
+        type:
+          type: string
+          enum:
+          - routing-form
+          description: type of the workflow
+          example: routing-form
+          default: routing-form
+        activation:
+          description: Activation settings for the workflow
+          allOf:
+          - $ref: '#/components/schemas/RoutingFormWorkflowActivationOutputDto'
+        trigger:
+          description: Trigger configuration
+          allOf:
+          - $ref: '#/components/schemas/RoutingFormWorkflowTriggerOutputDto'
+        steps:
+          type: array
+          description: Steps comprising the workflow. A workflow with conditional paths contains one paths step listing its branches, and a filter step for each gate; a workflow with lead enrichment contains one lead enrichment step; steps carrying a pathId only run when that path's conditions match.
+          items:
+            oneOf:
+            - title: Step
+              $ref: '#/components/schemas/RoutingFormWorkflowStepOutputDto'
+            - title: Paths step
+              $ref: '#/components/schemas/PathsWorkflowStepOutputDto'
+            - title: Filter step
+              $ref: '#/components/schemas/FilterWorkflowStepOutputDto'
+            - title: Delay step
+              $ref: '#/components/schemas/DelayWorkflowStepOutputDto'
+            - title: Lead enrichment step
+              $ref: '#/components/schemas/LeadEnrichmentWorkflowStepOutputDto'
+      required:
+      - id
+      - name
+      - type
+      - activation
+      - trigger
+      - steps
+    UpdatePhoneAttendeeWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_attendee
+          description: Action to perform, send a text message to the phone numbers of the attendees
+          example: sms_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+        phoneRequired:
+          type: boolean
+          default: false
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+    WorkflowDelayDurationOutputDto:
+      type: object
+      properties:
+        value:
+          type: number
+          description: How long to wait before the next sending step
+          example: 2
+        unit:
+          enum:
+          - hour
+          - minute
+          - day
+          type: string
+          description: Unit for the delay duration
+          example: hour
+      required:
+      - value
+      - unit
+    OnNoShowUpdateTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: bookingNoShowUpdated
+          enum:
+          - bookingNoShowUpdated
+          description: Trigger type for the workflow
+      required:
+      - type
+    OnCancelTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: eventCancelled
+          enum:
+          - eventCancelled
+          description: Trigger type for the workflow
+      required:
+      - type
+    WorkflowConditionOperatorOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The value to send as a condition's `operator`
+          example: select_equals
+        label:
+          type: string
+          description: How the comparison reads in the editor. Ids differ by field type where the label does not — `equal` on a text field and `select_equals` on a select both read "Equals" — so render this rather than the id.
+          example: Equals
+      required:
+      - id
+      - label
+    WorkflowPathConditionInputDto_2026_09_22:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: ^[\w-]{1,64}$
+          description: Identifier of the condition. Generated when omitted; send the id from GET to edit one.
+          example: b1d2e3f4-5a6b-4c7d-8e9f-0a1b2c3d4e5f
+        field:
+          type: string
+          maxLength: 255
+          description: The booking question or event field this condition reads. Use a field identifier returned by the workflow condition-fields endpoint.
+          example: company-size
+        operator:
+          type: string
+          maxLength: 64
+          description: How the field is compared. The operator has to be one the field's type accepts — `equal` for a text or number field, `select_equals` for a select, `multiselect_equals` for a multiselect — because a condition whose operator its field rejects is scored false and silences the branch.
+          example: select_equals
+          enum:
+          - between
+          - equal
+          - greater
+          - greater_or_equal
+          - is_empty
+          - is_not_empty
+          - less
+          - less_or_equal
+          - like
+          - multiselect_equals
+          - multiselect_not_equals
+          - not_between
+          - not_equal
+          - not_like
+          - select_any_in
+          - select_equals
+          - select_not_any_in
+          - select_not_equals
+          - starts_with
+        values:
+          maxItems: 100
+          description: The values the field is compared against. Omit or send an empty list for operators that take none, such as is_empty.
+          example:
+          - enterprise
+          default: []
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+      required:
+      - field
+      - operator
+    EventTypeWorkflowStepOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Intended recipient type
+          example: const
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        email:
+          type: string
+          description: Verified email address if action is EMAIL_ADDRESS
+          example: notifications@example.com
+        phone:
+          type: string
+          description: Verified Phone if action is SMS_NUMBER or WHATSAPP_NUMBER
+        phoneRequired:
+          type: boolean
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+          default: false
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: Template type used
+          example: reminder
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether a calendar event (.ics) was included (for email actions)
+          example: true
+        skipNoShowAttendees:
+          type: boolean
+          default: false
+          description: Whether an after-event attendee rating email skips attendees currently marked as no-show.
+          example: false
+        sender:
+          type: string
+          description: Displayed sender name used for this step
+          example: Cal.com Notifications
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/WorkflowMessageOutputDto'
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether auto-translation of the workflow step content for attendees is enabled. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type:
+          - string
+          - 'null'
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en').
+          example: en
+        pathId:
+          type: string
+          description: Id of the conditional path this step belongs to; the step only runs when that path's conditions match. Absent for unconditional steps.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          description: Action to perform
+          example: email_host
+      required:
+      - id
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+      - action
+    OnRequestedTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: bookingRequested
+          enum:
+          - bookingRequested
+          description: Trigger type for the workflow
+      required:
+      - type
+    PathsWorkflowStepOutputDto_2026_09_22:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        action:
+          type: string
+          enum:
+          - paths
+          description: The step that splits the workflow into conditional paths; include this step by id when updating the workflow's steps.
+          example: paths
+        pathId:
+          type: string
+          description: Id of the conditional path this split itself belongs to, when it sits inside a filter's path. Absent at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowStepPathOutputDto_2026_09_22'
+      required:
+      - id
+      - stepNumber
+      - action
+      - paths
+    CreateFormWorkflowDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the workflow
+          example: Platform Test Workflow
+        activation:
+          description: Activation settings for the workflow
+          allOf:
+          - $ref: '#/components/schemas/WorkflowFormActivationDto'
+        trigger:
+          description: Trigger configuration for the routing-form workflow, allowed triggers are formSubmitted,formSubmittedNoEvent
+          oneOf:
+          - title: Form Submitted
+            $ref: '#/components/schemas/OnFormSubmittedTriggerDto'
+          - title: Form Submitted Without Event
+            $ref: '#/components/schemas/OnFormSubmittedNoEventTriggerDto'
+        steps:
+          type: array
+          description: Steps to execute as part of the routing-form workflow, allowed steps are email_attendee,email_address,sms_attendee,sms_number
+          items:
+            oneOf:
+            - title: Email Address
+              $ref: '#/components/schemas/WorkflowEmailAddressStepDto'
+            - title: Email Attendee
+              $ref: '#/components/schemas/WorkflowEmailAttendeeStepDto'
+            - title: SMS Attendee
+              $ref: '#/components/schemas/WorkflowPhoneAttendeeStepDto'
+            - title: SMS Number
+              $ref: '#/components/schemas/WorkflowPhoneNumberStepDto'
+      required:
+      - name
+      - activation
+      - trigger
+      - steps
+    UpdateDelayWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - delay
+          description: 'Marks an existing delay step. Delays can only be created or edited in the Cal.com app. When updating steps, include this step as { action: "delay", id } using the id returned by GET so the wait is preserved. Its position is fixed, so it takes no stepNumber: an update that moves another step to the other side of it, or reuses the stepNumber GET returned for it, is rejected.'
+          example: delay
+        id:
+          type: number
+          description: Unique identifier of the existing delay step. A delay step cannot be created through the API, so the id is required.
+          example: 67244
+      required:
+      - action
+      - id
+    OnAfterCalVideoGuestsNoShowTriggerDto:
+      type: object
+      properties:
+        offset:
+          description: Offset before/after the trigger time; required for BEFORE_EVENT, AFTER_EVENT, and FORM_SUBMITTED_NO_EVENT
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetDto'
+        type:
+          type: string
+          default: afterGuestsCalVideoNoShow
+          enum:
+          - afterGuestsCalVideoNoShow
+          description: Trigger type for the workflow
+          example: afterGuestsCalVideoNoShow
+      required:
+      - offset
+      - type
+    WorkflowEmailHostStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_host
+          description: Action to perform, send an email to the host of the event
+          example: email_host
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto_2026_09_22'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - includeCalendarEvent
+      - message
+    WorkflowFormActivationDto:
+      type: object
+      properties:
+        isActiveOnAllRoutingForms:
+          type: boolean
+          description: Whether the workflow is active for all the routing forms
+          example: false
+        activeOnRoutingFormIds:
+          description: List of routing form IDs the workflow applies to
+          example:
+          - abd1-123edf-a213d-123dfwf
+          type: array
+          items:
+            type: number
+      required:
+      - isActiveOnAllRoutingForms
+    GetEventTypeWorkflowOutput_2026_09_22:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          description: Indicates the status of the response
+          example: success
+        data:
+          $ref: '#/components/schemas/EventTypeWorkflowOutput_2026_09_22'
+      required:
+      - status
+      - data
+    UpdatePhoneWhatsAppNumberWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: whatsapp_number
+          description: Action to perform, send a text message via whatsapp to a specific phone number
+          example: whatsapp_number
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        verifiedPhoneId:
+          type: number
+          description: Phone number if recipient is PHONE_NUMBER, required for actions SMS_NUMBER and WHATSAPP_NUMBER
+          example: 3243434
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-a-phone-number-for-an-org-team
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedPhoneId
+      - message
+    CreateEventTypeWorkflowDto_2026_09_22:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the workflow
+          example: Platform Test Workflow
+        activation:
+          description: Activation settings for the workflow
+          allOf:
+          - $ref: '#/components/schemas/WorkflowActivationDto_2026_09_22'
+        trigger:
+          description: Trigger configuration for the event-type workflow, allowed triggers are beforeEvent,eventCancelled,newEvent,afterEvent,rescheduleEvent,afterHostsCalVideoNoShow,afterGuestsCalVideoNoShow,bookingRejected,bookingRequested,bookingPaymentInitiated,bookingPaid,bookingNoShowUpdated
+          oneOf:
+          - title: Before Event
+            $ref: '#/components/schemas/OnBeforeEventTriggerDto'
+          - title: After Event
+            $ref: '#/components/schemas/OnAfterEventTriggerDto'
+          - title: Event Cancelled
+            $ref: '#/components/schemas/OnCancelTriggerDto'
+          - title: New Event
+            $ref: '#/components/schemas/OnCreationTriggerDto'
+          - title: Event Rescheduled
+            $ref: '#/components/schemas/OnRescheduleTriggerDto'
+          - title: After Guest No-Show
+            $ref: '#/components/schemas/OnAfterCalVideoGuestsNoShowTriggerDto'
+          - title: After Host No-Show
+            $ref: '#/components/schemas/OnAfterCalVideoHostsNoShowTriggerDto'
+          - title: Booking Rejected
+            $ref: '#/components/schemas/OnRejectedTriggerDto'
+          - title: Booking Requested
+            $ref: '#/components/schemas/OnRequestedTriggerDto'
+          - title: Booking Paid
+            $ref: '#/components/schemas/OnPaidTriggerDto'
+          - title: Booking Payment Initiated
+            $ref: '#/components/schemas/OnPaymentInitiatedTriggerDto'
+          - title: Booking No-Show Updated
+            $ref: '#/components/schemas/OnNoShowUpdateTriggerDto'
+        steps:
+          type: array
+          minItems: 1
+          description: Steps to execute as part of the event-type workflow, allowed steps are email_host,email_attendee,email_address,sms_attendee,sms_number,whatsapp_attendee,whatsapp_number,cal_ai_phone_call,paths,filter
+          items:
+            oneOf:
+            - title: Paths
+              $ref: '#/components/schemas/CreatePathsWorkflowStepDto_2026_09_22'
+            - title: Filter
+              $ref: '#/components/schemas/CreateFilterWorkflowStepDto_2026_09_22'
+            - title: Email Address
+              $ref: '#/components/schemas/WorkflowEmailAddressStepDto_2026_09_22'
+            - title: Email Attendee
+              $ref: '#/components/schemas/WorkflowEmailAttendeeStepDto_2026_09_22'
+            - title: Email Host
+              $ref: '#/components/schemas/WorkflowEmailHostStepDto_2026_09_22'
+            - title: WhatsApp Attendee
+              $ref: '#/components/schemas/WorkflowPhoneWhatsAppAttendeeStepDto_2026_09_22'
+            - title: WhatsApp Number
+              $ref: '#/components/schemas/WorkflowPhoneWhatsAppNumberStepDto_2026_09_22'
+            - title: SMS Number
+              $ref: '#/components/schemas/WorkflowPhoneNumberStepDto_2026_09_22'
+            - title: SMS Attendee
+              $ref: '#/components/schemas/WorkflowPhoneAttendeeStepDto_2026_09_22'
+      required:
+      - name
+      - activation
+      - trigger
+      - steps
+    HtmlWorkflowMessageDto:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the message
+          example: 'Reminder: Your Meeting {EVENT_NAME} - {EVENT_DATE_ddd, MMM D, YYYY h:mma} with Cal.com'
+        html:
+          type: string
+          description: HTML content of the message (used for Emails)
+          example: <p>This is a reminder from {ORGANIZER} of {EVENT_NAME} to {ATTENDEE} starting here  {LOCATION} {MEETING_URL} at {START_TIME_h:mma} {TIMEZONE}.</p>
+      required:
+      - subject
+      - html
+    WorkflowTriggerOffsetDto:
+      type: object
+      properties:
+        value:
+          type: number
+          minimum: 1
+          description: Time value for offset before/after event trigger
+          example: 24
+        unit:
+          enum:
+          - hour
+          - minute
+          - day
+          type: string
+          description: Unit for the offset time
+          example: hour
+      required:
+      - value
+      - unit
+    OnPaidTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: bookingPaid
+          enum:
+          - bookingPaid
+          description: Trigger type for the workflow
+      required:
+      - type
+    WorkflowConditionFieldsDataOutputDto:
+      type: object
+      properties:
+        truncated:
+          type: boolean
+          description: True when the catalog samples the first 100 active entities. Warnings cover only that sample.
+        fields:
+          description: The fields a condition on this workflow can read
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowConditionFieldOutputDto'
+        activeOn:
+          description: The event types the catalog was built from — what the workflow is active on, capped at 100.
+          example:
+          - Intro call
+          - Demo
+          type: array
+          items:
+            type: string
+        isActiveOnAll:
+          type: boolean
+          description: Present when the workflow is active on everything its owner has, in which case `activeOn` lists what the cap allowed.
+          example: true
+      required:
+      - truncated
+      - fields
+      - activeOn
+    UpdatePhoneNumberWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: sms_number
+          description: Action to perform, send a text message to a specific phone number
+          example: sms_number
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        verifiedPhoneId:
+          type: number
+          description: Phone number if recipient is PHONE_NUMBER, required for actions SMS_NUMBER and WHATSAPP_NUMBER
+          example: 3243434
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-a-phone-number-for-an-org-team
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedPhoneId
+      - message
+    OnRescheduleTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: rescheduleEvent
+          enum:
+          - rescheduleEvent
+          description: Trigger type for the workflow
+      required:
+      - type
+    WorkflowPathInputDto_2026_09_22:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the path. Generated when omitted; send the id from GET to edit an existing branch rather than replace it. An existing path id must belong to this workflow and this gate.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        name:
+          type: string
+          maxLength: 255
+          description: Name of the branch, shown on the canvas
+          example: Enterprise leads
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          - not_all
+          type: string
+          description: 'How conditions must match: all (every condition), any (at least one), none (no conditions), or not_all (at least one condition does not match). Omit to preserve an existing branch’s mode; new branches default to all.'
+          example: all
+          default: all
+        conditions:
+          description: The conditions deciding whether this branch matches. Omit or send an empty list for a branch that always matches.
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionInputDto_2026_09_22'
+      required:
+      - name
+    OnPaymentInitiatedTriggerDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: bookingPaymentInitiated
+          enum:
+          - bookingPaymentInitiated
+          description: Trigger type for the workflow
+      required:
+      - type
+    WorkflowEmailAddressStepDto:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_address
+          description: Action to perform, send an email to a specific email address
+          example: email_address
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        verifiedEmailId:
+          type: number
+          description: Email address if recipient is EMAIL, required for action EMAIL_ADDRESS
+          example: 31214
+          externalDocs:
+            url: https://cal.com/docs/api-reference/v2/organization-team-verified-resources/verify-an-email-for-an-org-team
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto'
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - verifiedEmailId
+      - includeCalendarEvent
+      - message
+    UpdateEmailAttendeeWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: email_attendee
+          description: Action to perform, send an email to the attendees of the event
+          example: email_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether to include a calendar event in the notification, can be included with actions email_host, email_attendee, email_address
+          example: true
+        skipNoShowAttendees:
+          type: boolean
+          default: false
+          description: Whether an after-event rating email should skip attendees currently marked as no-show. It has no effect for other workflow triggers or templates.
+          example: false
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/HtmlWorkflowMessageDto_2026_09_22'
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - includeCalendarEvent
+      - message
+    FilterWorkflowStepOutputDto_2026_09_22:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        action:
+          type: string
+          enum:
+          - filter
+          description: The step that gates every step after it on a set of conditions; include this step by id when updating the workflow's steps.
+          example: filter
+        gatedPathId:
+          type: string
+          description: Id of the path this filter gates. Every step carrying this as its pathId runs only when the filter's conditions match.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        conditions:
+          description: The conditions every following step is gated on. A filter with no conditions passes everything.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionOutputDto'
+        pathId:
+          type: string
+          description: Id of the conditional path this filter itself belongs to, when it sits inside a split branch or another filter. Absent at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          - not_all
+          type: string
+          description: 'all: every condition matches; any: at least one matches; none: no conditions match; not_all: at least one condition does not match.'
+          example: all
+      required:
+      - id
+      - stepNumber
+      - action
+      - gatedPathId
+      - conditions
+      - matches
+    TextWorkflowMessageDto:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the message
+          example: 'Reminder: Your Meeting {EVENT_NAME} - {EVENT_DATE_ddd, MMM D, YYYY h:mma} with Cal.com'
+        text:
+          type: string
+          description: Text content of the message (used for SMS)
+          example: This is a reminder message from {ORGANIZER} of {EVENT_NAME} to {ATTENDEE} starting here {LOCATION} {MEETING_URL} at {START_TIME_h:mma} {TIMEZONE}.
+      required:
+      - subject
+      - text
+    RoutingFormWorkflowTriggerOutputDto:
+      type: object
+      properties:
+        type:
+          enum:
+          - formSubmitted
+          - formSubmittedNoEvent
+          type: string
+          description: Trigger type for the workflow
+          example: formSubmitted
+        offset:
+          description: Offset details (present for BEFORE_EVENT/AFTER_EVENT/FORM_SUBMITTED_NO_EVENT)
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetOutputDto'
+      required:
+      - type
+    GetRoutingFormWorkflowsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          description: Indicates the status of the response
+          example: success
+        data:
+          description: List of workflows
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingFormWorkflowOutput'
+      required:
+      - status
+      - data
+    FilterWorkflowStepOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        action:
+          type: string
+          enum:
+          - filter
+          description: The step that gates every step after it on a set of conditions; include this step by id when updating the workflow's steps.
+          example: filter
+        gatedPathId:
+          type: string
+          description: Id of the path this filter gates. Every step carrying this as its pathId runs only when the filter's conditions match.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          type: string
+          description: How many of the conditions have to hold for this gate to pass — the editor's All, Any and None.
+          example: all
+        conditions:
+          description: The conditions every following step is gated on. A filter with no conditions passes everything.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionOutputDto'
+        pathId:
+          type: string
+          description: Id of the conditional path this filter itself belongs to, when it sits inside a split branch or another filter. Absent at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - id
+      - stepNumber
+      - action
+      - gatedPathId
+      - matches
+      - conditions
+    UpdateFormWorkflowDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the workflow
+          example: Rounting-form Test Workflow
+        trigger:
+          description: Trigger configuration for the routing-form workflow, allowed triggers are formSubmitted,formSubmittedNoEvent
+          oneOf:
+          - title: Form Submitted
+            $ref: '#/components/schemas/OnFormSubmittedTriggerDto'
+          - title: Form Submitted Without Event
+            $ref: '#/components/schemas/OnFormSubmittedNoEventTriggerDto'
+        steps:
+          type: array
+          minItems: 1
+          description: Steps to execute as part of the routing-form workflow, allowed steps are email_attendee,email_address,sms_attendee,sms_number. If the workflow has conditional paths, delays or lead enrichment, the array must also include its existing "paths", "filter", "delay" and "lead_enrichment" steps and every step that belongs to a path, using the ids returned by GET — paths, filters, delays and lead enrichment can only be edited in the Cal.com app.
+          items:
+            oneOf:
+            - title: Email Address
+              $ref: '#/components/schemas/UpdateEmailAddressWorkflowStepDto'
+            - title: Email Attendee
+              $ref: '#/components/schemas/UpdateEmailAttendeeWorkflowStepDto'
+            - title: SMS Attendee
+              $ref: '#/components/schemas/UpdatePhoneAttendeeWorkflowStepDto'
+            - title: SMS Number
+              $ref: '#/components/schemas/UpdatePhoneNumberWorkflowStepDto'
+            - title: Paths (existing step)
+              $ref: '#/components/schemas/UpdatePathsWorkflowStepDto'
+            - title: Filter (existing step)
+              $ref: '#/components/schemas/UpdateFilterWorkflowStepDto'
+            - title: Delay (existing step)
+              $ref: '#/components/schemas/UpdateDelayWorkflowStepDto'
+            - title: Lead enrichment (existing step)
+              $ref: '#/components/schemas/UpdateLeadEnrichmentWorkflowStepDto'
+        activation:
+          $ref: '#/components/schemas/WorkflowFormActivationDto'
+    CreatePathsWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - paths
+          description: Marks the step that splits the workflow into conditional paths. It is always placed after every step outside a path, followed by the steps inside its paths, so it takes no stepNumber. Send `paths` to author the split and omit this step to delete it.
+          example: paths
+        paths:
+          minItems: 2
+          description: The branches this step splits into, in the order they should appear on the canvas. A split needs at least two. Omit to leave the persisted branches untouched.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathInputDto_2026_09_22'
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the filter path this split itself sits inside. Omit it for a split at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - action
+    EventTypeWorkflowOutput_2026_09_22:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the workflow
+          example: 101
+        name:
+          type: string
+          description: Name of the workflow
+          example: Platform Test Workflow
+        userId:
+          type: number
+          description: ID of the user who owns the workflow (if not team-owned)
+          example: 2313
+        teamId:
+          type: number
+          description: ID of the team owning the workflow
+          example: 4214321
+        createdAt:
+          type: string
+          description: Timestamp of creation
+          example: '2024-05-12T10:00:00.000Z'
+          format: date-time
+        updatedAt:
+          type: string
+          description: Timestamp of last update
+          example: '2024-05-12T11:30:00.000Z'
+          format: date-time
+        type:
+          type: string
+          enum:
+          - event-type
+          description: type of the workflow
+          example: event-type
+          default: event-type
+        activation:
+          description: Activation settings for the workflow
+          allOf:
+          - $ref: '#/components/schemas/EventTypeWorkflowActivationOutputDto'
+        trigger:
+          description: Trigger configuration
+          allOf:
+          - $ref: '#/components/schemas/EventTypeWorkflowTriggerOutputDto'
+        steps:
+          type: array
+          items:
+            oneOf:
+            - title: Step
+              $ref: '#/components/schemas/EventTypeWorkflowStepOutputDto'
+            - title: Paths step
+              $ref: '#/components/schemas/PathsWorkflowStepOutputDto_2026_09_22'
+            - title: Filter step
+              $ref: '#/components/schemas/FilterWorkflowStepOutputDto_2026_09_22'
+            - title: Delay step
+              $ref: '#/components/schemas/DelayWorkflowStepOutputDto'
+            - title: Lead enrichment step
+              $ref: '#/components/schemas/LeadEnrichmentWorkflowStepOutputDto'
+      required:
+      - id
+      - name
+      - type
+      - activation
+      - trigger
+      - steps
+    OnAfterCalVideoHostsNoShowTriggerDto:
+      type: object
+      properties:
+        offset:
+          description: Offset before/after the trigger time; required for BEFORE_EVENT, AFTER_EVENT, and FORM_SUBMITTED_NO_EVENT
+          allOf:
+          - $ref: '#/components/schemas/WorkflowTriggerOffsetDto'
+        type:
+          type: string
+          default: afterHostsCalVideoNoShow
+          enum:
+          - afterHostsCalVideoNoShow
+          description: Trigger type for the workflow
+          example: afterHostsCalVideoNoShow
+      required:
+      - offset
+      - type
+    UpdateLeadEnrichmentWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - lead_enrichment
+          description: 'Marks the step that looks the attendee up with the lead enrichment provider before the steps after it run. It can only be added or configured in the Cal.com app. When updating steps, include this step as { action: "lead_enrichment", id } using the id returned by GET so the lookup is preserved. Its position is fixed, so it takes no stepNumber: an update that moves another step to the other side of it, or reuses the stepNumber GET returned for it, is rejected.'
+          example: lead_enrichment
+        id:
+          type: number
+          description: Unique identifier of the existing lead enrichment step. A lead enrichment step cannot be created through the API, so the id is required.
+          example: 67244
+      required:
+      - action
+      - id
+    UpdateLeadEnrichmentWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - lead_enrichment
+          description: 'Marks the step that looks the attendee or form submitter up with the lead enrichment provider before the steps after it run. It can only be added or configured in the Cal.com app. When updating steps, include this step as { action: "lead_enrichment", id } using the id returned by GET so the lookup is preserved. Its position is fixed, so it takes no stepNumber: an update that moves another step to the other side of it, or reuses the stepNumber GET returned for it, is rejected.'
+          example: lead_enrichment
+        id:
+          type: number
+          description: Unique identifier of the existing lead enrichment step. A lead enrichment step cannot be created through the API, so the id is required.
+          example: 67244
+      required:
+      - action
+      - id
+    RoutingFormWorkflowStepOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the step
+          example: 67244
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Intended recipient type
+          example: const
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        email:
+          type: string
+          description: Verified email address if action is EMAIL_ADDRESS
+          example: notifications@example.com
+        phone:
+          type: string
+          description: Verified Phone if action is SMS_NUMBER or WHATSAPP_NUMBER
+        phoneRequired:
+          type: boolean
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+          default: false
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: Template type used
+          example: reminder
+        includeCalendarEvent:
+          type: boolean
+          default: false
+          description: Whether a calendar event (.ics) was included (for email actions)
+          example: true
+        skipNoShowAttendees:
+          type: boolean
+          default: false
+          description: Whether an after-event attendee rating email skips attendees currently marked as no-show.
+          example: false
+        sender:
+          type: string
+          description: Displayed sender name used for this step
+          example: Cal.com Notifications
+        message:
+          description: Message content for this step
+          allOf:
+          - $ref: '#/components/schemas/WorkflowMessageOutputDto'
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether auto-translation of the workflow step content for attendees is enabled. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type:
+          - string
+          - 'null'
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en').
+          example: en
+        pathId:
+          type: string
+          description: Id of the conditional path this step belongs to; the step only runs when that path's conditions match. Absent for unconditional steps.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        action:
+          enum:
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          type: string
+          description: Action to perform
+          example: email_host
+      required:
+      - id
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+      - action
+    WorkflowTriggerOffsetOutputDto:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Time value for offset
+          example: 24
+        unit:
+          enum:
+          - hour
+          - minute
+          - day
+          type: string
+          description: Unit for the offset time
+          example: hour
+      required:
+      - value
+      - unit
+    TextWorkflowMessageDto_2026_09_22:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the message
+          example: 'Reminder: Your Meeting {EVENT_NAME} - {EVENT_DATE_ddd, MMM D, YYYY h:mma} with Cal.com'
+        text:
+          type: string
+          description: Text content of the message (used for SMS)
+          example: This is a reminder message from {ORGANIZER} of {EVENT_NAME} to {ATTENDEE} starting here {LOCATION} {MEETING_URL} at {START_TIME_h:mma} {TIMEZONE}.
+      required:
+      - subject
+      - text
+    UpdateWhatsAppAttendeePhoneWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          enum:
+          - email_host
+          - email_attendee
+          - email_address
+          - sms_attendee
+          - sms_number
+          - whatsapp_attendee
+          - whatsapp_number
+          - cal_ai_phone_call
+          type: string
+          default: whatsapp_attendee
+          description: Action to perform
+          example: whatsapp_attendee
+        stepNumber:
+          type: number
+          description: Step number in the workflow sequence
+          example: 1
+        recipient:
+          type: string
+          description: Recipient type
+          example: attendee
+          enum:
+          - const
+          - attendee
+          - email
+          - phone_number
+        template:
+          enum:
+          - reminder
+          - custom
+          - rescheduled
+          - completed
+          - rating
+          - cancelled
+          type: string
+          description: 'Template type for the step. Case-insensitive: uppercase values (e.g. `REMINDER`) are normalized to lowercase server-side for backwards compat.'
+          example: reminder
+        sender:
+          type: string
+          description: Displayed sender name.
+        autoTranslateEnabled:
+          type: boolean
+          description: Whether to enable auto-translation of the workflow step content for attendees. Only available for organizations.
+          example: false
+          default: false
+        sourceLocale:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          description: The source locale of the workflow step content used for auto-translation (e.g. 'en'). Defaults to the user's locale.
+          example: en
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this step belongs to, so it only runs when that path's conditions match. It must name a path defined in this request or already persisted on an echoed gate. Omit it for a step that always runs.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        message:
+          description: Message content for this step, send a text message via whatsapp to the phone numbers of the attendees
+          allOf:
+          - $ref: '#/components/schemas/TextWorkflowMessageDto_2026_09_22'
+        phoneRequired:
+          type: boolean
+          default: false
+          description: whether or not the attendees are required to provide their phone numbers when booking
+          example: true
+        id:
+          type: number
+          description: Unique identifier of the step you want to update, if adding a new step do not provide this id
+          example: 67244
+      required:
+      - action
+      - stepNumber
+      - recipient
+      - template
+      - sender
+      - message
+    CreateFilterWorkflowStepDto_2026_09_22:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - filter
+          description: Marks the step that gates everything after it on a set of conditions. Its position relative to the steps it gates is fixed, so it takes no stepNumber. Send `conditions` to author the gate and omit this step to delete it.
+          example: filter
+        gatedPathId:
+          type: string
+          format: uuid
+          description: Id of the path this filter gates, so steps can name it as their pathId. Generated when omitted; send the gatedPathId from GET to keep the steps already behind this gate.
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          - not_all
+          type: string
+          description: 'all: every condition matches; any: at least one matches; none: no conditions match; not_all: at least one condition does not match.'
+          example: all
+          default: all
+        conditions:
+          description: The conditions every following step is gated on. Omit to leave the persisted conditions untouched; send an empty list for a gate that passes everything.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionInputDto_2026_09_22'
+        pathId:
+          type: string
+          format: uuid
+          description: Id of the conditional path this filter itself sits inside. Omit it for a filter at the top level.
+          example: 8b2f0c31-4a6d-4f89-b1c5-6d0e8a4f2b73
+      required:
+      - action
+    WorkflowStepPathOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the path
+          example: 3f4c11a2-9b7e-4d15-8f0a-2f7de41b6c01
+        name:
+          type: string
+          description: Name of the path
+          example: Enterprise leads
+        position:
+          type: number
+          description: Position of the path among the branches of its step, starting at 0
+          example: 0
+        matches:
+          enum:
+          - all
+          - any
+          - none
+          type: string
+          description: How many of the conditions have to hold for this branch to match — the editor's All, Any and None.
+          example: all
+        conditions:
+          description: The conditions deciding whether this path matches. A path with no conditions always matches.
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowPathConditionOutputDto'
+      required:
+      - id
+      - name
+      - position
+      - matches
+      - conditions
+    UpdatePathsWorkflowStepDto:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - paths
+          description: 'Marks the step that splits the workflow into conditional paths. Paths and their conditions can only be edited in the Cal.com app. When updating steps, include this step as { action: "paths", id } using the id returned by GET so the split is preserved. It is always placed after every step outside a path, followed by the steps inside its paths, so it takes no stepNumber.'
+          example: paths
+        id:
+          type: number
+          description: Unique identifier of the existing paths step. A paths step cannot be created through the API, so the id is required.
+          example: 67244
+      required:
+      - action
+      - id
+    WorkflowPathConditionOutputDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the condition
+          example: b1d2e3f4-5a6b-4c7d-8e9f-0a1b2c3d4e5f
+        field:
+          type: string
+          description: 'What the condition reads: a booking question identifier, a routing form field id, or an event field id.'
+          example: company-size
+        operator:
+          type: string
+          description: 'How the field is compared, as the conditions editor stores it. The operator belongs to the field''s type: text, email, phone and number fields use `equal`, `not_equal`, `like`, `greater`, `between` and the like; a select uses `select_equals` or `select_any_in`; a multiselect uses `multiselect_equals`. To render an operator with the label the editor shows, resolve the field''s type from the booking questions of the event types this workflow is active on, or from the routing form''s fields for a form workflow.'
+          example: select_equals
+          enum:
+          - between
+          - equal
+          - greater
+          - greater_or_equal
+          - is_empty
+          - is_not_empty
+          - less
+          - less_or_equal
+          - like
+          - multiselect_equals
+          - multiselect_not_equals
+          - not_between
+          - not_equal
+          - not_like
+          - select_any_in
+          - select_equals
+          - select_not_any_in
+          - select_not_equals
+          - starts_with
+        values:
+          description: The values the field is compared against. Empty for operators that take none, such as is_empty.
+          example:
+          - enterprise
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - field
+      - operator
+      - values

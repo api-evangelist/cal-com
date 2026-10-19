@@ -1016,6 +1016,630 @@ apis:
     url: https://cal.com/docs/platform
   - type: SDKs
     url: https://www.npmjs.com/package/@calcom/atoms
+- aid: cal-com:cal-com-bookings-email-verification-api
+  name: Cal.com Bookings - Email Verification API
+  description: >-
+    The Bookings - Email Verification API from Cal.com — 3 operation(s) for bookings - email verification.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Bookings - Email Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-bookings-email-verification-api-openapi.yml
+- aid: cal-com:cal-com-bookings-routing-trace-api
+  name: Cal.com Bookings / Routing Trace API
+  description: >-
+    The Bookings / Routing Trace API from Cal.com — 1 operation(s) for bookings / routing trace.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Bookings / Routing Trace
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-bookings-routing-trace-api-openapi.yml
+- aid: cal-com:cal-com-credits-api
+  name: Cal.com Credits API
+  description: The Credits API from Cal.com — 2 operation(s) for credits.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Credits
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-credits-api-openapi.yml
+- aid: cal-com:cal-com-events-api
+  name: Cal.com Events API
+  description: The Events API from Cal.com — 21 operation(s) for events.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-events-api-openapi.yml
+- aid: cal-com:cal-com-insights-api
+  name: Cal.com Insights API
+  description: The Insights API from Cal.com — 11 operation(s) for insights.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Insights
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-insights-api-openapi.yml
+- aid: cal-com:cal-com-links-api
+  name: Cal.com Links API
+  description: The Links API from Cal.com — 1 operation(s) for links.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Links
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-links-api-openapi.yml
+- aid: cal-com:cal-com-managed-orgs-api
+  name: Cal.com Managed Orgs API
+  description: The Managed Orgs API from Cal.com — 2 operation(s) for managed orgs.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Managed Orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-managed-orgs-api-openapi.yml
+- aid: cal-com:cal-com-notifications-api
+  name: Cal.com Notifications API
+  description: The Notifications API from Cal.com — 9 operation(s) for notifications.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-notifications-api-openapi.yml
+- aid: cal-com:cal-com-organization-event-types-api
+  name: Cal.com Organization Event Types API
+  description: >-
+    The Organization Event Types API from Cal.com — 8 operation(s) for organization event types.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Organization Event Types
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-organization-event-types-api-openapi.yml
+- aid: cal-com:cal-com-organization-team-verified-resources-api
+  name: Cal.com Organization Team Verified Resources API
+  description: >-
+    The Organization Team Verified Resources API from Cal.com — 8 operation(s) for organization team verified
+    resources.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Organization Team Verified Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-organization-team-verified-resources-api-openapi.yml
+- aid: cal-com:cal-com-orgs-attributes-api
+  name: Cal.com Orgs / Attributes API
+  description: The Orgs / Attributes API from Cal.com — 2 operation(s) for orgs / attributes.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-attributes-api-openapi.yml
+- aid: cal-com:cal-com-orgs-attributes-options-api
+  name: Cal.com Orgs / Attributes / Options API
+  description: >-
+    The Orgs / Attributes / Options API from Cal.com — 7 operation(s) for orgs / attributes / options.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Attributes / Options
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-attributes-options-api-openapi.yml
+- aid: cal-com:cal-com-orgs-attributes-sync-history-api
+  name: Cal.com Orgs / Attributes / Sync History API
+  description: >-
+    The Orgs / Attributes / Sync History API from Cal.com — 2 operation(s) for orgs / attributes / sync
+    history.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Attributes / Sync History
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-attributes-sync-history-api-openapi.yml
+- aid: cal-com:cal-com-orgs-bookings-api
+  name: Cal.com Orgs / Bookings API
+  description: The Orgs / Bookings API from Cal.com — 3 operation(s) for orgs / bookings.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-bookings-api-openapi.yml
+- aid: cal-com:cal-com-orgs-calendar-invites-api
+  name: Cal.com Orgs / Calendar Invites API
+  description: >-
+    The Orgs / Calendar Invites API from Cal.com — 1 operation(s) for orgs / calendar invites.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Calendar Invites
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-calendar-invites-api-openapi.yml
+- aid: cal-com:cal-com-orgs-delegation-credentials-api
+  name: Cal.com Orgs / Delegation Credentials API
+  description: >-
+    The Orgs / Delegation Credentials API from Cal.com — 3 operation(s) for orgs / delegation credentials.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Delegation Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-delegation-credentials-api-openapi.yml
+- aid: cal-com:cal-com-orgs-memberships-api
+  name: Cal.com Orgs / Memberships API
+  description: The Orgs / Memberships API from Cal.com — 2 operation(s) for orgs / memberships.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Memberships
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-memberships-api-openapi.yml
+- aid: cal-com:cal-com-orgs-roles-api
+  name: Cal.com Orgs / Roles API
+  description: The Orgs / Roles API from Cal.com — 2 operation(s) for orgs / roles.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-roles-api-openapi.yml
+- aid: cal-com:cal-com-orgs-roles-permissions-api
+  name: Cal.com Orgs / Roles / Permissions API
+  description: >-
+    The Orgs / Roles / Permissions API from Cal.com — 2 operation(s) for orgs / roles / permissions.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Roles / Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-roles-permissions-api-openapi.yml
+- aid: cal-com:cal-com-orgs-routing-forms-api
+  name: Cal.com Orgs / Routing forms API
+  description: The Orgs / Routing forms API from Cal.com — 3 operation(s) for orgs / routing forms.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Routing forms
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-routing-forms-api-openapi.yml
+- aid: cal-com:cal-com-orgs-schedules-api
+  name: Cal.com Orgs / Schedules API
+  description: The Orgs / Schedules API from Cal.com — 1 operation(s) for orgs / schedules.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-schedules-api-openapi.yml
+- aid: cal-com:cal-com-orgs-secondary-domains-api
+  name: Cal.com Orgs / Secondary Domains API
+  description: >-
+    The Orgs / Secondary Domains API from Cal.com — 3 operation(s) for orgs / secondary domains.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Secondary Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-secondary-domains-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-api
+  name: Cal.com Orgs / Teams API
+  description: The Orgs / Teams API from Cal.com — 3 operation(s) for orgs / teams.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-bookings-api
+  name: Cal.com Orgs / Teams / Bookings API
+  description: >-
+    The Orgs / Teams / Bookings API from Cal.com — 2 operation(s) for orgs / teams / bookings.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-bookings-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-conferencing-api
+  name: Cal.com Orgs / Teams / Conferencing API
+  description: >-
+    The Orgs / Teams / Conferencing API from Cal.com — 11 operation(s) for orgs / teams / conferencing.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Conferencing
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-conferencing-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-event-types-private-links-api
+  name: Cal.com Orgs / Teams / Event Types / Private Links API
+  description: >-
+    The Orgs / Teams / Event Types / Private Links API from Cal.com — 2 operation(s) for orgs / teams
+    / event types / private links.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Event Types / Private Links
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-event-types-private-links-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-invite-api
+  name: Cal.com Orgs / Teams / Invite API
+  description: The Orgs / Teams / Invite API from Cal.com — 1 operation(s) for orgs / teams / invite.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Invite
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-invite-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-memberships-api
+  name: Cal.com Orgs / Teams / Memberships API
+  description: >-
+    The Orgs / Teams / Memberships API from Cal.com — 2 operation(s) for orgs / teams / memberships.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Memberships
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-memberships-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-roles-api
+  name: Cal.com Orgs / Teams / Roles API
+  description: The Orgs / Teams / Roles API from Cal.com — 2 operation(s) for orgs / teams / roles.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-roles-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-roles-permissions-api
+  name: Cal.com Orgs / Teams / Roles / Permissions API
+  description: >-
+    The Orgs / Teams / Roles / Permissions API from Cal.com — 2 operation(s) for orgs / teams / roles
+    / permissions.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Roles / Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-roles-permissions-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-routing-forms-api
+  name: Cal.com Orgs / Teams / Routing forms API
+  description: >-
+    The Orgs / Teams / Routing forms API from Cal.com — 5 operation(s) for orgs / teams / routing forms.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Routing forms
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-routing-forms-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-routing-forms-responses-api
+  name: Cal.com Orgs / Teams / Routing forms / Responses API
+  description: >-
+    The Orgs / Teams / Routing forms / Responses API from Cal.com — 2 operation(s) for orgs / teams /
+    routing forms / responses.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Routing forms / Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-routing-forms-responses-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-schedules-api
+  name: Cal.com Orgs / Teams / Schedules API
+  description: >-
+    The Orgs / Teams / Schedules API from Cal.com — 1 operation(s) for orgs / teams / schedules.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-schedules-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-stripe-api
+  name: Cal.com Orgs / Teams / Stripe API
+  description: The Orgs / Teams / Stripe API from Cal.com — 3 operation(s) for orgs / teams / stripe.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Stripe
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-stripe-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-users-schedules-api
+  name: Cal.com Orgs / Teams / Users / Schedules API
+  description: >-
+    The Orgs / Teams / Users / Schedules API from Cal.com — 1 operation(s) for orgs / teams / users /
+    schedules.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Users / Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-users-schedules-api-openapi.yml
+- aid: cal-com:cal-com-orgs-teams-workflows-api
+  name: Cal.com Orgs / Teams / Workflows API
+  description: >-
+    The Orgs / Teams / Workflows API from Cal.com — 5 operation(s) for orgs / teams / workflows.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Teams / Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-teams-workflows-api-openapi.yml
+- aid: cal-com:cal-com-orgs-users-api
+  name: Cal.com Orgs / Users API
+  description: The Orgs / Users API from Cal.com — 2 operation(s) for orgs / users.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Users
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-users-api-openapi.yml
+- aid: cal-com:cal-com-orgs-users-bookings-api
+  name: Cal.com Orgs / Users / Bookings API
+  description: >-
+    The Orgs / Users / Bookings API from Cal.com — 1 operation(s) for orgs / users / bookings.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Users / Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-users-bookings-api-openapi.yml
+- aid: cal-com:cal-com-orgs-users-conferencing-api
+  name: Cal.com Orgs / Users / Conferencing API
+  description: >-
+    The Orgs / Users / Conferencing API from Cal.com — 2 operation(s) for orgs / users / conferencing.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Users / Conferencing
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-users-conferencing-api-openapi.yml
+- aid: cal-com:cal-com-orgs-users-ooo-api
+  name: Cal.com Orgs / Users / OOO API
+  description: The Orgs / Users / OOO API from Cal.com — 3 operation(s) for orgs / users / ooo.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Users / OOO
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-users-ooo-api-openapi.yml
+- aid: cal-com:cal-com-orgs-users-schedules-api
+  name: Cal.com Orgs / Users / Schedules API
+  description: >-
+    The Orgs / Users / Schedules API from Cal.com — 2 operation(s) for orgs / users / schedules.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Users / Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-users-schedules-api-openapi.yml
+- aid: cal-com:cal-com-orgs-webhooks-api
+  name: Cal.com Orgs / Webhooks API
+  description: The Orgs / Webhooks API from Cal.com — 2 operation(s) for orgs / webhooks.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Orgs / Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-orgs-webhooks-api-openapi.yml
+- aid: cal-com:cal-com-out-of-office-api
+  name: Cal.com Out of Office API
+  description: The Out of Office API from Cal.com — 2 operation(s) for out of office.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Out of Office
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-out-of-office-api-openapi.yml
+- aid: cal-com:cal-com-routing-forms-api
+  name: Cal.com Routing forms API
+  description: The Routing forms API from Cal.com — 1 operation(s) for routing forms.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Routing forms
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-routing-forms-api-openapi.yml
+- aid: cal-com:cal-com-team-event-types-api
+  name: Cal.com Team Event Types API
+  description: The Team Event Types API from Cal.com — 6 operation(s) for team event types.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Team Event Types
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-team-event-types-api-openapi.yml
+- aid: cal-com:cal-com-teams-api
+  name: Cal.com Teams API
+  description: The Teams API from Cal.com — 2 operation(s) for teams.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-api-openapi.yml
+- aid: cal-com:cal-com-teams-booking-limit-pools-api
+  name: Cal.com Teams / Booking limit pools API
+  description: >-
+    The Teams / Booking limit pools API from Cal.com — 4 operation(s) for teams / booking limit pools.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Booking limit pools
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-booking-limit-pools-api-openapi.yml
+- aid: cal-com:cal-com-teams-bookings-api
+  name: Cal.com Teams / Bookings API
+  description: The Teams / Bookings API from Cal.com — 1 operation(s) for teams / bookings.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-bookings-api-openapi.yml
+- aid: cal-com:cal-com-teams-event-types-webhooks-api
+  name: Cal.com Teams / Event Types / Webhooks API
+  description: >-
+    The Teams / Event Types / Webhooks API from Cal.com — 2 operation(s) for teams / event types / webhooks.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Event Types / Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-event-types-webhooks-api-openapi.yml
+- aid: cal-com:cal-com-teams-events-api
+  name: Cal.com Teams / Events API
+  description: The Teams / Events API from Cal.com — 1 operation(s) for teams / events.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Events
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-events-api-openapi.yml
+- aid: cal-com:cal-com-teams-invite-api
+  name: Cal.com Teams / Invite API
+  description: The Teams / Invite API from Cal.com — 1 operation(s) for teams / invite.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Invite
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-invite-api-openapi.yml
+- aid: cal-com:cal-com-teams-memberships-api
+  name: Cal.com Teams / Memberships API
+  description: The Teams / Memberships API from Cal.com — 2 operation(s) for teams / memberships.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Memberships
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-memberships-api-openapi.yml
+- aid: cal-com:cal-com-teams-routing-forms-responses-api
+  name: Cal.com Teams / Routing forms / Responses API
+  description: >-
+    The Teams / Routing forms / Responses API from Cal.com — 1 operation(s) for teams / routing forms
+    / responses.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Routing forms / Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-routing-forms-responses-api-openapi.yml
+- aid: cal-com:cal-com-teams-schedules-api
+  name: Cal.com Teams / Schedules API
+  description: The Teams / Schedules API from Cal.com — 1 operation(s) for teams / schedules.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-schedules-api-openapi.yml
+- aid: cal-com:cal-com-teams-users-ooo-api
+  name: Cal.com Teams / Users / OOO API
+  description: The Teams / Users / OOO API from Cal.com — 2 operation(s) for teams / users / ooo.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams / Users / OOO
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-users-ooo-api-openapi.yml
+- aid: cal-com:cal-com-teams-verified-resources-api
+  name: Cal.com Teams Verified Resources API
+  description: >-
+    The Teams Verified Resources API from Cal.com — 8 operation(s) for teams verified resources.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Teams Verified Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-teams-verified-resources-api-openapi.yml
+- aid: cal-com:cal-com-timezones-api
+  name: Cal.com Timezones API
+  description: The Timezones API from Cal.com — 1 operation(s) for timezones.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Timezones
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-timezones-api-openapi.yml
+- aid: cal-com:cal-com-workflows-api
+  name: Cal.com Workflows API
+  description: The Workflows API from Cal.com — 3 operation(s) for workflows.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-workflows-api-openapi.yml
+- aid: cal-com:cal-com-allow-lists-api
+  name: Cal.com Allow Lists API
+  description: The Allow Lists API from Cal.com — 2 operation(s) for allow lists.
+  humanURL: https://cal.com/docs/api-reference/v2/bookings
+  baseURL: https://api.cal.com/v2
+  tags:
+  - Allow Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/cal-com-allow-lists-api-openapi.yml
 common:
 - type: CapabilityMap
   url: capabilities/cal-com-capability-edges.yml

@@ -1,0 +1,95 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Timezones API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Timezones
+paths:
+  /v2/timezones:
+    get:
+      description: 'Returns the cities Cal.com knows a timezone for, as a `city` to show the user and the IANA `timezone` to store and to send back to Cal.com. Without `search` every city is returned, around 7000 of them.
+
+
+        `search` searches the full source dataset by city name and additionally matches timezone names, so a search for an abbreviation such as `PDT` resolves to `{ "city": "Pacific Time - US & Canada", "timezone": "America/Los_Angeles" }`. City and alias names match by case-insensitive substring; complete IANA identifiers also match by case-insensitive equality. Partial IANA identifiers are not matched; timezone matches come first, then cities ordered by population, so the most likely answer is first. City results include `country` and `region` to distinguish same-named cities. Each city name and timezone pair appears once; display the location fields alongside the city and let the user choose. Timezone entries have no `pop`, `country` or `region`.
+
+
+        Cal.com stores the IANA identifier, never an abbreviation or an offset: `America/Los_Angeles` already means PDT in summer and PST in winter, and the response has no offset to interpret.'
+      operationId: TimezonesController_getTimeZones
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Match city or timezone names by case-insensitive substring, or a complete IANA timezone identifier by case-insensitive equality. Omit it to get every city.
+        schema:
+          maxLength: 100
+          example: PDT
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Return at most this many entries (a whole number from 1 to 250). Results are ordered by relevance, so a limit keeps the entries a user is most likely to want. Omit it to get every match.
+        schema:
+          minimum: 1
+          maximum: 250
+          example: 20
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTimezonesOutput'
+      summary: Get timezones
+      tags:
+      - Timezones
+      x-oauth-scopes: []
+components:
+  schemas:
+    GetTimezonesOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimezoneOutput'
+      required:
+      - status
+      - data
+    TimezoneOutput:
+      type: object
+      properties:
+        city:
+          type: string
+          description: 'Name to show the user: a city, or the name of a timezone when the search matched a timezone rather than a city.'
+          example: San Francisco
+        timezone:
+          type:
+          - string
+          - 'null'
+          description: IANA timezone identifier — the value to store and to send back to Cal.com. `null` for the handful of cities the upstream dataset has no timezone for; those cannot be selected, and a `search` never returns one.
+          example: America/Los_Angeles
+        country:
+          type: string
+          description: Country of a city search result. Absent for timezone names and the unfiltered list.
+          example: United States of America
+        region:
+          type: string
+          description: State or province of a city search result, when known. Absent for timezone names and the unfiltered list.
+          example: California
+        pop:
+          type: number
+          description: Population of the city. Absent when the entry is a timezone rather than a city.
+          example: 2091036
+      required:
+      - city
+      - timezone

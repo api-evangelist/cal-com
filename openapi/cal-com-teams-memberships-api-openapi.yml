@@ -1,0 +1,392 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Teams / Memberships API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Teams / Memberships
+paths:
+  /v2/teams/{teamId}/memberships:
+    post:
+      description: If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.
+      operationId: TeamsMembershipsController_createTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamMembershipInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTeamMembershipOutput'
+      summary: Create a membership
+      tags:
+      - Teams / Memberships
+      x-mcp:
+        name: create_team_membership
+        guidance: 'Add a user to a team. Required: userId (must be a real user ID from the system). Optional: role (defaults to MEMBER), accepted, disableImpersonation. Ask the user for the userId — never guess.'
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+    get:
+      description: Retrieve team memberships with optional filtering by email addresses. Supports pagination. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_READ` scope is required.
+      operationId: TeamsMembershipsController_getTeamMemberships
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: emails
+        required: false
+        in: query
+        description: Filter team memberships by email addresses. If you want to filter by multiple emails, separate them with a comma (max 20 emails for performance).
+        schema:
+          minItems: 1
+          maxItems: 20
+          example: ?emails=user1@example.com,user2@example.com
+          type: array
+          items:
+            type: string
+            format: email
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamMembershipsOutput'
+      summary: Get all memberships
+      tags:
+      - Teams / Memberships
+      x-mcp:
+        name: get_team_memberships
+        guidance: List all memberships in a team. Supports pagination with take/skip (take max 250) and filtering by up to 20 email addresses.
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_READ
+  /v2/teams/{teamId}/memberships/{membershipId}:
+    get:
+      description: If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_READ` scope is required.
+      operationId: TeamsMembershipsController_getTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: membershipId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamMembershipOutput'
+      summary: Get a membership
+      tags:
+      - Teams / Memberships
+      x-mcp:
+        name: get_team_membership
+        guidance: Get a specific team membership by its numeric ID. Use get_team_memberships to find this — never guess.
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_READ
+    patch:
+      description: If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.
+      operationId: TeamsMembershipsController_updateTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: membershipId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamMembershipInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTeamMembershipOutput'
+      summary: Update membership
+      tags:
+      - Teams / Memberships
+      x-mcp:
+        name: update_team_membership
+        guidance: Update a team membership. Can change accepted status, role, or impersonation settings. Use get_team_memberships to find the membershipId — never guess.
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+    delete:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.remove`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.'
+      operationId: TeamsMembershipsController_deleteTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: membershipId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTeamMembershipOutput'
+      summary: Delete a membership
+      tags:
+      - Teams / Memberships
+      x-mcp:
+        name: delete_team_membership
+        guidance: Remove a user from a team. This action is irreversible — confirm with the user before proceeding. Use get_team_memberships to find the membershipId — never guess.
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+components:
+  schemas:
+    GetTeamMembershipsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data
+    GetTeamMembershipOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data
+    CreateTeamMembershipOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data
+    CreateTeamMembershipInput:
+      type: object
+      properties:
+        userId:
+          type: number
+        accepted:
+          type: boolean
+          default: false
+        role:
+          default: MEMBER
+          enum:
+          - MEMBER
+          - OWNER
+          - ADMIN
+          type: string
+        disableImpersonation:
+          type: boolean
+          default: false
+      required:
+      - userId
+    UpdateTeamMembershipOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data
+    TeamMembershipOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        userId:
+          type: number
+        teamId:
+          type: number
+        accepted:
+          type: boolean
+        role:
+          enum:
+          - MEMBER
+          - OWNER
+          - ADMIN
+          type: string
+        disableImpersonation:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/MembershipUserOutputDto'
+      required:
+      - id
+      - userId
+      - teamId
+      - accepted
+      - role
+      - user
+    UpdateTeamMembershipInput:
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        role:
+          enum:
+          - MEMBER
+          - OWNER
+          - ADMIN
+          type: string
+        disableImpersonation:
+          type: boolean
+    MembershipUserOutputDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: 3f2504e0-4f89-41d3-9a0c-0305e82c3301
+        avatarUrl:
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        bio:
+          type: string
+        metadata:
+          type: object
+          example:
+            key: value
+      required:
+      - uuid
+      - email
+    DeleteTeamMembershipOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data

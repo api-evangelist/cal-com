@@ -1,0 +1,176 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Teams / Schedules API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Teams / Schedules
+paths:
+  /v2/teams/{teamId}/schedules:
+    get:
+      description: If accessed using an OAuth access token, the `TEAM_SCHEDULE_READ` scope is required.
+      operationId: TeamsSchedulesController_getTeamSchedules
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSchedulesOutput_2024_06_11'
+      summary: Get all team member schedules
+      tags:
+      - Teams / Schedules
+      x-oauth-scopes:
+      - TEAM_SCHEDULE_READ
+components:
+  schemas:
+    ScheduleOverrideInput_2024_06_11:
+      type: object
+      properties:
+        date:
+          type: string
+          example: '2024-05-20'
+        startTime:
+          type: string
+          example: '12:00'
+          description: startTime must be a valid time in format HH:MM e.g. 12:00
+        endTime:
+          type: string
+          example: '13:00'
+          description: endTime must be a valid time in format HH:MM e.g. 13:00
+      required:
+      - date
+      - startTime
+      - endTime
+    ScheduleOutput_2024_06_11:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 254
+        ownerId:
+          type: number
+          example: 478
+        name:
+          type: string
+          example: Catch up hours
+        timeZone:
+          type: string
+          example: Europe/Rome
+        availability:
+          example:
+          - days:
+            - Monday
+            - Tuesday
+            startTime: '17:00'
+            endTime: '19:00'
+          - days:
+            - Wednesday
+            - Thursday
+            startTime: '16:00'
+            endTime: '20:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
+        isDefault:
+          type: boolean
+          example: true
+        overrides:
+          example:
+          - date: '2024-05-20'
+            startTime: '18:00'
+            endTime: '21:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
+      required:
+      - id
+      - ownerId
+      - name
+      - timeZone
+      - availability
+      - isDefault
+      - overrides
+    GetSchedulesOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+      required:
+      - status
+      - data
+    ScheduleAvailabilityInput_2024_06_11:
+      type: object
+      properties:
+        days:
+          type: array
+          items:
+            type: string
+            enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+          example:
+          - Monday
+          - Tuesday
+          description: Array of days when schedule is active.
+        startTime:
+          type: string
+          example: 08:00
+          description: startTime must be a valid time in format HH:MM e.g. 08:00
+        endTime:
+          type: string
+          example: '15:00'
+          description: endTime must be a valid time in format HH:MM e.g. 15:00
+      required:
+      - days
+      - startTime
+      - endTime

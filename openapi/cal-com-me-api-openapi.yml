@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Me API
+  title: Cal.com API v2 Me API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,12 +10,12 @@ tags:
 paths:
   /v2/me:
     get:
+      description: If accessed using an OAuth access token, the `PROFILE_READ` scope is required.
       operationId: MeController_getMe
-      summary: Get my profile
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -26,16 +26,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMeOutput'
+      summary: Get my profile
       tags:
       - Me
+      x-mcp:
+        name: get_me
+        guidance: Get the authenticated user's profile including username, email, time zone, default schedule, and organizationId. Call this first when you need the user's own details (email, username, organizationId) for other tools.
+      x-oauth-scopes:
+      - PROFILE_READ
     patch:
+      description: Updates the authenticated user's profile. Email changes require verification and the primary email stays unchanged until verification completes, unless the new email is already a verified secondary email or the user is platform-managed. If accessed using an OAuth access token, the `PROFILE_WRITE` scope is required.
       operationId: MeController_updateMe
-      summary: Update my profile
-      description: Updates the authenticated user's profile. Email changes require verification and the primary email stays unchanged until verification completes, unless the new email is already a verified secondary email or the user is platform-managed.
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -52,10 +57,246 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdateMeOutput'
+      summary: Update my profile
       tags:
       - Me
+      x-mcp:
+        name: update_me
+        guidance: Update the authenticated user's profile. Supports name, email, bio, time zone, week start, time format, default schedule, locale, avatar URL, and custom metadata.
+      x-oauth-scopes:
+      - PROFILE_WRITE
+  /v2/me/booking-limits:
+    get:
+      description: Returns the authenticated user's global booking limits. Unset bounds are returned as null. Only available to organization members — non-org accounts receive a 403. If accessed using an OAuth access token, the `PROFILE_READ` scope is required.
+      operationId: MeController_getMyBookingLimits
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBookingLimitsOutput'
+      summary: Get my booking limits
+      tags:
+      - Me
+      x-oauth-scopes:
+      - PROFILE_READ
+    patch:
+      description: Partially updates the authenticated user's global booking limits. Only fields present in the request body are changed; omit a field to leave it untouched, or set it to null to remove that limit. Only available to organization members — non-org accounts receive a 403. If accessed using an OAuth access token, the `PROFILE_WRITE` scope is required.
+      operationId: MeController_updateMyBookingLimits
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookingLimitsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBookingLimitsOutput'
+      summary: Update my booking limits
+      tags:
+      - Me
+      x-oauth-scopes:
+      - PROFILE_WRITE
+    delete:
+      description: Removes all of the authenticated user's global booking limits. Only available to organization members — non-org accounts receive a 403. If accessed using an OAuth access token, the `PROFILE_WRITE` scope is required.
+      operationId: MeController_clearMyBookingLimits
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Clear my booking limits
+      tags:
+      - Me
+      x-oauth-scopes:
+      - PROFILE_WRITE
 components:
   schemas:
+    GetMeOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/MeOutput'
+      required:
+      - status
+      - data
+    UpdateBookingLimitsInput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          description: Maximum number of bookings per day. Pass null to remove this limit.
+          example: 4
+        perWeek:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          description: Maximum number of bookings per week. Pass null to remove this limit.
+          example: 20
+        perMonth:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          description: Maximum number of bookings per month. Pass null to remove this limit.
+          example: 60
+        perYear:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          description: Maximum number of bookings per year. Pass null to remove this limit.
+          example: 500
+    UpdateMeOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/MeOutput'
+      required:
+      - status
+      - data
+    GetBookingLimitsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/BookingLimitsOutput'
+      required:
+      - status
+      - data
+    MeOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        uuid:
+          type: string
+          format: uuid
+          example: 3f2504e0-4f89-41d3-9a0c-0305e82c3301
+        username:
+          type:
+          - string
+          - 'null'
+        email:
+          type: string
+          format: email
+        name:
+          type:
+          - string
+          - 'null'
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        timeFormat:
+          type: number
+        defaultScheduleId:
+          type:
+          - number
+          - 'null'
+        weekStart:
+          type: string
+        timeZone:
+          type: string
+        locale:
+          type:
+          - string
+          - 'null'
+          example: en
+          description: The user's locale setting
+        organizationId:
+          type:
+          - number
+          - 'null'
+        organization:
+          $ref: '#/components/schemas/MeOrgOutput'
+      required:
+      - id
+      - uuid
+      - username
+      - email
+      - name
+      - avatarUrl
+      - bio
+      - timeFormat
+      - defaultScheduleId
+      - weekStart
+      - timeZone
+      - locale
+      - organizationId
+    UpdateBookingLimitsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/BookingLimitsOutput'
+      required:
+      - status
+      - data
+    MeOrgOutput:
+      type: object
+      properties:
+        isPlatform:
+          type: boolean
+        id:
+          type: number
+      required:
+      - isPlatform
+      - id
     UpdateManagedUserInput:
       type: object
       properties:
@@ -64,16 +305,15 @@ components:
         name:
           type: string
         timeFormat:
-          type: number
           enum:
           - 12
           - 24
+          type: number
           example: 12
           description: Must be 12 or 24
         defaultScheduleId:
           type: number
         weekStart:
-          type: string
           enum:
           - Monday
           - Tuesday
@@ -82,6 +322,7 @@ components:
           - Friday
           - Saturday
           - Sunday
+          type: string
           example: Monday
         timeZone:
           type: string
@@ -126,6 +367,7 @@ components:
           - 'no'
           - pt-BR
           - sk
+          - sl
           - ta
           - uk
           - zh-TW
@@ -134,6 +376,7 @@ components:
           example: en
         avatarUrl:
           type: string
+          format: uri
           example: https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png
           description: URL of the user's avatar image
         bio:
@@ -142,93 +385,35 @@ components:
           example: I am a bio
         metadata:
           type: object
+          additionalProperties: true
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
-    GetMeOutput:
+    BookingLimitsOutput:
       type: object
       properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/MeOutput'
-      required:
-      - status
-      - data
-    MeOrgOutput:
-      type: object
-      properties:
-        isPlatform:
-          type: boolean
-        id:
-          type: number
-      required:
-      - isPlatform
-      - id
-    MeOutput:
-      type: object
-      properties:
-        id:
-          type: number
-        username:
-          type: string
-        email:
-          type: string
-        name:
-          type:
-          - string
-          - 'null'
-        avatarUrl:
-          type:
-          - string
-          - 'null'
-        bio:
-          type:
-          - string
-          - 'null'
-        timeFormat:
-          type: number
-        defaultScheduleId:
+        perDay:
           type:
           - number
           - 'null'
-        weekStart:
-          type: string
-        timeZone:
-          type: string
-        organizationId:
+          example: 4
+        perWeek:
           type:
           - number
           - 'null'
-        organization:
-          $ref: '#/components/schemas/MeOrgOutput'
+          example: 20
+        perMonth:
+          type:
+          - number
+          - 'null'
+          example: 60
+        perYear:
+          type:
+          - number
+          - 'null'
+          example: 500
       required:
-      - id
-      - username
-      - email
-      - name
-      - avatarUrl
-      - bio
-      - timeFormat
-      - defaultScheduleId
-      - weekStart
-      - timeZone
-      - organizationId
-    UpdateMeOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/MeOutput'
-      required:
-      - status
-      - data
+      - perDay
+      - perWeek
+      - perMonth
+      - perYear

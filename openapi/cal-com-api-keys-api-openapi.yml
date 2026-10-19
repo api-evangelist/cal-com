@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Api Keys API
+  title: Cal.com API v2 Api Keys API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,9 +10,8 @@ tags:
 paths:
   /v2/api-keys/refresh:
     post:
-      operationId: ApiKeysController_refresh
-      summary: Refresh API Key
       description: 'Generate a new API key and delete the current one. Provide API key to refresh as a Bearer token in the Authorization header (e.g. "Authorization: Bearer ").'
+      operationId: ApiKeysController_refresh
       parameters:
       - name: Authorization
         in: header
@@ -33,6 +32,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RefreshApiKeyOutput'
+      summary: Refresh API Key
       tags:
       - API Keys
 components:
@@ -44,6 +44,20 @@ components:
           type: string
       required:
       - apiKey
+    RefreshApiKeyOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/ApiKeyOutput'
+      required:
+      - status
+      - data
     RefreshApiKeyInput:
       type: object
       properties:
@@ -57,17 +71,3 @@ components:
           type: boolean
           description: If true, organization api key never expires.
           example: true
-    RefreshApiKeyOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ApiKeyOutput'
-      required:
-      - status
-      - data

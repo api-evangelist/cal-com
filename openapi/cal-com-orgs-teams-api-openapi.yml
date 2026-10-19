@@ -1,0 +1,579 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams
+paths:
+  /v2/organizations/{orgId}/teams:
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `team.readOrgTeams`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `ORG_PROFILE_READ` scope is required.'
+      operationId: OrganizationsTeamsController_getAllTeams
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamsOutputResponseDto'
+      summary: Get all teams
+      tags:
+      - Orgs / Teams
+      x-mcp:
+        name: get_org_teams
+        guidance: List all teams in an organization. Supports take/skip pagination (take max 250). Requires ORG_ADMIN role. Use get_me to obtain your organizationId. Returns team IDs, names, and slugs needed by other team-scoped tools. If this fails with 403, use get_my_teams instead.
+      x-oauth-scopes:
+      - ORG_PROFILE_READ
+      x-platform-plan: ESSENTIALS
+    post:
+      description: 'Required membership role: `org admin`. PBAC permission: `team.create`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `ORG_PROFILE_WRITE` scope is required.'
+      operationId: OrganizationsTeamsController_createTeam
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrgTeamDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamOutputResponseDto'
+      summary: Create a team
+      tags:
+      - Orgs / Teams
+      x-oauth-scopes:
+      - ORG_PROFILE_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/me:
+    get:
+      description: 'Required membership role: `org member`. PBAC permission: `team.read`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_READ` scope is required.'
+      operationId: OrganizationsTeamsController_getMyTeams
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMeTeamsOutputResponseDto'
+      summary: Get teams membership for user
+      tags:
+      - Orgs / Teams
+      x-mcp:
+        name: get_my_teams
+        guidance: List teams the authenticated user belongs to. Supports take/skip pagination (take max 250). Works for any org member (org admins see all teams). Use get_me to obtain your organizationId. Returns team IDs, names, and slugs needed by other team-scoped tools.
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readTeamSettings`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_PROFILE_READ` scope is required.'
+      operationId: OrganizationsTeamsController_getTeam
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamOutputResponseDto'
+      summary: Get a team
+      tags:
+      - Orgs / Teams
+      x-oauth-scopes:
+      - TEAM_PROFILE_READ
+      x-platform-plan: ESSENTIALS
+    delete:
+      description: 'Required membership role: `org admin`. PBAC permission: `team.delete`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `ORG_PROFILE_WRITE` scope is required.'
+      operationId: OrganizationsTeamsController_deleteTeam
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamOutputResponseDto'
+      summary: Delete a team
+      tags:
+      - Orgs / Teams
+      x-oauth-scopes:
+      - ORG_PROFILE_WRITE
+      x-platform-plan: ESSENTIALS
+    patch:
+      description: 'Required membership role: `org admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `ORG_PROFILE_WRITE` scope is required.'
+      operationId: OrganizationsTeamsController_updateTeam
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrgTeamDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamOutputResponseDto'
+      summary: Update a team
+      tags:
+      - Orgs / Teams
+      x-oauth-scopes:
+      - ORG_PROFILE_WRITE
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    OrgTeamOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/OrgTeamOutputDto'
+      required:
+      - status
+      - data
+    OrgTeamsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrgTeamOutputDto'
+      required:
+      - status
+      - data
+    UpdateOrgTeamDto:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 155
+          description: Name of the team. Maximum 155 characters. Cannot contain links or URLs.
+          example: CalTeam
+        slug:
+          type: string
+          description: Team slug
+          example: caltel
+        logoUrl:
+          type: string
+          example: https://i.cal.com/api/avatar/b0b58752-68ad-4c0d-8024-4fa382a77752.png
+          description: URL of the teams logo image
+        calVideoLogo:
+          type: string
+        appLogo:
+          type: string
+        appIconLogo:
+          type: string
+        bio:
+          type: string
+        hideBranding:
+          type: boolean
+        isPrivate:
+          type: boolean
+        hideBookATeamMember:
+          type: boolean
+        metadata:
+          type: object
+          additionalProperties: true
+          description: 'You can store any additional data you want here.
+
+            Metadata must have at most 50 keys, each key up to 40 characters.
+
+            Values can be strings (up to 500 characters), numbers, or booleans.'
+          example:
+            key: value
+        theme:
+          type: string
+        brandColor:
+          type: string
+        darkBrandColor:
+          type: string
+        bannerUrl:
+          type: string
+          example: https://i.cal.com/api/avatar/949be534-7a88-4185-967c-c020b0c0bef3.png
+          description: URL of the teams banner image which is shown on booker
+        timeFormat:
+          type: number
+        timeZone:
+          type: string
+          example: America/New_York
+          description: Timezone is used to create teams's default schedule from Monday to Friday from 9AM to 5PM. It will default to Europe/London if not passed.
+        weekStart:
+          type: string
+          example: Monday
+        bookingLimits:
+          type: string
+        includeManagedEventsInLimits:
+          type: boolean
+    OrgTeamOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+        parentId:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+        logoUrl:
+          type: string
+          format: uri
+        calVideoLogo:
+          type: string
+          format: uri
+        appLogo:
+          type: string
+          format: uri
+        appIconLogo:
+          type: string
+          format: uri
+        bio:
+          type: string
+        hideBranding:
+          type: boolean
+        isOrganization:
+          type: boolean
+        isPrivate:
+          type: boolean
+        hideBookATeamMember:
+          type: boolean
+          default: false
+        metadata:
+          type: object
+          additionalProperties: true
+          example:
+            key: value
+        theme:
+          type: string
+        brandColor:
+          type: string
+        darkBrandColor:
+          type: string
+        bannerUrl:
+          type: string
+          format: uri
+        timeFormat:
+          type: number
+        timeZone:
+          type: string
+          default: Europe/London
+        weekStart:
+          type: string
+          default: Sunday
+      required:
+      - id
+      - name
+      - isOrganization
+    OrgMeTeamsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrgTeamOutputDto'
+      required:
+      - status
+      - data
+    CreateOrgTeamDto:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 155
+          description: Name of the team. Maximum 155 characters. Cannot contain links or URLs.
+          example: CalTeam
+        slug:
+          type: string
+          description: Team slug in kebab-case - if not provided will be generated automatically based on name.
+          example: caltel
+        logoUrl:
+          type: string
+          example: https://i.cal.com/api/avatar/b0b58752-68ad-4c0d-8024-4fa382a77752.png
+          description: URL of the teams logo image
+        calVideoLogo:
+          type: string
+        appLogo:
+          type: string
+        appIconLogo:
+          type: string
+        bio:
+          type: string
+        hideBranding:
+          type: boolean
+          default: false
+        isPrivate:
+          type: boolean
+        hideBookATeamMember:
+          type: boolean
+        metadata:
+          type: object
+          additionalProperties: true
+          description: 'You can store any additional data you want here.
+
+            Metadata must have at most 50 keys, each key up to 40 characters.
+
+            Values can be strings (up to 500 characters), numbers, or booleans.'
+          example:
+            key: value
+        theme:
+          type: string
+        brandColor:
+          type: string
+        darkBrandColor:
+          type: string
+        bannerUrl:
+          type: string
+          example: https://i.cal.com/api/avatar/949be534-7a88-4185-967c-c020b0c0bef3.png
+          description: URL of the teams banner image which is shown on booker
+        timeFormat:
+          type: number
+        timeZone:
+          type: string
+          default: Europe/London
+          example: America/New_York
+          description: Timezone is used to create teams's default schedule from Monday to Friday from 9AM to 5PM. It will default to Europe/London if not passed.
+        weekStart:
+          type: string
+          default: Sunday
+          example: Monday
+        autoAcceptCreator:
+          type: boolean
+          default: true
+          description: If you are a platform customer, don't pass 'false', because then team creator won't be able to create team event types.
+        addCreatorAsOwner:
+          type: boolean
+          default: true
+          description: Whether to create an OWNER membership on the team for the user associated with authentication credentials for this request. For example, if you authenticate with API key belonging to Bob, then Bob will have OWNER membership for the newly created team. Pass false to create the team without an OWNER membership for that user - e.g. so it isn't included when assignAllTeamMembers is used on round-robin events. Org admins/owners can still manage the team and its event types without being a team member.
+      required:
+      - name

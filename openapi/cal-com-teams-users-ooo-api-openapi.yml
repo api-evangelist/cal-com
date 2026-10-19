@@ -1,0 +1,354 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Teams / Users / OOO API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Teams / Users / OOO
+paths:
+  /v2/teams/{teamId}/users/{userId}/ooo:
+    get:
+      description: If accessed using an OAuth access token, the `TEAM_SCHEDULE_READ` scope is required.
+      operationId: TeamsOOOController_getTeamMemberOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: sortStart
+        required: false
+        in: query
+        description: Sort results by their start time in ascending or descending order.
+        schema:
+          example: ?sortStart=asc OR ?sortStart=desc
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: sortEnd
+        required: false
+        in: query
+        description: Sort results by their end time in ascending or descending order.
+        schema:
+          example: ?sortEnd=asc OR ?sortEnd=desc
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOoosOutputResponseDto'
+      summary: Get all out-of-office entries for a team member
+      tags:
+      - Teams / Users / OOO
+      x-oauth-scopes:
+      - TEAM_SCHEDULE_READ
+    post:
+      description: If accessed using an OAuth access token, the `TEAM_SCHEDULE_WRITE` scope is required.
+      operationId: TeamsOOOController_createTeamMemberOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOutOfOfficeEntryDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOooOutputResponseDto'
+      summary: Create an out-of-office entry for a team member
+      tags:
+      - Teams / Users / OOO
+      x-oauth-scopes:
+      - TEAM_SCHEDULE_WRITE
+  /v2/teams/{teamId}/users/{userId}/ooo/{oooId}:
+    patch:
+      description: If accessed using an OAuth access token, the `TEAM_SCHEDULE_WRITE` scope is required.
+      operationId: TeamsOOOController_updateTeamMemberOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: oooId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOutOfOfficeEntryDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOooOutputResponseDto'
+      summary: Update an out-of-office entry for a team member
+      tags:
+      - Teams / Users / OOO
+      x-oauth-scopes:
+      - TEAM_SCHEDULE_WRITE
+    delete:
+      description: If accessed using an OAuth access token, the `TEAM_SCHEDULE_WRITE` scope is required.
+      operationId: TeamsOOOController_deleteTeamMemberOOO
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: oooId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOooOutputResponseDto'
+      summary: Delete an out-of-office entry for a team member
+      tags:
+      - Teams / Users / OOO
+      x-oauth-scopes:
+      - TEAM_SCHEDULE_WRITE
+components:
+  schemas:
+    UserOoosOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOooOutputDto'
+      required:
+      - status
+      - data
+    UserOooOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/UserOooOutputDto'
+      required:
+      - status
+      - data
+    CreateOutOfOfficeEntryDto:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+          description: The start date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-01T00:00:00.000Z'
+        end:
+          format: date-time
+          type: string
+          description: The end date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-10T23:59:59.999Z'
+        notes:
+          type: string
+          description: Optional notes for the out of office entry.
+          example: Vacation in Hawaii
+        toUserId:
+          type: number
+          description: The ID of the user covering for the out of office period, if applicable.
+          example: 2
+        reason:
+          enum:
+          - unspecified
+          - vacation
+          - travel
+          - sick
+          - public_holiday
+          type: string
+          description: the reason for the out of office entry, if applicable
+          example: vacation
+      required:
+      - start
+      - end
+    UserOooOutputDto:
+      type: object
+      properties:
+        userId:
+          type: number
+          description: The ID of the user.
+          example: 2
+        toUserId:
+          type: number
+          description: The ID of the user covering for the out of office period, if applicable.
+          example: 2
+        id:
+          type: number
+          description: The ID of the ooo entry.
+          example: 2
+        uuid:
+          type: string
+          description: The UUID of the ooo entry.
+          example: e84be5a3-4696-49e3-acc7-b2f3999c3b94
+        start:
+          format: date-time
+          type: string
+          description: The start date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-01T00:00:00.000Z'
+        end:
+          format: date-time
+          type: string
+          description: The end date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-10T23:59:59.999Z'
+        notes:
+          type: string
+          description: Optional notes for the out of office entry.
+          example: Vacation in Hawaii
+        reason:
+          enum:
+          - unspecified
+          - vacation
+          - travel
+          - sick
+          - public_holiday
+          type: string
+          description: the reason for the out of office entry, if applicable
+          example: vacation
+      required:
+      - userId
+      - id
+      - uuid
+      - start
+      - end
+    UpdateOutOfOfficeEntryDto:
+      type: object
+      properties:
+        start:
+          format: date-time
+          type: string
+          description: The start date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-01T00:00:00.000Z'
+        end:
+          format: date-time
+          type: string
+          description: The end date and time of the out of office period in ISO 8601 format in UTC timezone.
+          example: '2023-05-10T23:59:59.999Z'
+        notes:
+          type: string
+          description: Optional notes for the out of office entry.
+          example: Vacation in Hawaii
+        toUserId:
+          type: number
+          description: The ID of the user covering for the out of office period, if applicable.
+          example: 2
+        reason:
+          enum:
+          - unspecified
+          - vacation
+          - travel
+          - sick
+          - public_holiday
+          type: string
+          description: the reason for the out of office entry, if applicable
+          example: vacation

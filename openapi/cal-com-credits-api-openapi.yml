@@ -1,0 +1,75 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Credits API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Credits
+paths:
+  /v2/credits/available:
+    get:
+      description: Check if the authenticated user (or their org/team) has available credits and return the current balance. Third-party OAuth tokens require the `CREDITS_READ` scope.
+      operationId: CreditsController_getAvailableCredits
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      summary: Check available credits
+      tags:
+      - Credits
+      x-oauth-scopes:
+      - CREDITS_READ
+  /v2/credits/charge:
+    post:
+      description: Charge credits for an authenticated user. Uses externalRef for idempotency to prevent double-charging. Third-party OAuth tokens require the `CREDITS_WRITE` scope.
+      operationId: CreditsController_chargeCredits
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChargeCreditsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      summary: Charge credits
+      tags:
+      - Credits
+      x-oauth-scopes:
+      - CREDITS_WRITE
+components:
+  schemas:
+    ChargeCreditsInput:
+      type: object
+      properties:
+        credits:
+          type: number
+          minimum: 1
+          description: Number of credits to charge
+          example: 5
+        creditFor:
+          enum:
+          - SMS
+          - CAL_AI_PHONE_CALL
+          - AI_AGENT
+          type: string
+          description: What the credits are being charged for
+          example: AI_AGENT
+        externalRef:
+          type: string
+          description: Unique external reference for idempotency
+          example: agent-thread-123-1711432800000
+      required:
+      - credits
+      - creditFor

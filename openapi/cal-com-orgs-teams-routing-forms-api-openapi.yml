@@ -1,0 +1,1350 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Routing forms API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Routing forms
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/routing-forms:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `routingForm.readTeamRoutingForms`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_ROUTING_FORM_READ` scope is required.'
+      operationId: OrganizationsTeamsRoutingFormsController_getTeamRoutingForms
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of responses to skip
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Number of responses to take
+        schema:
+          type: number
+      - name: sortCreatedAt
+        required: false
+        in: query
+        description: Sort by creation time
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: sortUpdatedAt
+        required: false
+        in: query
+        description: Sort by update time
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: afterCreatedAt
+        required: false
+        in: query
+        description: Filter by responses created after this date
+        schema:
+          format: date-time
+          type: string
+      - name: beforeCreatedAt
+        required: false
+        in: query
+        description: Filter by responses created before this date
+        schema:
+          format: date-time
+          type: string
+      - name: afterUpdatedAt
+        required: false
+        in: query
+        description: Filter by responses created after this date
+        schema:
+          format: date-time
+          type: string
+      - name: beforeUpdatedAt
+        required: false
+        in: query
+        description: Filter by responses updated before this date
+        schema:
+          format: date-time
+          type: string
+      - name: routedToBookingUid
+        required: false
+        in: query
+        description: Filter by responses routed to a specific booking
+        schema:
+          type: string
+      - name: disabled
+        required: false
+        in: query
+        description: Filter by disabled status
+        schema:
+          type: boolean
+      - name: name
+        required: false
+        in: query
+        description: Filter by name
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoutingFormsOutput'
+      summary: Get team routing forms
+      tags:
+      - Orgs / Teams / Routing forms
+      x-mcp:
+        name: get_team_routing_forms
+        guidance: List routing forms that belong to a team in an organization. Use this as a team admin; get_org_routing_forms requires an organization admin. Use get_my_teams or get_org_teams to find teamId. Supports filtering by name (case-insensitive substring) and disabled status, created/updated date range filters, sorting by created/updated date, and skip/take pagination. Use get_routing_form with a returned id to read its questions and routes.
+        hints:
+          readOnly: true
+      x-oauth-scopes:
+      - TEAM_ROUTING_FORM_READ
+      x-platform-plan: ESSENTIALS
+    post:
+      description: 'Required membership role: `team admin`. PBAC permission: `routingForm.create`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_ROUTING_FORM_WRITE` scope is required. The form is created with no questions and a fallback route.'
+      operationId: OrganizationsTeamsRoutingFormsController_createTeamRoutingForm
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRoutingFormInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRoutingFormOutput'
+      summary: Create team routing form
+      tags:
+      - Orgs / Teams / Routing forms
+      x-mcp:
+        name: create_routing_form
+        guidance: Create a routing form for a team in an organization, from a name and an optional description. Confirm the name and the team with the user before calling; use get_my_teams or get_org_teams to find teamId and never guess it. Each call creates a new form, so never call it again to retry or to rename a form. The form starts with no questions and one fallback route, and is returned with its id, routes and updatedAt. To change its routes, pass the returned routes and updatedAt straight to edit_routing_form_routes, and don't call get_routing_form right after creating the form, because it can briefly miss a new form. This tool does not add questions, and until the form has questions the only route change that applies is setFallback.
+      x-oauth-scopes:
+      - TEAM_ROUTING_FORM_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/routing-forms/{routingFormId}:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `routingForm.readTeamRoutingForms`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_ROUTING_FORM_READ` scope is required.'
+      operationId: OrganizationsTeamsRoutingFormsController_getTeamRoutingForm
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: routingFormId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRoutingFormOutput'
+      summary: Get team routing form
+      tags:
+      - Orgs / Teams / Routing forms
+      x-mcp:
+        name: get_routing_form
+        guidance: 'Get one team routing form: its questions (id, label, identifier, type, required, hidden, options) and its routes in evaluation order (id, name, kind, action, readable conditions). Call this before changing a form''s routes or questions: route edits reference the route ids and question labels returned here, question edits reference the question and option ids, and applying an edit requires the form''s updatedAt. Use get_team_routing_forms to find routingFormId; never guess route, question or option ids.'
+        hints:
+          readOnly: true
+      x-oauth-scopes:
+      - TEAM_ROUTING_FORM_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/routing-forms/{routingFormId}/history:
+    get:
+      description: 'Required membership role: `org member`. PBAC permission: `routingForm.readTeamAuditLogs` on the team or `routingForm.readOrgAuditLogs` on the organization. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_ROUTING_FORM_READ` scope is required. Returns the form''s change history, newest first.'
+      operationId: OrganizationsTeamsRoutingFormsController_getTeamRoutingFormHistory
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: routingFormId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of history entries to return.
+        schema:
+          minimum: 1
+          maximum: 50
+          default: 25
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        description: Pass `pagination.nextCursor` from the previous response to fetch older entries.
+        schema:
+          format: uuid
+          example: 019a1b2c-3d4e-7f80-9a1b-2c3d4e5f6a7b
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRoutingFormHistoryOutput'
+      summary: Get team routing form history
+      tags:
+      - Orgs / Teams / Routing forms
+      x-mcp:
+        name: get_routing_form_history
+        guidance: 'Get the change history of a team routing form, newest first: each entry has an id, a timestamp, who made the change, and what changed (questions, routes, route conditions and settings, with before and after values). Use it to see what changed on a form and when, and to review its recent changes before and after editing it with edit_routing_form_routes; a new edit can take a few seconds to appear. Use get_team_routing_forms to find routingFormId. Supports cursor pagination: limit (1-50, default 25) and cursor set to pagination.nextCursor.'
+        hints:
+          readOnly: true
+      x-oauth-scopes:
+      - TEAM_ROUTING_FORM_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/routing-forms/{routingFormId}/routes:
+    patch:
+      description: 'Required membership role: `team admin`. PBAC permission: `routingForm.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_ROUTING_FORM_WRITE` scope is required. Previews by default (`dryRun` defaults to true); send `dryRun: false` with `expectedUpdatedAt` to save.'
+      operationId: OrganizationsTeamsRoutingFormsController_editTeamRoutingFormRoutes
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: routingFormId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditTeamRoutingFormRoutesInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditTeamRoutingFormRoutesOutput'
+      summary: Edit team routing form routes
+      tags:
+      - Orgs / Teams / Routing forms
+      x-mcp:
+        name: edit_routing_form_routes
+        guidance: 'Edit the routes of an existing team routing form: add, replace, remove or move routes, or change the fallback. Call get_routing_form first, refer to routes by the routeId it returns and to questions by their exact label, and never guess ids. Send only the operations that change something, never the full routes array: untouched routes keep their ids and settings. Always preview first with dryRun: true (the default), show the user the returned changes and warnings, and get their confirmation. Then send the same operations with dryRun: false and expectedUpdatedAt set to the updatedAt from the preview. A 409 means the form changed after the preview: call get_routing_form again, rebuild and preview the edit, and ask for confirmation again; never retry an apply blindly. Routes are evaluated top to bottom and the first match wins, so put the most specific routes first (position is 0-based among non-fallback routes; add appends when omitted). Multiselect questions have no equals: all_in means every selected option is in the list, so it is a subset test. An unanswered optional question counts as empty, and an empty value matches not_equals, not_contains, not_all_in, less_than, less_or_equal and ends_with; make the question required, or route on a choice question with explicit options, when that would catch the wrong people. Number questions support only equals, not_equals, greater_than, less_than, greater_or_equal, less_or_equal and between; use non-overlapping ranges. Router routes can be moved or removed but not replaced. Change the fallback only with setFallback. On a route to a round-robin event type, memberFilter limits the hosts to team members whose attributes match, and fallbackMemberFilter (same shape) sets the hosts used when memberFilter matches nobody. Fallback rules need attribute rules on the route: send memberFilter too, or replace a route that already has them. A route whose own fallback action (set in the route builder, not the form fallback that setFallback changes) shows a message or redirects to a URL never uses fallback rules, so the edit is refused. On replace, omitting memberFilter or fallbackMemberFilter keeps the stored rules; get_routing_form only counts them in its summary, so omit them rather than rebuilding rules you cannot read. Attach examples (answers keyed by question label, and the expectedRoute they must reach: a route id, route name or event-type slug, or null for the fallback) so the server checks that the edited routes catch the intended answers; a failed example rejects the edit with 400.'
+        hints:
+          destructive: true
+      x-oauth-scopes:
+      - TEAM_ROUTING_FORM_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/routing-forms/{routingFormId}/fields:
+    patch:
+      description: 'Required membership role: `team admin`. PBAC permission: `routingForm.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_ROUTING_FORM_WRITE` scope is required. Previews by default (`dryRun` defaults to true); send `dryRun: false` with `expectedUpdatedAt` to save.'
+      operationId: OrganizationsTeamsRoutingFormsController_editTeamRoutingFormFields
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: routingFormId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditTeamRoutingFormFieldsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditTeamRoutingFormFieldsOutput'
+      summary: Edit team routing form fields
+      tags:
+      - Orgs / Teams / Routing forms
+      x-mcp:
+        name: edit_routing_form_fields
+        guidance: 'Edit the questions of an existing team routing form: add, update or remove questions. Call get_routing_form first and refer to existing questions by the fieldId it returns and to their options by option id; a label only names a new question, and ids are never guessed. Send only the operations that change something: every route and every untouched question keeps its id and settings, and an update changes only the properties it lists. To change a choice question''s options, send its complete option list in display order: keep each existing option''s id (a renamed option keeps its id, so routes comparing against it keep matching), omit the id for a new option, and leave an option out to remove it. A question''s type can''t be changed; remove it and add a new one. Position is 0-based among the form''s questions, and add appends when it is omitted. Always preview first with dryRun: true (the default), show the user the returned changes and warnings, and get their confirmation. Then send the same operations with dryRun: false and expectedUpdatedAt set to the updatedAt from the preview. A 409 means the form changed after the preview: call get_routing_form again, rebuild and preview the edit, and ask for confirmation again; never retry an apply blindly. Removing a question or an option that a route uses (on this form or on a form that routes through it) is rejected with 400: change or remove that route first with edit_routing_form_routes. A hidden question is not shown to the booker and takes its answer from a URL parameter named after its identifier, e.g. a hidden "Lead Source" filled in by the link the lead clicked; a hidden question can''t be required. Renaming a question without an explicit identifier changes the key prefilled links use; the preview warns when that happens.'
+        hints:
+          destructive: true
+      x-oauth-scopes:
+      - TEAM_ROUTING_FORM_WRITE
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    EditTeamRoutingFormFieldsInput:
+      type: object
+      properties:
+        operations:
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            oneOf:
+            - title: Add question
+              $ref: '#/components/schemas/AddFieldOperationInput'
+            - title: Update question
+              $ref: '#/components/schemas/UpdateFieldOperationInput'
+            - title: Remove question
+              $ref: '#/components/schemas/RemoveFieldOperationInput'
+        dryRun:
+          type: boolean
+          default: true
+          description: Preview changes without saving. Defaults to true.
+        expectedUpdatedAt:
+          type: string
+          format: date-time
+          description: 'Required when dryRun is false: the updatedAt from the preview or from get_routing_form.'
+      required:
+      - operations
+    CreateTeamRoutingFormInput:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          example: Inbound sales
+        description:
+          type: string
+          maxLength: 3000
+          example: Routes inbound leads to the right sales rep
+      required:
+      - name
+    RoutingFormFieldOptionInput:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: a1b2c3d4-...
+          description: The option id from get_routing_form. Omit it for a new option.
+        label:
+          type: string
+          example: Partner
+      required:
+      - label
+    GetRoutingFormsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingFormOutput'
+      required:
+      - status
+      - data
+    EventTypeRedirectActionInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - eventTypeRedirectUrl
+        eventTypeSlug:
+          type: string
+          example: acme/discovery-call
+      required:
+      - type
+      - eventTypeSlug
+    EditTeamRoutingFormFieldChangeOutput:
+      type: object
+      properties:
+        type:
+          enum:
+          - add
+          - update
+          - remove
+          type: string
+        fieldId:
+          type: string
+          example: a1b2c3d4-...
+        description:
+          type: string
+          example: Added question "Lead source" (text) at position 2.
+      required:
+      - type
+      - fieldId
+      - description
+    EditTeamRoutingFormRoutesDataOutput:
+      type: object
+      properties:
+        formId:
+          type: string
+          example: a1b2c3d4-...
+        dryRun:
+          type: boolean
+          example: true
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EditTeamRoutingFormRouteChangeOutput'
+        warnings:
+          type: array
+          items:
+            type: string
+        before:
+          type: array
+          items:
+            $ref: '#/components/schemas/EditTeamRoutingFormRoutesRouteOutput'
+        after:
+          type: array
+          items:
+            $ref: '#/components/schemas/EditTeamRoutingFormRoutesRouteOutput'
+        updatedAt:
+          type: string
+          example: '2024-03-28T10:00:00.000Z'
+          format: date-time
+      required:
+      - formId
+      - dryRun
+      - changes
+      - warnings
+      - before
+      - after
+      - updatedAt
+    CustomPageMessageActionInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - customPageMessage
+        message:
+          type: string
+          example: Thanks for your interest
+      required:
+      - type
+      - message
+    AddFieldOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - add
+        field:
+          $ref: '#/components/schemas/NewRoutingFormFieldInput'
+        position:
+          type: number
+          minimum: 0
+          example: 0
+          description: 0-based position among the form's questions. Appends when omitted.
+      required:
+      - type
+      - field
+    EditTeamRoutingFormFieldsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/EditTeamRoutingFormFieldsDataOutput'
+      required:
+      - status
+      - data
+    TeamRoutingFormRouteOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          example: a1b2c3d4-...
+        name:
+          type:
+          - string
+          - 'null'
+          example: Enterprise leads
+        kind:
+          enum:
+          - route
+          - router
+          - fallback
+          type: string
+        action:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/TeamRoutingFormRouteActionOutput'
+        conditions:
+          type:
+          - string
+          - 'null'
+          example: '"Company size" equals "51-200"'
+          description: Human-readable description of the conditions a submission must match
+      required:
+      - id
+      - name
+      - kind
+      - action
+      - conditions
+    TeamRoutingFormHistoryPaginationOutput:
+      type: object
+      properties:
+        nextCursor:
+          type:
+          - string
+          - 'null'
+          example: 019a1b2c-3d4e-7f80-9a1b-2c3d4e5f6a7b
+          description: Pass as `cursor` to fetch older entries; null when there are none
+        hasMore:
+          type: boolean
+          example: false
+      required:
+      - nextCursor
+      - hasMore
+    TeamRoutingFormHistoryActorOutput:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          example: Ada Lovelace
+          description: Display name of who made the change; null when they have no name
+      required:
+      - name
+    EditTeamRoutingFormRoutesInput:
+      type: object
+      properties:
+        operations:
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AddRouteOperationInput'
+            - $ref: '#/components/schemas/ReplaceRouteOperationInput'
+            - $ref: '#/components/schemas/RemoveRouteOperationInput'
+            - $ref: '#/components/schemas/MoveRouteOperationInput'
+            - $ref: '#/components/schemas/SetFallbackOperationInput'
+        examples:
+          maxItems: 20
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteExampleInput'
+        dryRun:
+          type: boolean
+          default: true
+          description: Preview changes without saving. Defaults to true.
+        expectedUpdatedAt:
+          type: string
+          format: date-time
+          description: 'Required when dryRun is false: the updatedAt from the preview or from get_routing_form.'
+      required:
+      - operations
+    DraftRouteInput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Enterprise
+        match:
+          default: all
+          enum:
+          - all
+          - any
+          type: string
+        conditions:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/DraftConditionInput'
+        action:
+          oneOf:
+          - $ref: '#/components/schemas/EventTypeRedirectActionInput'
+          - $ref: '#/components/schemas/CustomPageMessageActionInput'
+          - $ref: '#/components/schemas/ExternalRedirectUrlActionInput'
+        memberFilter:
+          $ref: '#/components/schemas/DraftMemberFilterInput'
+        fallbackMemberFilter:
+          description: 'The hosts to use when memberFilter matches nobody. The route needs attribute rules: send memberFilter too, or replace a route that already has them. On replace, omit it to keep the stored fallback rules.'
+          allOf:
+          - $ref: '#/components/schemas/DraftMemberFilterInput'
+      required:
+      - conditions
+      - action
+    DraftConditionInput:
+      type: object
+      properties:
+        field:
+          type: string
+          example: Company size
+        operator:
+          enum:
+          - equals
+          - not_equals
+          - contains
+          - not_contains
+          - starts_with
+          - ends_with
+          - is_empty
+          - is_not_empty
+          - greater_than
+          - less_than
+          - greater_or_equal
+          - less_or_equal
+          - between
+          - all_in
+          - not_all_in
+          type: string
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - type: number
+      required:
+      - field
+      - operator
+    RouteExampleInput:
+      type: object
+      properties:
+        answers:
+          type: object
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: number
+            - type: array
+              items:
+                oneOf:
+                - type: string
+                - type: number
+          example:
+            Company size: 51-200
+        expectedRoute:
+          type:
+          - string
+          - 'null'
+          description: The route's exact name, or the event-type slug it redirects to. Null when the answers should fall through to the fallback; a route id is also accepted.
+          example: route-enterprise
+      required:
+      - answers
+      - expectedRoute
+    EditTeamRoutingFormRoutesRouteOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          example: a1b2c3d4-...
+        name:
+          type:
+          - string
+          - 'null'
+          example: Enterprise leads
+        kind:
+          enum:
+          - route
+          - router
+          - fallback
+          type: string
+        action:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/TeamRoutingFormRouteActionOutput'
+        conditions:
+          type:
+          - string
+          - 'null'
+          example: '"Company size" equals "51-200"'
+          description: Human-readable description of the conditions a submission must match
+        advancedRouting:
+          description: Advanced routing settings on the route, e.g. attribute-based team member routing; empty for routers
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - name
+      - kind
+      - action
+      - conditions
+      - advancedRouting
+    EditTeamRoutingFormFieldsDataOutput:
+      type: object
+      properties:
+        formId:
+          type: string
+          example: a1b2c3d4-...
+        dryRun:
+          type: boolean
+          example: true
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EditTeamRoutingFormFieldChangeOutput'
+        warnings:
+          type: array
+          items:
+            type: string
+        before:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoutingFormQuestionOutput'
+        after:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoutingFormQuestionOutput'
+        updatedAt:
+          type: string
+          example: '2024-03-28T10:00:00.000Z'
+          format: date-time
+          description: 'Dry run: the form''s current updatedAt, to send back as expectedUpdatedAt. Apply: the saved form''s.'
+      required:
+      - formId
+      - dryRun
+      - changes
+      - warnings
+      - before
+      - after
+      - updatedAt
+    RoutingFormOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: My Form
+        description:
+          type:
+          - string
+          - 'null'
+          example: This is the description.
+        position:
+          type: number
+          example: 0
+        routes:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Routing form routes configuration
+        createdAt:
+          type: string
+          example: '2024-03-28T10:00:00.000Z'
+          format: date-time
+        updatedAt:
+          type: string
+          example: '2024-03-28T10:00:00.000Z'
+          format: date-time
+        fields:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Routing form fields configuration
+        userId:
+          type: number
+          example: 2313
+        teamId:
+          type:
+          - number
+          - 'null'
+          example: 4214321
+        disabled:
+          type: boolean
+          example: false
+        settings:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Routing form settings
+        id:
+          type: string
+      required:
+      - name
+      - description
+      - position
+      - createdAt
+      - updatedAt
+      - userId
+      - teamId
+      - disabled
+      - id
+    DraftMemberFilterInput:
+      type: object
+      properties:
+        match:
+          default: all
+          enum:
+          - all
+          - any
+          type: string
+        conditions:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/DraftMemberFilterConditionInput'
+      required:
+      - conditions
+    TeamRoutingFormQuestionOptionOutput:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: a1b2c3d4-...
+        label:
+          type: string
+          example: 51-200
+      required:
+      - id
+      - label
+    RoutingFormFieldUpdateInput:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Lead source
+        identifier:
+          type: string
+          example: lead_source
+        required:
+          type: boolean
+        hidden:
+          type: boolean
+          description: A hidden question can't be required.
+        options:
+          minItems: 1
+          description: The complete option list in display order. A listed id keeps that option, renamed to its label; an existing option left out is removed.
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingFormFieldOptionInput'
+    GetTeamRoutingFormOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamRoutingFormOutput'
+      required:
+      - status
+      - data
+    RemoveRouteOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - remove
+        routeId:
+          type: string
+          example: route-enterprise
+      required:
+      - type
+      - routeId
+    UpdateFieldOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - update
+        fieldId:
+          type: string
+          example: a1b2c3d4-...
+          description: The question id from get_routing_form
+        field:
+          description: Only the properties to change
+          allOf:
+          - $ref: '#/components/schemas/RoutingFormFieldUpdateInput'
+      required:
+      - type
+      - fieldId
+      - field
+    GetTeamRoutingFormHistoryOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          description: Newest first
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoutingFormHistoryEntryOutput'
+        pagination:
+          $ref: '#/components/schemas/TeamRoutingFormHistoryPaginationOutput'
+      required:
+      - status
+      - data
+      - pagination
+    TeamRoutingFormRouteActionOutput:
+      type: object
+      properties:
+        type:
+          enum:
+          - customPageMessage
+          - externalRedirectUrl
+          - eventTypeRedirectUrl
+          type: string
+          description: For eventTypeRedirectUrl, value is the `team-slug/event-slug` path of the routed-to event type
+        value:
+          type: string
+          example: acme/discovery-call
+        eventTypeId:
+          type:
+          - number
+          - 'null'
+          example: 123
+      required:
+      - type
+      - value
+      - eventTypeId
+    MoveRouteOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - move
+        routeId:
+          type: string
+          example: route-enterprise
+        position:
+          type: number
+          minimum: 0
+      required:
+      - type
+      - routeId
+      - position
+    EditTeamRoutingFormRouteChangeOutput:
+      type: object
+      properties:
+        type:
+          enum:
+          - add
+          - replace
+          - remove
+          - move
+          - setFallback
+          - addMissingFallback
+          type: string
+        routeId:
+          type: string
+          example: route-enterprise
+        description:
+          type: string
+          example: Added route "Enterprise" at position 0.
+      required:
+      - type
+      - routeId
+      - description
+    TeamRoutingFormQuestionOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          example: a1b2c3d4-...
+        label:
+          type: string
+          example: Company size
+        identifier:
+          type: string
+          example: companySize
+          description: The key used to answer this question in a routing form response
+        type:
+          type: string
+          example: select
+        required:
+          type: boolean
+          example: true
+        hidden:
+          type: boolean
+          example: false
+          description: Not shown to the booker; the answer comes from a URL parameter named after the identifier
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoutingFormQuestionOptionOutput'
+      required:
+      - id
+      - label
+      - identifier
+      - type
+      - required
+      - hidden
+      - options
+    ExternalRedirectUrlActionInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - externalRedirectUrl
+        url:
+          type: string
+          format: uri
+          example: https://example.com/booking
+      required:
+      - type
+      - url
+    RemoveFieldOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - remove
+        fieldId:
+          type: string
+          example: a1b2c3d4-...
+          description: The question id from get_routing_form
+      required:
+      - type
+      - fieldId
+    EditTeamRoutingFormRoutesOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/EditTeamRoutingFormRoutesDataOutput'
+      required:
+      - status
+      - data
+    ReplaceRouteOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - replace
+        routeId:
+          type: string
+          example: route-enterprise
+        route:
+          $ref: '#/components/schemas/DraftRouteInput'
+      required:
+      - type
+      - routeId
+      - route
+    NewRoutingFormFieldInput:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Lead source
+        type:
+          enum:
+          - text
+          - number
+          - textarea
+          - select
+          - multiselect
+          - phone
+          - email
+          type: string
+          example: select
+        required:
+          type: boolean
+          default: false
+        hidden:
+          type: boolean
+          default: false
+          description: Not shown to the booker; the answer comes from a URL parameter named after the identifier. A hidden question can't be required.
+        identifier:
+          type: string
+          example: lead_source
+          description: The key that prefills and stores the answer. Defaults to the label.
+        options:
+          example:
+          - Partner
+          - Website
+          description: Option labels in display order. Required for select and multiselect, forbidden otherwise.
+          type: array
+          items:
+            type: string
+      required:
+      - label
+      - type
+    DraftMemberFilterConditionInput:
+      type: object
+      properties:
+        attribute:
+          type: string
+          example: Department
+        operator:
+          enum:
+          - equals
+          - not_equals
+          - contains
+          - not_contains
+          - starts_with
+          - ends_with
+          - is_empty
+          - is_not_empty
+          - greater_than
+          - less_than
+          - greater_or_equal
+          - less_or_equal
+          - between
+          - all_in
+          - not_all_in
+          type: string
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: array
+            items:
+              oneOf:
+              - type: string
+              - type: number
+      required:
+      - attribute
+      - operator
+    TeamRoutingFormHistoryEntryOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 019a1b2c-3d4e-7f80-9a1b-2c3d4e5f6a7b
+        timestamp:
+          type: string
+          example: '2026-10-12T10:00:00.000Z'
+          format: date-time
+        actor:
+          $ref: '#/components/schemas/TeamRoutingFormHistoryActorOutput'
+        changes:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          example:
+          - field: name
+            label: Name
+            type: scalar
+            previousValue: Intake
+            newValue: Sales intake
+          description: 'What changed. Every change has `field`, `label` and `type`: `scalar` adds `previousValue` and `newValue` (user ids for `sendUpdatesTo`); `list` (questions, routes) adds `added`, `removed` and `updated`; `object` nests more `changes`; `raqbTree` (route conditions) adds a `tree`; `created` and `deleted` mark the form''s creation and deletion.'
+      required:
+      - id
+      - timestamp
+      - actor
+      - changes
+    AddRouteOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - add
+        route:
+          $ref: '#/components/schemas/DraftRouteInput'
+        position:
+          type: number
+          minimum: 0
+      required:
+      - type
+      - route
+    TeamRoutingFormOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          example: a1b2c3d4-...
+        name:
+          type: string
+          example: My Form
+        description:
+          type:
+          - string
+          - 'null'
+          example: This is the description.
+        disabled:
+          type: boolean
+          example: false
+        teamId:
+          type: number
+          example: 4214321
+        updatedAt:
+          type: string
+          example: '2024-03-28T10:00:00.000Z'
+          format: date-time
+          description: Last modification time; required to apply route and question edits so concurrent changes are detected
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoutingFormQuestionOutput'
+        routes:
+          description: Routes in evaluation order
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamRoutingFormRouteOutput'
+        summary:
+          description: Human-readable overview of the form's questions and routing
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - name
+      - description
+      - disabled
+      - teamId
+      - updatedAt
+      - questions
+      - routes
+      - summary
+    SetFallbackOperationInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - setFallback
+        action:
+          oneOf:
+          - $ref: '#/components/schemas/EventTypeRedirectActionInput'
+          - $ref: '#/components/schemas/CustomPageMessageActionInput'
+          - $ref: '#/components/schemas/ExternalRedirectUrlActionInput'
+      required:
+      - type
+      - action

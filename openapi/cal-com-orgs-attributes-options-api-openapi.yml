@@ -1,0 +1,975 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Attributes / Options API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Attributes / Options
+paths:
+  /v2/organizations/{orgId}/attributes/{attributeId}/options:
+    post:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.create`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_createOrganizationAttributeOption
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationAttributeOptionInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAttributeOptionOutput'
+      summary: Create an attribute option
+      tags:
+      - Orgs / Attributes / Options
+      x-platform-plan: ESSENTIALS
+    get:
+      description: 'Required membership role: `org member`. PBAC permission: `organization.attributes.read`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_getOrganizationAttributeOptions
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllAttributeOptionOutput'
+      summary: Get all attribute options
+      tags:
+      - Orgs / Attributes / Options
+      x-mcp:
+        name: get_attribute_options
+        guidance: List all available options for a SINGLE_SELECT or MULTI_SELECT attribute. Returns option IDs and values needed when assigning attributes to users via assign_attribute_to_user.
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/attributes/{attributeId}/options/{optionId}:
+    delete:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.delete`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_deleteOrganizationAttributeOption
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: optionId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAttributeOptionOutput'
+      summary: Delete an attribute option
+      tags:
+      - Orgs / Attributes / Options
+      x-platform-plan: ESSENTIALS
+    patch:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_updateOrganizationAttributeOption
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: optionId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationAttributeOptionInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAttributeOptionOutput'
+      summary: Update an attribute option
+      tags:
+      - Orgs / Attributes / Options
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/attributes/{attributeId}/options/assigned:
+    get:
+      description: 'Required membership role: `org member`. PBAC permission: `organization.attributes.read`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_getOrganizationAttributeAssignedOptions
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: skip
+        required: false
+        in: query
+        description: Number of responses to skip
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Number of responses to take
+        schema:
+          type: number
+      - name: assignedOptionIds
+        required: false
+        in: query
+        description: Filter by assigned attribute option ids. ids must be separated by a comma.
+        schema:
+          minItems: 1
+          example: ?assignedOptionIds=aaaaaaaa-bbbb-cccc-dddd-eeeeee1eee,aaaaaaaa-bbbb-cccc-dddd-eeeeee2eee
+          type: array
+          items:
+            type: string
+      - name: teamIds
+        required: false
+        in: query
+        description: Filter by teamIds. Team ids must be separated by a comma.
+        schema:
+          minItems: 1
+          example: ?teamIds=100,200
+          type: array
+          items:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllAttributeAssignedOptionOutput'
+      summary: Get all assigned attribute options by attribute ID
+      tags:
+      - Orgs / Attributes / Options
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/attributes/slugs/{attributeSlug}/options/assigned:
+    get:
+      description: 'Required membership role: `org member`. PBAC permission: `organization.attributes.read`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_getOrganizationAttributeAssignedOptionsBySlug
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeSlug
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: skip
+        required: false
+        in: query
+        description: Number of responses to skip
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Number of responses to take
+        schema:
+          type: number
+      - name: assignedOptionIds
+        required: false
+        in: query
+        description: Filter by assigned attribute option ids. ids must be separated by a comma.
+        schema:
+          minItems: 1
+          example: ?assignedOptionIds=aaaaaaaa-bbbb-cccc-dddd-eeeeee1eee,aaaaaaaa-bbbb-cccc-dddd-eeeeee2eee
+          type: array
+          items:
+            type: string
+      - name: teamIds
+        required: false
+        in: query
+        description: Filter by teamIds. Team ids must be separated by a comma.
+        schema:
+          minItems: 1
+          example: ?teamIds=100,200
+          type: array
+          items:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllAttributeAssignedOptionOutput'
+      summary: Get all assigned attribute options by attribute slug
+      tags:
+      - Orgs / Attributes / Options
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/attributes/options/{userId}:
+    post:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.editUsers`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_assignOrganizationAttributeOptionToUser
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignOrganizationAttributeOptionToUserInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssignOptionUserOutput'
+      summary: Assign an attribute to a user
+      tags:
+      - Orgs / Attributes / Options
+      x-mcp:
+        name: assign_attribute_to_user
+        guidance: Assign an attribute option to a user. For SINGLE_SELECT/MULTI_SELECT attributes, pass attributeOptionId (use get_attribute_options to list available options). For TEXT/NUMBER attributes, pass value instead to create an option on the fly. Optionally set a weight for round-robin routing.
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_WRITE
+      x-platform-plan: ESSENTIALS
+    get:
+      description: 'Required membership role: `org member`. PBAC permission: `organization.attributes.read`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_getOrganizationAttributeOptionsForUser
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOptionUserOutput'
+      summary: Get all attribute options for a user
+      tags:
+      - Orgs / Attributes / Options
+      x-mcp:
+        name: get_user_attributes
+        guidance: Get all attribute options assigned to a specific user within an organization. Returns grouped attributes with their assigned option values and weights.
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/attributes/options/{userId}/{attributeOptionId}:
+    patch:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.editUsers`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_updateOrganizationAttributeOptionForUser
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeOptionId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationAttributeOptionUserInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateOptionUserOutput'
+      summary: Update an attribute assignment for a user
+      tags:
+      - Orgs / Attributes / Options
+      x-mcp:
+        name: update_user_attribute
+        guidance: Update an existing attribute assignment for a user (e.g. change the weight). Use get_user_attributes to find the attributeOptionId.
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_WRITE
+      x-platform-plan: ESSENTIALS
+    delete:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.editUsers`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_unassignOrganizationAttributeOptionFromUser
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: attributeOptionId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnassignOptionUserOutput'
+      summary: Unassign an attribute from a user
+      tags:
+      - Orgs / Attributes / Options
+      x-mcp:
+        name: unassign_attribute_from_user
+        guidance: Remove an attribute option assignment from a user. Use get_user_attributes to find the attributeOptionId. Confirm with the user before proceeding.
+      x-oauth-scopes:
+      - ORG_ATTRIBUTES_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/attributes/assignments/{userId}/history:
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `organization.attributes.readAuditLogs`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsAttributesOptionsController_getOrganizationAttributeAssignmentHistory
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of audit log entries to return.
+        schema:
+          minimum: 1
+          maximum: 50
+          default: 25
+          type: number
+      - name: cursor
+        required: false
+        in: query
+        description: Cursor from the previous response.
+        schema:
+          format: uuid
+          example: 018ff5cd-6dc4-7d57-bcbc-374702ca8b38
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAttributeAssignmentHistoryOutput'
+      summary: Get attribute assignment history for a user
+      tags:
+      - Orgs / Attributes / Options
+      x-mcp:
+        name: get_user_attribute_history
+        guidance: Get the attribute assignment history (audit log) for a user within an organization. Returns a chronological log of attribute assignment changes (assigned, updated, unassigned). Supports pagination with limit (1-50) and cursor. Requires org admin role.
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    UpdateAttributeOptionOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/OptionOutput'
+      required:
+      - status
+      - data
+    AssignOptionUserOutputData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the option assigned to the user
+        memberId:
+          type: number
+          description: The ID form the org membership for the user
+        attributeOptionId:
+          type: string
+          description: The value of the option
+        weight:
+          type:
+          - number
+          - 'null'
+          description: The weight of the attribute for this user
+      required:
+      - id
+      - memberId
+      - attributeOptionId
+    AttributeAssignmentHistoryLogOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the audit log entry.
+          example: 018ff5cd-6dc4-7d57-bcbc-374702ca8b38
+        timestamp:
+          type: string
+          description: The ISO timestamp when the assignment change was recorded.
+          example: '2026-06-04T10:00:00.000Z'
+        source:
+          type: string
+          description: The source that emitted the audit event, such as WEBAPP, API_V2, WEBHOOK, or SYSTEM.
+          example: API_V2
+        actor:
+          description: Details about the user, app, or system actor that made the change.
+          allOf:
+          - $ref: '#/components/schemas/AttributeAssignmentHistoryActorOutput'
+        sourceContext:
+          type: object
+          additionalProperties: true
+          description: Source-specific context for the audit event, for example API v2, web app, DSync, or integration sync metadata.
+          example:
+            kind: API_V2
+        changes:
+          description: The attribute assignment changes captured in this audit log entry.
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeAssignmentHistoryChangeOutput'
+        hasError:
+          type: boolean
+          description: Whether the audit log payload could not be fully parsed.
+          example: true
+      required:
+      - id
+      - timestamp
+      - source
+      - actor
+      - sourceContext
+      - changes
+    AttributeAssignmentHistoryValueOutput:
+      type: object
+      properties:
+        optionId:
+          type: string
+          description: The unique identifier of the assigned attribute option.
+          example: opt_engineering
+        optionSlug:
+          type: string
+          description: The URL-safe slug of the assigned attribute option.
+          example: engineering
+        value:
+          type: string
+          description: The display value of the assigned attribute option.
+          example: Engineering
+        weight:
+          type:
+          - number
+          - 'null'
+          description: The routing weight for the assigned option, or null when weights are not used.
+          example: 100
+      required:
+      - optionId
+      - optionSlug
+      - value
+    AssignOrganizationAttributeOptionToUserInput:
+      type: object
+      properties:
+        value:
+          type: string
+        attributeOptionId:
+          type: string
+        attributeId:
+          type: string
+        weight:
+          type: number
+          minimum: 0
+          description: The weight of the attribute for this user
+      required:
+      - attributeId
+    AttributeAssignmentHistoryDataOutput:
+      type: object
+      properties:
+        userId:
+          type: number
+          description: The ID of the user whose attribute assignment history was requested.
+          example: 5
+        membershipId:
+          type: number
+          description: The organization membership ID for the requested user.
+          example: 42
+        auditLogs:
+          description: The paginated audit log entries for the user's attribute assignments.
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeAssignmentHistoryLogOutput'
+        nextCursor:
+          type: string
+          description: The cursor to pass to the next request when more audit logs are available.
+          example: 018ff5cd-6dc4-7d57-bcbc-374702ca8b38
+        hasMore:
+          type: boolean
+          description: Whether additional audit log entries are available after this page.
+          example: true
+      required:
+      - userId
+      - membershipId
+      - auditLogs
+      - hasMore
+    UpdateOrganizationAttributeOptionInput:
+      type: object
+      properties:
+        value:
+          type: string
+        slug:
+          type: string
+    GetOptionUserOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetOptionUserOutputData'
+      required:
+      - status
+      - data
+    GetAllAttributeAssignedOptionOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssignedOptionOutput'
+      required:
+      - status
+      - data
+    AttributeAssignmentHistoryActorOutput:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of actor that made the attribute assignment change.
+          example: USER
+        displayName:
+          type: string
+          description: The human-readable name of the actor that made the change.
+          example: Alice Admin
+        displayEmail:
+          type:
+          - string
+          - 'null'
+          description: The email address of the actor when one is available.
+          example: alice@example.com
+        displayAvatar:
+          type:
+          - string
+          - 'null'
+          description: The avatar URL of the actor when one is available.
+          example: https://example.com/avatar.png
+      required:
+      - type
+      - displayName
+    DeleteAttributeOptionOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/OptionOutput'
+      required:
+      - status
+      - data
+    UnassignOptionUserOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/AssignOptionUserOutputData'
+      required:
+      - status
+      - data
+    CreateAttributeOptionOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/OptionOutput'
+      required:
+      - status
+      - data
+    CreateOrganizationAttributeOptionInput:
+      type: object
+      properties:
+        value:
+          type: string
+        slug:
+          type: string
+      required:
+      - value
+      - slug
+    GetAttributeAssignmentHistoryOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          description: The attribute assignment history response payload.
+          allOf:
+          - $ref: '#/components/schemas/AttributeAssignmentHistoryDataOutput'
+      required:
+      - status
+      - data
+    AttributeAssignmentHistoryAttributeOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the attribute that changed.
+          example: attr_dept
+        slug:
+          type: string
+          description: The URL-safe slug of the attribute that changed.
+          example: department
+        name:
+          type: string
+          description: The display name of the attribute that changed.
+          example: Department
+        type:
+          type: string
+          description: The attribute input type, such as TEXT, NUMBER, SINGLE_SELECT, or MULTI_SELECT.
+          example: SINGLE_SELECT
+      required:
+      - id
+      - slug
+      - name
+      - type
+    OptionOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the option
+          example: attr_option_id
+        attributeId:
+          type: string
+          description: The ID of the attribute
+          example: attr_id
+        value:
+          type: string
+          description: The value of the option
+          example: option_value
+        slug:
+          type: string
+          description: The slug of the option
+          example: option-slug
+      required:
+      - id
+      - attributeId
+      - value
+      - slug
+    AttributeAssignmentHistoryChangeOutput:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of assignment change, such as ASSIGNED, UNASSIGNED, VALUE_CHANGED, or WEIGHT_CHANGED.
+          example: VALUE_CHANGED
+        attribute:
+          description: Details for the attribute affected by this change.
+          allOf:
+          - $ref: '#/components/schemas/AttributeAssignmentHistoryAttributeOutput'
+        previous:
+          description: The previous assignment value before the change, or null when the value was newly assigned.
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/AttributeAssignmentHistoryValueOutput'
+        current:
+          description: The current assignment value after the change, or null when the value was unassigned.
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/AttributeAssignmentHistoryValueOutput'
+      required:
+      - type
+      - attribute
+    UpdateOptionUserOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/AssignOptionUserOutputData'
+      required:
+      - status
+      - data
+    GetAllAttributeOptionOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionOutput'
+      required:
+      - status
+      - data
+    AssignedOptionOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the option
+          example: attr_option_id
+        attributeId:
+          type: string
+          description: The ID of the attribute
+          example: attr_id
+        value:
+          type: string
+          description: The value of the option
+          example: option_value
+        slug:
+          type: string
+          description: The slug of the option
+          example: option-slug
+        assignedUserIds:
+          description: Ids of the users assigned to the attribute option.
+          example:
+          - 124
+          - 224
+          type: array
+          items:
+            type: number
+      required:
+      - id
+      - attributeId
+      - value
+      - slug
+      - assignedUserIds
+    UpdateOrganizationAttributeOptionUserInput:
+      type: object
+      properties:
+        weight:
+          type: number
+          minimum: 0
+          description: The weight of the attribute for this user
+    GetOptionUserOutputData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the option assigned to the user
+        attributeId:
+          type: string
+          description: The ID of the attribute
+        value:
+          type: string
+          description: The value of the option
+        slug:
+          type: string
+          description: The slug of the option
+      required:
+      - id
+      - attributeId
+      - value
+      - slug
+    AssignOptionUserOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/AssignOptionUserOutputData'
+      required:
+      - status
+      - data

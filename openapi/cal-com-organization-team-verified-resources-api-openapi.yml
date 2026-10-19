@@ -1,0 +1,561 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Organization Team Verified Resources API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Organization Team Verified Resources
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/emails/verification-code/request:
+    post:
+      description: 'Sends a verification code to the email. Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_WRITE` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_requestEmailVerificationCode
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestEmailVerificationInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestEmailVerificationOutput'
+      summary: Request email verification code
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/phones/verification-code/request:
+    post:
+      description: 'Sends a verification code to the phone number. Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_WRITE` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_requestPhoneVerificationCode
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestPhoneVerificationInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestPhoneVerificationOutput'
+      summary: Request phone number verification code
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_WRITE
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/emails/verification-code/verify:
+    post:
+      description: 'Use code to verify an email. Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_WRITE` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_verifyEmail
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamVerifiedEmailOutput'
+      summary: Verify an email for an org team
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/phones/verification-code/verify:
+    post:
+      description: 'Use code to verify a phone number. Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_WRITE` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_verifyPhoneNumber
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyPhoneInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamVerifiedPhoneOutput'
+      summary: Verify a phone number for an org team
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/emails:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readVerifiedResources`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_READ` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_getVerifiedEmails
+      parameters:
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamVerifiedEmailsOutput'
+      summary: Get list of verified emails of an org team
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/phones:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readVerifiedResources`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_READ` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_getVerifiedPhoneNumbers
+      parameters:
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamVerifiedPhonesOutput'
+      summary: Get list of verified phone numbers of an org team
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/emails/{id}:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readVerifiedResources`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_READ` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_getVerifiedEmailById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamVerifiedEmailOutput'
+      summary: Get verified email of an org team by id
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/verified-resources/phones/{id}:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readVerifiedResources`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_VERIFIED_RESOURCES_READ` scope is required.'
+      operationId: OrgTeamsVerifiedResourcesController_getVerifiedPhoneById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamVerifiedPhoneOutput'
+      summary: Get verified phone number of an org team by id
+      tags:
+      - Organization Team Verified Resources
+      x-oauth-scopes:
+      - TEAM_VERIFIED_RESOURCES_READ
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    TeamVerifiedEmailOutputData:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The unique identifier for the verified email.
+          example: 789
+        email:
+          type: string
+          description: The verified email address.
+          example: user@example.com
+          format: email
+        teamId:
+          type: number
+          description: The ID of the associated team, if applicable.
+          example: 89
+        userId:
+          type:
+          - number
+          - 'null'
+          description: The ID of the associated user, if applicable.
+          example: 45
+      required:
+      - id
+      - email
+      - teamId
+    VerifyPhoneInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: phone number to verify.
+          example: '+37255556666'
+        code:
+          type: string
+          description: verification code sent to the phone number to verify
+          example: 1ABG2C
+      required:
+      - phone
+      - code
+    VerifyEmailInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email to verify.
+          example: example@acme.com
+        code:
+          type: string
+          description: verification code sent to the email to verify
+          example: 1ABG2C
+      required:
+      - email
+      - code
+    TeamVerifiedPhonesOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamVerifiedPhoneOutputData'
+      required:
+      - status
+      - data
+    TeamVerifiedEmailOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamVerifiedEmailOutputData'
+      required:
+      - status
+      - data
+    RequestEmailVerificationInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email to verify.
+          example: acme@example.com
+      required:
+      - email
+    TeamVerifiedPhoneOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamVerifiedPhoneOutputData'
+      required:
+      - status
+      - data
+    TeamVerifiedEmailsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamVerifiedEmailOutputData'
+      required:
+      - status
+      - data
+    RequestPhoneVerificationInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: Phone number to verify.
+          example: +372 5555 6666
+      required:
+      - phone
+    RequestEmailVerificationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    RequestPhoneVerificationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    TeamVerifiedPhoneOutputData:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The unique identifier for the verified email.
+          example: 789
+        phoneNumber:
+          type: string
+          description: The verified phone number.
+          example: '+37255556666'
+          format: phone
+        userId:
+          type:
+          - number
+          - 'null'
+          description: The ID of the associated user, if applicable.
+          example: 45
+        teamId:
+          type: number
+          description: The ID of the associated team, if applicable.
+          example: 89
+      required:
+      - id
+      - phoneNumber
+      - teamId

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: 'Cal.diy API v2 Deprecated: Platform / Managed Users API'
+  title: 'Cal.com API v2 Deprecated: Platform / Managed Users API'
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,9 +10,8 @@ tags:
 paths:
   /v2/oauth-clients/{clientId}/users:
     get:
-      operationId: OAuthClientUsersController_getManagedUsers
-      summary: Get all managed users
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientUsersController_getManagedUsers
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -30,6 +29,8 @@ paths:
         in: query
         description: The number of items to return
         schema:
+          minimum: 1
+          maximum: 250
           example: 10
           type: number
       - name: offset
@@ -37,6 +38,8 @@ paths:
         in: query
         description: The number of items to skip
         schema:
+          minimum: 0
+          maximum: 250
           example: 0
           type: number
       - name: emails
@@ -44,6 +47,7 @@ paths:
         in: query
         description: Filter managed users by email. If you want to filter by multiple emails, separate them with a comma.
         schema:
+          minItems: 1
           example: ?emails=email1@example.com,email2@example.com
           type: array
           items:
@@ -55,12 +59,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManagedUsersOutput'
+      summary: Get all managed users
       tags:
       - 'Deprecated: Platform / Managed Users'
     post:
-      operationId: OAuthClientUsersController_createUser
-      summary: Create a managed user
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientUsersController_createUser
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -86,13 +90,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateManagedUserOutput'
+      summary: Create a managed user
       tags:
       - 'Deprecated: Platform / Managed Users'
   /v2/oauth-clients/{clientId}/users/{userId}:
     get:
-      operationId: OAuthClientUsersController_getUserById
-      summary: Get a managed user
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientUsersController_getUserById
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -117,12 +121,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManagedUserOutput'
+      summary: Get a managed user
       tags:
       - 'Deprecated: Platform / Managed Users'
     patch:
-      operationId: OAuthClientUsersController_updateUser
-      summary: Update a managed user
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientUsersController_updateUser
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -153,12 +157,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManagedUserOutput'
+      summary: Update a managed user
       tags:
       - 'Deprecated: Platform / Managed Users'
     delete:
-      operationId: OAuthClientUsersController_deleteUser
-      summary: Delete a managed user
       description: These endpoints are deprecated and will be removed in the future.
+      operationId: OAuthClientUsersController_deleteUser
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -183,15 +187,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManagedUserOutput'
+      summary: Delete a managed user
       tags:
       - 'Deprecated: Platform / Managed Users'
   /v2/oauth-clients/{clientId}/users/{userId}/force-refresh:
     post:
-      operationId: OAuthClientUsersController_forceRefresh
-      summary: Force refresh tokens
       description: 'These endpoints are deprecated and will be removed in the future. If you have lost managed user access or refresh token, then you can get new ones by using OAuth credentials. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.
 
         Response also contains `accessTokenExpiresAt` and `refreshTokenExpiresAt` fields, but if you decode the jwt token the payload will contain `clientId` (OAuth client ID), `ownerId` (user to whom token belongs ID), `iat` (issued at time) and `expiresAt` (when does the token expire) fields.'
+      operationId: OAuthClientUsersController_forceRefresh
       parameters:
       - name: x-cal-secret-key
         in: header
@@ -216,17 +220,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KeysResponseDto'
+      summary: Force refresh tokens
       tags:
       - 'Deprecated: Platform / Managed Users'
   /v2/oauth/{clientId}/refresh:
     post:
-      operationId: OAuthFlowController_refreshTokens
-      summary: Refresh managed user tokens
       description: 'These endpoints are deprecated and will be removed in the future. If managed user access token is expired then get a new one using this endpoint - it will also refresh the refresh token, because we use
 
         "refresh token rotation" mechanism. Access token is valid for 60 minutes and refresh token for 1 year. Make sure to store them in your database, for example, in your User database model `calAccessToken` and `calRefreshToken` fields.
 
         Response also contains `accessTokenExpiresAt` and `refreshTokenExpiresAt` fields, but if you decode the jwt token the payload will contain `clientId` (OAuth client ID), `ownerId` (user to whom token belongs ID), `iat` (issued at time) and `expiresAt` (when does the token expire) fields.'
+      operationId: OAuthFlowController_refreshTokens
       parameters:
       - name: clientId
         required: true
@@ -252,10 +256,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/KeysResponseDto'
+      summary: Refresh managed user tokens
       tags:
       - 'Deprecated: Platform / Managed Users'
 components:
   schemas:
+    RefreshTokenInput:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          description: Managed user's refresh token.
+      required:
+      - refreshToken
+    KeysResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/KeysDto'
+      required:
+      - status
+      - data
+    GetManagedUsersOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedUserOutput'
+      required:
+      - status
+      - data
+    CreateManagedUserOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/CreateManagedUserData'
+      required:
+      - status
+      - data
+    GetManagedUserOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/ManagedUserOutput'
+      required:
+      - status
+      - data
     CreateManagedUserData:
       type: object
       properties:
@@ -277,14 +348,6 @@ components:
       - user
       - accessTokenExpiresAt
       - refreshTokenExpiresAt
-    RefreshTokenInput:
-      type: object
-      properties:
-        refreshToken:
-          type: string
-          description: Managed user's refresh token.
-      required:
-      - refreshToken
     KeysDto:
       type: object
       properties:
@@ -303,38 +366,24 @@ components:
       - refreshToken
       - accessTokenExpiresAt
       - refreshTokenExpiresAt
-    KeysResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/KeysDto'
-      required:
-      - status
-      - data
-    UpdateManagedUserInput:
+    CreateManagedUserInput:
       type: object
       properties:
         email:
           type: string
+          example: alice@example.com
         name:
           type: string
+          example: Alice Smith
+          description: Managed user's name is used in emails
         timeFormat:
-          type: number
           enum:
           - 12
           - 24
-          example: 12
-          description: Must be 12 or 24
-        defaultScheduleId:
           type: number
+          example: 12
+          description: Must be a number 12 or 24
         weekStart:
-          type: string
           enum:
           - Monday
           - Tuesday
@@ -343,9 +392,12 @@ components:
           - Friday
           - Saturday
           - Sunday
+          type: string
           example: Monday
         timeZone:
           type: string
+          example: America/New_York
+          description: "Timezone is used to create user's default schedule from Monday to Friday from 9AM to 5PM. If it is not passed then user does not have\n      a default schedule and it must be created manually via the /schedules endpoint. Until the schedule is created, the user can't access availability atom to set his / her availability nor booked.\n      It will default to Europe/London if not passed."
         locale:
           enum:
           - ar
@@ -387,6 +439,7 @@ components:
           - 'no'
           - pt-BR
           - sk
+          - sl
           - ta
           - uk
           - zh-TW
@@ -395,6 +448,7 @@ components:
           example: en
         avatarUrl:
           type: string
+          format: uri
           example: https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png
           description: URL of the user's avatar image
         bio:
@@ -403,31 +457,23 @@ components:
           example: I am a bio
         metadata:
           type: object
+          additionalProperties: true
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
-    GetManagedUsersOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagedUserOutput'
       required:
-      - status
-      - data
+      - email
+      - name
     ManagedUserOutput:
       type: object
       properties:
         id:
           type: number
           example: 1
+        uuid:
+          type: string
+          format: uuid
+          example: 3f2504e0-4f89-41d3-9a0c-0305e82c3301
         email:
           type: string
           example: alice+cluo37fwd0001khkzqqynkpj3@example.com
@@ -455,6 +501,7 @@ components:
         createdDate:
           type: string
           example: '2024-04-01T00:00:00.000Z'
+          format: date-time
         timeFormat:
           type:
           - number
@@ -506,6 +553,7 @@ components:
           - 'no'
           - pt-BR
           - sk
+          - sl
           - ta
           - uk
           - zh-TW
@@ -516,14 +564,17 @@ components:
           type:
           - string
           - 'null'
+          format: uri
           example: https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png
           description: URL of the user's avatar image
         metadata:
           type: object
+          additionalProperties: true
           example:
             key: value
       required:
       - id
+      - uuid
       - email
       - username
       - name
@@ -533,42 +584,23 @@ components:
       - createdDate
       - timeFormat
       - defaultScheduleId
-    CreateManagedUserOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/CreateManagedUserData'
-        error:
-          type: object
-      required:
-      - status
-      - data
-    CreateManagedUserInput:
+    UpdateManagedUserInput:
       type: object
       properties:
         email:
           type: string
-          example: alice@example.com
         name:
           type: string
-          example: Alice Smith
-          description: Managed user's name is used in emails
         timeFormat:
-          type: number
           enum:
           - 12
           - 24
+          type: number
           example: 12
-          description: Must be a number 12 or 24
+          description: Must be 12 or 24
+        defaultScheduleId:
+          type: number
         weekStart:
-          type: string
-          example: Monday
           enum:
           - Monday
           - Tuesday
@@ -577,10 +609,10 @@ components:
           - Friday
           - Saturday
           - Sunday
+          type: string
+          example: Monday
         timeZone:
           type: string
-          example: America/New_York
-          description: "Timezone is used to create user's default schedule from Monday to Friday from 9AM to 5PM. If it is not passed then user does not have\n      a default schedule and it must be created manually via the /schedules endpoint. Until the schedule is created, the user can't access availability atom to set his / her availability nor booked.\n      It will default to Europe/London if not passed."
         locale:
           enum:
           - ar
@@ -622,6 +654,7 @@ components:
           - 'no'
           - pt-BR
           - sk
+          - sl
           - ta
           - uk
           - zh-TW
@@ -630,6 +663,7 @@ components:
           example: en
         avatarUrl:
           type: string
+          format: uri
           example: https://cal.com/api/avatar/2b735186-b01b-46d3-87da-019b8f61776b.png
           description: URL of the user's avatar image
         bio:
@@ -638,23 +672,7 @@ components:
           example: I am a bio
         metadata:
           type: object
+          additionalProperties: true
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
-      required:
-      - email
-      - name
-    GetManagedUserOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ManagedUserOutput'
-      required:
-      - status
-      - data

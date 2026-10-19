@@ -1,0 +1,163 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Bookings - Email Verification API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Bookings - Email Verification
+paths:
+  /v2/bookings/verification/email/send-code:
+    post:
+      description: Sends a one-time verification code to the specified email address.
+      operationId: BookingsVerificationController_sendEmailVerificationCode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendVerificationEmailInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendVerificationEmailOutput'
+      summary: Send email verification code
+      tags:
+      - Bookings - Email Verification
+      x-oauth-scopes: []
+  /v2/bookings/verification/email/check:
+    get:
+      description: Checks whether email verification is required for the given email. Returns true if verification is needed.
+      operationId: BookingsVerificationController_checkEmailVerificationRequired
+      parameters:
+      - name: email
+        required: true
+        in: query
+        schema:
+          example: user@example.com
+          type: string
+      - name: userSessionEmail
+        required: false
+        in: query
+        schema:
+          example: user@example.com
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      summary: Check if email verification is required
+      tags:
+      - Bookings - Email Verification
+      x-oauth-scopes: []
+  /v2/bookings/verification/email/verify-code:
+    post:
+      description: Verifies an email address using the one-time code that was previously sent.
+      operationId: BookingsVerificationController_verifyEmailCode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailCodeInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyEmailCodeOutput'
+      summary: Verify email with code
+      tags:
+      - Bookings - Email Verification
+      x-oauth-scopes: []
+components:
+  schemas:
+    VerifyEmailCodeOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/VerifyEmailCodeData'
+      required:
+      - status
+      - data
+    VerifyEmailCodeData:
+      type: object
+      properties:
+        verified:
+          type: boolean
+          example: true
+      required:
+      - verified
+    SendVerificationEmailData:
+      type: object
+      properties:
+        sent:
+          type: boolean
+          example: true
+      required:
+      - sent
+    VerifyEmailCodeInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        code:
+          type: string
+          example: '123456'
+      required:
+      - email
+      - code
+    SendVerificationEmailOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/SendVerificationEmailData'
+      required:
+      - status
+      - data
+    SendVerificationEmailInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        username:
+          type: string
+          example: johndoe
+        language:
+          type: string
+          example: en
+        isVerifyingEmail:
+          type: boolean
+          example: true
+        eventTypeId:
+          type: number
+          example: 123
+          description: Id of the event type being booked. When provided, the email honours the hide-branding setting of the event type's owner or team.
+      required:
+      - email

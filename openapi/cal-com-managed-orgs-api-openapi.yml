@@ -1,0 +1,431 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Managed Orgs API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Managed Orgs
+paths:
+  /v2/organizations/{orgId}/organizations:
+    post:
+      description: 'For platform, the plan must be ''SCALE'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.create`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsOrganizationsController_createOrganization
+      parameters:
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateManagedOrganizationOutput'
+      summary: Create an organization within an organization
+      tags:
+      - Managed Orgs
+      x-platform-plan: SCALE
+    get:
+      description: 'For platform, the plan must be ''SCALE'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.readManagedOrganizations`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsOrganizationsController_getOrganizations
+      parameters:
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: slug
+        required: false
+        in: query
+        description: The slug of the managed organization
+        schema:
+          example: organization-slug
+          type: string
+      - name: metadataKey
+        required: false
+        in: query
+        description: The key of the metadata - it is case sensitive so provide exactly as stored. If you provide it then you must also provide metadataValue
+        schema:
+          example: metadata-key
+          type: string
+      - name: metadataValue
+        required: false
+        in: query
+        description: The value of the metadata - it is case sensitive so provide exactly as stored. If you provide it then you must also provide metadataKey
+        schema:
+          example: metadata-value
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManagedOrganizationsOutput'
+      summary: Get all organizations within an organization
+      tags:
+      - Managed Orgs
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/organizations/{managedOrganizationId}:
+    get:
+      description: 'For platform, the plan must be ''SCALE'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.readManagedOrganizations`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsOrganizationsController_getOrganization
+      parameters:
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: managedOrganizationId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManagedOrganizationOutput'
+      summary: Get an organization within an organization
+      tags:
+      - Managed Orgs
+      x-platform-plan: SCALE
+    patch:
+      description: 'For platform, the plan must be ''SCALE'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsOrganizationsController_updateOrganization
+      parameters:
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: managedOrganizationId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManagedOrganizationOutput'
+      summary: Update an organization within an organization
+      tags:
+      - Managed Orgs
+      x-platform-plan: SCALE
+    delete:
+      description: 'For platform, the plan must be ''SCALE'' or higher to access this endpoint. Required membership role: `org admin`. PBAC permission: `organization.delete`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsOrganizationsController_deleteOrganization
+      parameters:
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: managedOrganizationId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManagedOrganizationOutput'
+      summary: Delete an organization within an organization
+      tags:
+      - Managed Orgs
+      x-platform-plan: SCALE
+components:
+  schemas:
+    PaginationMetaDto:
+      type: object
+      properties:
+        totalItems:
+          type: number
+          minimum: 0
+          description: The total number of items available across all pages, matching the query criteria.
+          example: 123
+        remainingItems:
+          type: number
+          minimum: 0
+          description: 'The number of items remaining to be fetched *after* the current page. Calculated as: `totalItems - (skip + itemsPerPage)`.'
+          example: 103
+        returnedItems:
+          type: number
+          minimum: 0
+          description: The number of items returned in the current page.
+          example: 10
+        itemsPerPage:
+          type: number
+          minimum: 1
+          description: The maximum number of items requested per page.
+          example: 10
+        currentPage:
+          type: number
+          minimum: 1
+          description: The current page number being returned.
+          example: 2
+        totalPages:
+          type: number
+          minimum: 0
+          description: The total number of pages available.
+          example: 13
+        hasNextPage:
+          type: boolean
+          description: Indicates if there is a subsequent page available after the current one.
+          example: true
+        hasPreviousPage:
+          type: boolean
+          description: Indicates if there is a preceding page available before the current one.
+          example: true
+      required:
+      - totalItems
+      - remainingItems
+      - returnedItems
+      - itemsPerPage
+      - currentPage
+      - totalPages
+      - hasNextPage
+      - hasPreviousPage
+    GetManagedOrganizationOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/ManagedOrganizationOutput'
+      required:
+      - status
+      - data
+    ManagedOrganizationOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+          example:
+            key: value
+      required:
+      - id
+      - name
+    UpdateOrganizationInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: Name of the organization. Maximum 155 characters. Cannot contain links or URLs.
+          example: CalTeam
+          maxLength: 155
+        metadata:
+          type: object
+          additionalProperties: true
+          description: 'You can store any additional data you want here.
+
+            Metadata must have at most 50 keys, each key up to 40 characters.
+
+            Values can be strings (up to 500 characters), numbers, or booleans.'
+          example:
+            key: value
+    CreateManagedOrganizationOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/ManagedOrganizationWithApiKeyOutput'
+      required:
+      - status
+      - data
+    CreateOrganizationInput:
+      type: object
+      properties:
+        apiKeyDaysValid:
+          type: number
+          minimum: 1
+          description: For how many days is managed organization api key valid. Defaults to 30 days.
+          example: 60
+          default: 30
+        apiKeyNeverExpires:
+          type: boolean
+          description: If true, organization api key never expires.
+          example: true
+        name:
+          type: string
+          minLength: 1
+          description: Name of the organization. Maximum 155 characters. Cannot contain links or URLs.
+          example: CalTeam
+          maxLength: 155
+        slug:
+          type: string
+          description: Organization slug in kebab-case - if not provided will be generated automatically based on name.
+          example: cal-tel
+        metadata:
+          type: object
+          additionalProperties: true
+          description: 'You can store any additional data you want here.
+
+            Metadata must have at most 50 keys, each key up to 40 characters.
+
+            Values can be strings (up to 500 characters), numbers, or booleans.'
+          example:
+            key: value
+      required:
+      - name
+    ManagedOrganizationWithApiKeyOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        slug:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+          example:
+            key: value
+        apiKey:
+          type: string
+      required:
+      - id
+      - name
+      - apiKey
+    GetManagedOrganizationsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedOrganizationOutput'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetaDto'
+      required:
+      - status
+      - data
+      - pagination

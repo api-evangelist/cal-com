@@ -1,0 +1,416 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Memberships API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Memberships
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/memberships:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readMemberships`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_READ` scope is required.'
+      operationId: OrganizationsTeamsMembershipsController_getAllOrgTeamMemberships
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: take
+        required: false
+        in: query
+        description: Maximum number of items to return
+        schema:
+          minimum: 1
+          maximum: 250
+          default: 250
+          example: 25
+          type: number
+      - name: skip
+        required: false
+        in: query
+        description: Number of items to skip
+        schema:
+          minimum: 0
+          default: 0
+          example: 0
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamMembershipsOutputResponseDto'
+      summary: Get all memberships
+      tags:
+      - Orgs / Teams / Memberships
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_READ
+      x-platform-plan: ESSENTIALS
+    post:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.invite`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.'
+      operationId: OrganizationsTeamsMembershipsController_createOrgTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrgTeamMembershipDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamMembershipOutputResponseDto'
+      summary: Create a membership
+      tags:
+      - Orgs / Teams / Memberships
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/memberships/{membershipId}:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readMemberships`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_READ` scope is required.'
+      operationId: OrganizationsTeamsMembershipsController_getOrgTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: membershipId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamMembershipOutputResponseDto'
+      summary: Get a membership
+      tags:
+      - Orgs / Teams / Memberships
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_READ
+      x-platform-plan: ESSENTIALS
+    delete:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.remove`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.'
+      operationId: OrganizationsTeamsMembershipsController_deleteOrgTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: membershipId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamMembershipOutputResponseDto'
+      summary: Delete a membership
+      tags:
+      - Orgs / Teams / Memberships
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+      x-platform-plan: ESSENTIALS
+    patch:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.changeMemberRole`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.'
+      operationId: OrganizationsTeamsMembershipsController_updateOrgTeamMembership
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: membershipId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrgTeamMembershipDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgTeamMembershipOutputResponseDto'
+      summary: Update a membership
+      tags:
+      - Orgs / Teams / Memberships
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    OrgTeamMembershipsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data
+    UpdateOrgTeamMembershipDto:
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        role:
+          enum:
+          - MEMBER
+          - OWNER
+          - ADMIN
+          type: string
+        disableImpersonation:
+          type: boolean
+    OrgTeamMembershipOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/TeamMembershipOutput'
+      required:
+      - status
+      - data
+    TeamMembershipOutput:
+      type: object
+      properties:
+        id:
+          type: number
+        userId:
+          type: number
+        teamId:
+          type: number
+        accepted:
+          type: boolean
+        role:
+          enum:
+          - MEMBER
+          - OWNER
+          - ADMIN
+          type: string
+        disableImpersonation:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/MembershipUserOutputDto'
+      required:
+      - id
+      - userId
+      - teamId
+      - accepted
+      - role
+      - user
+    CreateOrgTeamMembershipDto:
+      type: object
+      properties:
+        userId:
+          type: number
+        accepted:
+          type: boolean
+          default: false
+        role:
+          default: MEMBER
+          enum:
+          - MEMBER
+          - OWNER
+          - ADMIN
+          type: string
+        disableImpersonation:
+          type: boolean
+          default: false
+      required:
+      - userId
+      - role
+    MembershipUserOutputDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: 3f2504e0-4f89-41d3-9a0c-0305e82c3301
+        avatarUrl:
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        bio:
+          type: string
+        metadata:
+          type: object
+          example:
+            key: value
+      required:
+      - uuid
+      - email

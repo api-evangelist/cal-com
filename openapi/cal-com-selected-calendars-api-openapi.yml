@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Selected Calendars API
+  title: Cal.com API v2 Selected Calendars API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,12 +10,12 @@ tags:
 paths:
   /v2/selected-calendars:
     post:
+      description: If accessed using an OAuth access token, the `APPS_WRITE` scope is required.
       operationId: SelectedCalendarsController_addSelectedCalendar
-      summary: Add a selected calendar
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -32,15 +32,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SelectedCalendarOutputResponseDto'
+      summary: Add a selected calendar
       tags:
       - Selected Calendars
+      x-oauth-scopes:
+      - APPS_WRITE
     delete:
+      description: If accessed using an OAuth access token, the `APPS_WRITE` scope is required.
       operationId: SelectedCalendarsController_deleteSelectedCalendar
-      summary: Delete a selected calendar
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -71,10 +74,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SelectedCalendarOutputResponseDto'
+      summary: Delete a selected calendar
       tags:
       - Selected Calendars
+      x-oauth-scopes:
+      - APPS_WRITE
 components:
   schemas:
+    SelectedCalendarOutputDto:
+      type: object
+      properties:
+        userId:
+          type: number
+        integration:
+          type: string
+        externalId:
+          type: string
+        credentialId:
+          type:
+          - number
+          - 'null'
+      required:
+      - userId
+      - integration
+      - externalId
+      - credentialId
     SelectedCalendarsInputDto:
       type: object
       properties:
@@ -94,31 +118,13 @@ components:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           $ref: '#/components/schemas/SelectedCalendarOutputDto'
       required:
       - status
       - data
-    SelectedCalendarOutputDto:
-      type: object
-      properties:
-        userId:
-          type: number
-        integration:
-          type: string
-        externalId:
-          type: string
-        credentialId:
-          type:
-          - number
-          - 'null'
-      required:
-      - userId
-      - integration
-      - externalId
-      - credentialId

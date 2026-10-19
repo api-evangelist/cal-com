@@ -1,0 +1,149 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Calendar Invites API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Calendar Invites
+paths:
+  /v2/organizations/{orgId}/calendar-invites:
+    get:
+      description: 'Returns the host and guest organization defaults used when an event type inherits its calendar-invite description. Access matches the web organization procedure: the `organization.update` PBAC permission grants access, or the ORG_ADMIN role applies when PBAC is not granting it. OAuth clients require `ORG_PROFILE_READ`. Custom templates are limited to 5,000 characters. Platform organizations must have the Essentials plan; regular organizations are not subject to platform plan gating. An `inherit` mode uses Cal.com''s standard invite description.'
+      operationId: OrganizationsCalendarInvitesController_getOrganizationCalendarInvites
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCalendarInvitesOutput'
+      summary: Get organization calendar-invite defaults
+      tags:
+      - Orgs / Calendar Invites
+      x-oauth-scopes:
+      - ORG_PROFILE_READ
+      x-platform-plan: ESSENTIALS
+    patch:
+      description: 'Updates one or both host and guest organization defaults; omitted audiences are unchanged. Access matches the web organization procedure: the `organization.update` PBAC permission grants access, or the ORG_ADMIN role applies when PBAC is not granting it. OAuth clients require `ORG_PROFILE_WRITE`. Platform organizations must have the Essentials plan; regular organizations are not subject to platform plan gating. `custom` templates are limited to 5,000 characters and sanitized before saving; Markdown links are preserved. An `inherit` mode clears the organization default. Event types resolve their own custom template first, then this default, then Cal.com''s standard description.'
+      operationId: OrganizationsCalendarInvitesController_updateOrganizationCalendarInvites
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCalendarInvitesInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCalendarInvitesOutput'
+      summary: Update organization calendar-invite defaults
+      tags:
+      - Orgs / Calendar Invites
+      x-oauth-scopes:
+      - ORG_PROFILE_WRITE
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    OrganizationCalendarInvitesInput:
+      type: object
+      properties:
+        host:
+          description: Organization default for host calendar-invite descriptions.
+          example:
+            mode: custom
+            template: Meeting with {ATTENDEE}
+          allOf:
+          - $ref: '#/components/schemas/OrganizationCalendarInviteTemplateInputDto'
+        guest:
+          description: Organization default for guest calendar-invite descriptions.
+          example:
+            mode: inherit
+          allOf:
+          - $ref: '#/components/schemas/OrganizationCalendarInviteTemplateInputDto'
+    OrganizationCalendarInviteTemplateInputDto:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: Use the Cal.com standard description with `inherit`, or set an organization default with `custom`.
+          enum:
+          - inherit
+          - custom
+          example: custom
+        template:
+          type: string
+          description: Custom Markdown description. Required only when mode is custom; maximum length is 5000 characters.
+          example: Meeting with {ATTENDEE} about {LINK_TITLE}
+      required:
+      - mode
+    OrganizationCalendarInviteTemplateOutput:
+      type: object
+      properties:
+        mode:
+          enum:
+          - inherit
+          - custom
+          type: string
+          description: Whether the organization uses the standard description or its custom default.
+          example: custom
+        template:
+          type:
+          - string
+          - 'null'
+          description: The organization default template, or null when the standard description is used.
+          example: 'Organization default: {LINK_TITLE}'
+      required:
+      - mode
+      - template
+    OrganizationCalendarInvitesOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        data:
+          $ref: '#/components/schemas/OrganizationCalendarInvitesDataOutput'
+      required:
+      - status
+      - data
+    OrganizationCalendarInvitesDataOutput:
+      type: object
+      properties:
+        host:
+          $ref: '#/components/schemas/OrganizationCalendarInviteTemplateOutput'
+        guest:
+          $ref: '#/components/schemas/OrganizationCalendarInviteTemplateOutput'
+      required:
+      - host
+      - guest

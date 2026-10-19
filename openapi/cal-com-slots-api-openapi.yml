@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Slots API
+  title: Cal.com API v2 Slots API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,27 +10,25 @@ tags:
 paths:
   /v2/slots:
     get:
-      operationId: SlotsController_2024_09_04_getAvailableSlots
-      summary: Get available time slots for an event type
       description: 'There are 4 ways to get available slots for event type of an individual user:
 
 
-        1. By event type id. Example ''/v2/slots?eventTypeId=10&start=2050-09-05&end=2050-09-06&timeZone=Europe/Rome''
+        1. By event type id. Example ''/v2/slots?eventTypeId=10&start=2033-09-05&end=2033-09-06&timeZone=Europe/Rome''
 
 
-        2. By event type slug + username. Example ''/v2/slots?eventTypeSlug=intro&username=bob&start=2050-09-05&end=2050-09-06''
+        2. By event type slug + username. Example ''/v2/slots?eventTypeSlug=intro&username=bob&start=2033-09-05&end=2033-09-06''
 
 
-        3. By event type slug + username + organization slug when searching within an organization. Example ''/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&username=bob&start=2050-09-05&end=2050-09-06''
+        3. By event type slug + username + organization slug when searching within an organization. Example ''/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&username=bob&start=2033-09-05&end=2033-09-06''
 
 
-        4. By usernames only (used for dynamic event type - there is no specific event but you want to know when 2 or more people are available). Example ''/v2/slots?usernames=alice,bob&username=bob&organizationSlug=org-slug&start=2050-09-05&end=2050-09-06''. As you see you also need to provide the slug of the organization to which each user in the ''usernames'' array belongs.
+        4. By usernames only (used for dynamic event type - there is no specific event but you want to know when 2 or more people are available). Example ''/v2/slots?usernames=alice,bob&username=bob&organizationSlug=org-slug&start=2033-09-05&end=2033-09-06''. As you see you also need to provide the slug of the organization to which each user in the ''usernames'' array belongs.
 
 
         And 3 ways to get available slots for team event type:
 
 
-        1. By team event type id. Example ''/v2/slots?eventTypeId=10&start=2050-09-05&end=2050-09-06&timeZone=Europe/Rome''.
+        1. By team event type id. Example ''/v2/slots?eventTypeId=10&start=2033-09-05&end=2033-09-06&timeZone=Europe/Rome''.
 
         **Note for managed event types**: Managed event types are templates that create individual child event types for each team member. You cannot fetch slots for the parent managed event type directly. Instead, you must:
 
@@ -39,10 +37,10 @@ paths:
         - Use those child event type IDs to fetch slots as individual user event types using as described in the individual user section above.
 
 
-        2. By team event type slug + team slug. Example ''/v2/slots?eventTypeSlug=intro&teamSlug=team-slug&start=2050-09-05&end=2050-09-06''
+        2. By team event type slug + team slug. Example ''/v2/slots?eventTypeSlug=intro&teamSlug=team-slug&start=2033-09-05&end=2033-09-06''
 
 
-        3. By team event type slug + team slug + organization slug when searching within an organization. Example ''/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&teamSlug=team-slug&start=2050-09-05&end=2050-09-06''
+        3. By team event type slug + team slug + organization slug when searching within an organization. Example ''/v2/slots?organizationSlug=org-slug&eventTypeSlug=intro&teamSlug=team-slug&start=2033-09-05&end=2033-09-06''
 
 
         All of them require "start" and "end" query parameters which define the time range for which available slots should be checked.
@@ -59,6 +57,7 @@ paths:
 
 
         Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
+      operationId: SlotsController_2024_09_04_getAvailableSlots
       parameters:
       - name: cal-api-version
         in: header
@@ -66,6 +65,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-09-04'
           default: '2024-09-04'
       - name: bookingUidToReschedule
         required: false
@@ -79,14 +79,14 @@ paths:
         in: query
         description: "\n      Time starting from which available slots should be checked.\n\n      Must be in UTC timezone as ISO 8601 datestring.\n\n      You can pass date without hours which defaults to start of day or specify hours:\n      2024-08-13 (will have hours 00:00:00 aka at very beginning of the date) or you can specify hours manually like 2024-08-13T09:00:00Z."
         schema:
-          example: '2050-09-05'
+          example: '2033-09-05'
           type: string
       - name: end
         required: true
         in: query
         description: "\n    Time until which available slots should be checked.\n\n    Must be in UTC timezone as ISO 8601 datestring.\n\n    You can pass date without hours which defaults to end of day or specify hours:\n    2024-08-20 (will have hours 23:59:59 aka at the very end of the date) or you can specify hours manually like 2024-08-20T18:00:00Z."
         schema:
-          example: '2050-09-06'
+          example: '2033-09-06'
           type: string
       - name: organizationSlug
         required: false
@@ -167,12 +167,12 @@ paths:
                   example:
                     status: success
                     data:
-                      '2050-09-05':
-                      - start: '2050-09-05T09:00:00.000+02:00'
-                      - start: '2050-09-05T10:00:00.000+02:00'
-                      '2050-09-06':
-                      - start: '2050-09-06T09:00:00.000+02:00'
-                      - start: '2050-09-06T10:00:00.000+02:00'
+                      '2033-09-05':
+                      - start: '2033-09-05T09:00:00.000+02:00'
+                      - start: '2033-09-05T10:00:00.000+02:00'
+                      '2033-09-06':
+                      - start: '2033-09-06T09:00:00.000+02:00'
+                      - start: '2033-09-06T10:00:00.000+02:00'
                 - type: object
                   title: Range format (when format=range)
                   additionalProperties:
@@ -187,28 +187,29 @@ paths:
                   example:
                     status: success
                     data:
-                      '2050-09-05':
-                      - start: '2050-09-05T09:00:00.000+02:00'
-                        end: '2050-09-05T10:00:00.000+02:00'
-                      - start: '2050-09-05T10:00:00.000+02:00'
-                        end: '2050-09-05T11:00:00.000+02:00'
-                      '2050-09-06':
-                      - start: '2050-09-06T09:00:00.000+02:00'
-                        end: '2050-09-06T10:00:00.000+02:00'
-                      - start: '2050-09-06T10:00:00.000+02:00'
-                        end: '2050-09-06T11:00:00.000+02:00'
+                      '2033-09-05':
+                      - start: '2033-09-05T09:00:00.000+02:00'
+                        end: '2033-09-05T10:00:00.000+02:00'
+                      - start: '2033-09-05T10:00:00.000+02:00'
+                        end: '2033-09-05T11:00:00.000+02:00'
+                      '2033-09-06':
+                      - start: '2033-09-06T09:00:00.000+02:00'
+                        end: '2033-09-06T10:00:00.000+02:00'
+                      - start: '2033-09-06T10:00:00.000+02:00'
+                        end: '2033-09-06T11:00:00.000+02:00'
+      summary: Get available time slots for an event type
       tags:
       - Slots
+      x-oauth-scopes: []
   /v2/slots/reservations:
     post:
-      operationId: SlotsController_2024_09_04_reserveSlot
-      summary: Reserve a slot
       description: 'Make a slot not available for others to book for a certain period of time. If you authenticate using oAuth credentials, api key or access token
 
         then you can also specify custom duration for how long the slot should be reserved for (defaults to 5 minutes).
 
 
         Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
+      operationId: SlotsController_2024_09_04_reserveSlot
       parameters:
       - name: cal-api-version
         in: header
@@ -216,10 +217,11 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-09-04'
           default: '2024-09-04'
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: false
         schema:
           type: string
@@ -242,13 +244,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReserveSlotOutputResponse_2024_09_04'
+      summary: Reserve a slot
       tags:
       - Slots
+      x-oauth-scopes: []
   /v2/slots/reservations/{uid}:
     get:
-      operationId: SlotsController_2024_09_04_getReservedSlot
-      summary: Get reserved slot
       description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+      operationId: SlotsController_2024_09_04_getReservedSlot
       parameters:
       - name: cal-api-version
         in: header
@@ -256,6 +259,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-09-04'
           default: '2024-09-04'
       - name: uid
         required: true
@@ -269,12 +273,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetReservedSlotOutput_2024_09_04'
+      summary: Get reserved slot
       tags:
       - Slots
+      x-oauth-scopes: []
     patch:
+      description: 'If you specify a custom reservation duration, you must authenticate using oAuth credentials, api key or access token.
+
+
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
       operationId: SlotsController_2024_09_04_updateReservedSlot
-      summary: Update a reserved slot
-      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: cal-api-version
         in: header
@@ -282,10 +290,23 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-09-04'
           default: '2024-09-04'
       - name: uid
         required: true
         in: path
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
         schema:
           type: string
       requestBody:
@@ -301,12 +322,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReserveSlotOutputResponse_2024_09_04'
+      summary: Update a reserved slot
       tags:
       - Slots
+      x-oauth-scopes: []
     delete:
-      operationId: SlotsController_2024_09_04_deleteReservedSlot
-      summary: Delete a reserved slot
       description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+      operationId: SlotsController_2024_09_04_deleteReservedSlot
       parameters:
       - name: cal-api-version
         in: header
@@ -314,6 +336,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-09-04'
           default: '2024-09-04'
       - name: uid
         required: true
@@ -329,10 +352,30 @@ paths:
                 type: object
                 example:
                   status: success
+      summary: Delete a reserved slot
       tags:
       - Slots
+      x-oauth-scopes: []
 components:
   schemas:
+    GetReservedSlotOutput_2024_09_04:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/GetReservedSlotOutput_2024_09_04'
+      required:
+      - status
+      - data
     ReserveSlotOutput_2024_09_04:
       type: object
       properties:
@@ -344,13 +387,15 @@ components:
           type: string
           example: '2024-09-04T09:00:00Z'
           description: ISO 8601 datestring in UTC timezone representing available slot.
+          format: date-time
         slotEnd:
           type: string
           example: '2024-09-04T10:00:00Z'
           description: ISO 8601 datestring in UTC timezone representing slot end.
+          format: date-time
         slotDuration:
           type: number
-          example: '30'
+          example: 30
           description: By default slot duration is equal to event type length, but if you want to reserve a slot for an event type that has a variable length you can specify it here. If you don't have this set explicitly that event type can have one of many lengths you can omit this.
         reservationUid:
           type: string
@@ -364,6 +409,7 @@ components:
           type: string
           example: '2023-09-04T10:00:00Z'
           description: ISO 8601 datestring in UTC timezone representing time until which the slot is reserved.
+          format: date-time
       required:
       - eventTypeId
       - slotStart
@@ -372,6 +418,29 @@ components:
       - reservationUid
       - reservationDuration
       - reservationUntil
+    ReserveSlotInput_2024_09_04:
+      type: object
+      properties:
+        eventTypeId:
+          type: number
+          example: 1
+          description: The ID of the event type for which slot should be reserved.
+        slotStart:
+          type: string
+          example: '2024-09-04T09:00:00Z'
+          description: ISO 8601 datestring in UTC timezone representing available slot.
+          format: date-time
+        slotDuration:
+          type: number
+          example: 30
+          description: By default slot duration is equal to event type length, but if you want to reserve a slot for an event type that has a variable length you can specify it here as a number in minutes. If you don't have this set explicitly that event type can have one of many lengths you can omit this.
+        reservationDuration:
+          type: number
+          example: 5
+          description: "ONLY for authenticated requests with api key, access token or OAuth credentials (ID + secret).\n      \n      For how many minutes the slot should be reserved - for this long time noone else can book this event type at `start` time. If not provided, defaults to 5 minutes."
+      required:
+      - eventTypeId
+      - slotStart
     ReserveSlotOutputResponse_2024_09_04:
       type: object
       properties:
@@ -386,40 +455,3 @@ components:
       required:
       - status
       - data
-    GetReservedSlotOutput_2024_09_04:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          allOf:
-          - $ref: '#/components/schemas/GetReservedSlotOutput_2024_09_04'
-      required:
-      - status
-      - data
-    ReserveSlotInput_2024_09_04:
-      type: object
-      properties:
-        eventTypeId:
-          type: number
-          example: 1
-          description: The ID of the event type for which slot should be reserved.
-        slotStart:
-          type: string
-          example: '2024-09-04T09:00:00Z'
-          description: ISO 8601 datestring in UTC timezone representing available slot.
-        slotDuration:
-          type: number
-          example: '30'
-          description: By default slot duration is equal to event type length, but if you want to reserve a slot for an event type that has a variable length you can specify it here as a number in minutes. If you don't have this set explicitly that event type can have one of many lengths you can omit this.
-        reservationDuration:
-          type: number
-          example: 5
-          description: "ONLY for authenticated requests with api key, access token or OAuth credentials (ID + secret).\n      \n      For how many minutes the slot should be reserved - for this long time noone else can book this event type at `start` time. If not provided, defaults to 5 minutes."
-      required:
-      - eventTypeId
-      - slotStart

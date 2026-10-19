@@ -1,0 +1,1565 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Insights API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Insights
+paths:
+  /v2/insights/booking-limits/usage:
+    post:
+      description: How much of each booking limit is used in the day, week, month and year containing `date` (default today), per user in scope. Counts come from the same queries booking-limit enforcement uses. Reports the user's global limit and, when `eventTypeId` is given, the event type's own limit; team booking limits are not included yet. Team scope requires `insights.read` on the team, even for direct members. Org scope requires `eventTypeId` and lists that event's hosts. An admin `skipBookingLimits` override can still let a booking through when `remaining` is 0.
+      operationId: InsightsController_getBookingLimitsUsage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingLimitsUsageInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBookingLimitsUsageOutput'
+      summary: Get booking limits usage
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/bookings/kpi-stats:
+    post:
+      description: Get booking KPI stats for user, team, or organization insights.
+      operationId: InsightsController_getBookingKpiStats
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingInsightsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBookingKpiStatsOutput'
+      summary: Get booking KPI stats
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/bookings/event-trends:
+    post:
+      description: Get booking trend stats for user, team, or organization insights.
+      operationId: InsightsController_getBookingEventTrends
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingInsightsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBookingEventTrendsOutput'
+      summary: Get booking event trends
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/bookings/average-duration:
+    post:
+      description: Get average booking duration for user, team, or organization insights.
+      operationId: InsightsController_getBookingAverageDuration
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingInsightsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBookingAverageDurationOutput'
+      summary: Get average booking duration
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/bookings/members:
+    post:
+      description: Get booking member stats for user, team, or organization insights.
+      operationId: InsightsController_getBookingMemberStats
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingInsightsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBookingMemberStatsOutput'
+      summary: Get booking member stats
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/routings/forms-by-status:
+    post:
+      description: Get routing form response counts by booking status for user, team, or organization insights.
+      operationId: InsightsController_getRoutingFormsByStatus
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingInsightsBaseInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightsRoutingFormsByStatusOutput'
+      summary: Get routing forms by status
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/routings/form-responses:
+    post:
+      description: Get paginated routing form responses for user, team, or organization insights.
+      operationId: InsightsController_getRoutingFormResponses
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingInsightsPaginatedInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightsRoutingFormResponsesOutput'
+      summary: Get routing form responses
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/routings/form-field-options:
+    post:
+      description: Get routing form fields and options for user, team, or organization insights.
+      operationId: InsightsController_getRoutingFormFieldOptions
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingFormFieldsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightsRoutingFormFieldOptionsOutput'
+      summary: Get routing form field options
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/routings/form-response-headers:
+    post:
+      description: Get routing form response headers for user, team, or organization insights.
+      operationId: InsightsController_getRoutingFormHeaders
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingFormFieldsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightsRoutingFormHeadersOutput'
+      summary: Get routing form response headers
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/routings/failed-bookings-by-field:
+    post:
+      description: Get failed booking counts grouped by routing form field for user, team, or organization insights.
+      operationId: InsightsController_getFailedBookingsByField
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingInsightsBaseInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightsRoutingFailedBookingsByFieldOutput'
+      summary: Get failed bookings by routing field
+      tags:
+      - Insights
+      x-oauth-scopes: []
+  /v2/insights/routings/routed-to-per-period:
+    post:
+      description: Get routed-to booking counts by user and period for user, team, or organization insights.
+      operationId: InsightsController_getRoutedToPerPeriod
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutedToPerPeriodInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightsRoutingRoutedToPerPeriodOutput'
+      summary: Get routed-to users per period
+      tags:
+      - Insights
+      x-oauth-scopes: []
+components:
+  schemas:
+    BookingLimitPeriodsUsageOutput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        perWeek:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        perMonth:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        perYear:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+      required:
+      - perDay
+      - perWeek
+      - perMonth
+      - perYear
+    InsightsRoutingRoutedToUserOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 101
+        name:
+          type:
+          - string
+          - 'null'
+          example: Alice Doe
+        email:
+          type:
+          - object
+          - 'null'
+          example: alice@example.com
+        avatarUrl:
+          type:
+          - object
+          - 'null'
+          example: https://example.com/avatar.png
+        performance:
+          type: string
+          example: above_average
+        totalBookings:
+          type: number
+          example: 12
+      required:
+      - id
+      - name
+      - email
+      - avatarUrl
+      - performance
+      - totalBookings
+    BookingLimitPeriodUsageOutput:
+      type: object
+      properties:
+        limit:
+          type: number
+          example: 20
+          description: The configured maximum for this period.
+        used:
+          type: number
+          example: 7
+          description: Accepted bookings counted against the limit in this period.
+        remaining:
+          type: number
+          example: 13
+          description: Bookings left in this period, never below 0.
+        periodStart:
+          type: string
+          example: '2026-10-11'
+          description: First day of the period (YYYY-MM-DD) in `timeZone`.
+        periodEnd:
+          type: string
+          example: '2026-10-17'
+          description: Last day of the period (YYYY-MM-DD, inclusive) in `timeZone`.
+      required:
+      - limit
+      - used
+      - remaining
+      - periodStart
+      - periodEnd
+    BookingInsightsMemberStatDto:
+      type: object
+      properties:
+        userId:
+          type: number
+          description: User ID of the team member
+          example: 101
+        user:
+          description: Team member profile details
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMemberUserDto'
+        emailMd5:
+          type: string
+          description: MD5 hash of email for Gravatar lookup
+          example: c160f8cc69a4f0bf2b0362752353d060
+        count:
+          type: number
+          description: Number of bookings for this ranking category
+          example: 8
+      required:
+      - userId
+      - user
+      - emailMd5
+      - count
+    BookingInsightsMetricOutput:
+      type: object
+      properties:
+        count:
+          type: number
+          description: Metric value for the current period
+          example: 10
+        deltaPrevious:
+          type: number
+          description: Percentage change compared to the previous period
+          example: 12.5
+      required:
+      - count
+      - deltaPrevious
+    BookingLimitsUsageDataOutput:
+      type: object
+      properties:
+        date:
+          type:
+          - string
+          - 'null'
+          example: '2026-10-13'
+          description: The requested calendar day; null when the periods containing today were reported.
+        eventType:
+          description: Shared by every host of the event type; null when no eventTypeId was given.
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/EventTypeBookingLimitsUsageOutput'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserBookingLimitsUsageOutput'
+        total:
+          type: number
+          example: 42
+          description: Users in scope, before paging.
+      required:
+      - date
+      - eventType
+      - users
+      - total
+    GetInsightsRoutingFailedBookingsByFieldOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: object
+          example:
+            Contact Sales:
+              Company size:
+              - optionId: option_1
+                optionLabel: Enterprise
+                count: 5
+      required:
+      - status
+      - data
+    InsightsRoutingRoutedToPerPeriodDataOutput:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/InsightsRoutingRoutedToUsersOutput'
+        periodStats:
+          $ref: '#/components/schemas/InsightsRoutingRoutedToPeriodStatsOutput'
+      required:
+      - users
+      - periodStats
+    GetBookingMemberStatsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          description: Member statistics grouped by ranking category
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMemberStatsDataOutput'
+      required:
+      - status
+      - data
+    BookingInsightsKpiStatsDataOutput:
+      type: object
+      properties:
+        empty:
+          type: boolean
+          description: Whether no data exists for the selected period
+          example: false
+        created:
+          description: Total bookings created in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        scheduled:
+          description: Total bookings scheduled (upcoming) in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        completed:
+          description: Total bookings completed in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        rescheduled:
+          description: Total bookings rescheduled in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        cancelled:
+          description: Total bookings cancelled in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        no_show:
+          description: Total host no-shows in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        no_show_guest:
+          description: Total guest no-shows in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        rating:
+          description: Average rating score in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        csat:
+          description: Customer satisfaction percentage (0-100) in the period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsMetricOutput'
+        previousRange:
+          description: Date range of the previous comparison period
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsPreviousRangeOutput'
+      required:
+      - empty
+      - created
+      - scheduled
+      - completed
+      - rescheduled
+      - cancelled
+      - no_show
+      - no_show_guest
+      - rating
+      - csat
+      - previousRange
+    GetInsightsRoutingRoutedToPerPeriodOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/InsightsRoutingRoutedToPerPeriodDataOutput'
+      required:
+      - status
+      - data
+    BookingInsightsPreviousRangeOutput:
+      type: object
+      properties:
+        startDate:
+          type: string
+          description: Start date of the previous comparison period
+          example: Dec 1, 2023
+        endDate:
+          type: string
+          description: End date of the previous comparison period
+          example: Dec 31, 2023
+      required:
+      - startDate
+      - endDate
+    InsightsRoutingRoutedToPeriodStatsOutput:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingRoutedToPeriodStatOutput'
+      required:
+      - data
+    BookingInsightsMemberStatsDataOutput:
+      type: object
+      properties:
+        mostBookings:
+          description: Members ranked by most total bookings
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        leastBookings:
+          description: Members ranked by fewest total bookings
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        mostCancelled:
+          description: Members ranked by most cancellations
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        mostCompleted:
+          description: Members ranked by most completed bookings
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        leastCompleted:
+          description: Members ranked by fewest completed bookings
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        mostNoShow:
+          description: Members ranked by most no-shows
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        highestRatings:
+          description: Members ranked by highest average rating
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+        lowestRatings:
+          description: Members ranked by lowest average rating
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsMemberStatDto'
+      required:
+      - mostBookings
+      - leastBookings
+      - mostCancelled
+      - mostCompleted
+      - leastCompleted
+      - mostNoShow
+      - highestRatings
+      - lowestRatings
+    BookingInsightsMemberUserDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: User ID of the team member
+          example: 101
+        username:
+          type:
+          - string
+          - 'null'
+          description: Username of the team member
+          example: alice
+        name:
+          type:
+          - string
+          - 'null'
+          description: Display name of the team member
+          example: Alice
+        email:
+          type: string
+          description: Email address of the team member
+          example: alice@example.com
+        avatarUrl:
+          type:
+          - string
+          - 'null'
+          description: Avatar image URL
+          example: /alice/avatar.png
+      required:
+      - id
+      - email
+    BookingInsightsAverageDurationDto:
+      type: object
+      properties:
+        Date:
+          type: string
+          description: Abbreviated date label for chart display
+          example: Jan 1
+        formattedDateFull:
+          type: string
+          description: Full formatted date label for the data point
+          example: Jan 1, 2024
+        isToday:
+          type: boolean
+          description: Whether this data point represents the current day
+          example: false
+        Average:
+          type: number
+          description: Average booking duration in minutes for this date
+          example: 30
+      required:
+      - Date
+      - formattedDateFull
+      - isToday
+      - Average
+    GetInsightsRoutingFormHeadersOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingFormFieldOutput'
+      required:
+      - status
+      - data
+    RoutedToPerPeriodInput:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - user
+          - team
+          - org
+          example: user
+        selectedTeamId:
+          type: number
+          description: Team ID for team-scoped routing insights
+          example: 12
+        startDate:
+          type: string
+          description: Inclusive start date for routing insights
+          example: '2024-01-01'
+        endDate:
+          type: string
+          description: Inclusive end date for routing insights
+          example: '2024-01-31'
+        columnFilters:
+          type: array
+          description: 'Data-table column filters (discriminated union by type: ss, ms, t, n, dr). Date range filters use id=createdAt.'
+          example:
+          - id: createdAt
+            value:
+              type: dr
+              data:
+                startDate: '2024-01-01'
+                endDate: '2024-01-31'
+                preset: custom
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              value:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - ss
+                    - ms
+                    - t
+                    - n
+                    - dr
+                  data:
+                    type: object
+        period:
+          type: string
+          enum:
+          - perDay
+          - perWeek
+          - perMonth
+          example: perWeek
+        limit:
+          type: number
+          example: 10
+          maximum: 100
+        searchQuery:
+          type: string
+          example: Alice
+      required:
+      - scope
+      - startDate
+      - endDate
+      - period
+      - limit
+    RoutingInsightsPaginatedInput:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - user
+          - team
+          - org
+          example: user
+        selectedTeamId:
+          type: number
+          description: Team ID for team-scoped routing insights
+          example: 12
+        startDate:
+          type: string
+          description: Inclusive start date for routing insights
+          example: '2024-01-01'
+        endDate:
+          type: string
+          description: Inclusive end date for routing insights
+          example: '2024-01-31'
+        columnFilters:
+          type: array
+          description: 'Data-table column filters (discriminated union by type: ss, ms, t, n, dr). Date range filters use id=createdAt.'
+          example:
+          - id: createdAt
+            value:
+              type: dr
+              data:
+                startDate: '2024-01-01'
+                endDate: '2024-01-31'
+                preset: custom
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              value:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - ss
+                    - ms
+                    - t
+                    - n
+                    - dr
+                  data:
+                    type: object
+        sorting:
+          type: array
+          example:
+          - id: createdAt
+            desc: true
+        offset:
+          type: number
+          example: 0
+        limit:
+          type: number
+          example: 50
+          maximum: 100
+      required:
+      - scope
+      - startDate
+      - endDate
+      - offset
+      - limit
+    EventTypeBookingLimitsUsageOutput:
+      type: object
+      properties:
+        perDay:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        perWeek:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        perMonth:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        perYear:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodUsageOutput'
+        eventTypeId:
+          type: number
+          example: 101
+        timeZone:
+          type: string
+          example: Europe/London
+          description: Time zone the event type's periods are counted in.
+      required:
+      - perDay
+      - perWeek
+      - perMonth
+      - perYear
+      - eventTypeId
+      - timeZone
+    GetBookingEventTrendsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          description: Array of daily event trend data points
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsEventTrendDto'
+      required:
+      - status
+      - data
+    UserBookingLimitsUsageOutput:
+      type: object
+      properties:
+        userUuid:
+          type: string
+          format: uuid
+          example: 3f2504e0-4f89-41d3-9a0c-0305e82c3301
+        timeZone:
+          type: string
+          example: America/New_York
+          description: Time zone the user's own periods are counted in.
+        user:
+          description: The user's global booking limit.
+          allOf:
+          - $ref: '#/components/schemas/BookingLimitPeriodsUsageOutput'
+        binding:
+          description: The limit with the least room left across the event type's limit and the user's global limit; null when neither applies. Team booking limits are not included yet.
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BindingBookingLimitOutput'
+      required:
+      - userUuid
+      - timeZone
+      - user
+      - binding
+    BookingLimitsUsageInput:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - user
+          - team
+          - org
+          example: team
+          description: '`user`: the caller only. `team`: accepted members of `selectedTeamId`. `org`: the hosts of `eventTypeId`, which is then required.'
+        selectedTeamId:
+          type: number
+          description: Required for team scope.
+          example: 12
+        date:
+          type: string
+          description: 'Calendar day (YYYY-MM-DD). Reports the day, week, month and year containing it, each read in its limit''s own time zone: the user''s for the global limit, the event type''s for the event-type limit. Defaults to today.'
+          example: '2026-10-13'
+        eventTypeId:
+          description: Adds the event type's own booking limit. Accepts a numeric ID or UUID. Must be an event type inside the scope; required for org scope.
+          oneOf:
+          - type: integer
+          - type: string
+            format: uuid
+          example: 101
+        userUuids:
+          description: Only report these users. Every uuid must be inside the scope.
+          maxItems: 100
+          example:
+          - 3f2504e0-4f89-41d3-9a0c-0305e82c3301
+          type: array
+          items:
+            type: string
+        offset:
+          type: number
+          example: 0
+        limit:
+          type: number
+          example: 50
+          maximum: 100
+      required:
+      - scope
+      - offset
+      - limit
+    RoutingFormFieldsInput:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - user
+          - team
+          - org
+          example: user
+        selectedTeamId:
+          type: number
+          description: Team ID for team-scoped routing insights
+          example: 12
+        routingFormId:
+          type: string
+          description: Routing form ID to filter fields
+          example: form_123
+      required:
+      - scope
+    GetInsightsRoutingFormsByStatusOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/InsightsRoutingFormsByStatusDataOutput'
+      required:
+      - status
+      - data
+    RoutingInsightsBaseInput:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - user
+          - team
+          - org
+          example: user
+        selectedTeamId:
+          type: number
+          description: Team ID for team-scoped routing insights
+          example: 12
+        startDate:
+          type: string
+          description: Inclusive start date for routing insights
+          example: '2024-01-01'
+        endDate:
+          type: string
+          description: Inclusive end date for routing insights
+          example: '2024-01-31'
+        columnFilters:
+          type: array
+          description: 'Data-table column filters (discriminated union by type: ss, ms, t, n, dr). Date range filters use id=createdAt.'
+          example:
+          - id: createdAt
+            value:
+              type: dr
+              data:
+                startDate: '2024-01-01'
+                endDate: '2024-01-31'
+                preset: custom
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              value:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - ss
+                    - ms
+                    - t
+                    - n
+                    - dr
+                  data:
+                    type: object
+      required:
+      - scope
+      - startDate
+      - endDate
+    BindingBookingLimitOutput:
+      type: object
+      properties:
+        layer:
+          type: string
+          enum:
+          - eventType
+          - user
+          example: user
+        limitKey:
+          type: string
+          enum:
+          - perDay
+          - perWeek
+          - perMonth
+          - perYear
+          example: perWeek
+        remaining:
+          type: number
+          example: 2
+      required:
+      - layer
+      - limitKey
+      - remaining
+    InsightsRoutingRoutedToPeriodStatOutput:
+      type: object
+      properties:
+        userId:
+          type: number
+          example: 101
+        period_start:
+          format: date-time
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+        total:
+          type: number
+          example: 3
+      required:
+      - userId
+      - period_start
+      - total
+    BookingInsightsInput:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - user
+          - team
+          - org
+          example: user
+        selectedTeamId:
+          type: number
+          description: Team ID for team-scoped insights
+          example: 12
+        timeZone:
+          type: string
+          description: IANA timezone used to group time-series insights
+          example: America/New_York
+        columnFilters:
+          type: array
+          description: 'Data-table column filters (discriminated union by type: ss, ms, t, n, dr). Date range filters use id=startTime or id=createdAt.'
+          example:
+          - id: createdAt
+            value:
+              type: dr
+              data:
+                startDate: '2024-01-01'
+                endDate: '2024-01-31'
+                preset: custom
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Column identifier
+              value:
+                type: object
+                description: Filter value discriminated by type field
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - ss
+                    - ms
+                    - t
+                    - n
+                    - dr
+                  data:
+                    type: object
+      required:
+      - scope
+      - timeZone
+    InsightsRoutingFormsByStatusDataOutput:
+      type: object
+      properties:
+        total:
+          type: number
+          example: 100
+        totalWithoutBooking:
+          type: number
+          example: 25
+        totalWithBooking:
+          type: number
+          example: 75
+      required:
+      - total
+      - totalWithoutBooking
+      - totalWithBooking
+    GetInsightsRoutingFormResponsesOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/InsightsRoutingFormResponsesDataOutput'
+      required:
+      - status
+      - data
+    GetBookingLimitsUsageOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          $ref: '#/components/schemas/BookingLimitsUsageDataOutput'
+      required:
+      - status
+      - data
+    BookingInsightsEventTrendDto:
+      type: object
+      properties:
+        formattedDateFull:
+          type: string
+          description: Full formatted date label for the data point
+          example: Jan 1, 2024
+        isToday:
+          type: boolean
+          description: Whether this data point represents the current day
+          example: false
+        Month:
+          type: string
+          description: Abbreviated month-day label for chart display
+          example: Jan 1
+        Created:
+          type: number
+          description: Number of bookings created on this date
+          example: 12
+        Completed:
+          type: number
+          description: Number of bookings completed on this date
+          example: 8
+        Rescheduled:
+          type: number
+          description: Number of bookings rescheduled on this date
+          example: 2
+        Cancelled:
+          type: number
+          description: Number of bookings cancelled on this date
+          example: 1
+        No-Show (Host):
+          type: number
+          description: Number of host no-shows on this date
+          example: 0
+        No-Show (Guest):
+          type: number
+          description: Number of guest no-shows on this date
+          example: 1
+      required:
+      - formattedDateFull
+      - isToday
+      - Month
+      - Created
+      - Completed
+      - Rescheduled
+      - Cancelled
+      - No-Show (Host)
+      - No-Show (Guest)
+    InsightsRoutingResponseFieldOutput:
+      type: object
+      properties:
+        fieldId:
+          type:
+          - string
+          - 'null'
+          example: company-size
+        valueString:
+          type:
+          - string
+          - 'null'
+          example: Enterprise
+        valueNumber:
+          type:
+          - number
+          - 'null'
+          example: 100
+        valueStringArray:
+          example:
+          - Enterprise
+          - Mid Market
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - fieldId
+      - valueString
+      - valueNumber
+      - valueStringArray
+    InsightsRoutingFormResponsesDataOutput:
+      type: object
+      properties:
+        total:
+          type: number
+          example: 10
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingFormResponseOutput'
+      required:
+      - total
+      - data
+    GetBookingKpiStatsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          description: KPI statistics data
+          allOf:
+          - $ref: '#/components/schemas/BookingInsightsKpiStatsDataOutput'
+      required:
+      - status
+      - data
+    InsightsRoutingFormFieldOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          example: field_1
+        label:
+          type: string
+          example: Company size
+        type:
+          type: string
+          example: select
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingFormFieldOptionOutput'
+      required:
+      - id
+      - label
+    GetInsightsRoutingFormFieldOptionsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingFormFieldOutput'
+      required:
+      - status
+      - data
+    GetBookingAverageDurationOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+          enum:
+          - success
+          - error
+        data:
+          description: Array of daily average duration data points
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingInsightsAverageDurationDto'
+      required:
+      - status
+      - data
+    InsightsRoutingFormFieldOptionOutput:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          example: option_1
+        label:
+          type: string
+          example: Enterprise
+      required:
+      - id
+      - label
+    InsightsRoutingBookingAttendeeOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Jane Doe
+        timeZone:
+          type: string
+          example: Europe/London
+        email:
+          type: string
+          example: jane@example.com
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+          example: null
+      required:
+      - name
+      - timeZone
+      - email
+      - phoneNumber
+    InsightsRoutingFormResponseOutput:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        uuid:
+          type:
+          - string
+          - 'null'
+          example: form_123
+        formId:
+          type: string
+          example: form_123
+        formName:
+          type: string
+          example: Contact Sales
+        formTeamId:
+          type:
+          - number
+          - 'null'
+          example: 10
+        formUserId:
+          type:
+          - number
+          - 'null'
+          example: 101
+        bookingUid:
+          type:
+          - string
+          - 'null'
+          example: booking_uid
+        bookingId:
+          type:
+          - number
+          - 'null'
+          example: 1
+        bookingStatus:
+          type:
+          - string
+          - 'null'
+          example: ACCEPTED
+        bookingStatusOrder:
+          type:
+          - number
+          - 'null'
+          example: 1
+        bookingCreatedAt:
+          type:
+          - string
+          - 'null'
+          example: '2024-01-01T00:00:00.000Z'
+          format: date-time
+        bookingUserId:
+          type:
+          - number
+          - 'null'
+          example: 101
+        bookingUserName:
+          type:
+          - string
+          - 'null'
+          example: Alice Doe
+        bookingUserEmail:
+          type:
+          - string
+          - 'null'
+          example: alice@example.com
+        bookingUserAvatarUrl:
+          type:
+          - string
+          - 'null'
+          example: https://example.com/avatar.png
+        bookingAssignmentReason:
+          type:
+          - string
+          - 'null'
+          example: round_robin
+        bookingStartTime:
+          type:
+          - string
+          - 'null'
+          example: '2024-01-01T09:00:00.000Z'
+          format: date-time
+        bookingEndTime:
+          type:
+          - string
+          - 'null'
+          example: '2024-01-01T09:30:00.000Z'
+          format: date-time
+        eventTypeId:
+          type:
+          - number
+          - 'null'
+          example: 200
+        eventTypeParentId:
+          type:
+          - number
+          - 'null'
+          example: null
+        eventTypeSchedulingType:
+          type:
+          - string
+          - 'null'
+          example: ROUND_ROBIN
+        createdAt:
+          format: date-time
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+        utm_source:
+          type:
+          - string
+          - 'null'
+          example: google
+        utm_medium:
+          type:
+          - string
+          - 'null'
+          example: cpc
+        utm_campaign:
+          type:
+          - string
+          - 'null'
+          example: spring_launch
+        utm_term:
+          type:
+          - string
+          - 'null'
+          example: calendar scheduling
+        utm_content:
+          type:
+          - string
+          - 'null'
+          example: hero_cta
+        bookingAttendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingBookingAttendeeOutput'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingResponseFieldOutput'
+      required:
+      - id
+      - uuid
+      - formId
+      - formName
+      - formTeamId
+      - formUserId
+      - bookingUid
+      - bookingId
+      - bookingStatus
+      - bookingStatusOrder
+      - bookingCreatedAt
+      - bookingUserId
+      - bookingUserName
+      - bookingUserEmail
+      - bookingUserAvatarUrl
+      - bookingAssignmentReason
+      - bookingStartTime
+      - bookingEndTime
+      - eventTypeId
+      - eventTypeParentId
+      - eventTypeSchedulingType
+      - createdAt
+      - utm_source
+      - utm_medium
+      - utm_campaign
+      - utm_term
+      - utm_content
+      - bookingAttendees
+      - fields
+    InsightsRoutingRoutedToUsersOutput:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightsRoutingRoutedToUserOutput'
+      required:
+      - data

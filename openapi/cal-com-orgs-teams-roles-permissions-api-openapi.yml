@@ -1,0 +1,427 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Roles / Permissions API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Roles / Permissions
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/roles/{roleId}/permissions:
+    post:
+      operationId: OrganizationsTeamsRolesPermissionsController_addPermissions
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRolePermissionsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRolePermissionsOutput'
+      summary: Add permissions to an organization team role (single or batch)
+      tags:
+      - Orgs / Teams / Roles / Permissions
+      x-platform-plan: SCALE
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `role.readTeamRoles`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsTeamsRolesPermissionsController_listPermissions
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRolePermissionsOutput'
+      summary: List permissions for an organization team role
+      tags:
+      - Orgs / Teams / Roles / Permissions
+      x-platform-plan: SCALE
+    put:
+      operationId: OrganizationsTeamsRolesPermissionsController_setPermissions
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRolePermissionsInput'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamRolePermissionsOutput'
+      summary: Replace all permissions for an organization team role
+      tags:
+      - Orgs / Teams / Roles / Permissions
+      x-platform-plan: SCALE
+    delete:
+      operationId: OrganizationsTeamsRolesPermissionsController_removePermissions
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: permissions
+        required: false
+        in: query
+        description: 'Permissions to remove (format: resource.action). Supports comma-separated values as well as repeated query params.'
+        schema:
+          example: ?permissions=eventType.read,booking.read
+          type: array
+          items:
+            type: string
+            enum:
+            - role.create
+            - role.read
+            - role.readTeamRoles
+            - role.update
+            - role.delete
+            - eventType.create
+            - eventType.read
+            - eventType.readTeamEventTypes
+            - eventType.update
+            - eventType.delete
+            - calEvent.create
+            - calEvent.read
+            - calEvent.update
+            - calEvent.delete
+            - team.read
+            - team.readTeamSettings
+            - team.readConferencing
+            - team.readVerifiedResources
+            - team.readMemberships
+            - team.update
+            - team.delete
+            - team.invite
+            - team.remove
+            - team.listMembers
+            - team.listMembersPrivate
+            - team.changeMemberRole
+            - team.impersonate
+            - booking.read
+            - booking.readTeamBookings
+            - booking.readRecordings
+            - booking.update
+            - booking.updateTeamBookings
+            - booking.reassignTeamPastBookings
+            - booking.readTeamAuditLogs
+            - insights.read
+            - workflow.create
+            - workflow.read
+            - workflow.readTeamWorkflows
+            - workflow.update
+            - workflow.delete
+            - routingForm.create
+            - routingForm.read
+            - routingForm.readTeamRoutingForms
+            - routingForm.update
+            - routingForm.delete
+            - routingForm.readTeamAuditLogs
+            - routingForm.readResponsePii
+            - webhook.create
+            - webhook.read
+            - webhook.update
+            - webhook.delete
+            - availability.readTeamAvailability
+            - featureOptIn.read
+            - featureOptIn.update
+            - tag.create
+            - tag.update
+            - tag.delete
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '204':
+          description: ''
+      summary: Remove multiple permissions from an organization team role
+      tags:
+      - Orgs / Teams / Roles / Permissions
+      x-platform-plan: SCALE
+  /v2/organizations/{orgId}/teams/{teamId}/roles/{roleId}/permissions/{permission}:
+    delete:
+      operationId: OrganizationsTeamsRolesPermissionsController_removePermission
+      parameters:
+      - name: Authorization
+        in: header
+        description: For non-platform customers - value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: false
+        schema:
+          type: string
+      - name: x-cal-secret-key
+        in: header
+        description: For platform customers - OAuth client secret key
+        required: false
+        schema:
+          type: string
+      - name: x-cal-client-id
+        in: header
+        description: For platform customers - OAuth client ID
+        required: false
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: roleId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: permission
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Remove a permission from an organization team role
+      tags:
+      - Orgs / Teams / Roles / Permissions
+      x-platform-plan: SCALE
+components:
+  schemas:
+    GetTeamRolePermissionsOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          example: success
+        data:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - data
+    CreateTeamRolePermissionsInput:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            type: string
+            enum:
+            - role.create
+            - role.read
+            - role.readTeamRoles
+            - role.update
+            - role.delete
+            - eventType.create
+            - eventType.read
+            - eventType.readTeamEventTypes
+            - eventType.update
+            - eventType.delete
+            - calEvent.create
+            - calEvent.read
+            - calEvent.update
+            - calEvent.delete
+            - team.read
+            - team.readTeamSettings
+            - team.readConferencing
+            - team.readVerifiedResources
+            - team.readMemberships
+            - team.update
+            - team.delete
+            - team.invite
+            - team.remove
+            - team.listMembers
+            - team.listMembersPrivate
+            - team.changeMemberRole
+            - team.impersonate
+            - booking.read
+            - booking.readTeamBookings
+            - booking.readRecordings
+            - booking.update
+            - booking.updateTeamBookings
+            - booking.reassignTeamPastBookings
+            - booking.readTeamAuditLogs
+            - insights.read
+            - workflow.create
+            - workflow.read
+            - workflow.readTeamWorkflows
+            - workflow.update
+            - workflow.delete
+            - routingForm.create
+            - routingForm.read
+            - routingForm.readTeamRoutingForms
+            - routingForm.update
+            - routingForm.delete
+            - routingForm.readTeamAuditLogs
+            - routingForm.readResponsePii
+            - webhook.create
+            - webhook.read
+            - webhook.update
+            - webhook.delete
+            - availability.readTeamAvailability
+            - featureOptIn.read
+            - featureOptIn.update
+            - tag.create
+            - tag.update
+            - tag.delete
+          description: 'Permissions to add (format: resource.action)'
+          example:
+          - eventType.read
+          - booking.read
+      required:
+      - permissions

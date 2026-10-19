@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Bookings / Guests API
+  title: Cal.com API v2 Bookings / Guests API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,14 +10,17 @@ tags:
 paths:
   /v2/bookings/{bookingUid}/guests:
     post:
-      operationId: BookingGuestsController_2024_08_13_addGuests
-      summary: Add guests to an existing booking
       description: 'Add one or more guests to an existing booking. Maximum 10 guests per request, with a limit of 30 total guests per booking.
 
 
         **Rate Limiting:**
 
         This endpoint is rate limited to 5 requests per minute to prevent abuse.
+
+
+        **Seated Events:**
+
+        This endpoint does not support seated event bookings. For seated events, each guest must be added by creating a new booking for the same event type and time slot via `POST /v2/bookings`. Attempting to add guests to a seated event booking will return a 400 error.
 
 
         **Email Notifications:**
@@ -34,7 +37,11 @@ paths:
         - **Existing Guests:** Receive an "Add Guests" notification email informing them that additional guests have been added to the booking.
 
 
-        The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.'
+        The cal-api-version header is required for this endpoint. Without it, the request will fail with a 404 error.
+
+
+        If accessed using an OAuth access token, the `BOOKING_WRITE` scope is required.'
+      operationId: BookingGuestsController_2024_08_13_addGuests
       parameters:
       - name: cal-api-version
         in: header
@@ -42,6 +49,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-08-13'
       - name: bookingUid
         required: true
         in: path
@@ -49,7 +57,7 @@ paths:
           type: string
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -66,135 +74,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddGuestsOutput_2024_08_13'
+      summary: Add guests to an existing booking
       tags:
       - Bookings / Guests
+      x-oauth-scopes:
+      - BOOKING_WRITE
 components:
   schemas:
-    BookingOutput_2024_08_13:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 123
-        uid:
-          type: string
-          example: booking_uid_123
-        title:
-          type: string
-          example: Consultation
-        description:
-          type: string
-          example: Learn how to integrate scheduling into marketplace.
-        hosts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingHost'
-        status:
-          type: string
-          enum:
-          - cancelled
-          - accepted
-          - rejected
-          - pending
-          example: accepted
-        cancellationReason:
-          type: string
-          example: User requested cancellation
-        cancelledByEmail:
-          type: string
-          example: canceller@example.com
-        reschedulingReason:
-          type: string
-          example: User rescheduled the event
-        rescheduledByEmail:
-          type: string
-          example: rescheduler@example.com
-        rescheduledFromUid:
-          type: string
-          example: previous_uid_123
-          description: UID of the previous booking from which this booking was rescheduled.
-        rescheduledToUid:
-          type: string
-          example: new_uid_456
-          description: UID of the new booking to which this booking was rescheduled.
-        start:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        end:
-          type: string
-          example: '2024-08-13T16:30:00Z'
-        duration:
-          type: number
-          example: 60
-        eventTypeId:
-          type: number
-          example: 50
-          deprecated: true
-          description: Deprecated - rely on 'eventType' object containing the id instead.
-        eventType:
-          $ref: '#/components/schemas/EventType'
-        meetingUrl:
-          type: string
-          description: Deprecated - rely on 'location' field instead.
-          example: https://example.com/recurring-meeting
-          deprecated: true
-        location:
-          type: string
-          example: https://example.com/meeting
-        absentHost:
-          type: boolean
-          example: true
-        createdAt:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        updatedAt:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        metadata:
-          type: object
-          example:
-            key: value
-        rating:
-          type: number
-          example: 4
-        icsUid:
-          type: string
-          example: ics_uid_123
-          description: UID of ICS event.
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingAttendee'
-        guests:
-          example:
-          - guest1@example.com
-          - guest2@example.com
-          type: array
-          items:
-            type: string
-        bookingFieldsResponses:
-          type: object
-          description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
-          example:
-            customField: customValue
-      required:
-      - id
-      - uid
-      - title
-      - description
-      - hosts
-      - status
-      - start
-      - end
-      - duration
-      - eventTypeId
-      - eventType
-      - location
-      - absentHost
-      - createdAt
-      - updatedAt
-      - attendees
-      - bookingFieldsResponses
     RecurringBookingOutput_2024_08_13:
       type: object
       properties:
@@ -215,24 +101,28 @@ components:
           items:
             $ref: '#/components/schemas/BookingHost'
         status:
-          type: string
           enum:
           - cancelled
           - accepted
           - rejected
           - pending
+          - awaiting_host
+          type: string
           example: accepted
+          description: '`awaiting_host` is an instant meeting that is live and waiting for a host to join.'
         cancellationReason:
           type: string
           example: User requested cancellation
         cancelledByEmail:
           type: string
+          format: email
           example: canceller@example.com
         reschedulingReason:
           type: string
           example: User rescheduled the event
         rescheduledByEmail:
           type: string
+          format: email
           example: rescheduler@example.com
         rescheduledFromUid:
           type: string
@@ -245,9 +135,11 @@ components:
         start:
           type: string
           example: '2024-08-13T15:30:00Z'
+          format: date-time
         end:
           type: string
           example: '2024-08-13T16:30:00Z'
+          format: date-time
         duration:
           type: number
           example: 60
@@ -258,8 +150,15 @@ components:
           description: Deprecated - rely on 'eventType' object containing the id instead.
         eventType:
           $ref: '#/components/schemas/EventType'
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          example: 0199b5d2-7c1e-7f3a-9b4d-2e6f8a1c3d5e
+          description: UUID of the Event this booking belongs to. Pass it to `GET /v2/events/{uuid}` to fetch the Event. `null` when the booking is not for an Event.
         meetingUrl:
           type: string
+          format: uri
           description: Deprecated - rely on 'location' field instead.
           example: https://example.com/recurring-meeting
           deprecated: true
@@ -272,11 +171,17 @@ components:
         createdAt:
           type: string
           example: '2024-08-13T15:30:00Z'
+          format: date-time
         updatedAt:
-          type: string
+          type:
+          - string
+          - 'null'
           example: '2024-08-13T15:30:00Z'
+          format: date-time
         metadata:
           type: object
+          additionalProperties:
+            type: string
           example:
             key: value
         rating:
@@ -299,6 +204,7 @@ components:
             type: string
         bookingFieldsResponses:
           type: object
+          additionalProperties: true
           description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
           example:
             customField: customValue
@@ -324,364 +230,37 @@ components:
       - attendees
       - bookingFieldsResponses
       - recurringBookingUid
-    BookingHost:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        name:
-          type: string
-          example: Jane Doe
-        email:
-          type: string
-          example: jane100@example.com
-        displayEmail:
-          type: string
-          example: jane100@example.com
-          description: Clean email for display purposes
-        username:
-          type: string
-          example: jane100
-        timeZone:
-          type: string
-          example: America/Los_Angeles
-      required:
-      - id
-      - name
-      - email
-      - displayEmail
-      - username
-      - timeZone
-    SeatedAttendee:
-      type: object
-      properties:
-        name:
-          type: string
-          example: John Doe
-        email:
-          type: string
-          example: john@example.com
-        displayEmail:
-          type: string
-          example: john@example.com
-          description: Clean email for display purposes
-        timeZone:
-          type: string
-          example: America/New_York
-        language:
-          type: string
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          example: en
-        absent:
-          type: boolean
-          example: false
-        phoneNumber:
-          type: string
-          example: '+1234567890'
-        seatUid:
-          type: string
-          example: 3be561a9-31f1-4b8e-aefc-9d9a085f0dd1
-        bookingFieldsResponses:
-          type: object
-          description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
-          example:
-            customField: customValue
-        metadata:
-          type: object
-          example:
-            key: value
-      required:
-      - name
-      - email
-      - displayEmail
-      - timeZone
-      - absent
-      - seatUid
-      - bookingFieldsResponses
-    AddGuestsInput_2024_08_13:
-      type: object
-      properties:
-        guests:
-          description: Array of guests to add to the booking. Maximum 10 guests per request.
-          example:
-          - email: john.doe@example.com
-            name: John Doe
-            timeZone: America/New_York
-          - email: jane.smith@example.com
-            name: Jane Smith
-          type: array
-          items:
-            $ref: '#/components/schemas/Guest'
-      required:
-      - guests
     AddGuestsOutput_2024_08_13:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           oneOf:
-          - $ref: '#/components/schemas/BookingOutput_2024_08_13'
-          - $ref: '#/components/schemas/RecurringBookingOutput_2024_08_13'
-          - type: array
+          - title: Booking
+            $ref: '#/components/schemas/BookingOutput_2024_08_13'
+          - title: Recurring Booking
+            $ref: '#/components/schemas/RecurringBookingOutput_2024_08_13'
+          - title: Recurring Bookings (array)
+            type: array
             items:
               $ref: '#/components/schemas/RecurringBookingOutput_2024_08_13'
-          - $ref: '#/components/schemas/GetSeatedBookingOutput_2024_08_13'
-          - $ref: '#/components/schemas/GetRecurringSeatedBookingOutput_2024_08_13'
-          - type: array
+          - title: Seated Booking
+            $ref: '#/components/schemas/GetSeatedBookingOutput_2024_08_13'
+          - title: Recurring Seated Booking
+            $ref: '#/components/schemas/GetRecurringSeatedBookingOutput_2024_08_13'
+          - title: Recurring Seated Bookings (array)
+            type: array
             items:
               $ref: '#/components/schemas/GetRecurringSeatedBookingOutput_2024_08_13'
           description: Booking data, which can be either a BookingOutput object, a RecurringBookingOutput object, or an array of RecurringBookingOutput objects
       required:
       - status
       - data
-    GetSeatedBookingOutput_2024_08_13:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 123
-        uid:
-          type: string
-          example: booking_uid_123
-        title:
-          type: string
-          example: Consultation
-        description:
-          type: string
-          example: Learn how to integrate scheduling into marketplace.
-        hosts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BookingHost'
-        status:
-          type: string
-          enum:
-          - cancelled
-          - accepted
-          - rejected
-          - pending
-          example: accepted
-        cancellationReason:
-          type: string
-          example: User requested cancellation
-        cancelledByEmail:
-          type: string
-          example: canceller@example.com
-        reschedulingReason:
-          type: string
-          example: User rescheduled the event
-        rescheduledByEmail:
-          type: string
-          example: rescheduler@example.com
-        rescheduledFromUid:
-          type: string
-          example: previous_uid_123
-          description: UID of the previous booking from which this booking was rescheduled.
-        rescheduledToUid:
-          type: string
-          example: new_uid_456
-          description: UID of the new booking to which this booking was rescheduled.
-        start:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        end:
-          type: string
-          example: '2024-08-13T16:30:00Z'
-        duration:
-          type: number
-          example: 60
-        eventTypeId:
-          type: number
-          example: 50
-          deprecated: true
-          description: Deprecated - rely on 'eventType' object containing the id instead.
-        eventType:
-          $ref: '#/components/schemas/EventType'
-        meetingUrl:
-          type: string
-          description: Deprecated - rely on 'location' field instead.
-          example: https://example.com/recurring-meeting
-          deprecated: true
-        location:
-          type: string
-          example: https://example.com/meeting
-        absentHost:
-          type: boolean
-          example: true
-        createdAt:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        updatedAt:
-          type: string
-          example: '2024-08-13T15:30:00Z'
-        metadata:
-          type: object
-          example:
-            key: value
-        rating:
-          type: number
-          example: 4
-        icsUid:
-          type: string
-          example: ics_uid_123
-          description: UID of ICS event.
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/SeatedAttendee'
-      required:
-      - id
-      - uid
-      - title
-      - description
-      - hosts
-      - status
-      - start
-      - end
-      - duration
-      - eventTypeId
-      - eventType
-      - location
-      - absentHost
-      - createdAt
-      - updatedAt
-      - attendees
-    BookingAttendee:
-      type: object
-      properties:
-        name:
-          type: string
-          example: John Doe
-        email:
-          type: string
-          example: john@example.com
-        displayEmail:
-          type: string
-          example: john@example.com
-          description: Clean email for display purposes
-        timeZone:
-          type: string
-          example: America/New_York
-        language:
-          type: string
-          enum:
-          - ar
-          - ca
-          - de
-          - es
-          - eu
-          - he
-          - id
-          - ja
-          - lv
-          - pl
-          - ro
-          - sr
-          - th
-          - vi
-          - az
-          - cs
-          - el
-          - es-419
-          - fi
-          - hr
-          - it
-          - km
-          - nl
-          - pt
-          - ru
-          - sv
-          - tr
-          - zh-CN
-          - bg
-          - da
-          - en
-          - et
-          - fr
-          - hu
-          - iw
-          - ko
-          - 'no'
-          - pt-BR
-          - sk
-          - ta
-          - uk
-          - zh-TW
-          - bn
-          example: en
-        absent:
-          type: boolean
-          example: false
-        phoneNumber:
-          type: string
-          example: '+1234567890'
-      required:
-      - name
-      - email
-      - displayEmail
-      - timeZone
-      - absent
-    EventType:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        slug:
-          type: string
-          example: some-event
-      required:
-      - id
-      - slug
     Guest:
       type: object
       properties:
@@ -743,6 +322,7 @@ components:
           - 'no'
           - pt-BR
           - sk
+          - sl
           - ta
           - uk
           - zh-TW
@@ -752,6 +332,358 @@ components:
           default: en
       required:
       - email
+    GetSeatedBookingOutput_2024_08_13:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 123
+        uid:
+          type: string
+          example: booking_uid_123
+        title:
+          type: string
+          example: Consultation
+        description:
+          type: string
+          example: Learn how to integrate scheduling into marketplace.
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingHost'
+        status:
+          enum:
+          - cancelled
+          - accepted
+          - rejected
+          - pending
+          - awaiting_host
+          type: string
+          example: accepted
+          description: '`awaiting_host` is an instant meeting that is live and waiting for a host to join.'
+        cancellationReason:
+          type: string
+          example: User requested cancellation
+        cancelledByEmail:
+          type: string
+          format: email
+          example: canceller@example.com
+        reschedulingReason:
+          type: string
+          example: User rescheduled the event
+        rescheduledByEmail:
+          type: string
+          format: email
+          example: rescheduler@example.com
+        rescheduledFromUid:
+          type: string
+          example: previous_uid_123
+          description: UID of the previous booking from which this booking was rescheduled.
+        rescheduledToUid:
+          type: string
+          example: new_uid_456
+          description: UID of the new booking to which this booking was rescheduled.
+        start:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+          format: date-time
+        end:
+          type: string
+          example: '2024-08-13T16:30:00Z'
+          format: date-time
+        duration:
+          type: number
+          example: 60
+        eventTypeId:
+          type: number
+          example: 50
+          deprecated: true
+          description: Deprecated - rely on 'eventType' object containing the id instead.
+        eventType:
+          $ref: '#/components/schemas/EventType'
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          example: 0199b5d2-7c1e-7f3a-9b4d-2e6f8a1c3d5e
+          description: UUID of the Event this booking belongs to. Pass it to `GET /v2/events/{uuid}` to fetch the Event. `null` when the booking is not for an Event.
+        meetingUrl:
+          type: string
+          format: uri
+          description: Deprecated - rely on 'location' field instead.
+          example: https://example.com/recurring-meeting
+          deprecated: true
+        location:
+          type: string
+          example: https://example.com/meeting
+        absentHost:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          example: '2024-08-13T15:30:00Z'
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            key: value
+        rating:
+          type: number
+          example: 4
+        icsUid:
+          type: string
+          example: ics_uid_123
+          description: UID of ICS event.
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeatedAttendee'
+      required:
+      - id
+      - uid
+      - title
+      - description
+      - hosts
+      - status
+      - start
+      - end
+      - duration
+      - eventTypeId
+      - eventType
+      - location
+      - absentHost
+      - createdAt
+      - updatedAt
+      - attendees
+    SeatedAttendee:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john@example.com
+        displayEmail:
+          type: string
+          example: john@example.com
+          description: Clean email for display purposes
+        timeZone:
+          type: string
+          example: America/New_York
+        language:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          example: en
+        absent:
+          type: boolean
+          example: false
+        phoneNumber:
+          type: string
+          example: '+1234567890'
+        seatUid:
+          type: string
+          example: 3be561a9-31f1-4b8e-aefc-9d9a085f0dd1
+        createdAt:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+          description: The date and time when the attendee joined the seated booking.
+        bookingFieldsResponses:
+          type: object
+          additionalProperties: true
+          description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
+          example:
+            customField: customValue
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            key: value
+        status:
+          type: string
+          enum:
+          - cancelled
+          example: cancelled
+          description: Present on API version 2026-02-25 and later when this attendee was loaded from a cancelled seat. Omitted for occupied seats.
+        confirmationStatus:
+          enum:
+          - pending
+          - accepted
+          - rejected
+          type: string
+          example: accepted
+          description: Confirmation verdict of this live seat. Omitted when the attendee has no live seat. An attendee loaded from a cancelled seat has status cancelled and does not include confirmationStatus.
+      required:
+      - name
+      - email
+      - displayEmail
+      - timeZone
+      - absent
+      - seatUid
+      - bookingFieldsResponses
+    BookingHost:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        uuid:
+          type: string
+          format: uuid
+          example: 3f2504e0-4f89-41d3-9a0c-0305e82c3301
+        name:
+          type: string
+          example: Jane Doe
+        email:
+          type: string
+          example: jane100@example.com
+        displayEmail:
+          type: string
+          example: jane100@example.com
+          description: Clean email for display purposes
+        username:
+          type: string
+          example: jane100
+        timeZone:
+          type: string
+          example: America/Los_Angeles
+      required:
+      - id
+      - uuid
+      - name
+      - email
+      - displayEmail
+      - username
+      - timeZone
+    BookingAttendee:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john@example.com
+        displayEmail:
+          type: string
+          example: john@example.com
+          description: Clean email for display purposes
+        timeZone:
+          type: string
+          example: America/New_York
+        language:
+          enum:
+          - ar
+          - ca
+          - de
+          - es
+          - eu
+          - he
+          - id
+          - ja
+          - lv
+          - pl
+          - ro
+          - sr
+          - th
+          - vi
+          - az
+          - cs
+          - el
+          - es-419
+          - fi
+          - hr
+          - it
+          - km
+          - nl
+          - pt
+          - ru
+          - sv
+          - tr
+          - zh-CN
+          - bg
+          - da
+          - en
+          - et
+          - fr
+          - hu
+          - iw
+          - ko
+          - 'no'
+          - pt-BR
+          - sk
+          - sl
+          - ta
+          - uk
+          - zh-TW
+          - bn
+          type: string
+          example: en
+        absent:
+          type: boolean
+          example: false
+        phoneNumber:
+          type: string
+          example: '+1234567890'
+      required:
+      - name
+      - email
+      - displayEmail
+      - timeZone
+      - absent
     GetRecurringSeatedBookingOutput_2024_08_13:
       type: object
       properties:
@@ -772,24 +704,28 @@ components:
           items:
             $ref: '#/components/schemas/BookingHost'
         status:
-          type: string
           enum:
           - cancelled
           - accepted
           - rejected
           - pending
+          - awaiting_host
+          type: string
           example: accepted
+          description: '`awaiting_host` is an instant meeting that is live and waiting for a host to join.'
         cancellationReason:
           type: string
           example: User requested cancellation
         cancelledByEmail:
           type: string
+          format: email
           example: canceller@example.com
         reschedulingReason:
           type: string
           example: User rescheduled the event
         rescheduledByEmail:
           type: string
+          format: email
           example: rescheduler@example.com
         rescheduledFromUid:
           type: string
@@ -802,9 +738,11 @@ components:
         start:
           type: string
           example: '2024-08-13T15:30:00Z'
+          format: date-time
         end:
           type: string
           example: '2024-08-13T16:30:00Z'
+          format: date-time
         duration:
           type: number
           example: 60
@@ -815,8 +753,15 @@ components:
           description: Deprecated - rely on 'eventType' object containing the id instead.
         eventType:
           $ref: '#/components/schemas/EventType'
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          example: 0199b5d2-7c1e-7f3a-9b4d-2e6f8a1c3d5e
+          description: UUID of the Event this booking belongs to. Pass it to `GET /v2/events/{uuid}` to fetch the Event. `null` when the booking is not for an Event.
         meetingUrl:
           type: string
+          format: uri
           description: Deprecated - rely on 'location' field instead.
           example: https://example.com/recurring-meeting
           deprecated: true
@@ -829,11 +774,17 @@ components:
         createdAt:
           type: string
           example: '2024-08-13T15:30:00Z'
+          format: date-time
         updatedAt:
-          type: string
+          type:
+          - string
+          - 'null'
           example: '2024-08-13T15:30:00Z'
+          format: date-time
         metadata:
           type: object
+          additionalProperties:
+            type: string
           example:
             key: value
         rating:
@@ -868,3 +819,177 @@ components:
       - updatedAt
       - attendees
       - recurringBookingUid
+    BookingOutput_2024_08_13:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 123
+        uid:
+          type: string
+          example: booking_uid_123
+        title:
+          type: string
+          example: Consultation
+        description:
+          type: string
+          example: Learn how to integrate scheduling into marketplace.
+        hosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingHost'
+        status:
+          enum:
+          - cancelled
+          - accepted
+          - rejected
+          - pending
+          - awaiting_host
+          type: string
+          example: accepted
+          description: '`awaiting_host` is an instant meeting that is live and waiting for a host to join.'
+        cancellationReason:
+          type: string
+          example: User requested cancellation
+        cancelledByEmail:
+          type: string
+          format: email
+          example: canceller@example.com
+        reschedulingReason:
+          type: string
+          example: User rescheduled the event
+        rescheduledByEmail:
+          type: string
+          format: email
+          example: rescheduler@example.com
+        rescheduledFromUid:
+          type: string
+          example: previous_uid_123
+          description: UID of the previous booking from which this booking was rescheduled.
+        rescheduledToUid:
+          type: string
+          example: new_uid_456
+          description: UID of the new booking to which this booking was rescheduled.
+        start:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+          format: date-time
+        end:
+          type: string
+          example: '2024-08-13T16:30:00Z'
+          format: date-time
+        duration:
+          type: number
+          example: 60
+        eventTypeId:
+          type: number
+          example: 50
+          deprecated: true
+          description: Deprecated - rely on 'eventType' object containing the id instead.
+        eventType:
+          $ref: '#/components/schemas/EventType'
+        eventUuid:
+          type:
+          - string
+          - 'null'
+          example: 0199b5d2-7c1e-7f3a-9b4d-2e6f8a1c3d5e
+          description: UUID of the Event this booking belongs to. Pass it to `GET /v2/events/{uuid}` to fetch the Event. `null` when the booking is not for an Event.
+        meetingUrl:
+          type: string
+          format: uri
+          description: Deprecated - rely on 'location' field instead.
+          example: https://example.com/recurring-meeting
+          deprecated: true
+        location:
+          type: string
+          example: https://example.com/meeting
+        absentHost:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          example: '2024-08-13T15:30:00Z'
+          format: date-time
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          example: '2024-08-13T15:30:00Z'
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            key: value
+        rating:
+          type: number
+          example: 4
+        icsUid:
+          type: string
+          example: ics_uid_123
+          description: UID of ICS event.
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookingAttendee'
+        guests:
+          example:
+          - guest1@example.com
+          - guest2@example.com
+          type: array
+          items:
+            type: string
+        bookingFieldsResponses:
+          type: object
+          additionalProperties: true
+          description: Booking field responses consisting of an object with booking field slug as keys and user response as values.
+          example:
+            customField: customValue
+      required:
+      - id
+      - uid
+      - title
+      - description
+      - hosts
+      - status
+      - start
+      - end
+      - duration
+      - eventTypeId
+      - eventType
+      - location
+      - absentHost
+      - createdAt
+      - updatedAt
+      - attendees
+      - bookingFieldsResponses
+    EventType:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        slug:
+          type: string
+          example: some-event
+      required:
+      - id
+      - slug
+    AddGuestsInput_2024_08_13:
+      type: object
+      properties:
+        guests:
+          minItems: 1
+          description: Array of guests to add to the booking. Maximum 100 guests per request.
+          example:
+          - email: john.doe@example.com
+            name: John Doe
+            timeZone: America/New_York
+          - email: jane.smith@example.com
+            name: Jane Smith
+          type: array
+          items:
+            $ref: '#/components/schemas/Guest'
+      required:
+      - guests

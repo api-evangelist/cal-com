@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Schedules API
+  title: Cal.com API v2 Schedules API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,8 +10,6 @@ tags:
 paths:
   /v2/schedules:
     post:
-      operationId: SchedulesController_2024_06_11_createSchedule
-      summary: Create a schedule
       description: 'Create a schedule for the authenticated user.
 
 
@@ -35,11 +33,15 @@ paths:
         When specifying start time and end time for each day use the 24 hour format e.g. 08:00, 15:00 etc.
 
 
-        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+
+
+        If accessed using an OAuth access token, the `SCHEDULE_WRITE` scope is required.'
+      operationId: SchedulesController_2024_06_11_createSchedule
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -49,6 +51,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-06-11'
           default: '2024-06-11'
       requestBody:
         required: true
@@ -63,19 +66,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateScheduleOutput_2024_06_11'
+      summary: Create a schedule
       tags:
       - Schedules
+      x-mcp:
+        name: create_schedule
+        guidance: 'Create a schedule. Required: name, timeZone, isDefault. Each user should have exactly one default schedule. Supports availability slots and date-specific overrides.'
+      x-oauth-scopes:
+      - SCHEDULE_WRITE
     get:
-      operationId: SchedulesController_2024_06_11_getSchedules
-      summary: Get all schedules
       description: 'Get all schedules of the authenticated user.
 
 
-        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+
+
+        If accessed using an OAuth access token, the `SCHEDULE_READ` scope is required.'
+      operationId: SchedulesController_2024_06_11_getSchedules
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -85,6 +96,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-06-11'
           default: '2024-06-11'
       responses:
         '200':
@@ -93,20 +105,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSchedulesOutput_2024_06_11'
+      summary: Get all schedules
       tags:
       - Schedules
+      x-mcp:
+        name: get_schedules
+        guidance: List all schedules of the authenticated user.
+      x-oauth-scopes:
+      - SCHEDULE_READ
   /v2/schedules/default:
     get:
-      operationId: SchedulesController_2024_06_11_getDefaultSchedule
-      summary: Get default schedule
       description: 'Get the default schedule of the authenticated user.
 
 
-        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.'
+        Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+
+
+        If accessed using an OAuth access token, the `SCHEDULE_READ` scope is required.'
+      operationId: SchedulesController_2024_06_11_getDefaultSchedule
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -116,6 +136,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-06-11'
           default: '2024-06-11'
       responses:
         '200':
@@ -124,17 +145,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDefaultScheduleOutput_2024_06_11'
+      summary: Get default schedule
       tags:
       - Schedules
+      x-mcp:
+        name: get_default_schedule
+        guidance: Get the authenticated user's default schedule.
+      x-oauth-scopes:
+      - SCHEDULE_READ
   /v2/schedules/{scheduleId}:
     get:
+      description: 'Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+
+
+        If accessed using an OAuth access token, the `SCHEDULE_READ` scope is required.'
       operationId: SchedulesController_2024_06_11_getSchedule
-      summary: Get a schedule
-      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -144,6 +173,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-06-11'
           default: '2024-06-11'
       - name: scheduleId
         required: true
@@ -157,16 +187,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetScheduleOutput_2024_06_11'
+      summary: Get a schedule
       tags:
       - Schedules
+      x-mcp:
+        name: get_schedule
+        guidance: Get a schedule by its numeric ID. Returns availability slots and overrides.
+      x-oauth-scopes:
+      - SCHEDULE_READ
     patch:
+      description: 'Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+
+
+        If accessed using an OAuth access token, the `SCHEDULE_WRITE` scope is required.'
       operationId: SchedulesController_2024_06_11_updateSchedule
-      summary: Update a schedule
-      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -176,6 +214,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-06-11'
           default: '2024-06-11'
       - name: scheduleId
         required: true
@@ -195,16 +234,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdateScheduleOutput_2024_06_11'
+      summary: Update a schedule
       tags:
       - Schedules
+      x-mcp:
+        name: update_schedule
+        guidance: Update an existing schedule. Array fields (availability, overrides) replace all existing entries.
+      x-oauth-scopes:
+      - SCHEDULE_WRITE
     delete:
+      description: 'Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
+
+
+        If accessed using an OAuth access token, the `SCHEDULE_WRITE` scope is required.'
       operationId: SchedulesController_2024_06_11_deleteSchedule
-      summary: Delete a schedule
-      description: Please make sure to pass in the cal-api-version header value as mentioned in the Headers section. Not passing the correct value will default to an older version of this endpoint.
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -214,6 +261,7 @@ paths:
         required: true
         schema:
           type: string
+          example: '2024-06-11'
           default: '2024-06-11'
       - name: scheduleId
         required: true
@@ -227,70 +275,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteScheduleOutput_2024_06_11'
+      summary: Delete a schedule
       tags:
       - Schedules
+      x-mcp:
+        name: delete_schedule
+        guidance: Delete a schedule by its numeric ID. This action is irreversible, confirm with the user before proceeding.
+      x-oauth-scopes:
+      - SCHEDULE_WRITE
 components:
   schemas:
-    ScheduleAvailabilityInput_2024_06_11:
-      type: object
-      properties:
-        days:
-          type: array
-          example:
-          - Monday
-          - Tuesday
-          description: Array of days when schedule is active.
-          items:
-            type: string
-            enum:
-            - Monday
-            - Tuesday
-            - Wednesday
-            - Thursday
-            - Friday
-            - Saturday
-            - Sunday
-        startTime:
-          type: string
-          example: 08:00
-          description: startTime must be a valid time in format HH:MM e.g. 08:00
-        endTime:
-          type: string
-          example: '15:00'
-          description: endTime must be a valid time in format HH:MM e.g. 15:00
-      required:
-      - days
-      - startTime
-      - endTime
     CreateScheduleOutput_2024_06_11:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-      required:
-      - status
-      - data
-    GetSchedulesOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-        error:
-          type: object
       required:
       - status
       - data
@@ -316,18 +321,77 @@ components:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-        error:
-          type: object
       required:
       - status
       - data
+    ScheduleAvailabilityInput_2024_06_11:
+      type: object
+      properties:
+        days:
+          type: array
+          items:
+            type: string
+            enum:
+            - Monday
+            - Tuesday
+            - Wednesday
+            - Thursday
+            - Friday
+            - Saturday
+            - Sunday
+          example:
+          - Monday
+          - Tuesday
+          description: Array of days when schedule is active.
+        startTime:
+          type: string
+          example: 08:00
+          description: startTime must be a valid time in format HH:MM e.g. 08:00
+        endTime:
+          type: string
+          example: '15:00'
+          description: endTime must be a valid time in format HH:MM e.g. 15:00
+      required:
+      - days
+      - startTime
+      - endTime
+    UpdateScheduleInput_2024_06_11:
+      type: object
+      properties:
+        name:
+          type: string
+          example: One-on-one coaching
+        timeZone:
+          type: string
+          example: Europe/Rome
+        availability:
+          example:
+          - days:
+            - Monday
+            - Tuesday
+            startTime: 09:00
+            endTime: '10:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
+        isDefault:
+          type: boolean
+          example: true
+        overrides:
+          example:
+          - date: '2024-05-20'
+            startTime: '12:00'
+            endTime: '14:00'
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
     CreateScheduleInput_2024_06_11:
       type: object
       properties:
@@ -371,20 +435,6 @@ components:
       - name
       - timeZone
       - isDefault
-    GetDefaultScheduleOutput_2024_06_11:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-      required:
-      - status
-      - data
     ScheduleOutput_2024_06_11:
       type: object
       properties:
@@ -434,61 +484,66 @@ components:
       - availability
       - isDefault
       - overrides
-    UpdateScheduleInput_2024_06_11:
-      type: object
-      properties:
-        name:
-          type: string
-          example: One-on-one coaching
-        timeZone:
-          type: string
-          example: Europe/Rome
-        availability:
-          example:
-          - days:
-            - Monday
-            - Tuesday
-            startTime: 09:00
-            endTime: '10:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleAvailabilityInput_2024_06_11'
-        isDefault:
-          type: boolean
-          example: true
-        overrides:
-          example:
-          - date: '2024-05-20'
-            startTime: '12:00'
-            endTime: '14:00'
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduleOverrideInput_2024_06_11'
     DeleteScheduleOutput_2024_06_11:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
       required:
       - status
     GetScheduleOutput_2024_06_11:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
-        error:
-          type: object
+      required:
+      - status
+      - data
+    GetSchedulesOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
+      required:
+      - status
+      - data
+    GetDefaultScheduleOutput_2024_06_11:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/ScheduleOutput_2024_06_11'
       required:
       - status
       - data

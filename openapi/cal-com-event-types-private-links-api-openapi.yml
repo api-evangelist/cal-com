@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Event Types Private Links API
+  title: Cal.com API v2 Event Types Private Links API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,9 +10,17 @@ tags:
 paths:
   /v2/event-types/{eventTypeId}/private-links:
     post:
-      operationId: EventTypesPrivateLinksController_createPrivateLink
-      summary: Create a private link for an event type
+      description: If accessed using an OAuth access token, the `EVENT_TYPE_WRITE` scope is required.
+      operationId: EventTypesPrivateLinksController_2024_09_04_createPrivateLink
       parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to `2024-09-04`. Returns the full booking URL including org slug and event slug.
+        required: true
+        schema:
+          type: string
+          example: '2024-09-04'
+          default: '2024-09-04'
       - name: eventTypeId
         required: true
         in: path
@@ -20,7 +28,7 @@ paths:
           type: number
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -37,12 +45,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreatePrivateLinkOutput'
+      summary: Create a private link for an event type
       tags:
       - Event Types Private Links
+      x-oauth-scopes:
+      - EVENT_TYPE_WRITE
     get:
-      operationId: EventTypesPrivateLinksController_getPrivateLinks
-      summary: Get all private links for an event type
+      description: If accessed using an OAuth access token, the `EVENT_TYPE_READ` scope is required.
+      operationId: EventTypesPrivateLinksController_2024_09_04_getPrivateLinks
       parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to `2024-09-04`. Returns the full booking URL including org slug and event slug.
+        required: true
+        schema:
+          type: string
+          example: '2024-09-04'
+          default: '2024-09-04'
       - name: eventTypeId
         required: true
         in: path
@@ -50,7 +69,7 @@ paths:
           type: number
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -61,13 +80,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPrivateLinksOutput'
+      summary: Get all private links for an event type
       tags:
       - Event Types Private Links
+      x-oauth-scopes:
+      - EVENT_TYPE_READ
   /v2/event-types/{eventTypeId}/private-links/{linkId}:
     patch:
-      operationId: EventTypesPrivateLinksController_updatePrivateLink
-      summary: Update a private link for an event type
+      description: If accessed using an OAuth access token, the `EVENT_TYPE_WRITE` scope is required.
+      operationId: EventTypesPrivateLinksController_2024_09_04_updatePrivateLink
       parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to `2024-09-04`. Returns the full booking URL including org slug and event slug.
+        required: true
+        schema:
+          type: string
+          example: '2024-09-04'
+          default: '2024-09-04'
       - name: eventTypeId
         required: true
         in: path
@@ -80,7 +110,7 @@ paths:
           type: string
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -97,12 +127,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdatePrivateLinkOutput'
+      summary: Update a private link for an event type
       tags:
       - Event Types Private Links
+      x-oauth-scopes:
+      - EVENT_TYPE_WRITE
     delete:
-      operationId: EventTypesPrivateLinksController_deletePrivateLink
-      summary: Delete a private link for an event type
+      description: If accessed using an OAuth access token, the `EVENT_TYPE_WRITE` scope is required.
+      operationId: EventTypesPrivateLinksController_2024_09_04_deletePrivateLink
       parameters:
+      - name: cal-api-version
+        in: header
+        description: Must be set to `2024-09-04`. Returns the full booking URL including org slug and event slug.
+        required: true
+        schema:
+          type: string
+          example: '2024-09-04'
+          default: '2024-09-04'
       - name: eventTypeId
         required: true
         in: path
@@ -115,7 +156,7 @@ paths:
           type: string
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -126,8 +167,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeletePrivateLinkOutput'
+      summary: Delete a private link for an event type
       tags:
       - Event Types Private Links
+      x-oauth-scopes:
+      - EVENT_TYPE_WRITE
 components:
   schemas:
     TimeBasedPrivateLinkOutput:
@@ -147,9 +191,9 @@ components:
           example: false
         bookingUrl:
           type: string
-          description: Full booking URL for this private link
+          description: Full booking URL for this private link (deprecated endpoints return hash-only URL without event slug)
           format: uri
-          example: https://cal.com/d/abc123def456/30min
+          example: https://cal.com/d/abc123def456
         expiresAt:
           type: string
           description: Expiration date for this time-based link
@@ -161,7 +205,7 @@ components:
       - isExpired
       - bookingUrl
       - expiresAt
-    GetPrivateLinksOutput:
+    UpdatePrivateLinkOutput:
       type: object
       properties:
         status:
@@ -169,47 +213,12 @@ components:
           description: Response status
           example: success
         data:
-          type: array
-          description: Array of private links for the event type (mix of time-based and usage-based)
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-            - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
-    CreatePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          description: Created private link data (either time-based or usage-based)
+          description: Updated private link data (either time-based or usage-based)
           oneOf:
-          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data
-    DeletePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          type: object
-          description: Deleted link information
-          properties:
-            linkId:
-              type: string
-              example: abc123def456
-            message:
-              type: string
-              example: Private link deleted successfully
+          - title: Time-Based Link
+            $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+          - title: Usage-Based Link
+            $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
       required:
       - status
       - data
@@ -230,9 +239,9 @@ components:
           example: false
         bookingUrl:
           type: string
-          description: Full booking URL for this private link
+          description: Full booking URL for this private link (deprecated endpoints return hash-only URL without event slug)
           format: uri
-          example: https://cal.com/d/abc123def456/30min
+          example: https://cal.com/d/abc123def456
         maxUsageCount:
           type: number
           description: Maximum number of times this link can be used
@@ -258,10 +267,65 @@ components:
           example: '2024-12-31T23:59:59.000Z'
         maxUsageCount:
           type: number
-          description: Maximum number of times the link can be used. If omitted and expiresAt is not provided, defaults to 1 (one time use).
+          description: Maximum number of times the link can be used. Pass `-1` to opt out of the count cap (the link is then gated only by `expiresAt`, or unbounded if that is also unset). If omitted and expiresAt is not provided, defaults to 1 (one time use).
           example: 10
-          minimum: 1
           default: 1
+    DeletePrivateLinkOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          type: object
+          description: Deleted link information
+          properties:
+            linkId:
+              type: string
+              example: abc123def456
+            message:
+              type: string
+              example: Private link deleted successfully
+      required:
+      - status
+      - data
+    GetPrivateLinksOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          type: array
+          description: Array of private links for the event type (mix of time-based and usage-based)
+          items:
+            oneOf:
+            - title: Time-Based Link
+              $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+            - title: Usage-Based Link
+              $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
+    CreatePrivateLinkOutput:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Response status
+          example: success
+        data:
+          description: Created private link data (either time-based or usage-based)
+          oneOf:
+          - title: Time-Based Link
+            $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
+          - title: Usage-Based Link
+            $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
+      required:
+      - status
+      - data
     UpdatePrivateLinkBody:
       type: object
       properties:
@@ -272,21 +336,5 @@ components:
           example: '2024-12-31T23:59:59.000Z'
         maxUsageCount:
           type: number
-          description: New maximum number of times the link can be used
+          description: New maximum number of times the link can be used. Pass `-1` to opt out of the count cap.
           example: 10
-          minimum: 1
-    UpdatePrivateLinkOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Response status
-          example: success
-        data:
-          description: Updated private link data (either time-based or usage-based)
-          oneOf:
-          - $ref: '#/components/schemas/TimeBasedPrivateLinkOutput'
-          - $ref: '#/components/schemas/UsageBasedPrivateLinkOutput'
-      required:
-      - status
-      - data

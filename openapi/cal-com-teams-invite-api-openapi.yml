@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Teams / Invite API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Teams / Invite
+paths:
+  /v2/teams/{teamId}/invite:
+    post:
+      description: If accessed using an OAuth access token, the `TEAM_MEMBERSHIP_WRITE` scope is required.
+      operationId: TeamsInviteController_createInvite
+      parameters:
+      - name: Authorization
+        in: header
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_
+        required: true
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInviteOutputDto'
+      summary: Create team invite link
+      tags:
+      - Teams / Invite
+      x-mcp:
+        name: create_team_invite
+        guidance: Generate an invite link for a team. Returns a URL that can be shared with users to join the team.
+      x-oauth-scopes:
+      - TEAM_MEMBERSHIP_WRITE
+components:
+  schemas:
+    InviteDataDto:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Unique invitation token for this team. Share this token with prospective members to allow them to join the team/organization.
+          example: f6a5c8b1d2e34c7f90a1b2c3d4e5f6a5b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2
+        inviteLink:
+          type: string
+          description: Complete invitation URL that can be shared with prospective members. Opens the signup page with the token and redirects to getting started after signup.
+          example: http://app.cal.com/signup?token=f6a5c8b1d2e34c7f90a1b2c3d4e5f6a5b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2&callbackUrl=/getting-started
+      required:
+      - token
+      - inviteLink
+    CreateInviteOutputDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/InviteDataDto'
+      required:
+      - status
+      - data

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 O Auth2 API
+  title: Cal.com API v2 O Auth2 API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,9 +10,8 @@ tags:
 paths:
   /v2/auth/oauth2/clients/{clientId}:
     get:
-      operationId: OAuth2Controller_getClient
-      summary: Get OAuth2 client
       description: Returns the OAuth2 client information for the given client ID
+      operationId: OAuth2Controller_getClient
       parameters:
       - name: clientId
         required: true
@@ -26,13 +25,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OAuth2ClientResponseDto'
+      summary: Get OAuth2 client
       tags:
       - OAuth2
   /v2/auth/oauth2/token:
     post:
-      operationId: OAuth2Controller_token
-      summary: Exchange authorization code or refresh token for tokens
       description: RFC 6749-compliant token endpoint. Pass client_id in the request body (Section 2.3.1). Use grant_type 'authorization_code' to exchange an auth code for tokens, or 'refresh_token' to refresh an access token. Accepts both application/x-www-form-urlencoded (standard per RFC 6749 Section 4.1.3) and application/json content types.
+      operationId: OAuth2Controller_token
       parameters: []
       requestBody:
         required: true
@@ -41,10 +40,14 @@ paths:
           application/json:
             schema:
               oneOf:
-              - $ref: '#/components/schemas/OAuth2ExchangeConfidentialInput'
-              - $ref: '#/components/schemas/OAuth2ExchangePublicInput'
-              - $ref: '#/components/schemas/OAuth2RefreshConfidentialInput'
-              - $ref: '#/components/schemas/OAuth2RefreshPublicInput'
+              - title: Exchange - Confidential Client
+                $ref: '#/components/schemas/OAuth2ExchangeConfidentialInput'
+              - title: Exchange - Public Client
+                $ref: '#/components/schemas/OAuth2ExchangePublicInput'
+              - title: Refresh - Confidential Client
+                $ref: '#/components/schemas/OAuth2RefreshConfidentialInput'
+              - title: Refresh - Public Client
+                $ref: '#/components/schemas/OAuth2RefreshPublicInput'
       responses:
         '200':
           description: ''
@@ -52,10 +55,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OAuth2TokensDto'
+      summary: Exchange authorization code or refresh token for tokens
       tags:
       - OAuth2
 components:
   schemas:
+    OAuth2RefreshConfidentialInput:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The client identifier
+          example: my-client-id
+        grant_type:
+          type: string
+          description: The grant type — must be 'refresh_token'
+          example: refresh_token
+          enum:
+          - refresh_token
+        refresh_token:
+          type: string
+          description: The refresh token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        client_secret:
+          type: string
+          description: The client secret for confidential clients
+      required:
+      - client_id
+      - grant_type
+      - refresh_token
+      - client_secret
     OAuth2ExchangePublicInput:
       type: object
       properties:
@@ -86,71 +115,6 @@ components:
       - code
       - redirect_uri
       - code_verifier
-    OAuth2ClientDto:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The OAuth client ID
-          example: clxxxxxxxxxxxxxxxx
-        redirect_uris:
-          description: The redirect URIs for the OAuth client
-          example:
-          - https://example.com/callback
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-          description: The name of the OAuth client
-          example: My App
-        logo:
-          type:
-          - string
-          - 'null'
-          description: The logo URL of the OAuth client
-        is_trusted:
-          type: boolean
-          description: Whether the OAuth client is trusted
-          example: false
-        client_type:
-          type: string
-          description: The type of OAuth client (CONFIDENTIAL or PUBLIC)
-          example: CONFIDENTIAL
-          enum:
-          - CONFIDENTIAL
-          - PUBLIC
-      required:
-      - client_id
-      - redirect_uris
-      - name
-      - is_trusted
-      - client_type
-    OAuth2RefreshConfidentialInput:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The client identifier
-          example: my-client-id
-        grant_type:
-          type: string
-          description: The grant type — must be 'refresh_token'
-          example: refresh_token
-          enum:
-          - refresh_token
-        refresh_token:
-          type: string
-          description: The refresh token
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        client_secret:
-          type: string
-          description: The client secret for confidential clients
-      required:
-      - client_id
-      - grant_type
-      - refresh_token
-      - client_secret
     OAuth2ExchangeConfidentialInput:
       type: object
       properties:
@@ -200,25 +164,16 @@ components:
           type: number
           description: The number of seconds until the access token expires
           example: 1800
+        scope:
+          type: string
+          description: The granted scopes (space-delimited per RFC 6749)
+          example: BOOKING_READ BOOKING_WRITE
       required:
       - access_token
       - token_type
       - refresh_token
       - expires_in
-    OAuth2ClientResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/OAuth2ClientDto'
-      required:
-      - status
-      - data
+      - scope
     OAuth2RefreshPublicInput:
       type: object
       properties:
@@ -240,3 +195,57 @@ components:
       - client_id
       - grant_type
       - refresh_token
+    OAuth2ClientDto:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The OAuth client ID
+          example: clxxxxxxxxxxxxxxxx
+        redirect_uris:
+          description: The redirect URIs for the OAuth client
+          example:
+          - https://example.com/callback
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+          description: The name of the OAuth client
+          example: My App
+        logo:
+          type:
+          - string
+          - 'null'
+          description: The logo URL of the OAuth client
+        is_trusted:
+          type: boolean
+          description: Whether the OAuth client is trusted
+          example: false
+        client_type:
+          enum:
+          - CONFIDENTIAL
+          - PUBLIC
+          type: string
+          description: The type of OAuth client (CONFIDENTIAL or PUBLIC)
+          example: CONFIDENTIAL
+      required:
+      - client_id
+      - redirect_uris
+      - name
+      - is_trusted
+      - client_type
+    OAuth2ClientResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/OAuth2ClientDto'
+      required:
+      - status
+      - data

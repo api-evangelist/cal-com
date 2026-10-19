@@ -1,0 +1,163 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Stripe API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Stripe
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/stripe/connect:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `organization.manageBilling`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsStripeController_getTeamStripeConnectUrl
+      parameters:
+      - name: Authorization
+        required: true
+        in: header
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: returnTo
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: onErrorReturnTo
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripConnectOutputResponseDto'
+      summary: Get Stripe connect URL for a team
+      tags:
+      - Orgs / Teams / Stripe
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/stripe/check:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `organization.manageBilling`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsStripeController_checkTeamStripeConnection
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripCredentialsCheckOutputResponseDto'
+      summary: Check team Stripe connection
+      tags:
+      - Orgs / Teams / Stripe
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/stripe/save:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `organization.manageBilling`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control'
+      operationId: OrganizationsStripeController_save
+      parameters:
+      - name: state
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: code
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripCredentialsSaveOutputResponseDto'
+      summary: Save Stripe credentials
+      tags:
+      - Orgs / Teams / Stripe
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    StripCredentialsCheckOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+      required:
+      - status
+    StripConnectOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/StripConnectOutputDto'
+      required:
+      - status
+      - data
+    StripConnectOutputDto:
+      type: object
+      properties:
+        authUrl:
+          type: string
+      required:
+      - authUrl
+    StripCredentialsSaveOutputResponseDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url

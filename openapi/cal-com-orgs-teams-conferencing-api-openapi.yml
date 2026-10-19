@@ -1,0 +1,537 @@
+openapi: 3.2.0
+info:
+  title: Cal.com API v2 Orgs / Teams / Conferencing API
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers: []
+tags:
+- name: Orgs / Teams / Conferencing
+paths:
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing/{app}/connect:
+    post:
+      description: 'Only `google-meet` can be connected this way, and only for a team that already has a valid Google Calendar connection. Zoom and Microsoft Teams require an OAuth handshake - start it with `GET /v2/organizations/{orgId}/teams/{teamId}/conferencing/{app}/oauth/auth-url` instead. Walkthrough: https://cal.com/docs/api-reference/v2/conferencing-apps. Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_connectTeamApp
+      parameters:
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - google-meet
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferencingAppOutputResponseDto'
+      summary: Connect your conferencing application to a team
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing/{app}/oauth/auth-url:
+    get:
+      description: 'Returns the URL to send a team admin to so they can authorize Zoom or Microsoft Teams for the team. Redirect their browser to it - the provider then returns them to a callback already registered by Cal.com, which stores the credential against the team rather than against the admin who authorized it. To cover every team in the organization with a single handshake, use `GET /v2/organizations/{orgId}/conferencing/{app}/oauth/auth-url` instead. `returnTo` and `onErrorReturnTo` must each be a relative path or an absolute http(s) URL. The returned URL expires 10 minutes after this call, so redirect immediately rather than caching it. Walkthrough: https://cal.com/docs/api-reference/v2/conferencing-apps. Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_getTeamOAuthUrl
+      parameters:
+      - name: Authorization
+        required: true
+        in: header
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - zoom
+          - msteams
+          type: string
+      - name: returnTo
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: onErrorReturnTo
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConferencingAppsOauthUrlResponseDto'
+      summary: Get OAuth conferencing app's auth URL for a team
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readConferencing`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_READ` scope is required.'
+      operationId: OrganizationsConferencingController_listTeamConferencingApps
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferencingAppsOutputResponseDto'
+      summary: List team conferencing applications
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing/{app}/default:
+    post:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_setTeamDefaultApp
+      parameters:
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - google-meet
+          - zoom
+          - msteams
+          - daily-video
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetDefaultConferencingAppOutputResponseDto'
+      summary: Set team default conferencing application
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing/default:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.readConferencing`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_READ` scope is required.'
+      operationId: OrganizationsConferencingController_getTeamDefaultApp
+      parameters:
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDefaultConferencingAppOutputResponseDto'
+      summary: Get team default conferencing application
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing/{app}/disconnect:
+    delete:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_disconnectTeamApp
+      parameters:
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - google-meet
+          - zoom
+          - msteams
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectConferencingAppOutputResponseDto'
+      summary: Disconnect team conferencing application
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/teams/{teamId}/conferencing/{app}/oauth/callback:
+    get:
+      description: 'Required membership role: `team admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_saveTeamOauthCredentials
+      parameters:
+      - name: state
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: code
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: app
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: teamId
+        required: true
+        in: path
+        description: The team's uuid (preferred), its short-uuid (Flickr Base58) form, or its numeric id.
+        schema:
+          anyOf:
+          - type: string
+          - type: number
+      responses:
+        '200':
+          description: ''
+      summary: Save conferencing app OAuth credentials
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/conferencing/{app}/oauth/auth-url:
+    get:
+      description: 'Returns the URL to send an organization admin to so they can authorize Zoom or Microsoft Teams once for the whole organization. The resulting credential is owned by the organization, so every team and member below it can use the app without its own OAuth handshake. Redirect their browser to it - the provider then returns them to a callback already registered by Cal.com. `returnTo` and `onErrorReturnTo` must each be a relative path or an absolute http(s) URL. The returned URL expires 10 minutes after this call, so redirect immediately rather than caching it. Walkthrough: https://cal.com/docs/api-reference/v2/conferencing-apps. Required membership role: `org admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_getOrgOAuthUrl
+      parameters:
+      - name: Authorization
+        required: true
+        in: header
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - zoom
+          - msteams
+          type: string
+      - name: returnTo
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: onErrorReturnTo
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetConferencingAppsOauthUrlResponseDto'
+      summary: Get OAuth conferencing app's auth URL for an organization
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/conferencing/{app}/oauth/callback:
+    get:
+      description: 'Required membership role: `org admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_saveOrgOauthCredentials
+      parameters:
+      - name: state
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: code
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - zoom
+          - msteams
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: Save organization conferencing app OAuth credentials
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/conferencing:
+    get:
+      description: 'Lists the conferencing apps installed on the organization itself, not those installed on its teams or members. Required membership role: `org admin`. PBAC permission: `team.readConferencing`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_READ` scope is required.'
+      operationId: OrganizationsConferencingController_listOrgConferencingApps
+      parameters:
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConferencingAppsOutputResponseDto'
+      summary: List organization conferencing applications
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_READ
+      x-platform-plan: ESSENTIALS
+  /v2/organizations/{orgId}/conferencing/{app}/disconnect:
+    delete:
+      description: 'Required membership role: `org admin`. PBAC permission: `team.update`. Learn more about API access control at https://cal.com/docs/api-reference/v2/access-control. If accessed using an OAuth access token, the `TEAM_APPS_WRITE` scope is required.'
+      operationId: OrganizationsConferencingController_disconnectOrgApp
+      parameters:
+      - name: orgId
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: app
+        required: true
+        in: path
+        description: Conferencing application type
+        schema:
+          enum:
+          - zoom
+          - msteams
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectConferencingAppOutputResponseDto'
+      summary: Disconnect organization conferencing application
+      tags:
+      - Orgs / Teams / Conferencing
+      x-oauth-scopes:
+      - TEAM_APPS_WRITE
+      x-platform-plan: ESSENTIALS
+components:
+  schemas:
+    SetDefaultConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+      required:
+      - status
+    GetConferencingAppsOauthUrlResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+          enum:
+          - success
+          - error
+      required:
+      - status
+    ConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+        data:
+          $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
+    DefaultConferencingAppsOutputDto:
+      type: object
+      properties:
+        appSlug:
+          type: string
+        appLink:
+          type: string
+    ConferencingAppsOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConferencingAppsOutputDto'
+      required:
+      - status
+      - data
+    GetDefaultConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/DefaultConferencingAppsOutputDto'
+      required:
+      - status
+    DisconnectConferencingAppOutputResponseDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+      required:
+      - status
+    ConferencingAppsOutputDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the conferencing app credentials
+        type:
+          type: string
+          example: google_video
+          description: Type of conferencing app
+        userId:
+          type: number
+          description: Id of the user associated to the conferencing app
+        invalid:
+          type:
+          - boolean
+          - 'null'
+          example: true
+          description: Whether if the connection is working or not.
+      required:
+      - id
+      - type
+      - userId

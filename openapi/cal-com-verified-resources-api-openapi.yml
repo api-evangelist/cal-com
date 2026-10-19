@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Cal.diy API v2 Verified Resources API
+  title: Cal.com API v2 Verified Resources API
   description: ''
   version: 1.0.0
   contact: {}
@@ -10,13 +10,12 @@ tags:
 paths:
   /v2/verified-resources/emails/verification-code/request:
     post:
+      description: Sends a verification code to the email. If accessed using an OAuth access token, the `VERIFIED_RESOURCES_WRITE` scope is required.
       operationId: UserVerifiedResourcesController_requestEmailVerificationCode
-      summary: Request email verification code
-      description: Sends a verification code to the email
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -33,17 +32,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RequestEmailVerificationOutput'
+      summary: Request email verification code
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_WRITE
   /v2/verified-resources/phones/verification-code/request:
     post:
+      description: Sends a verification code to the phone number. If accessed using an OAuth access token, the `VERIFIED_RESOURCES_WRITE` scope is required.
       operationId: UserVerifiedResourcesController_requestPhoneVerificationCode
-      summary: Request phone number verification code
-      description: Sends a verification code to the phone number
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -60,17 +61,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RequestPhoneVerificationOutput'
+      summary: Request phone number verification code
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_WRITE
   /v2/verified-resources/emails/verification-code/verify:
     post:
+      description: Use code to verify an email. If accessed using an OAuth access token, the `VERIFIED_RESOURCES_WRITE` scope is required.
       operationId: UserVerifiedResourcesController_verifyEmail
-      summary: Verify an email
-      description: Use code to verify an email
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -87,17 +90,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifiedEmailOutput'
+      summary: Verify an email
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_WRITE
   /v2/verified-resources/phones/verification-code/verify:
     post:
+      description: Use code to verify a phone number. If accessed using an OAuth access token, the `VERIFIED_RESOURCES_WRITE` scope is required.
       operationId: UserVerifiedResourcesController_verifyPhoneNumber
-      summary: Verify a phone number
-      description: Use code to verify a phone number
       parameters:
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -114,12 +119,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifiedPhoneOutput'
+      summary: Verify a phone number
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_WRITE
   /v2/verified-resources/emails:
     get:
+      description: If accessed using an OAuth access token, the `VERIFIED_RESOURCES_READ` scope is required.
       operationId: UserVerifiedResourcesController_getVerifiedEmails
-      summary: Get list of verified emails
       parameters:
       - name: take
         required: false
@@ -142,7 +150,7 @@ paths:
           type: number
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -153,12 +161,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifiedEmailsOutput'
+      summary: Get list of verified emails
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_READ
   /v2/verified-resources/phones:
     get:
+      description: If accessed using an OAuth access token, the `VERIFIED_RESOURCES_READ` scope is required.
       operationId: UserVerifiedResourcesController_getVerifiedPhoneNumbers
-      summary: Get list of verified phone numbers
       parameters:
       - name: take
         required: false
@@ -181,7 +192,7 @@ paths:
           type: number
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -192,12 +203,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifiedPhonesOutput'
+      summary: Get list of verified phone numbers
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_READ
   /v2/verified-resources/emails/{id}:
     get:
+      description: If accessed using an OAuth access token, the `VERIFIED_RESOURCES_READ` scope is required.
       operationId: UserVerifiedResourcesController_getVerifiedEmailById
-      summary: Get verified email by id
       parameters:
       - name: id
         required: true
@@ -206,7 +220,7 @@ paths:
           type: number
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -217,12 +231,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifiedEmailOutput'
+      summary: Get verified email by id
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_READ
   /v2/verified-resources/phones/{id}:
     get:
+      description: If accessed using an OAuth access token, the `VERIFIED_RESOURCES_READ` scope is required.
       operationId: UserVerifiedResourcesController_getVerifiedPhoneById
-      summary: Get verified phone number by id
       parameters:
       - name: id
         required: true
@@ -231,7 +248,7 @@ paths:
           type: number
       - name: Authorization
         in: header
-        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_ or managed user access token
+        description: value must be `Bearer <token>` where `<token>` is api key prefixed with cal_, managed user access token, or OAuth access token
         required: true
         schema:
           type: string
@@ -242,29 +259,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserVerifiedPhoneOutput'
+      summary: Get verified phone number by id
       tags:
       - Verified Resources
+      x-oauth-scopes:
+      - VERIFIED_RESOURCES_READ
 components:
   schemas:
-    UserVerifiedPhoneOutput:
+    VerifyPhoneInput:
       type: object
       properties:
-        status:
+        phone:
           type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
+          description: phone number to verify.
+          example: '+37255556666'
+        code:
+          type: string
+          description: verification code sent to the phone number to verify
+          example: 1ABG2C
       required:
-      - status
-      - data
+      - phone
+      - code
     VerifyEmailInput:
       type: object
       properties:
         email:
           type: string
+          format: email
           description: Email to verify.
           example: example@acme.com
         code:
@@ -274,17 +295,41 @@ components:
       required:
       - email
       - code
-    RequestEmailVerificationOutput:
+    RequestEmailVerificationInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email to verify.
+          example: acme@example.com
+      required:
+      - email
+    UserVerifiedPhonesOutput:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
       required:
       - status
+      - data
+    RequestPhoneVerificationInput:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: Phone number to verify.
+          example: +372 5555 6666
+      required:
+      - phone
     UserVerifiedPhoneOutputData:
       type: object
       properties:
@@ -305,65 +350,31 @@ components:
       - id
       - phoneNumber
       - userId
-    RequestPhoneVerificationInput:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: Phone number to verify.
-          example: +372 5555 6666
-      required:
-      - phone
-    UserVerifiedPhonesOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
-      required:
-      - status
-      - data
-    RequestPhoneVerificationOutput:
-      type: object
-      properties:
-        status:
-          type: string
-          example: success
-          enum:
-          - success
-          - error
-      required:
-      - status
     UserVerifiedEmailOutput:
       type: object
       properties:
         status:
-          type: string
-          example: success
           enum:
           - success
           - error
+          type: string
+          example: success
         data:
           $ref: '#/components/schemas/UserVerifiedEmailOutputData'
       required:
       - status
       - data
-    RequestEmailVerificationInput:
+    RequestEmailVerificationOutput:
       type: object
       properties:
-        email:
+        status:
           type: string
-          description: Email to verify.
-          example: acme@example.com
+          example: success
+          enum:
+          - success
+          - error
       required:
-      - email
+      - status
     UserVerifiedEmailOutputData:
       type: object
       properties:
@@ -384,21 +395,7 @@ components:
       - id
       - email
       - userId
-    VerifyPhoneInput:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: phone number to verify.
-          example: '+37255556666'
-        code:
-          type: string
-          description: verification code sent to the phone number to verify
-          example: 1ABG2C
-      required:
-      - phone
-      - code
-    UserVerifiedEmailsOutput:
+    RequestPhoneVerificationOutput:
       type: object
       properties:
         status:
@@ -407,10 +404,35 @@ components:
           enum:
           - success
           - error
+      required:
+      - status
+    UserVerifiedEmailsOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
         data:
           type: array
           items:
             $ref: '#/components/schemas/UserVerifiedEmailOutputData'
+      required:
+      - status
+      - data
+    UserVerifiedPhoneOutput:
+      type: object
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/UserVerifiedPhoneOutputData'
       required:
       - status
       - data
