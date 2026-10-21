@@ -136,3 +136,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: cal-com-hubspot-own
+  label: HubSpot (own)
+  partner: hubspot
+  partner_name: HubSpot (own)
+  category: SCHEDULING
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/cal-com-832915
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

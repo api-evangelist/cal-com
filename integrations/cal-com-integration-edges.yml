@@ -143,6 +143,23 @@ edges:
   category: Docker Verified Publisher
   badges:
   - Docker Verified Publisher
+- partner_name: HubSpot (own)
+  partner: hubspot
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/cal-com-832915
+  mirror_of: hubspot/integrations/hubspot-integration-edges.yml
+  apps:
+  - Cal.com
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: SCHEDULING
 method: searched
 checked:
 - https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
@@ -154,6 +171,7 @@ checked:
 - https://zapier.com/api/v4/apps/
 - zoom/integrations/zoom-integration-edges.yml
 - docker-hub/integrations/docker-hub-integration-edges.yml
+- hubspot/integrations/hubspot-integration-edges.yml
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://zapier.com/api/v4/apps/
