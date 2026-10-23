@@ -114,3 +114,9 @@ components:
           type: string
       required:
       - url
+x-provenance:
+  method: harvested
+  publisher: Cal.com
+  source: https://cal.com/docs/api-reference/v2/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

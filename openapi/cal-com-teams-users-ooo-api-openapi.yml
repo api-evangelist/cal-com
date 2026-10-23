@@ -352,3 +352,9 @@ components:
           type: string
           description: the reason for the out of office entry, if applicable
           example: vacation
+x-provenance:
+  method: harvested
+  publisher: Cal.com
+  source: https://cal.com/docs/api-reference/v2/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

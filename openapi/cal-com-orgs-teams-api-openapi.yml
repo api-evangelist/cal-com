@@ -577,3 +577,9 @@ components:
           description: Whether to create an OWNER membership on the team for the user associated with authentication credentials for this request. For example, if you authenticate with API key belonging to Bob, then Bob will have OWNER membership for the newly created team. Pass false to create the team without an OWNER membership for that user - e.g. so it isn't included when assignAllTeamMembers is used on round-robin events. Org admins/owners can still manage the team and its event types without being a team member.
       required:
       - name
+x-provenance:
+  method: harvested
+  publisher: Cal.com
+  source: https://cal.com/docs/api-reference/v2/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

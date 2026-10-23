@@ -676,3 +676,9 @@ components:
           description: You can store any additional data you want here. Metadata must have at most 50 keys, each key up to 40 characters, and values up to 500 characters.
           example:
             key: value
+x-provenance:
+  method: harvested
+  publisher: Cal.com
+  source: https://cal.com/docs/api-reference/v2/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
