@@ -1,4 +1,4 @@
-# Cal.com (cal-com)
+# Cal.com
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,286 +66,207 @@
 
 Cal.com is open-source scheduling infrastructure (Calendly alternative) available as a managed cloud service or self-hosted deployment. The Cal.com API v2 exposes bookings, event types, schedules, availability, slots, webhooks, OAuth, teams, organizations, OOO, conferencing, destination calendars, and the Cal.com Atoms (Platform) for embedding scheduling primitives into other apps.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/cal-com/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/cal-com/refs/heads/main/apis.yml)
+**Areas:** Productivity · Scheduling · Calendar · Open Source · Booking
+
+## Cal.com on APIs.io
+
+Everything profiled for Cal.com is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cal-com/](https://apis.io/providers/cal-com/)** — or go straight to one of the APIs or properties below.
+
+### APIs (23)
+
+- [Cal.com Api Keys API](https://apis.io/apis/cal-com/cal-com-api-keys-api/) — The Api Keys API from Cal.com — 1 operation(s) for api keys.
+- [Cal.com Bookings API](https://apis.io/apis/cal-com/cal-com-bookings-api/) — The Bookings API from Cal.com — 16 operation(s) for bookings.
+- [Cal.com Bookings / Attendees API](https://apis.io/apis/cal-com/cal-com-bookings-attendees-api/) — The Bookings / Attendees API from Cal.com — 2 operation(s) for bookings / attendees.
+- [Cal.com Bookings / Guests API](https://apis.io/apis/cal-com/cal-com-bookings-guests-api/) — The Bookings / Guests API from Cal.com — 1 operation(s) for bookings / guests.
+- [Cal.com Cal Unified Calendars API](https://apis.io/apis/cal-com/cal-com-cal-unified-calendars-api/) — The Cal Unified Calendars API from Cal.com — 8 operation(s) for cal unified calendars.
+- [Cal.com Calendars API](https://apis.io/apis/cal-com/cal-com-calendars-api/) — The Calendars API from Cal.com — 9 operation(s) for calendars.
+- [Cal.com Conferencing API](https://apis.io/apis/cal-com/cal-com-conferencing-api/) — The Conferencing API from Cal.com — 7 operation(s) for conferencing.
+- [Cal.com Deprecated: Platform / Managed Users API](https://apis.io/apis/cal-com/cal-com-deprecated-platform-managed-users-api/) — The Deprecated: Platform / Managed Users API from Cal.com — 4 operation(s) for deprecated: platform / managed users.
+- [Cal.com Deprecated: Platform OAuth Clients API](https://apis.io/apis/cal-com/cal-com-deprecated-platform-oauth-clients-api/) — The Deprecated: Platform OAuth Clients API from Cal.com — 2 operation(s) for deprecated: platform oauth clients.
+- [Cal.com Deprecated: Platform / Webhooks API](https://apis.io/apis/cal-com/cal-com-deprecated-platform-webhooks-api/) — The Deprecated: Platform / Webhooks API from Cal.com — 2 operation(s) for deprecated: platform / webhooks.
+- [Cal.com Destination Calendars API](https://apis.io/apis/cal-com/cal-com-destination-calendars-api/) — The Destination Calendars API from Cal.com — 1 operation(s) for destination calendars.
+- [Cal.com Event Types API](https://apis.io/apis/cal-com/cal-com-event-types-api/) — The Event Types API from Cal.com — 2 operation(s) for event types.
+- [Cal.com Event Types Private Links API](https://apis.io/apis/cal-com/cal-com-event-types-private-links-api/) — The Event Types Private Links API from Cal.com — 2 operation(s) for event types private links.
+- [Cal.com Event Types / Webhooks API](https://apis.io/apis/cal-com/cal-com-event-types-webhooks-api/) — The Event Types / Webhooks API from Cal.com — 2 operation(s) for event types / webhooks.
+- [Cal.com Me API](https://apis.io/apis/cal-com/cal-com-me-api/) — The Me API from Cal.com — 1 operation(s) for me.
+- [Cal.com Schedules API](https://apis.io/apis/cal-com/cal-com-schedules-api/) — The Schedules API from Cal.com — 3 operation(s) for schedules.
+- [Cal.com Selected Calendars API](https://apis.io/apis/cal-com/cal-com-selected-calendars-api/) — The Selected Calendars API from Cal.com — 1 operation(s) for selected calendars.
+- [Cal.com Slots API](https://apis.io/apis/cal-com/cal-com-slots-api/) — The Slots API from Cal.com — 3 operation(s) for slots.
+- [Cal.com Stripe API](https://apis.io/apis/cal-com/cal-com-stripe-api/) — The Stripe API from Cal.com — 3 operation(s) for stripe.
+- [Cal.com Verified Resources API](https://apis.io/apis/cal-com/cal-com-verified-resources-api/) — The Verified Resources API from Cal.com — 8 operation(s) for verified resources.
+- [Cal.com Webhooks API](https://apis.io/apis/cal-com/cal-com-webhooks-api/) — The Webhooks API from Cal.com — 2 operation(s) for webhooks.
+- [Cal.com REST API v2](https://apis.io/apis/cal-com/rest-api-v2/) — REST API providing full programmatic control over Cal.com resources including calendars, event types, bookings, schedules, teams, and organizations.…
+- [Cal.com O Auth2 API](https://apis.io/apis/cal-com/cal-com-oauth2-api/) — The OAuth2 API from Cal.com — 2 operation(s) for oauth2.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Tags
+#### AsyncAPI (1)
 
-- Productivity
-- Scheduling
-- Calendar
-- Open Source
-- Booking
+Event-driven and webhook contracts.
 
-## Timestamps
+- [Cal.com Webhooks](https://apis.io/asyncapis/cal-com/cal-com-webhooks-asyncapi/)
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-30
+#### Event channels (22)
 
-## APIs
+Individual events and webhooks the provider emits.
 
-### Cal.com Bookings API
+- [AFTER_GUESTS_CAL_VIDEO_NO_SHOW](https://apis.io/channels/cal-com/after-guests-cal-video-no-show/)
+- [AFTER_HOSTS_CAL_VIDEO_NO_SHOW](https://apis.io/channels/cal-com/after-hosts-cal-video-no-show/)
+- [BOOKING_CANCELLED](https://apis.io/channels/cal-com/booking-cancelled/)
+- [BOOKING_CREATED](https://apis.io/channels/cal-com/booking-created/)
+- [BOOKING_NO_SHOW_UPDATED](https://apis.io/channels/cal-com/booking-no-show-updated/)
+- [BOOKING_PAID](https://apis.io/channels/cal-com/booking-paid/)
+- [BOOKING_PAYMENT_INITIATED](https://apis.io/channels/cal-com/booking-payment-initiated/)
+- [BOOKING_REJECTED](https://apis.io/channels/cal-com/booking-rejected/)
+- [BOOKING_REQUESTED](https://apis.io/channels/cal-com/booking-requested/)
+- [BOOKING_RESCHEDULED](https://apis.io/channels/cal-com/booking-rescheduled/)
+- [DELEGATION_CREDENTIAL_ERROR](https://apis.io/channels/cal-com/delegation-credential-error/)
+- [FORM_SUBMITTED](https://apis.io/channels/cal-com/form-submitted/)
+- [FORM_SUBMITTED_NO_EVENT](https://apis.io/channels/cal-com/form-submitted-no-event/)
+- [INSTANT_MEETING](https://apis.io/channels/cal-com/instant-meeting/)
+- [INSTANT_MEETING_ACCEPTED](https://apis.io/channels/cal-com/instant-meeting-accepted/)
+- [MEETING_ENDED](https://apis.io/channels/cal-com/meeting-ended/)
+- [MEETING_STARTED](https://apis.io/channels/cal-com/meeting-started/)
+- [OOO_CREATED](https://apis.io/channels/cal-com/ooo-created/)
+- [RECORDING_READY](https://apis.io/channels/cal-com/recording-ready/)
+- [RECORDING_TRANSCRIPTION_GENERATED](https://apis.io/channels/cal-com/recording-transcription-generated/)
+- [ROUTING_FORM_FALLBACK_HIT](https://apis.io/channels/cal-com/routing-form-fallback-hit/)
+- [WRONG_ASSIGNMENT_REPORT](https://apis.io/channels/cal-com/wrong-assignment-report/)
 
-Create, read, update, cancel, and reschedule bookings. Supports recurring, seated, and round-robin booking flows.
+#### MCP servers (1)
 
-- **Human URL:** [https://cal.com/docs/api-reference/v2/bookings](https://cal.com/docs/api-reference/v2/bookings)
-- **Base URL:** `https://api.cal.com/v2`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [cal-com](https://apis.io/servers/cal-com/cal-com/)
 
-- Bookings
-- CRUD
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://cal.com/docs/api-reference)
-- [API Reference](https://cal.com/docs/api-reference/v2/bookings)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Cal Com Agentic Access](https://apis.io/agentic-access/cal-com/cal-com-agentic-access/)
 
-### Cal.com Event Types API
+#### Collections (23)
 
-Manage event types (meeting templates) — duration, location, fields, locations, payment, recurrence, and team round-robin assignments.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://cal.com/docs/api-reference/v2/event-types](https://cal.com/docs/api-reference/v2/event-types)
-- **Base URL:** `https://api.cal.com/v2`
+- [Cal.diy API v2](https://apis.io/collections/cal-com/open-cal-com/)
+- [Cal.diy API v2 Api Keys API](https://apis.io/collections/cal-com/open-cal-com-api-keys-api/)
+- [Cal.diy API v2 Api Keys Bookings API](https://apis.io/collections/cal-com/open-cal-com-bookings-api/)
+- [Cal.diy API v2 Api Keys Bookings / Attendees API](https://apis.io/collections/cal-com/open-cal-com-bookings-attendees-api/)
+- [Cal.diy API v2 Api Keys Bookings / Guests API](https://apis.io/collections/cal-com/open-cal-com-bookings-guests-api/)
+- [Cal.diy API v2 Api Keys Cal Unified Calendars API](https://apis.io/collections/cal-com/open-cal-com-cal-unified-calendars-api/)
+- [Cal.diy API v2 Api Keys Calendars API](https://apis.io/collections/cal-com/open-cal-com-calendars-api/)
+- [Cal.diy API v2 Api Keys Conferencing API](https://apis.io/collections/cal-com/open-cal-com-conferencing-api/)
+- [Cal.diy API v2 Api Keys Deprecated: Platform / Managed Users API](https://apis.io/collections/cal-com/open-cal-com-deprecated-platform-managed-users-api/)
+- [Cal.diy API v2 Api Keys Deprecated: Platform OAuth Clients API](https://apis.io/collections/cal-com/open-cal-com-deprecated-platform-oauth-clients-api/)
+- [Cal.diy API v2 Api Keys Deprecated: Platform / Webhooks API](https://apis.io/collections/cal-com/open-cal-com-deprecated-platform-webhooks-api/)
+- [Cal.diy API v2 Api Keys Destination Calendars API](https://apis.io/collections/cal-com/open-cal-com-destination-calendars-api/)
+- [Cal.diy API v2 Api Keys Event Types API](https://apis.io/collections/cal-com/open-cal-com-event-types-api/)
+- [Cal.diy API v2 Api Keys Event Types Private Links API](https://apis.io/collections/cal-com/open-cal-com-event-types-private-links-api/)
+- [Cal.diy API v2 Api Keys Event Types / Webhooks API](https://apis.io/collections/cal-com/open-cal-com-event-types-webhooks-api/)
+- [Cal.diy API v2 Api Keys Me API](https://apis.io/collections/cal-com/open-cal-com-me-api/)
+- [Cal.diy API v2 Api Keys OAuth2 API](https://apis.io/collections/cal-com/open-cal-com-oauth2-api/)
+- [Cal.diy API v2 Api Keys Schedules API](https://apis.io/collections/cal-com/open-cal-com-schedules-api/)
+- [Cal.diy API v2 Api Keys Selected Calendars API](https://apis.io/collections/cal-com/open-cal-com-selected-calendars-api/)
+- [Cal.diy API v2 Api Keys Slots API](https://apis.io/collections/cal-com/open-cal-com-slots-api/)
+- [Cal.diy API v2 Api Keys Stripe API](https://apis.io/collections/cal-com/open-cal-com-stripe-api/)
+- [Cal.diy API v2 Api Keys Verified Resources API](https://apis.io/collections/cal-com/open-cal-com-verified-resources-api/)
+- [Cal.diy API v2 Api Keys Webhooks API](https://apis.io/collections/cal-com/open-cal-com-webhooks-api/)
 
-#### Tags
+#### Governance rules (1)
 
-- Event Types
-- Configuration
+Spectral rulesets for the provider's contracts.
 
-#### Properties
+- [Cal.com — asyncapi rules](https://apis.io/rules/cal-com/cal-com-asyncapi-spectral-rules/)
 
-- [API Reference](https://cal.com/docs/api-reference/v2/event-types)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (3)
 
-### Cal.com Schedules API
+Authentication, trust centre, and vulnerability disclosure.
 
-Manage user schedules — weekly working hours, date overrides, and timezone defaults.
+- [Cal Com Domain Security](https://apis.io/security/cal-com/cal-com-domain-security/)
+- [Cal Com Trust Center](https://apis.io/security/cal-com/cal-com-trust-center/)
+- [Cal Com Vulnerability Disclosure](https://apis.io/security/cal-com/cal-com-vulnerability-disclosure/)
 
-- **Human URL:** [https://cal.com/docs/api-reference/v2/schedules](https://cal.com/docs/api-reference/v2/schedules)
-- **Base URL:** `https://api.cal.com/v2`
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Schedules
-- Working Hours
+- [Cal Com Plans Pricing](https://apis.io/plans/cal-com/cal-com-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [API Reference](https://cal.com/docs/api-reference/v2/schedules)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published request limits.
 
-### Cal.com Availability API
+- [Cal Com Rate Limits](https://apis.io/rate-limits/cal-com/cal-com-rate-limits/)
 
-Compute and read user/team availability across event types, accounting for connected calendars and overrides.
+#### FinOps (1)
 
-- **Human URL:** [https://cal.com/docs/api-reference/v2/availability](https://cal.com/docs/api-reference/v2/availability)
-- **Base URL:** `https://api.cal.com/v2`
+What the API costs to run, by operation.
 
-#### Tags
+- [Cal Com Finops](https://apis.io/finops/cal-com/cal-com-finops/)
 
-- Availability
-- Calendar
+## Where to find this API
 
-#### Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- [API Reference](https://cal.com/docs/api-reference/v2/availability)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Slots API
-
-Reserve, list, and release bookable time slots for event types — used by booking page UIs to lock a slot before confirmation.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/slots](https://cal.com/docs/api-reference/v2/slots)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Slots
-- Time
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/slots)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Webhooks API
-
-Subscribe to BOOKING_CREATED, BOOKING_RESCHEDULED, BOOKING_CANCELLED, MEETING_STARTED, and other events; deliveries POST to a developer-defined endpoint.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/webhooks](https://cal.com/docs/api-reference/v2/webhooks)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Webhooks
-- Events
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/webhooks)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](asyncapi/cal-com-webhooks-asyncapi.yaml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-
-### Cal.com OAuth & Auth API
-
-OAuth client management, token issuance, and refresh — primarily used by Cal.com Platform integrations to manage end-user accounts under a hosting application.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/oauth](https://cal.com/docs/api-reference/v2/oauth)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- OAuth
-- Authentication
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/oauth)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Teams API
-
-Manage teams, team members, and team event types for collective and round-robin scheduling.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/teams](https://cal.com/docs/api-reference/v2/teams)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Teams
-- Membership
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/teams)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Organizations API
-
-Top-level organizations API for managing sub-teams, members, and organization-wide event types and routing forms.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/organizations](https://cal.com/docs/api-reference/v2/organizations)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Organizations
-- Enterprise
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/organizations)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Out-of-Office API
-
-Mark users as out-of-office for a date range, with optional automatic forwarding to a delegate.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/out-of-office](https://cal.com/docs/api-reference/v2/out-of-office)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- OOO
-- Availability
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/out-of-office)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Conferencing API
-
-Connect and manage video-conferencing apps (Zoom, Google Meet, Microsoft Teams, Cal Video, Daily, etc.) used as event-type locations.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/conferencing](https://cal.com/docs/api-reference/v2/conferencing)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Conferencing
-- Video
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/conferencing)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Destination Calendars API
-
-Connect Google, Outlook/Office 365, Apple, and CalDAV calendars; choose where new bookings are written and where conflicts are read from.
-
-- **Human URL:** [https://cal.com/docs/api-reference/v2/destination-calendars](https://cal.com/docs/api-reference/v2/destination-calendars)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Calendars
-- Integration
-
-#### Properties
-
-- [API Reference](https://cal.com/docs/api-reference/v2/destination-calendars)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Cal.com Atoms (Platform)
-
-Cal.com Platform exposes pre-built React components ("Atoms") and a managed-user OAuth model so SaaS apps can embed scheduling primitives end-to-end. Used by platforms that want to ship Cal.com features under their own brand.
-
-- **Human URL:** [https://cal.com/docs/platform](https://cal.com/docs/platform)
-- **Base URL:** `https://api.cal.com/v2`
-
-#### Tags
-
-- Atoms
-- SDK
-- Embed
-
-#### Properties
-
-- [Documentation](https://cal.com/docs/platform)
-- [SDK](https://www.npmjs.com/package/@calcom/atoms)
-- [OpenAPI](openapi/cal-com-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/cal-com.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/cal-com.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/cal-com)
 - [Website](https://cal.com/)
 - [Documentation](https://cal.com/docs/api-reference)
 - [Pricing](https://cal.com/pricing)
-- [Git Hub](https://github.com/calcom/cal.com)
-- [Plans](plans/cal-com-plans-pricing.yml)
-- [Rate Limits](rate-limits/cal-com-rate-limits.yml)
-- [Fin Ops](finops/cal-com-finops.yml)
+- [Blog](https://cal.com/blog)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 37.6** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 49.6 |
+| Contract governance | 13.6 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 26.3 |
+
+**Agent readiness 49.2** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cal-com/](https://apis.io/providers/cal-com/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cal.com: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cal-com/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
